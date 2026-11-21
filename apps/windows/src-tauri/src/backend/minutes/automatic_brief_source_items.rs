@@ -1129,8 +1129,7 @@ fn completed_payments(text: &str) -> impl Iterator<Item = SpokenPayment<'_>> {
     )).expect("constant completed-payment expression"));
     PAYMENT.captures_iter(text).filter_map(|matched| {
         let verb = matched.name("action")?;
-        let begin = text[..verb.start()].rsplit(['。','！','？','；','，',';',',','
-']).next()?.trim_end();
+        let begin = text[..verb.start()].rsplit(['。','！','？','；','，',';',',','\n']).next()?.trim_end();
         if ["如果", "假如", "假设", "是否", "打算", "准备", "预计", "建议", "否认"]
             .iter().any(|word| begin.contains(word))
             || ["尚未", "尚不", "没有", "不再", "未", "没", "应", "需要", "必须", "将", "要", "不"]

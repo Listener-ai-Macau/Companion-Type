@@ -186,11 +186,38 @@ fn spoken_department<'a>(requested: &str, snippets: impl Iterator<Item = &'a str
 
 fn directed_department(requested: &str, proof: &Value) -> Option<String> {
     let stem = department_stem(requested)?;
-    let quote = super::normalized(proof["text"].as_str()?);
+    let quote = proof["text"].as_str()?;
+    let normalized = super::normalized(quote);
     ["儿那边儿", "儿这边儿", "那边儿", "儿那边", "儿这边", "那边"].into_iter()
         .map(|ending| format!("{stem}{ending}"))
-        .find(|form| quote.split_once(form).is_some_and(|(_, after)|
+        .find(|form| normalized.split_once(form).is_some_and(|(_, after)|
             after.starts_with(['你', '您', '要', '先', '得'])))
+        .or_else(|| assigned_department_short_name(stem, quote))
+}
+
+fn assigned_department_short_name(stem: &str, quote: &str) -> Option<String> {
+    let mut assignments = quote.match_indices(stem).filter(|(start, label)| {
+        let (before, after) = (&quote[..*start], &quote[*start + label.len()..]);
+        let before = before.rsplit(['。', '？', '！', '，', '；']).next().unwrap_or("").trim_end();
+        let after = after.trim_start();
+        let Some(lead) = ["需要", "要求", "安排", "交给", "请", "让", "由"].into_iter()
+            .find_map(|directive| before.strip_suffix(directive))
+        else {
+            return false;
+        };
+        let lead = lead.trim_end();
+        if ["没有", "没", "不", "别", "无需", "无须", "并非", "不用"].iter().any(|word| lead.ends_with(word))
+            || ["如果", "假如", "要不要", "能否", "是否", "考虑", "拟", "原先"].iter().any(|word| lead.contains(word))
+        {
+            return false;
+        }
+        after.starts_with("负责") || after.strip_prefix('去').is_some_and(|work| {
+            ["调查", "核对", "准备", "跟进", "收集", "整理", "联系", "处理", "安排", "确认", "提交", "沟通"]
+                .iter().any(|action| work.trim_start().starts_with(action))
+        })
+    });
+    let (_, original) = assignments.next()?;
+    assignments.next().is_none().then(|| original.to_owned())
 }
 
 fn spoken_collective(requested: &str, quote: &str) -> Option<String> {
@@ -447,6 +474,14 @@ fn keeps_dialect_owner_and_defers_an_unbound_pronoun_without_losing_the_task() {
     };
     let named = bind("主持人：物料儿那边儿你先检查这个设备资质。","物料部","检查设备资质。").unwrap().unwrap();
     assert_eq!(named.owner.as_deref(),Some("物料儿那边儿"));
+    let survey = bind("负责人：这边儿需要市场去调查一下客户做一下问卷。","市场部","检查设备资质。")
+        .unwrap().unwrap();
+    assert_eq!(survey.owner.as_deref(),Some("市场"));
+    for utterance in ["不需要市场去调查。", "如果需要市场去调查，之后再说。", "需要市场数据做参考。",
+        "请研究市场发展趋势。", "让研发去调查、请研发去准备。"] {
+        assert!(directed_department("市场部", &json!({"text":utterance})).is_none());
+    }
+    assert!(directed_department("研发部", &json!({"text":"让研发去调查、请研发去准备。"})).is_none());
     let pending = bind("主持人：那你那边儿先检查这个设备资质。","说话人3","检查设备资质。").unwrap().unwrap();
     assert!(pending.owner.is_none());
     assert_eq!(pending.text,"检查设备资质（负责人待核实）。");
