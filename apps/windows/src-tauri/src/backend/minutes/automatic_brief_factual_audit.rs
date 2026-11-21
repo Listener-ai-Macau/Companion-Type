@@ -1563,7 +1563,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
     let mut attribution_repairs = HashSet::new();
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims = match verified {
-        Some(verified) if super::source_items::enabled() => unchanged_source_assertions(doc, verified),
+        Some(verified) if super::source_items::enabled() => unchanged_source_assertions(current, verified),
         _ => verified.map(claims).unwrap_or_default().into_iter()
             .map(|claim| (claim["path"].as_str().unwrap().to_owned(), claim)).collect(),
     };
