@@ -1262,6 +1262,58 @@ fn unsupported_confirmation(issues: &[Value], claims: &[Value], source: &[Senten
     (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
 }
 
+fn unclear_optional_action_as_quote(issues: &[Value], claims: &[Value], source: &[Sentence]) -> Option<String> {
+    let changes = issues.iter().map(|issue| {
+        let path = issue["path"].as_str()?;
+        if !path.starts_with("actionItems[") || issue["status"] != "unclear" || issue["placementUnsupported"] != true {
+            return None;
+        }
+        let claim = claims.iter().find(|claim| claim["path"] == path)?;
+        if !claim["due"].is_null() { return None; }
+        let owner = claim["owner"].as_str()?.trim();
+        let term = issue["unclearText"].as_str()?.trim();
+        let current = claim["text"].as_str()?;
+        if owner.is_empty() || term.is_empty() || !current.contains(term)
+            || !current.strip_prefix(owner)?.trim_start_matches([' ', '，', '：']).starts_with("可以")
+        {
+            return None;
+        }
+        let [anchor] = issue["evidence"].as_array()?.as_slice() else { return None; };
+        let unit = source.iter().find(|sentence| anchor == sentence.id.as_str()
+            && claim["sources"].as_array().is_some_and(|sources| sources.iter().any(|id| id == sentence.source.as_str())))?;
+        let quote = super::super::source_resolution::split_turn_label(&unit.text)
+            .map_or(unit.text.as_str(), |(_, speech)| speech).trim();
+        let (lead, action) = quote.split_once(owner)?;
+        if !action.trim_start_matches([' ', '儿']).starts_with("可以")
+            || ["不是", "不能", "不要", "不得"].iter().any(|marker| lead.contains(marker))
+            || !super::line(quote, 96) || quote.contains(term) || quote.contains(['「', '」'])
+        {
+            return None;
+        }
+        // Independent re-audit rejected the task role and the replacement
+        // term. Keep the complete source proposal and its pending status.
+        Some(json!({"path":path,"text":format!("会上讨论「{quote}」。其中具体用语待核实。")}))
+    }).collect::<Option<Vec<_>>>()?;
+    (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
+}
+
+#[cfg(test)]
+#[test]
+fn rejected_optional_actions_keep_exact_wording_and_pending_status() {
+    let claim = json!({"path":"actionItems[0]","owner":"保安部","due":null,
+        "text":"保安部可以向财务部申请报批，把盲区补上。","sources":["u002"]});
+    let issue = json!({"path":"actionItems[0]","status":"unclear","placementUnsupported":true,
+        "unclearText":"申请报批","evidence":["e0051"]});
+    let source = [Sentence{id:"e0051".into(),source:"u002".into(),
+        text:"说话人2: 那保安部儿可以向财务部申请一个报表儿把盲区补上".into()}];
+    let repair = unclear_optional_action_as_quote(&[issue.clone()], &[claim.clone()], &source).unwrap();
+    let repair: Value = serde_json::from_str(&repair).unwrap();
+    assert_eq!(repair["changes"][0]["text"], "会上讨论「那保安部儿可以向财务部申请一个报表儿把盲区补上」。其中具体用语待核实。");
+    let mut confirmed = issue;
+    confirmed["placementUnsupported"] = json!(false);
+    assert!(unclear_optional_action_as_quote(&[confirmed], &[claim], &source).is_none());
+}
+
 fn preserves_unclear_history(doc:&Document,history:&HashMap<String,Vec<String>>)->Result<(),String>{
     let value=serde_json::to_value(doc).map_err(|_|"纪要含混表达历史核对未完成，已有结果保留。")?;
     for(path,phrases)in history{
@@ -1695,7 +1747,9 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
         let local = if bounded_repair.is_some() {
             bounded_repair
         } else if scoped {
-            undisputed_action_text(&issues, &audited_claims).map(|raw| (raw, "localUnclearActionRepair"))
+            unclear_optional_action_as_quote(&issues, &audited_claims, &source)
+                .map(|raw| (raw, "localUnclearProposalQuote"))
+                .or_else(|| undisputed_action_text(&issues, &audited_claims).map(|raw| (raw, "localUnclearActionRepair")))
                 .or_else(|| relocate_ownerless_requirements(&issues, &audited_claims)
                     .map(|raw| (raw, "localOwnerlessRequirementMove")))
         } else { None };

@@ -1011,6 +1011,29 @@ fn relative_quarter_witness(span: &str, source: &str, source_quote: &str, statem
     false
 }
 
+fn academic_billing_period_witness(span: &str, source: &str, source_quote: &str, statement_quote: &str) -> bool {
+    static ANNUAL_PAYMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:交|缴)(?:了|的是|纳)?(?:是)?一年(?:度)?"
+    ).expect("constant annual payment expression"));
+    static ACADEMIC_PAYMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:交|缴)(?:了|的是|纳)?(?:是)?一{1,3}学年"
+    ).expect("constant academic payment expression"));
+    if span != "一年" || !ANNUAL_PAYMENT.is_match(&normalized(source_quote))
+        || !ACADEMIC_PAYMENT.is_match(&normalized(source))
+    {
+        return false;
+    }
+    // The speaker used both names for the same payment cycle. A semester
+    // or a period of non-attendance still needs a separate factual witness.
+    let statement = normalized(statement_quote);
+    ["按学年交费", "按学年缴费", "按学年交纳", "按学年缴纳"].iter().any(|phrase| {
+        statement.match_indices(phrase).any(|(start, _)| {
+            !["不", "不是", "并非", "未", "不能", "如果", "假设"].iter()
+                .any(|prefix| statement[..start].ends_with(prefix))
+        })
+    })
+}
+
 fn daily_frequency_witness(span: &str, question: &str, answer_quote: &str, statement_quote: &str) -> bool {
     static QUESTION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"一天([\p{Han}]{2,8}?)几次"
@@ -1119,7 +1142,8 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         let span = context["cue"]["span"].as_str()?;
         let alternate_measure = grounded && proof.as_ref().is_some_and(|proof| {
             (coverage_quote_is_grounded(&proof.source_quote, source_text)
-                && relative_quarter_witness(span, source_text, &proof.source_quote, &proof.statement_quote))
+                && (relative_quarter_witness(span, source_text, &proof.source_quote, &proof.statement_quote)
+                    || academic_billing_period_witness(span, source_text, &proof.source_quote, &proof.statement_quote)))
                 || evidence.iter().skip_while(|row| row["id"] != source["id"]).skip(1).take(8).any(|answer| {
                     answer["source"] == source["source"]
                         && answer["id"].as_str().is_some_and(|id| cited.is_some_and(|ids| ids.iter().any(|cited| cited == id)))
@@ -1183,6 +1207,18 @@ fn coverage_supports_relative_periods_and_a_cited_answer_to_a_frequency_question
     assert!(daily_frequency_witness("一天", question, answer, "每天上午巡逻3次、下午巡逻2次。"));
     assert!(!daily_frequency_witness("一天", question, answer, "每天上午巡逻2次、下午巡逻3次。"));
     assert!(!daily_frequency_witness("一天", "有一天巡逻了几次", answer, "每天上午巡逻3次、下午巡逻2次。"));
+}
+
+#[cfg(test)]
+#[test]
+fn annual_payment_alias_requires_the_source_to_name_the_same_academic_cycle() {
+    let witness = "因为我们交了是一年度吗";
+    let original = "因为我们交了是一年度吗，交的是一一一学年的。";
+    assert!(academic_billing_period_witness("一年", original, witness, "因按学年缴费且只退本学期部分"));
+    assert!(!academic_billing_period_witness("一年", witness, witness, "因按学年缴费且只退本学期部分"));
+    assert!(!academic_billing_period_witness("一年", original, witness, "因按学期缴费且只退本学期部分"));
+    assert!(!academic_billing_period_witness("一年", original, witness, "并非按学年缴费"));
+    assert!(!academic_billing_period_witness("半年", original, witness, "因按学年缴费且只退本学期部分"));
 }
 
 fn retain_acknowledgment(issue: &Value, evidence: &[Value]) -> Option<SourceCheck> {
