@@ -160,7 +160,7 @@ fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity
         }
         // A reviewer may echo supplied claim metadata. Accept only exact
         // echoes, including null owner/due; unknown or changed fields fail.
-        if claim.echoed.iter().any(|(key,value)|!matches!(key.as_str(),"kind"|"text"|"sources"|"owner"|"due"|"sourceScopeEvidence")||original.get(key)!=Some(value)) {
+        if claim.echoed.iter().any(|(key,value)|!matches!(key.as_str(),"kind"|"text"|"sources"|"owner"|"due"|"sourceScopeEvidence"|"relatedUncertainty")||original.get(key)!=Some(value)) {
             return Err("纪要审核的陈述元数据不匹配，已有结果保留。".into());
         }
         match claim.clarity.as_deref(){
@@ -272,6 +272,9 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     let mut role_prompt;
     let prompt = if super::source_items::enabled() {
         role_prompt = format!("{PROMPT}\n栏目本身也是需要单独核对的主张。对decisions、actionItems、questions的每一条，另外返回placementUnsupported布尔值。真有本场定案、会后承诺或指派、尚未解决的问题时填false；当其实只是开场目的、个人设想、举例、建议、现场已经回答的疑问或散会提示时填true，并将status判为overstated、unsupported或unclear。文字有原话不代表栏目正确。只写错截止日期、责任人或数值但栏目确实成立时填false，按独立事实问题判status。其他栏目无须此字段。");
+        if expected.iter().any(|claim| claim.get("relatedUncertainty").is_some()) {
+            role_prompt.push_str("\nrelatedUncertainty 指向同一数值在另一条陈述中已发现的原文疑点。核对这一条表达的是较早的明确建议还是已确定的结果。可保留独立原话支持的建议及其归属、时序。若本条仍把同一含混数值写为已定案，判unclear，unclearText填本条实际出现的数值，引用原话。");
+        }
         if expected.iter().any(|claim| claim.get("competingSourceIds").is_some()) {
             role_prompt.push_str("\ncompetingSourceIds 是从原文反查提出的候选冲突。逐个看这些原话及邻句，并对照当前条目出处。能分清早期提议和后来明确否定时保留先后。原话确实冲突而无法确定时标为含混；不能原样保留一个无条件版本。候选提示本身也要核实。");
         }
@@ -1146,6 +1149,90 @@ fn merge_shorter_repair_texts(original:&str,shortened:&str,paths:&HashSet<String
     }
     Ok(original.to_string())
 }
+fn ranged_field(text: &str) -> impl Iterator<Item = (&str, (String, String, &str))> {
+    static RANGE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"([0-9０-９]{1,9}(?:[.．][0-9０-９]+)?)\s*(?:到|至|[-~～—－])\s*([0-9０-９]{1,9}(?:[.．][0-9０-９]+)?)\s*(岁|万元|美元|元|小时|分钟|工作日|周|天|个月|年|%|％|人|台|件)")
+            .expect("numeric range pattern")
+    });
+    let digits = |value: &str| value.chars().map(|c| match c {
+        '０'..='９' => char::from(b'0' + (c as u32 - '０' as u32) as u8),
+        '．' => '.',
+        _ => c,
+    }).collect::<String>();
+    RANGE.captures_iter(text).map(move |hit| {
+        let part = |index| hit.get(index).unwrap().as_str();
+        let unit = part(3);
+        (part(0), (digits(part(1)), digits(part(2)), if unit == "％" { "%" } else { unit }))
+    })
+}
+
+fn related_numeric_uncertainty(audit: &Audit, claims: &[Value], source: &[Sentence]) -> HashMap<String, Value> {
+    let supported = |path: &str| audit.claim_audit.iter().find(|claim| claim.path == path)
+        .is_none_or(|claim| claim.status == "supported");
+    let mut related = HashMap::new();
+    for issue in audit.claim_audit.iter().filter(|claim| source_wording_unclear(claim)) {
+        let Some((_, quantity)) = issue.unclear_text.as_deref().and_then(|text| ranged_field(text).next()) else { continue; };
+        let units: HashSet<_> = source.iter().filter(|row| issue.evidence.contains(&row.id))
+            .map(|row| row.source.as_str()).collect();
+        for peer in claims {
+            let path = peer["path"].as_str().unwrap();
+            let Some((span, _)) = peer["text"].as_str().and_then(|text|
+                ranged_field(text).find(|(_, key)| key == &quantity)) else { continue; };
+            if path == issue.path || !supported(path) || !peer["sources"].as_array().is_some_and(|ids|
+                ids.iter().filter_map(Value::as_str).any(|id| units.contains(id)))
+            { continue; }
+            related.entry(statement_identity(path, peer)).or_insert_with(|| json!({
+                "priorPath":issue.path, "uncertainValue":span,
+                "evidence":issue.evidence, "reason":issue.reason
+            }));
+        }
+    }
+    related
+}
+
+fn reject_unresolved_settlement(audit: &mut Audit, expected: &[Value]) {
+    for verdict in audit.claim_audit.iter_mut().filter(|claim| claim.status == "supported") {
+        let Some(field) = expected.iter().find(|claim| claim["path"] == verdict.path) else { continue; };
+        let context = &field["relatedUncertainty"];
+        let Some(quantity) = context["uncertainValue"].as_str() else { continue; };
+        let text = field["text"].as_str().unwrap();
+        let settlement = ["达成共识", "形成共识", "已达成", "已定下", "已定案", "已敲定", "已确定", "决定为"]
+            .iter().any(|term| text.contains(term))
+            || text.split(['。', '；', ';']).any(|part| part.contains("形成") && part.contains("共识") && part.contains(quantity));
+        if !settlement {
+            continue;
+        }
+        let Some(disputed) = context["evidence"].as_array() else { continue; };
+        if !verdict.evidence.iter().all(|id| disputed.iter().any(|earlier| earlier == id.as_str())) {
+            continue;
+        }
+        verdict.status = "unclear".into();
+        verdict.clarity = Some("unclear".into());
+        verdict.unclear_text = Some(quantity.to_owned());
+        verdict.reason = "本条仍写成已定，引用的是先前无法确认同一数值的原话，未有独立定案依据。".into();
+    }
+}
+
+fn unsupported_confirmation(issues: &[Value], claims: &[Value], source: &[Sentence]) -> Option<String> {
+    let changes = issues.iter().map(|issue| {
+        let reason = issue["reason"].as_str()?;
+        let original = claims.iter().find(|claim| claim["path"] == issue["path"])?["text"].as_str()?;
+        let (before, rest) = original.split_once("询问并确认")?;
+        let first = rest.split(['。', '；', ';', '！']).next()?;
+        let questions = issue["evidence"].as_array()?;
+        if issue["status"] != "overstated"
+            || !["没有明确回答", "没有回答", "未有明确回应", "没有得到确认"].iter().any(|term| reason.contains(term))
+            || !["是否", "能否", "有没有", "怎么", "何时"].iter().any(|cue| first.contains(cue))
+            || !source.iter().any(|row| questions.iter().any(|id| id == row.id.as_str())
+                && ["是否", "是吧", "吗", "么", "？", "?"].iter().any(|cue| row.text.contains(cue)))
+        {
+            return None;
+        }
+        Some(json!({"path":issue["path"],"text":format!("{before}询问{rest}")}))
+    }).collect::<Option<Vec<_>>>()?;
+    (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
+}
+
 fn preserves_unclear_history(doc:&Document,history:&HashMap<String,Vec<String>>)->Result<(),String>{
     let value=serde_json::to_value(doc).map_err(|_|"纪要含混表达历史核对未完成，已有结果保留。")?;
     for(path,phrases)in history{
@@ -1387,6 +1474,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
     let mut evidence = HashMap::new();
     let mut supported_conflicts = HashSet::new();
     let mut pending_quotes = Vec::new();
+    let mut related = HashMap::new();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
         if expected.is_empty(){
@@ -1399,6 +1487,9 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             emphasize_source_scope(&mut expected,&source);
         }
         for claim in &mut expected {
+            if let Some(context) = related.remove(&statement_identity(claim["path"].as_str().unwrap(), claim)) {
+                claim["relatedUncertainty"] = context;
+            }
             let competing: Vec<_> = conflicts.iter().filter(|conflict| same_assertion(claim, &conflict["claim"]))
                 .map(|conflict| &conflict["evidence"]).collect();
             if !competing.is_empty() {
@@ -1410,6 +1501,9 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         // retroactively rewrite other claims in this same independent batch.
         let history=trace.iter().filter_map(|c|c.get("unclearClaimHistory").and_then(Value::as_array)).flatten().cloned().collect::<Vec<_>>();
         let mut audit=partitioned_audit(endpoint,model,key,client,&current,&wire,&expected,&source,stage,start,trace,&recovered_format)?;
+        if super::source_items::enabled() {
+            reject_unresolved_settlement(&mut audit, &expected);
+        }
         let vetoed=apply_historical_veto(&mut audit,&expected,&history,&source);
         if !vetoed.is_empty(){if let Some(call)=trace.last_mut(){call["historicalUnclearVetoes"]=json!(vetoed);}}
         // Bind original jumps to the exact immutable evidence actually checked,
@@ -1467,10 +1561,13 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         });
         // A re-audit can identify a different defect after attribution was fixed.
         // Remove only the explicit false link, with its two separately cited witnesses.
-        let separated_examples = if round == 1 && super::source_items::enabled() {
+        let bounded_repair = if round == 1 && super::source_items::enabled() {
             repair_separately_cited_examples(&issues, &audited_claims, &source)
+                .map(|raw| (raw, "localSeparateExampleRepair"))
+                .or_else(|| unsupported_confirmation(&issues, &audited_claims, &source)
+                    .map(|raw| (raw, "localQuestionModalityRepair")))
         } else { None };
-        if round==2||(repeated && separated_examples.is_none()) {
+        if round==2||(repeated && bounded_repair.is_none()) {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
         let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||source_wording_unclear(c)).map(|c|c.path.clone()).collect::<HashSet<_>>();
@@ -1500,8 +1597,8 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             payload["roleCorrectionContract"]=json!("placementUnsupported为true的决定、交办或未决条目将由程序移出原栏目。仍有用的内容只返回path和120字内text，写清实际是意见、现状、设想或已回答的提问；程序保留出处并放入相关主题，之后独立复审。完全无依据、散会或重复无用条目可remove:true。不要在text内继续称已定案。只有需要指定补充主题且不含糊时，才附moveToTopic的已有主题下标。");
         }
         let scoped = super::source_items::enabled() && verified.is_some();
-        let local = if let Some(raw) = separated_examples {
-            Some((raw, "localSeparateExampleRepair"))
+        let local = if bounded_repair.is_some() {
+            bounded_repair
         } else if scoped {
             undisputed_action_text(&issues, &audited_claims).map(|raw| (raw, "localUnclearActionRepair"))
                 .or_else(|| relocate_ownerless_requirements(&issues, &audited_claims)
@@ -1549,6 +1646,10 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             pending_quotes.extend(newly_pending);
         }
         if super::source_items::enabled() {
+            related.extend(related_numeric_uncertainty(&audit, &audited_claims, &source));
+            if !related.is_empty() {
+                verified_claims.retain(|path, claim| !related.contains_key(&statement_identity(path, claim)));
+            }
             carry_verified_after_scoped_repair(&next.document, &current, &mut verified_claims, &mut evidence);
         }
         current=next.document;
@@ -1729,6 +1830,40 @@ mod tests {
         assert_eq!(accepted.claim_audit[0].status,"overstated");assert_eq!(missing,vec![expected[1].clone()]);
         for bad in [json!({"claimAudit":[{"path":"unknown","status":"supported","reason":"假路径","evidence":["e0000"]}]}),json!({"claimAudit":[],"passed":true})]{assert!(incomplete_audit(&bad.to_string(),&expected,&source).is_none());}
     }
+    #[test]
+    fn related_numeric_veto_checks_shared_source_and_leaves_an_earlier_supported_proposal() {
+        let source = [Sentence {id:"e0010".into(),source:"u002".into(),text:"十八到三十五还是四十五岁再说。".into()}];
+        let affected = json!({"path":"topics[0].details[0]","text":"已形成共识，年龄范围为１８到４５岁。","sources":["u002"]});
+        let unrelated = json!({"path":"topics[2].details[0]","text":"另一组以18到45岁为准。","sources":["u009"]});
+        let earlier = json!({"path":"topics[0].points[0]","text":"营销建议年龄18到45岁。","sources":["u002"]});
+        let original = json!({"path":"actionItems[0]","text":"18至45岁确定色彩。","sources":["u002"]});
+        let mut first = serde_json::from_value::<Audit>(json!({"claimAudit":[{"path":"actionItems[0]",
+            "status":"unclear","clarity":"unclear","unclearText":"18至45岁","reason":"两种上限都出现","evidence":["e0010"]}]})).unwrap();
+        let set = related_numeric_uncertainty(&first, &[original,affected.clone(),unrelated,earlier.clone()], &source);
+        assert_eq!(set.len(),2);
+        let mut expected = vec![affected,earlier];
+        for item in &mut expected {
+            item["relatedUncertainty"] = set[&statement_identity(item["path"].as_str().unwrap(), item)].clone();
+        }
+        first.claim_audit = expected.iter().map(|item| serde_json::from_value(json!({"path":item["path"],"status":"supported",
+            "reason":"读作年龄范围","evidence":["e0010"]})).unwrap()).collect();
+        reject_unresolved_settlement(&mut first,&expected);
+        assert_eq!(first.claim_audit[0].status,"unclear");
+        assert_eq!(first.claim_audit[1].status,"supported");
+    }
+
+    #[test]
+    fn a_question_without_a_reply_drops_only_the_unsupported_confirmation() {
+        let source = [Sentence {id:"e0010".into(),source:"u002".into(),text:"两种设备是分开存放吧？".into()}];
+        let claims = [json!({"path":"topics[0].points[0]","text":"会上询问并确认两类设备是否分开存放；备用设备单独存。","sources":["u002"]})];
+        let issue = json!({"path":"topics[0].points[0]","status":"overstated","reason":"没有明确回答或确认","evidence":["e0010"]});
+        let repair = unsupported_confirmation(&[issue.clone()], &claims, &source).unwrap();
+        assert!(repair.contains("会上询问两类设备是否分开存放；备用设备单独存。"));
+        let mut genuine = issue;
+        genuine["reason"] = json!("会中明确回答并确认");
+        assert!(unsupported_confirmation(&[genuine], &claims, &source).is_none());
+    }
+
     #[test]
     fn automatic_brief_fact_sentence_projection_keeps_all_source_bytes(){
         let units=source();let split=sentences(&units);assert_eq!(split.iter().map(|s|s.text.as_str()).collect::<String>(),units[0].text);

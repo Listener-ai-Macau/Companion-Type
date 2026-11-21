@@ -348,6 +348,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         traced_document=Some(doc.clone());
         let mut pending_quotes = Vec::new();
         let mut conditional_speakers = Vec::new();
+        let mut unresolved_timings = Vec::new();
         let mut doc=if let Some(facts)=source_facts {
             let reviewable = |draft: &Document, reason: String| {
                 check_current()?;
@@ -365,6 +366,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             };
             pending_quotes = std::mem::take(&mut verified.pending_quotes);
             conditional_speakers = final_bindings::conditional_speakers(&verified, &units);
+            unresolved_timings = final_bindings::unresolved_timings(&verified, &units);
             let reviewed = verified.document.clone();
             traced_document=Some(reviewed.clone());
             match commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace) {
@@ -384,8 +386,10 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         if source_items::enabled() {
             clean_question_annotations(&mut doc);
             let bindings = final_bindings::apply(&mut doc, &units, conditional_speakers);
-            if bindings != (0, 0) {
-                trace.push(json!({"stage":"source-final-bindings","conditionalSpeakers":bindings.0,"scopedAssignments":bindings.1}));
+            let retained = final_bindings::preserve_unresolved_timings(&mut doc, &unresolved_timings);
+            if bindings != (0, 0) || retained != 0 {
+                trace.push(json!({"stage":"source-final-bindings","conditionalSpeakers":bindings.0,"scopedAssignments":bindings.1,
+                    "unresolvedTimingReferences":retained}));
             }
         }
         reconcile_citations(&mut doc, &source);

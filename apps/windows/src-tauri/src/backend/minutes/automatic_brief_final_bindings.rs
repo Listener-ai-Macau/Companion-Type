@@ -30,6 +30,83 @@ pub(super) fn conditional_speakers(brief: &factual_audit::VerifiedBrief, units: 
     reported
 }
 
+pub(super) struct UnresolvedTiming {
+    action: String,
+    sources: Vec<String>,
+    phrase: String,
+    quote: String,
+}
+
+fn timing_phrase(text: &str) -> Option<(&str, &str)> {
+    static TIMING: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"^(?P<object>[\p{Han}]{2,18}?)(?P<event>出品|出来|到位|到货|发货|交付|上线|完工|发布)(?:的)?时间$")
+            .expect("timing field pattern")
+    });
+    let featured = |text: &str| TIMING.is_match(text);
+    let mut matches = text.split(['、','，','。','；','：',',',';']).map(str::trim).filter(|part| featured(part));
+    let phrase = matches.next()?;
+    if matches.next().is_some() { return None; }
+    let event = TIMING.captures(phrase)?.name("event")?.as_str();
+    Some((phrase, event))
+}
+
+fn opaque_timing(source: &str) -> impl Iterator<Item = (&str, &str)> {
+    static OPAQUE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"(?P<quote>(?:咱们的|我们的|他们的|这批|那批|这件|那件|这个|那个|那些)?东西(?P<event>出来|到位|到货|发货|交付|上线|完工|发布)(?:的)?时间)")
+            .expect("opaque timing pattern")
+    });
+    OPAQUE.captures_iter(source).map(|capture| {
+        (capture.name("quote").unwrap().as_str(), capture.name("event").unwrap().as_str())
+    })
+}
+
+fn same_event(first: &str, second: &str) -> bool {
+    first == second || ["出品", "出来"].contains(&first) && ["出品", "出来"].contains(&second)
+}
+
+fn anchored_opaque_time(action: &Action, turns: &[&str]) -> Option<(String, String)> {
+    let (phrase, event) = timing_phrase(&action.text)?;
+    let field = phrase.replace("的时间", "时间");
+    if turns.iter().any(|text| text.replace("的时间", "时间").contains(&field)) {
+        return None;
+    }
+    let mut opaque = turns.iter().flat_map(|text| opaque_timing(text))
+        .filter(|(_, candidate)| same_event(event, candidate)).map(|(quote, _)| quote);
+    let quote = opaque.next()?;
+    if !opaque.all(|other| other == quote) { return None; }
+    Some((phrase.to_owned(), quote.to_owned()))
+}
+
+pub(super) fn unresolved_timings(brief: &factual_audit::VerifiedBrief, units: &[Unit]) -> Vec<UnresolvedTiming> {
+    let turns = factual_audit::evidence_sentences(units);
+    brief.document.action_items.iter().enumerate().filter_map(|(index, action)| {
+        let ids = brief.evidence.get(&format!("actionItems[{index}]"))?;
+        let mut evidence = Vec::new();
+        for row in turns.iter().filter(|row| ids.iter().any(|id| row["id"] == id.as_str())
+            && action.sources.iter().any(|unit| row["source"] == unit.as_str()))
+        {
+            evidence.push(content(row));
+        }
+        let (phrase, quote) = anchored_opaque_time(action, &evidence)?;
+        Some(UnresolvedTiming {action:action.text.clone(),sources:action.sources.clone(),phrase,quote})
+    }).collect()
+}
+
+pub(super) fn preserve_unresolved_timings(doc: &mut Document, unresolved: &[UnresolvedTiming]) -> usize {
+    let mut retained = 0;
+    for action in &mut doc.action_items {
+        let Some(entry) = unresolved.iter().find(|item| action.text == item.action && action.sources == item.sources)
+        else { continue; };
+        let body = action.text.replacen(&entry.phrase, &format!("「{}」（具体对象待核实）", entry.quote), 1);
+        let body = if body.starts_with("待核对：") { body } else { format!("待核对：{body}") };
+        if line(&body, 180) {
+            action.text = body;
+            retained += 1;
+        }
+    }
+    retained
+}
+
 fn content(turn: &Value) -> &str {
     let text = turn["text"].as_str().unwrap_or("");
     super::super::source_resolution::split_turn_label(text).map_or(text, |(_, speech)| speech)
@@ -113,6 +190,27 @@ pub(super) fn apply(doc: &mut Document, units: &[Unit], reported: Vec<ReportedCo
         vec![action]
     }).collect();
     (attributed, split)
+}
+
+#[cfg(test)]
+#[test]
+fn bound_timing_keeps_exact_unresolved_words_and_other_task_fields() {
+    let action = Action{text:"列出折扣、设备交付时间、出厂参数。".into(), owner:Some("采购组".into()),
+        due:Some("周五之前".into()), sources:vec!["u002".into()]};
+    let evidence = ["同时写折扣，再看这批东西交付的时间。"];
+    let (phrase, quote) = anchored_opaque_time(&action, &evidence).unwrap();
+    assert_eq!(phrase, "设备交付时间");
+    assert_eq!(quote, "这批东西交付的时间");
+    assert!(anchored_opaque_time(&action, &[evidence[0], "就是设备交付的时间。"]).is_none());
+    assert!(anchored_opaque_time(&action, &["等待这批东西上线的时间。"]).is_none());
+    let mut doc = Document{purpose:"讨论交付安排。".into(),topics:Vec::new(),decisions:Vec::new(),
+        action_items:vec![action.clone()],questions:Vec::new()};
+    let retained = preserve_unresolved_timings(&mut doc, &[UnresolvedTiming{
+        action:action.text.clone(),sources:action.sources.clone(),phrase,quote}]);
+    assert_eq!(retained, 1);
+    assert_eq!(doc.action_items[0].text,"待核对：列出折扣、「这批东西交付的时间」（具体对象待核实）、出厂参数。");
+    assert_eq!(doc.action_items[0].owner, action.owner);
+    assert_eq!(doc.action_items[0].due, action.due);
 }
 
 #[cfg(test)]
