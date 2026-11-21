@@ -38,6 +38,8 @@ fn review_label(text: &str, needs_review: bool) -> std::borrow::Cow<'_, str> {
         text.into()
     }
 }
+pub(super) const DRAFT_CONFLICT_PREFIX: &str = "待核实：";
+
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
 pub(in crate::backend::minutes) struct Topic {pub(in crate::backend::minutes) title:String,pub(in crate::backend::minutes) points:Vec<Point>,#[serde(default)]pub(in crate::backend::minutes) details:Vec<Entry>}
@@ -190,13 +192,21 @@ pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Op
     for topic in &doc.topics {
         md.push_str(&format!("### {}\n\n",topic.title.trim()));
         for p in &topic.points {
+            if p.text.starts_with(DRAFT_CONFLICT_PREFIX) {
+                md.push_str(&format!("- {}\n", p.text.trim()));
+                continue;
+            }
             let caption = if matches!(p.kind, Kind::Status)
                 && super::source_resolution::split_turn_label(p.text.trim()).is_some()
             { "发言" } else { p.kind.label() };
             md.push_str(&format!("- {caption}：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
         }
         for p in &topic.details {
-            md.push_str(&format!("- 补充：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
+            if p.text.starts_with(DRAFT_CONFLICT_PREFIX) {
+                md.push_str(&format!("- {}\n", p.text.trim()));
+            } else {
+                md.push_str(&format!("- 补充：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
+            }
         }
         md.push('\n');
     }

@@ -271,6 +271,45 @@ fn answered_question(summary: &str, cited: &[&Value]) -> bool {
     })
 }
 
+fn live_agenda(fact: &Fact, quotes: &[&str]) -> bool {
+    static ORDER: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:咱们?|我们|现在|当前|这场会|这次会)[^。！？；，]{0,12}?先(?:先|不|集中|只)*(?:说|谈|讨论|问|汇报|听|介绍)"
+    ).unwrap());
+    static DEFER: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"一会儿?(?:再|在)(?:说|谈|讨论|问|汇报|听|介绍)"
+    ).unwrap());
+    let summary = normalized(&fact.text);
+    const BINDING: &[&str] = &["会后", "散会后", "下周", "明天", "下次会议", "决定由", "董事会决定",
+        "正式决定", "同意执行", "达成一致", "明确通过", "定于", "最迟", "截止"];
+    if fact.due.is_some() || BINDING.iter().any(|word|
+        summary.contains(word) || quotes.iter().any(|quote| normalized(quote).contains(word)))
+    {
+        return false;
+    }
+    match fact.placement {
+        Placement::Decision => {
+            let about_discussion = ["当前先", "现在先", "先集中讨论", "先讨论", "暂不讨论",
+                "先问", "先谈", "先听", "先请"].iter().any(|marker| summary.contains(marker));
+            about_discussion && quotes.iter().any(|quote| {
+                let quote = normalized(quote);
+                ORDER.is_match(&quote) || (DEFER.is_match(&quote)
+                    && ["你就说", "刚才", "现在", "先", "接着"].iter().any(|cue| quote.contains(cue)))
+            })
+        }
+        Placement::Action => {
+            let opening = ["召开", "开一场", "举行"].iter().any(|cue| summary.starts_with(cue))
+                && summary.contains('会') && ["先讨论", "先谈", "先听"].iter().any(|cue| summary.contains(cue));
+            opening && quotes.iter().any(|quote| {
+                let quote = normalized(quote);
+                ["叫过来", "把大家叫来", "把大家聚到一起"].iter().any(|cue| quote.contains(cue))
+                    && ["开一个", "开个会", "开这场"].iter().any(|cue| quote.contains(cue))
+                    && ORDER.is_match(&quote)
+            })
+        }
+        _ => false,
+    }
+}
+
 fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
     let by_id: HashMap<_, _> = evidence.iter().filter_map(|row|
         Some((row["id"].as_str()?, row))).collect();
@@ -279,6 +318,7 @@ fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String>
         let rows: Vec<_> = fact.evidence.iter().filter_map(|id| by_id.get(id.as_str()).copied()).collect();
         let quotes: Vec<_> = rows.iter().filter_map(|row| row["text"].as_str()).collect();
         let result = match fact.placement {
+            Placement::Decision | Placement::Action if live_agenda(fact, &quotes) => Some((Kind::Status, None)),
             Placement::Action if fact.due.is_none() && completed_report(&fact.text, &quotes) =>
                 Some((Kind::Status, None)),
             Placement::Action => live_request_topic(fact, evidence).map(|text| (Kind::Opinion, Some(text))),
@@ -891,7 +931,16 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
         .chain(doc.questions.iter().map(|entry| normalized(&entry.text))).collect();
     for addition in additions {
         let mut fact = addition.item.bind(&known, &known_ids)?;
-        if fact.placement == Placement::Question {
+        if matches!(fact.placement, Placement::Decision | Placement::Action) {
+            let quotes: Vec<_> = fact.evidence.iter()
+                .filter_map(|id| known[id.as_str()]["text"].as_str()).collect();
+            if live_agenda(&fact, &quotes) {
+                fact.kind = Kind::Status;
+                fact.placement = Placement::Topic;
+                fact.owner = None;
+                fact.due = None;
+            }
+        } else if fact.placement == Placement::Question {
             let rows: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]).collect();
             if answered_question(&fact.text, &rows) {
                 fact.kind = Kind::Opinion;
@@ -2508,6 +2557,29 @@ fn a_named_group_owns_only_the_directed_clause_before_a_question() {
     assert!(ordinary_source_aspect("说话人1: 质量部不要进行调查 你觉得还有什么问题？").is_none());
 }
 
+fn quoted_draft_claim<'a>(text: &str, source: &str, claims: &'a [Value]) -> Option<&'a Value> {
+    let tail = ["正文写“", "纪要写“", "纪要中写“"].into_iter()
+        .find_map(|marker| text.split_once(marker).map(|(_, tail)| tail))?;
+    let (quote, _) = tail.split_once('”')?;
+    if !line(quote, 90) || quote.chars().filter(|ch| ch.is_alphanumeric()).count() < 6 {
+        return None;
+    }
+    // The model is identifying language in its own draft. A literal target,
+    // uniquely present in the draft and related to the cited speech, is
+    // required before its objection can affect another displayed row.
+    let glyphs: Vec<_> = quote.chars().collect();
+    let source = normalized(source);
+    if !glyphs.windows(3).any(|part| part.iter().all(|ch| ch.is_alphanumeric())
+        && source.contains(&part.iter().collect::<String>()))
+    {
+        return None;
+    }
+    let mut hits = claims.iter().filter(|claim| claim.get("sources").is_some()
+        && claim["text"].as_str().is_some_and(|text| text.contains(quote)));
+    let found = hits.next()?;
+    hits.next().is_none().then_some(found)
+}
+
 fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value],
     verified_coverage: &HashSet<String>)
     -> Result<(Vec<MissingItem>, Vec<Value>), String>
@@ -2553,6 +2625,13 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
                 {
                     return Err(fail());
                 }
+                if review {
+                    if let Some(claim) = quoted_draft_claim(
+                        &addition.item.text, known[cue.evidence.as_str()], &claims,
+                    ) {
+                        conflicts.push(json!({"claim":claim, "evidence":cue.evidence}));
+                    }
+                }
                 retain_instruction_clause(&mut addition.item, cue, known[cue.evidence.as_str()], evidence);
                 additions.push(addition);
             }
@@ -2576,6 +2655,11 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
             additions.push(addition);
         }
     }
+    let mut seen_conflicts = HashSet::new();
+    conflicts.retain(|conflict| seen_conflicts.insert((
+        conflict["claim"]["path"].as_str().unwrap().to_owned(),
+        conflict["evidence"].as_str().unwrap().to_owned(),
+    )));
     Ok((additions, conflicts))
 }
 
@@ -2839,6 +2923,37 @@ mod tests {
         let after = append_missing(vec![addition], doc, &units, &evidence).unwrap();
         assert!(after.questions.is_empty());
         assert_eq!(after.topics[0].details[0].text, report);
+    }
+
+    #[test]
+    fn an_agenda_change_stays_in_discussion_but_later_commitments_keep_their_type() {
+        let make = |text: &str, placement| Fact {id:"a000".into(),kind:Kind::Decision,placement,
+            text:text.into(),owner:None,due:None,evidence:vec!["e0000".into()]};
+        let agenda = make("主持人将招聘问题留待后续讨论，当前先问后勤对方案的看法。", Placement::Decision);
+        let quote = "行那咱一会儿在讨论这个后勤这个你就说这个";
+        assert!(live_agenda(&agenda, &[quote]));
+        assert!(!live_agenda(&agenda, &["咱们下周再讨论这个后勤，这次先通过方案。"]));
+        assert!(!live_agenda(&agenda, &["我们讨论过后勤方案。"]));
+        let now = make("当前先谈要办什么项目，活动策划放到后面。",Placement::Decision);
+        assert!(live_agenda(&now, &["咱们先谈谈要办什么东西，搞什么项目"]));
+        let opening = make("召开项目启动会，各部门提出建议，先讨论选址。", Placement::Action);
+        assert!(live_agenda(&opening, &["今天把各部门叫过来，咱们开一个启动会，咱们先说一下选址"]));
+        let assigned = make("会后由项目部召开项目启动会，先讨论选址。", Placement::Action);
+        assert!(!live_agenda(&assigned, &["今天把各部门叫过来，咱们开一个启动会，咱们先说一下选址"]));
+    }
+
+    #[test]
+    fn a_pending_objection_needs_a_unique_literal_draft_quote_and_relevant_speech() {
+        let text = "待核实住宿费范围：原话说退半学年，正文写“退了半年住宿费的一半”，范围不同。";
+        let speech = "住宿费退一半儿，因为这半个学年没有住。";
+        let claims = [
+            json!({"path":"topics[0].points[0]","text":"目前只退了半年住宿费的一半。","sources":["u000"]}),
+            json!({"path":"topics[0].points[1]","text":"住宿费已经退还。","sources":["u000"]}),
+        ];
+        assert_eq!(quoted_draft_claim(text, speech, &claims).unwrap()["path"], "topics[0].points[0]");
+        assert!(quoted_draft_claim(text, "下周检查所有设备。", &claims).is_none());
+        assert!(quoted_draft_claim(&text.replace("正文写", "有人说"), speech, &claims).is_none());
+        assert!(quoted_draft_claim(text, speech, &[claims[0].clone(),claims[0].clone()]).is_none());
     }
 
     #[test]

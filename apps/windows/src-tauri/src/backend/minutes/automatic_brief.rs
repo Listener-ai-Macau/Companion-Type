@@ -255,14 +255,41 @@ fn append_pending_quotes(minutes: &mut CompanionV1MeetingMinutes, pending: &[Str
 }
 
 fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[Unit],
-    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, reason: &str,
+    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, reason: &str, conflicts: &[Value],
+    pending_quotes: &[String],
 ) -> CompanionV1MeetingMinutes {
     let mut marked = doc.clone();
+    let mut disputed_ids = HashSet::new();
+    let mut mark = |text: &mut String, owner: Option<&str>, due: Option<&str>, pending_by_default: bool| {
+        let matches: Vec<_> = conflicts.iter().filter(|conflict| {
+            let claim = &conflict["claim"];
+            claim["text"].as_str() == Some(text.as_str())
+                && claim["owner"].as_str() == owner && claim["due"].as_str() == due
+        }).filter_map(|conflict| conflict["evidence"].as_str()).collect();
+        if !matches.is_empty() {
+            disputed_ids.extend(matches);
+            if !text.starts_with(DRAFT_CONFLICT_PREFIX) {
+                text.insert_str(0, DRAFT_CONFLICT_PREFIX);
+            }
+        } else if pending_by_default {
+            text.insert_str(0, "待核对：");
+        }
+    };
+    for topic in &mut marked.topics {
+        for row in topic.points.iter_mut().map(|row| &mut row.text)
+            .chain(topic.details.iter_mut().map(|row| &mut row.text))
+        {
+            mark(row, None, None, false);
+        }
+    }
     for decision in &mut marked.decisions {
-        decision.text = format!("待核对：{}", decision.text);
+        mark(&mut decision.text, None, None, true);
     }
     for action in &mut marked.action_items {
-        action.text = format!("待核对：{}", action.text);
+        mark(&mut action.text, action.owner.as_deref(), action.due.as_deref(), true);
+    }
+    for question in &mut marked.questions {
+        mark(&mut question.text, None, None, false);
     }
     let mut minutes = project_cloud_minutes(&marked, units, session, base);
     minutes.quality = "draft".into();
@@ -289,6 +316,11 @@ fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[
     }
     let entries = super::short_evidence::capture(&json!({"evidence":quotes}), &minutes, &session.transcript_text);
     super::short_evidence::append(&mut minutes, &entries);
+    let mut disputed_quotes = pending_quotes.to_vec();
+    disputed_quotes.extend(source.iter().filter_map(|row| {
+        disputed_ids.contains(row["id"].as_str()?).then(|| row["text"].as_str().unwrap().trim().to_owned())
+    }));
+    append_pending_quotes(&mut minutes, &disputed_quotes);
     minutes
 }
 
@@ -357,14 +389,14 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         let mut conditional_speakers = Vec::new();
         let mut unresolved_timings = Vec::new();
         let mut doc=if let Some(facts)=source_facts {
-            let reviewable = |draft: &Document, reason: String| {
+            let reviewable = |draft: &Document, reason: String, conflicts: &[Value], quotes: &[String]| {
                 check_current()?;
                 validate(draft, &units)?;
-                Ok(project_review_draft(draft, &facts, &units, session, base, &reason))
+                Ok(project_review_draft(draft, &facts, &units, session, base, &reason, conflicts, quotes))
             };
             let checked = match source_items::fill_omissions(endpoint, model, key, client, doc.clone(), &facts, &units, start, &mut trace) {
                 Ok(checked) => checked,
-                Err(reason) => return reviewable(&doc, reason),
+                Err(reason) => return reviewable(&doc, reason, &[], &[]),
             };
             traced_document=Some(checked.doc.clone());
             let mut factual_draft = factual_audit::FactualDraft { document: checked.doc, pending_quotes: Vec::new() };
@@ -372,9 +404,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 Ok(verified) => verified,
                 Err(reason) => {
                     traced_document=Some(factual_draft.document.clone());
-                    let mut draft = reviewable(&factual_draft.document, reason)?;
-                    append_pending_quotes(&mut draft, &factual_draft.pending_quotes);
-                    return Ok(draft);
+                    return reviewable(&factual_draft.document, reason, &checked.conflicts, &factual_draft.pending_quotes);
                 }
             };
             pending_quotes = std::mem::take(&mut verified.pending_quotes);
@@ -385,9 +415,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             let document = match commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace) {
                 Ok(document) => document,
                 Err(reason) => {
-                    let mut draft = reviewable(&reviewed, reason)?;
-                    append_pending_quotes(&mut draft, &pending_quotes);
-                    return Ok(draft);
+                    return reviewable(&reviewed, reason, &[], &pending_quotes);
                 }
             };
             match source_items::restore_reported_steps(&document, &facts, &units, &mut trace) {
@@ -398,18 +426,14 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                     ) {
                         Ok(verified) => verified,
                         Err(reason) => {
-                            let mut draft = reviewable(&supplemented, reason)?;
-                            append_pending_quotes(&mut draft, &pending_quotes);
-                            return Ok(draft);
+                            return reviewable(&supplemented, reason, &[], &pending_quotes);
                         }
                     }
                 }
                 Ok(None) => document,
                 Err(reason) => {
                     traced_document = Some(document.clone());
-                    let mut draft = reviewable(&document, reason)?;
-                    append_pending_quotes(&mut draft, &pending_quotes);
-                    return Ok(draft);
+                    return reviewable(&document, reason, &[], &pending_quotes);
                 }
             }
         }else if coverage::enabled(){
