@@ -715,7 +715,7 @@ mod tests {
         assert!(restored.contains("费用") && restored.contains("进行了一些拓展"));
         assert!(retain_additional_cause(&restored, source).is_none());
         assert!(retain_additional_cause("对方未能按时交货。", source).is_none());
-        assert!(retain_additional_cause(claim, &format!("如果{source}")).is_none());
+        assert!(retain_additional_cause(claim, &format!("说话人6: 如果{}", source_body(source))).is_none());
     }
 
     #[test]
