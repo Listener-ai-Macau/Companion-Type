@@ -241,28 +241,61 @@ fn incomplete_audit(raw:&str,expected:&[Value],source:&[Sentence])->Option<(Audi
     Some((audit,missing))
 }
 
-fn batch_audit_reply<'a>(raw: &'a str, expected: &[Value]) -> (std::borrow::Cow<'a, str>, usize) {
+fn batch_audit_reply<'a>(raw: &'a str, expected: &[Value]) -> (std::borrow::Cow<'a, str>, usize, usize) {
     let Ok(mut result) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
-        return (raw.into(), 0);
+        return (raw.into(), 0, 0);
     };
-    let Some(rows) = result["claimAudit"].as_array_mut() else { return (raw.into(), 0); };
+    let Some(rows) = result["claimAudit"].as_array_mut() else { return (raw.into(), 0, 0); };
     let paths: HashSet<_> = expected.iter().filter_map(|claim| claim["path"].as_str()).collect();
     let before = rows.len();
+    let mut closed_paths = 0;
+    for row in rows.iter_mut() {
+        let Some(path) = row["path"].as_str().filter(|path| !paths.contains(path)) else { continue; };
+        let Some((_, index)) = path.rsplit_once('[') else { continue; };
+        if index.is_empty() || !index.bytes().all(|byte| byte.is_ascii_digit()) {
+            continue;
+        }
+        // Only complete an unclosed numeric index to a supplied path.
+        // Existing and completed copies of one path still fail as duplicates.
+        let canonical = format!("{path}]");
+        if paths.contains(canonical.as_str()) {
+            row["path"] = json!(canonical);
+            closed_paths += 1;
+        }
+    }
     // Only this request's verdicts can influence this batch. Missing,
     // duplicate and invalid requested rows still go through the strict decoder.
     rows.retain(|row| row["path"].as_str().is_none_or(|path| paths.contains(path)));
     let ignored = before - rows.len();
-    if ignored == 0 { (raw.into(), 0) } else { (result.to_string().into(), ignored) }
+    if ignored == 0 && closed_paths == 0 {
+        (raw.into(), 0, 0)
+    } else {
+        (result.to_string().into(), ignored, closed_paths)
+    }
 }
 
 #[cfg(test)]
 #[test]
 fn batch_projection_keeps_required_duplicates_visible_to_the_decoder() {
     let raw = r#"{"claimAudit":[{"path":"purpose"},{"path":"decisions[0]"},{"path":"purpose"}]}"#;
-    let (scoped, ignored) = batch_audit_reply(raw, &[json!({"path":"purpose"})]);
-    assert_eq!(ignored, 1);
+    let (scoped, ignored, closed) = batch_audit_reply(raw, &[json!({"path":"purpose"})]);
+    assert_eq!((ignored, closed), (1, 0));
     let scoped: Value = serde_json::from_str(&scoped).unwrap();
     assert_eq!(scoped["claimAudit"], json!([{"path":"purpose"},{"path":"purpose"}]));
+}
+
+#[cfg(test)]
+#[test]
+fn audit_indices_only_close_to_supplied_paths_without_discarding_conflicts() {
+    let known = [json!({"path":"questions[5]"}), json!({"path":"topics[2].details[1]"})];
+    let raw = r#"{"claimAudit":[{"path":"questions[5","status":"overstated"},{"path":"questions[5]","status":"supported"},{"path":"topics[2].details[1","status":"supported"},{"path":"questions[15","status":"supported"}]}"#;
+    let (reply, ignored, closed) = batch_audit_reply(raw, &known);
+    assert_eq!((ignored, closed), (1, 2));
+    let reply: Value = serde_json::from_str(&reply).unwrap();
+    assert_eq!(reply["claimAudit"][0]["path"], "questions[5]");
+    assert_eq!(reply["claimAudit"][0]["status"], "overstated");
+    assert_eq!(reply["claimAudit"][1]["path"], "questions[5]");
+    assert_eq!(reply["claimAudit"][2]["path"], "topics[2].details[1]");
 }
 
 fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
@@ -317,12 +350,15 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                     let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
                     let raw=super::request(endpoint,model,key,client,prompt,payload.clone(),true,start,&mut calls,&stage)?;
                     check_cancellation(token.as_ref())?;
-                    let (raw, ignored) = if super::source_items::enabled() {
+                    let (raw, ignored, closed) = if super::source_items::enabled() {
                         batch_audit_reply(&raw, claims)
-                    } else { (raw.as_str().into(), 0) };
-                    if ignored > 0 {
-                        if let Some(call) = calls.last_mut() {
+                    } else { (raw.as_str().into(), 0, 0) };
+                    if let Some(call) = calls.last_mut() {
+                        if ignored > 0 {
                             call["ignoredOutOfBatchVerdicts"] = json!(ignored);
+                        }
+                        if closed > 0 {
+                            call["closedAuditPathIndices"] = json!(closed);
                         }
                     }
                     let incomplete=super::coverage::enabled().then(||incomplete_audit(&raw,claims,source)).flatten();
