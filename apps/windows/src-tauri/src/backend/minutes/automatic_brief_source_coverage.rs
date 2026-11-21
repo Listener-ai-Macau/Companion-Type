@@ -536,12 +536,81 @@ fn retain_additional_cause(claim: &str, raw: &str) -> Option<String> {
     line(&corrected, 90).then_some(corrected)
 }
 
+fn retain_service_audience(claim: &str, raw: &str) -> Option<String> {
+    static SERVICE_NEED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:还有|仍有|有)+(?P<group>[\p{Han}]{2,10}?)(?:仍|还)?需要(?P<use>(?:去|来)?(?:就餐|用餐|办理|使用|借用))"
+    ).unwrap());
+    let source = source_body(raw);
+    if !["仅开", "只开", "仅保留", "只保留"].iter().any(|word| claim.contains(word))
+        || !["窗口", "场所", "网点", "通道"].iter().any(|term| claim.contains(term) && source.contains(term))
+    {
+        return None;
+    }
+    let matched = SERVICE_NEED.captures(source)?;
+    let group = matched.name("group")?.as_str();
+    let use_case = matched.name("use")?.as_str();
+    let preceding = source[..matched.get(0)?.start()].rsplit(['。', '；', '！', '？']).next()?;
+    if claim.contains(group) || ["如果", "假如", "可能", "未必", "是否"].iter().any(|cue| preceding.contains(cue)) {
+        return None;
+    }
+    let revised = format!("{}；仍有{group}需要{use_case}。", claim.trim_end_matches('。'));
+    line(&revised, 90).then_some(revised)
+}
+
+pub(super) fn retain_context_schedule(facts: &mut [Fact], context: &[Fact], evidence: &[Value]) -> Vec<Value> {
+    static MONTH: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<month>[0-9０-９一二三四五六七八九十]{1,3})月份?(?:预计|将会?|会|要|开始)"
+    ).unwrap());
+    let sources: HashMap<_, _> = evidence.iter().map(|row| (evidence_id(row), utterance(row))).collect();
+    let mut changes = Vec::new();
+    for fact in facts.iter_mut().filter(|fact| fact.placement == Placement::Topic && !fact.text.contains('月')) {
+        let mut witnesses = context.iter().filter(|alternative| alternative.placement == Placement::Topic
+            && alternative.kind == fact.kind).filter_map(|alternative| {
+            let (opening, same_claim) = alternative.text.split_once(['，', ',', '。', '；'])?;
+            let month = MONTH.captures(opening)?;
+            let date = super::source_items::number_value(&month["month"], false)?;
+            if month.get(0)?.start() > 9 || !(1.0..=12.0).contains(&date)
+                || normalized(same_claim) != normalized(&fact.text)
+            {
+                return None;
+            }
+            fact.evidence.iter().filter(|id| alternative.evidence.contains(id)).find_map(|id| {
+                let quoted = sources.get(id.as_str())?;
+                let month = MONTH.captures(quoted)?;
+                if super::source_items::number_value(&month["month"], false)? != date
+                    || !shared_literal(&fact.text, &normalized(quoted), 4)
+                {
+                    return None;
+                }
+                let at = month.get(0)?.start();
+                let earlier = quoted[..at].rsplit(['。', '；', '！', '？']).next()?;
+                if ["如果", "假如", "要不要", "是否"].iter().any(|cue| earlier.contains(cue)) {
+                    return None;
+                }
+                let tail = quoted[at..].split(" 然后").next()?;
+                let literal = tail.split(['。', '，', '；', '！', '？']).next()?.trim();
+                (line(literal, 34) && !literal.contains(['「', '」']) && literal.chars().count() >= 8)
+                    .then_some((id, literal))
+            })
+        });
+        if let Some((id, literal)) = witnesses.next() {
+            let revised = format!("会上提到「{literal}」。{}", fact.text);
+            if witnesses.all(|(other, quote)| id == other && literal == quote) && line(&revised, 90) {
+                changes.push(serde_json::json!({"id":fact.id,"evidence":id,"quote":literal}));
+                fact.text = revised;
+            }
+        }
+    }
+    changes
+}
+
 pub(super) fn retain_cited_details(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
     let source: HashMap<_, _> = evidence.iter().map(|row| {
         (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
     }).collect();
-    let repairs: [(&str, fn(&str, &str) -> Option<String>); 2] = [
+    let repairs: [(&str, fn(&str, &str) -> Option<String>); 3] = [
         ("headcount", retain_recruitment_count), ("additionalCause", retain_additional_cause),
+        ("serviceAudience", retain_service_audience),
     ];
     let mut changes = Vec::new();
     for fact in facts.iter_mut().filter(|fact| fact.placement == Placement::Topic) {
@@ -631,6 +700,186 @@ pub(super) fn bind_nearby_assignment(facts: &mut [Fact], evidence: &[Value]) -> 
         }
     }
     changes
+}
+
+fn utterance(row: &Value) -> &str {
+    source_body(row["text"].as_str().unwrap_or_default())
+}
+
+fn evidence_id(row: &Value) -> &str {
+    row["id"].as_str().unwrap()
+}
+
+fn retain_fact_evidence(fact: &mut Fact, proof: &[&str]) -> bool {
+    let mut additional = Vec::new();
+    for &id in proof {
+        if !fact.evidence.iter().any(|known| known == id) && !additional.contains(&id) {
+            additional.push(id);
+        }
+    }
+    if fact.evidence.len() + additional.len() > 8 {
+        return false;
+    }
+    fact.evidence.extend(additional.into_iter().map(str::to_owned));
+    true
+}
+
+fn reporting_addressee<'a>(
+    issuer: &Value, previous: &'a [Value], fact: &Fact,
+    bindings: &super::source_bindings::SourceBindings<'a>,
+) -> Option<(&'a str, Vec<&'a str>)> {
+    static ADDRESSED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"你们?(?:那|这)边儿?\s*(?P<team>[\p{Han}]{2,8}?(?:处|部|科|组|中心))(?:管的|负责的)?[，\s]*(?:有没有|是否有|怎么|是怎么)"
+    ).unwrap());
+    let issuer_label = issuer["turnSpeaker"].as_str()?;
+    let statement = normalized(&fact.text);
+    if !["统计", "登记", "汇总"].iter().any(|word| statement.contains(word))
+        || !["上报", "报表", "报送"].iter().any(|word| statement.contains(word))
+    {
+        return None;
+    }
+    let mut matches = previous.iter().enumerate().filter_map(|(index, ask)| {
+        if ask["turnSpeaker"] != issuer_label { return None; }
+        let team = ADDRESSED.captures(utterance(ask))?.name("team")?.as_str();
+        let stem = team.trim_end_matches("中心").trim_end_matches(['处', '部', '科', '组']);
+        if stem.chars().count() < 2 || previous[index + 1..].iter().any(|row| {
+            ["换个话题", "另一个部门", "下一个部门", "接下来讨论"].iter().any(|cue| utterance(row).contains(cue))
+        }) {
+            return None;
+        }
+        let answers = &previous[index + 1..];
+        let answer = answers.iter().take(4).find(|row| {
+            row["turnSpeaker"] != issuer_label && utterance(row).chars().count() >= 10 && !utterance(row).contains('？')
+        })?;
+        let speaker = answer["turnSpeaker"].as_str()?;
+        let (identity, intro) = bindings.introduction(speaker)?;
+        if identity != team && !identity.strip_prefix(stem).is_some_and(|role| {
+            ["主任", "部长", "组长", "主管", "负责人", "经理"].contains(&role)
+        }) {
+            return None;
+        }
+        let recent = answers.iter().rev().take(5).find(|row| {
+            row["turnSpeaker"] == speaker && utterance(row).chars().count() >= 8
+        })?;
+        Some((team, vec![intro, evidence_id(ask), evidence_id(answer), evidence_id(recent)]))
+    });
+    let result = matches.next()?;
+    matches.next().is_none().then_some(result)
+}
+
+fn proposal_addressee<'a>(
+    issuer: &Value, nearby: &'a [Value], reply: Option<&'a Value>, fact: &Fact,
+    bindings: &super::source_bindings::SourceBindings<'a>,
+) -> Option<(&'a str, Vec<&'a str>)> {
+    let instruction = normalized(utterance(issuer));
+    if !["拟一个方案", "拟一份方案", "写一个方案", "做一个方案"].iter().any(|cue| instruction.contains(cue))
+        || !fact.text.contains("方案")
+    {
+        return None;
+    }
+    let reply = reply?;
+    let speaker = reply["turnSpeaker"].as_str()?;
+    if issuer["turnSpeaker"] == speaker || !["想法就是", "我的想法", "我会", "我来", "好我"]
+        .iter().any(|cue| normalized(utterance(reply)).starts_with(cue))
+    {
+        return None;
+    }
+    let (identity, intro) = bindings.introduction(speaker)?;
+    let previous = nearby.iter().rev().find(|row| {
+        row["turnSpeaker"] == speaker && shared_literal(&fact.text, &normalized(utterance(row)), 4)
+    })?;
+    Some((identity, vec![intro, evidence_id(previous), evidence_id(reply)]))
+}
+
+fn accepted_deliverable<'a>(issuer: &Value, previous: &Value, reply: &'a Value, fact: &Fact) -> Option<&'a str> {
+    static DELIVERABLE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:对|好|嗯对)[，、\s]*(?:做|编|整理|提交|出)(?P<item>[\p{Han}]{2,12}?(?:表|清单|报告|手册))[。！\s]*$"
+    ).unwrap());
+    let same_participant = previous["turnSpeaker"].is_string() && previous["turnSpeaker"] == reply["turnSpeaker"];
+    let instruction = normalized(utterance(issuer));
+    if !same_participant || issuer["turnSpeaker"] == reply["turnSpeaker"]
+        || !instruction.contains("具体的计划") || !fact.text.contains("计划")
+        || !shared_literal(&fact.text, &normalized(utterance(previous)), 4)
+    {
+        return None;
+    }
+    let item = DELIVERABLE.captures(utterance(reply))?.name("item")?.as_str();
+    (!fact.text.contains(item)).then_some(item)
+}
+
+pub(super) fn retain_assignment_dialogue(
+    facts: &mut [Fact], evidence: &[Value], bindings: &super::source_bindings::SourceBindings<'_>,
+) -> Vec<Value> {
+    let positions: HashMap<_, _> = evidence.iter().enumerate()
+        .map(|(index, row)| (evidence_id(row), index)).collect();
+    let mut changes = Vec::new();
+    for fact in facts.iter_mut().filter(|fact| fact.placement == Placement::Action) {
+        let anchors: Vec<_> = fact.evidence.iter().filter_map(|id| positions.get(id.as_str()).copied()).collect();
+        for position in anchors {
+            let issuer = &evidence[position];
+            let text = normalized(utterance(issuer));
+            let directly_addressed = ["你到时候", "你先", "你们先", "你们到时候", "你负责"].iter().any(|cue| text.contains(cue));
+            if fact.owner.is_none() && directly_addressed {
+                let prior = &evidence[position.saturating_sub(16)..position];
+                let addressee = reporting_addressee(issuer, prior, fact, bindings).or_else(|| {
+                    proposal_addressee(issuer, &evidence[position.saturating_sub(4)..position],
+                        evidence.get(position + 1), fact, bindings)
+                });
+                if let Some((owner, proof)) = addressee {
+                    if retain_fact_evidence(fact, &proof) {
+                        fact.owner = Some(owner.to_owned());
+                        changes.push(serde_json::json!({"id":fact.id,"owner":owner,"evidence":proof}));
+                    }
+                }
+            }
+            if let (Some(previous), Some(reply)) = (position.checked_sub(1).and_then(|pos| evidence.get(pos)), evidence.get(position + 1)) {
+                if let Some(deliverable) = accepted_deliverable(issuer, previous, reply, fact) {
+                    let revised = format!("{}，并制作{}。", fact.text.trim_end_matches('。'), deliverable);
+                    let proof = [evidence_id(previous), evidence_id(reply)];
+                    if line(&revised, 90) && retain_fact_evidence(fact, &proof) {
+                        fact.text = revised;
+                        changes.push(serde_json::json!({"id":fact.id,"deliverable":deliverable,"evidence":proof}));
+                    }
+                }
+            }
+        }
+    }
+    changes
+}
+
+pub(super) fn retain_opening_host(
+    purpose: &mut String, evidence: &[Value], bindings: &super::source_bindings::SourceBindings<'_>,
+) -> Option<Value> {
+    static TRANSFER: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:接下来|接着|下面|现在)由(?:咱们这个|我们这个|咱们的|我们的|这个)?(?P<host>[\p{Han}]{2,12}?)来?主持(?:一下儿?)?(?:这次|这场|这个|本次)?会议"
+    ).unwrap());
+    for (index, issuer) in evidence.iter().take(18).enumerate() {
+        let source = normalized(utterance(issuer));
+        let Some(transfer) = TRANSFER.captures(&source) else { continue; };
+        let host = transfer.name("host")?.as_str();
+        if purpose.contains("主持") || ["如果", "要不要", "能不能", "是否"].iter().any(|cue| source.contains(cue)) {
+            continue;
+        }
+        let opened = evidence.iter().skip(index + 1).take(3).find(|row| {
+            row["turnSpeaker"] != issuer["turnSpeaker"] && row["turnSpeaker"].as_str()
+                .and_then(|speaker| bindings.introduction(speaker)).is_some_and(|(name, _)| name == host)
+                && ["会议开始", "开始开会", "开始今天的会议"].iter().any(|cue| utterance(row).contains(cue))
+        });
+        let Some(opened) = opened else { continue; };
+        let called_by = issuer["turnSpeaker"].as_str().and_then(|speaker| bindings.introduction(speaker));
+        let host_clause = if let Some((caller, _)) = called_by.filter(|_| {
+            ["叫过来", "召集", "请大家"].iter().any(|cue| source.contains(cue))
+        }) {
+            format!("{caller}召集会议并交由{host}主持。")
+        } else {
+            format!("本次会议由{host}主持。")
+        };
+        let combined = format!("{host_clause}{purpose}");
+        if !line(&combined, 120) { continue; }
+        *purpose = combined;
+        return Some(serde_json::json!({"host":host,"evidence":[evidence_id(issuer),evidence_id(opened)]}));
+    }
+    None
 }
 
 fn assignment_owner<'a>(statement: &str, source: &'a str) -> Option<&'a str> {
@@ -771,6 +1020,79 @@ pub(super) fn preserve_spoken_roles(facts: &mut [Fact], evidence: &[Value]) -> V
 mod tests {
     use super::*;
     use serde_json::json;
+
+    fn turn(id: &str, speaker: &str, text: &str) -> Value {
+        json!({"id":id,"turnSpeaker":speaker,"text":format!("{speaker}：{text}")})
+    }
+
+    fn item(id: &str, text: &str, basis: &str, kind: Kind, placement: Placement) -> Fact {
+        Fact {id:id.into(), kind, placement, text:text.into(), owner:None, due:None, evidence:vec![basis.into()]}
+    }
+
+    #[test]
+    fn contextual_copy_can_restore_a_verified_month_without_creating_tasks() {
+        let source = turn("e0143", "说话人5", "等到九月份会有一批新的同学然后来我们的学校 然后我觉得该把资金放在招生宣传和招生咨询上");
+        let fact = item("a046", "建议把资金放在招生宣传和招生咨询上。", "e0143", Kind::Recommendation, Placement::Topic);
+        let mut facts = [fact];
+        let matching = "九月份将迎来新生，建议把资金放在招生宣传和招生咨询上。";
+        let wrong = matching.replace("九月", "八月");
+        let wrong = item("", &wrong, "e0143", Kind::Recommendation, Placement::Topic);
+        let matching = item("", matching, "e0143", Kind::Recommendation, Placement::Topic);
+        assert!(retain_context_schedule(&mut facts, &[wrong], &[source.clone()]).is_empty());
+        assert_eq!(retain_context_schedule(&mut facts, &[matching], &[source]).len(), 1);
+        assert!(facts[0].text.contains("九月份会有一批新的同学"));
+        assert!(facts[0].due.is_none());
+    }
+
+    #[test]
+    fn two_sided_dialogue_binds_the_original_action_and_reply() {
+        let mut source = vec![
+            turn("e0006","说话人7","我是教务主任"),
+            turn("e0010","副院长","你们那边儿教务处管的有没有登记表格儿之类的？"),
+            turn("e0011","说话人7","疫情期间每天都需要打卡报备。"),
+            turn("e0012","副院长","打卡方式是什么？"),
+            turn("e0013","说话人7","在学校系统打卡和报备信息。"),
+            turn("e0014","副院长","那你到时候通知班长做统计，做报表并每天上报。"),
+            turn("e0015","财务","管理人员需要做好设施安全培训。"),
+            turn("e0016","负责人","你这边做个具体的计划。"),
+            turn("e0017","财务","对做财务表"),
+        ];
+        let mut facts = [
+            item("a001","通知班长做统计，做报表并每天上报。","e0014",Kind::Decision,Placement::Action),
+            item("a002","针对设施安全培训做一个具体的计划。","e0016",Kind::Decision,Placement::Action),
+        ];
+        let bindings = super::super::source_bindings::SourceBindings::new(&source);
+        assert_eq!(retain_assignment_dialogue(&mut facts, &source, &bindings).len(), 2);
+        assert_eq!(facts[0].owner.as_deref(), Some("教务处"));
+        assert!(facts[0].due.is_none());
+        assert!(facts[0].evidence.iter().any(|id| id == "e0010"));
+        assert!(facts[1].text.contains("制作财务表"));
+        assert!(facts[1].evidence.iter().any(|id| id == "e0017"));
+        source[8] = turn("e0017","后勤","对做财务表");
+        let mut fact = [item("a002","针对设施安全培训做一个具体的计划。","e0016",Kind::Decision,Placement::Action)];
+        let bindings = super::super::source_bindings::SourceBindings::new(&source);
+        assert!(retain_assignment_dialogue(&mut fact, &source, &bindings).is_empty());
+    }
+
+    #[test]
+    fn meeting_opening_and_service_audience_need_their_own_source() {
+        let source = [
+            turn("e0000","说话人1","我是院长"),
+            turn("e0002","说话人3","我是副院长"),
+            turn("e0007","说话人1","把各部门叫过来开会，接下来由咱们这个副院长来主持一下这个会议"),
+            turn("e0008","说话人3","好，现在会议开始了"),
+            turn("e0074","说话人6","食堂开设的窗口儿比较少，但是有有老师需要去就餐。"),
+        ];
+        let bindings = super::super::source_bindings::SourceBindings::new(&source);
+        let mut purpose = "会议回顾上半年网课与经费情况。".to_string();
+        assert!(retain_opening_host(&mut purpose, &source, &bindings).is_some());
+        assert!(purpose.starts_with("院长召集会议并交由副院长主持。"));
+        let mut fact = [item("a002","食堂上学期仅开三个窗口，收入不可观。","e0074",Kind::Status,Placement::Topic)];
+        assert_eq!(retain_cited_details(&mut fact, &source).len(), 1);
+        assert!(fact[0].text.contains("老师需要去就餐"));
+        let planning = "食堂开设的窗口儿比较少，如果有老师需要去就餐。";
+        assert!(retain_service_audience("食堂上学期仅开三个窗口。",planning).is_none());
+    }
 
     #[test]
     fn direct_date_qualifier_survives_confirmation_without_concrete_dates() {

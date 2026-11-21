@@ -676,6 +676,7 @@ struct Window<'a> {
 
 struct CheckedWindow {
     facts: Vec<Fact>,
+    context: Vec<Fact>,
     ignored_neighbors: usize,
     ignored_neighbor_only_items: usize,
     normalized_topic_metadata: usize,
@@ -699,6 +700,7 @@ impl Window<'_> {
         let missing = || "原话分段的核对记录不完整，已有纪要和原文保留。".to_string();
         let mut by_id = HashMap::new();
         let mut ignored_neighbors = 0;
+        let mut neighbors = Vec::new();
         for answer in extraction.units {
             if !unit_ids.contains(answer.id.as_str()) {
                 return Err(missing());
@@ -707,6 +709,7 @@ impl Window<'_> {
                 // This unit has its own primary request. The context copy
                 // cannot produce a second set of competing facts.
                 ignored_neighbors += 1;
+                neighbors.push(answer);
                 continue;
             }
             if by_id.insert(answer.id, answer.items).is_some() {
@@ -737,7 +740,14 @@ impl Window<'_> {
                 }
             }
         }
-        Ok(CheckedWindow { facts, ignored_neighbors, ignored_neighbor_only_items, normalized_topic_metadata })
+        let context = neighbors.into_iter().flat_map(|answer| {
+            answer.items.into_iter().filter_map(|item| {
+                let fact = item.bind(&known, &known_ids).ok()?;
+                (fact.placement == Placement::Topic
+                    && fact.evidence.iter().any(|id| known[id.as_str()]["source"] == answer.id)).then_some(fact)
+            })
+        }).take(FACT_LIMIT).collect();
+        Ok(CheckedWindow { facts, context, ignored_neighbors, ignored_neighbor_only_items, normalized_topic_metadata })
     }
 }
 
@@ -820,7 +830,7 @@ fn complete_layout(layout: &mut Layout, facts: &[Fact]) -> Result<Value, String>
     Ok(json!({"restoredTopicIds":restored,"movedToDetails":moved}))
 }
 
-fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Value, Vec<Fact>), String> {
+fn organize(raw: &str, facts: &[Fact], units: &[Unit], context: &[Fact]) -> Result<(Document, Value, Vec<Fact>), String> {
     let mut layout: Layout = parse(raw)?;
     let evidence = super::commitments::with_turn_labels(&factual_audit::evidence_sentences(units));
     let bindings = super::source_bindings::SourceBindings::new(&evidence);
@@ -832,6 +842,9 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     let roles = super::source_coverage::preserve_spoken_roles(&mut facts, &evidence);
     let bridged_assignments = super::source_coverage::bind_nearby_assignment(&mut facts, &evidence);
     let cited_details = super::source_coverage::retain_cited_details(&mut facts, &evidence);
+    let assignment_dialogue = super::source_coverage::retain_assignment_dialogue(&mut facts, &evidence, &bindings);
+    let contextual_schedule = super::source_coverage::retain_context_schedule(&mut facts, context, &evidence);
+    let host = super::source_coverage::retain_opening_host(&mut layout.purpose, &evidence, &bindings);
     let separated = retain_requests_before_questions(&mut facts, &evidence);
     let source_by_id: HashMap<_, _> = evidence.iter().map(|row| {
         (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
@@ -898,6 +911,15 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     }
     if !cited_details.is_empty() {
         projection["sourceBindings"]["retainedCitedDetails"] = json!(cited_details);
+    }
+    if !assignment_dialogue.is_empty() {
+        projection["sourceBindings"]["retainedAssignmentDialogue"] = json!(assignment_dialogue);
+    }
+    if !contextual_schedule.is_empty() {
+        projection["sourceBindings"]["retainedContextSchedule"] = json!(contextual_schedule);
+    }
+    if let Some(host) = host {
+        projection["sourceBindings"]["retainedOpeningHost"] = host;
     }
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),
@@ -2869,6 +2891,7 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
 {
     let evidence = factual_audit::evidence_sentences(units);
     let mut facts = Vec::new();
+    let mut context = Vec::new();
     let ranges = windows(units);
     let cancellation = super::current_cancellation();
     for batch in ranges.chunks(WINDOW_WORKERS) {
@@ -2894,7 +2917,7 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
                                 "normalizedTopicMetadata":checked.normalized_topic_metadata
                             });
                         }
-                        Ok(checked.facts)
+                        Ok((checked.facts, checked.context))
                     });
                     (result, calls)
                 })
@@ -2913,7 +2936,9 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
             batch_items.push(result);
         }
         for items in batch_items {
-            facts.extend(items?);
+            let (window_facts, window_context) = items?;
+            facts.extend(window_facts);
+            context.extend(window_context);
         }
     }
     let facts = seal_items(facts, units)?;
@@ -2926,7 +2951,7 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
     if let Some(last) = trace.last_mut() {
         last["items"] = json!(facts);
     }
-    let (doc, projection, facts) = organize(&raw, &facts, units)?;
+    let (doc, projection, facts) = organize(&raw, &facts, units, &context)?;
     if let Some(last) = trace.last_mut() {
         last["layoutProjection"] = projection;
     }
@@ -3085,11 +3110,11 @@ mod tests {
         ]}]}).to_string();
         let facts = seal_items(window.decode(&raw).unwrap().facts, &units).unwrap();
         let layout = json!({"purpose":"讨论校服","topics":[{"title":"校服筹备","points":["a000"],"details":[]}]});
-        let (document, _, _) = organize(&layout.to_string(), &facts, &units).unwrap();
+        let (document, _, _) = organize(&layout.to_string(), &facts, &units, &[]).unwrap();
         assert_eq!(document.action_items.len(), 2);
         assert_eq!(document.action_items[0].owner.as_deref(), Some("采购组"));
         assert_eq!(document.action_items[1].owner.as_deref(), Some("质检组"));
-        assert!(organize(&layout.to_string().replace("a000","a001"), &facts, &units).is_err());
+        assert!(organize(&layout.to_string().replace("a000","a001"), &facts, &units, &[]).is_err());
         assert!(window.decode(&raw.replace("e0002","e9999")).is_err());
         assert!(window.decode(r#"{"units":[]}"#).is_err());
     }
@@ -3155,13 +3180,13 @@ mod tests {
         }).collect();
         let raw = json!({"purpose":"讨论校服","topics":[{"title":"校服筹备",
             "points":["a000","a001","a002","a003"],"details":[]}]}).to_string();
-        let (assembled, projection, _) = organize(&raw, &facts, &units).unwrap();
+        let (assembled, projection, _) = organize(&raw, &facts, &units, &[]).unwrap();
         assert_eq!(assembled.topics[0].points.len(), 3);
         assert_eq!(projection["restoredTopicIds"], json!(["a004"]));
         assert_eq!(projection["movedToDetails"], json!(["a003"]));
         assert_eq!(assembled.topics[0].details[0].text, facts[3].text);
         assert_eq!(assembled.topics[0].details[1].text, facts[4].text);
-        assert!(organize(&raw.replace("a003","a999"), &facts, &units).is_err());
+        assert!(organize(&raw.replace("a003","a999"), &facts, &units, &[]).is_err());
     }
 
     #[test]
@@ -3176,7 +3201,7 @@ mod tests {
             {"title":"供货安排","points":["a000"],"details":selected},
             {"title":"费用审批","points":["a027"],"details":[]}
         ]});
-        let (doc, _, _) = organize(&raw.to_string(), &facts, &units).unwrap();
+        let (doc, _, _) = organize(&raw.to_string(), &facts, &units, &[]).unwrap();
         assert_eq!(doc.topics[0].details.len(), 26);
         assert_eq!(doc.topics[0].details.last().unwrap().text, facts[26].text);
         assert!(doc.topics[1].details.is_empty());

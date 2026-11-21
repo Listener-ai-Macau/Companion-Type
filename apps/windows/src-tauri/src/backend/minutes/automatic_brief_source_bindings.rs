@@ -5,7 +5,7 @@ use super::{Kind, answer_layout::{Fact, Placement}, line, normalized};
 
 pub(super) struct SourceBindings<'a> {
     by_id: HashMap<&'a str, &'a Value>,
-    names: HashMap<&'a str, &'a str>,
+    names: HashMap<&'a str, (&'a str, &'a str)>,
 }
 
 struct Assignment<'a> {
@@ -26,12 +26,16 @@ impl<'a> SourceBindings<'a> {
             if !(2..=14).contains(&name.chars().count()) || !name.chars().all(|c| ('㐀'..='鿿').contains(&c)) {
                 continue;
             }
-            if names.insert(speaker, name).is_some_and(|former| former != name) {
+            if names.insert(speaker, (name, row["id"].as_str().unwrap())).is_some_and(|(former, _)| former != name) {
                 contested.insert(speaker);
             }
         }
         names.retain(|speaker, _| !contested.contains(speaker));
         Self { by_id, names }
+    }
+
+    pub(super) fn introduction(&self, speaker: &str) -> Option<(&'a str, &'a str)> {
+        self.names.get(speaker).copied()
     }
 
     pub(super) fn correct_attribution(&self, fact: &mut Fact) -> Option<(String, String)> {
@@ -44,8 +48,8 @@ impl<'a> SourceBindings<'a> {
         if source.iter().any(|row| row["turnSpeaker"].as_str() != Some(speaker)) {
             return None;
         }
-        let actual = *self.names.get(speaker)?;
-        let claimed = self.names.values().copied().filter(|name| fact.text.starts_with(name))
+        let (actual, _) = self.introduction(speaker)?;
+        let claimed = self.names.values().map(|(name, _)| *name).filter(|name| fact.text.starts_with(name))
             .max_by_key(|name| name.len())?;
         let suffix = &fact.text[claimed.len()..];
         if actual == claimed || source.iter().any(|row| row["text"].as_str().unwrap().contains(claimed)) {
@@ -71,7 +75,7 @@ impl<'a> SourceBindings<'a> {
         let row = self.by_id.get(id).copied()?;
         let utterance = row["text"].as_str()?.trim();
         let mut roles = Vec::new();
-        for name in self.names.values() {
+        for (name, _) in self.names.values() {
             let Some(team) = name.strip_suffix("部门").or_else(|| name.strip_suffix('部'))
                 else { continue; };
             let found = ["这边儿", "这一块儿", "这块儿", "这边", "这一块", "这块"]

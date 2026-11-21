@@ -347,6 +347,22 @@ fn collective_owner_rebinds_only_from_nearby_audited_assignment() {
     assert!(run(&unrelated, shortened).is_err());
 }
 
+fn speaker_label_without_commitment(owner: &str, row: &Value) -> bool {
+    let Some((speaker, body)) = row["text"].as_str()
+        .and_then(super::super::source_resolution::split_turn_label)
+    else { return false; };
+    if super::normalized(speaker) != super::normalized(owner) {
+        return false;
+    }
+    let spoken = super::normalized(body);
+    if spoken.contains(&super::normalized(owner)) {
+        return false;
+    }
+    let first_person = ["我会", "我来", "我负责", "由我", "交给我", "我将", "我去", "我也回去",
+        "我回去", "我这边负责", "我处理", "我安排"];
+    !first_person.iter().any(|cue| spoken.contains(cue))
+}
+
 fn unchanged_action_with_unbound_owner(original: &Value, item: &mut source_items::SourceItem,
     proof: &str, known: &SourceIndex<'_>) -> bool
 {
@@ -357,7 +373,8 @@ fn unchanged_action_with_unbound_owner(original: &Value, item: &mut source_items
     if claim["kind"] != "action" || !claim["owner"].is_null() || !item.is_action()
         || item.text.as_str() != text || claim["due"].as_str() != item.due.as_deref()
         || !basis.iter().any(|id| id == proof)
-        || !["你那边", "你这边"].iter().any(|form| quote.contains(form))
+        || !(["你那边", "你这边"].iter().any(|form| quote.contains(form))
+            || item.owner.as_deref().is_some_and(|owner| speaker_label_without_commitment(owner, known[proof])))
     {
         return false;
     }
@@ -395,6 +412,13 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
                 let mut proof = allowed(&proof).ok_or("ownerEvidence 不在本条相邻原话中。")?;
                 let owner = requested.as_deref().ok_or("ownerEvidence 需要对应明确的 owner。")?;
                 let witness = known[proof.as_str()];
+                if original["claim"]["owner"].as_str() != Some(owner) && speaker_label_without_commitment(owner, witness) {
+                    if unchanged_action_with_unbound_owner(original, &mut item, &proof, known) {
+                        return item.bind(known, known_ids).map(Some)
+                            .map_err(|_| "已核任务的负责人待核说明无法保留。");
+                    }
+                    return Err("说话人标签不能证明承接。请引用发言中的明确自担或指派。");
+                }
                 let literal = if let Some(literal) = owner_as_spoken(owner, witness)
                     .or_else(|| directed_department(owner, witness))
                 {
@@ -485,6 +509,11 @@ fn keeps_dialect_owner_and_defers_an_unbound_pronoun_without_losing_the_task() {
     assert!(pending.owner.is_none());
     assert_eq!(pending.text,"检查设备资质（负责人待核实）。");
     assert!(bind("主持人：那你那边儿先检查这个设备资质。","说话人3","检查设备资质并交给财务。").is_err());
+    let requester = bind("主持人：请保安检查设备资质。","主持人","检查设备资质。").unwrap().unwrap();
+    assert_eq!(requester.owner, None);
+    assert_eq!(requester.text, "检查设备资质（负责人待核实）。");
+    let volunteer = bind("主持人：我会检查设备资质。","主持人","检查设备资质。").unwrap().unwrap();
+    assert_eq!(volunteer.owner.as_deref(), Some("主持人"));
 }
 
 #[derive(Default)]
