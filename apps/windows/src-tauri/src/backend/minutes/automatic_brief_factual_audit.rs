@@ -67,11 +67,20 @@ pub(super) fn claims(doc:&Document)->Vec<Value> {
     }
     out
 }
-fn emphasize_source_scope(claims:&mut[Value],source:&[Sentence]) {
+fn emphasize_source_scope(claims:&mut[Value],source:&[Sentence],topic_source_hints:&HashMap<String,Vec<String>>) {
     let partial=["一些","有些","部分","某些"];
     let qualifiers=["一些","有些","部分","某些","只有","如果","前提","不一定"];
     for claim in claims {
         let Some(ids)=claim.get("sources").and_then(Value::as_array)else{continue;};
+        if let Some(cited) = claim["text"].as_str().and_then(|text| topic_source_hints.get(text)) {
+            let excerpts: Vec<_> = cited.iter().filter_map(|id| source.iter().find(|sentence| {
+                sentence.id == *id && ids.iter().any(|known| known.as_str() == Some(sentence.source.as_str()))
+            })).take(2).map(|sentence| json!({"id":sentence.id,"text":sentence.text})).collect();
+            if !excerpts.is_empty() {
+                claim["sourceScopeEvidence"] = json!(excerpts);
+                continue;
+            }
+        }
         let mut found=source.iter().filter(|s|ids.iter().any(|id|id.as_str()==Some(s.source.as_str()))&&qualifiers.iter().any(|w|s.text.contains(w))).collect::<Vec<_>>();
         found.sort_by_key(|s|(!partial.iter().any(|w|s.text.contains(w)),s.id.as_str()));
         let excerpts=found.into_iter().take(2).map(|s|{
@@ -2576,7 +2585,7 @@ fn unchanged_source_assertion_keeps_evidence_after_a_neighbor_is_removed() {
 // this invocation. Unchanged claims retain that evidence; new/changed claims
 // still see the complete original source, never a model inventory.
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
-    let mut draft = FactualDraft { document: doc.clone(), pending_quotes: Vec::new(), adverse_claims: Vec::new() };
+    let mut draft = FactualDraft { document: doc.clone(), pending_quotes: Vec::new(), adverse_claims: Vec::new(), topic_source_hints: HashMap::new() };
     review(endpoint,model,key,client,&mut draft,units,verified,&[],start,trace).map(|result| result.document)
 }
 
@@ -2595,6 +2604,7 @@ pub(super) struct FactualDraft {
     pub(super) pending_quotes: Vec<String>,
     // Exact statements found doubtful even when a later request cannot finish.
     pub(super) adverse_claims: Vec<Value>,
+    pub(super) topic_source_hints: HashMap<String, Vec<String>>,
 }
 
 pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,draft:&mut FactualDraft,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
@@ -2660,7 +2670,7 @@ fn a_partial_audit_keeps_its_adverse_claims_until_the_same_statement_is_verified
 fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,draft:&mut FactualDraft,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
-    let FactualDraft { document: current, pending_quotes, adverse_claims } = draft;
+    let FactualDraft { document: current, pending_quotes, adverse_claims, topic_source_hints } = draft;
     let mut attempted: HashMap<String, Claim> = HashMap::new();
     let recovered_format = AtomicBool::new(false);
     let mut attribution_repairs = HashSet::new();
@@ -2685,7 +2695,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
         // Late review gets the full immutable source and the changed statements.
         // Whole-unit qualifier matches can highlight unrelated nearby content.
         if !super::source_items::enabled() || verified.is_none() {
-            emphasize_source_scope(&mut expected,&source);
+            emphasize_source_scope(&mut expected,&source,topic_source_hints);
         }
         for claim in &mut expected {
             if let Some(context) = related.remove(&statement_identity(claim["path"].as_str().unwrap(), claim)) {
@@ -3116,10 +3126,24 @@ mod tests {
     fn automatic_brief_scope_attention_uses_only_bounded_original_cited_text(){
         let units=vec![Unit{id:"u000".into(),text:"部分常规产品精度已足够，新研发设备仍有差距。如果条件满足再评估。".into()},Unit{id:"u001".into(),text:"另一些无关产品的报告。".into()}];
         let source=sentences(&units);let mut checks=vec![json!({"path":"topics[0].points[0]","text":"产品精度已足够","sources":["u000"]})];
-        emphasize_source_scope(&mut checks,&source);
+        emphasize_source_scope(&mut checks,&source,&HashMap::new());
         let quoted=checks[0]["sourceScopeEvidence"].as_array().unwrap();assert_eq!(quoted.len(),2);
         assert!(quoted[0]["text"].as_str().unwrap().contains("部分"));
         for q in quoted {let original=source.iter().find(|s|s.id==q["id"].as_str().unwrap()).unwrap();assert_eq!(original.source,"u000");assert!(original.text.contains(q["text"].as_str().unwrap()));assert!(q["text"].as_str().unwrap().chars().count()<=100);}
+    }
+
+    #[test]
+    fn scope_highlights_pass_the_bound_supplement_instead_of_the_unit_opening() {
+        let units = vec![Unit { id: "u000".into(), text:
+            "一些部门要做汇报。部分人还在讨论。卖场的女装更新得快，男装是少一些。".into() }];
+        let source = sentences(&units);
+        let claim = "会上认为女装更新快，男装款式少。";
+        let mut checks = vec![json!({"text":claim,"sources":["u000"]})];
+        assert_eq!(source.len(), 3);
+        let preferred = HashMap::from([(claim.to_owned(), vec![source[2].id.clone()])]);
+        emphasize_source_scope(&mut checks, &source, &preferred);
+        assert_eq!(checks[0]["sourceScopeEvidence"][0]["id"], source[2].id);
+        assert_eq!(checks[0]["sourceScopeEvidence"][0]["text"], source[2].text);
     }
     #[test]
     fn automatic_brief_broken_json_recovery_cannot_erase_a_readable_rejection(){

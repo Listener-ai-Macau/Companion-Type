@@ -864,6 +864,7 @@ pub(super) struct CheckedOmissions {
     pub(super) doc: Document,
     pub(super) conflicts: Vec<Value>,
     pub(super) pending_coverage_quotes: Vec<String>,
+    pub(super) topic_source_hints: HashMap<String, Vec<String>>,
 }
 
 fn parse<T: serde::de::DeserializeOwned>(raw: &str) -> Result<T, String> {
@@ -1359,7 +1360,15 @@ fn an_expanded_question_keeps_the_same_request_and_cites_the_new_measure() {
     assert!(!expanded_question(prior, &expanded.replace("谁来保护求职者利益","谁来检查培训资质"), &quotes));
 }
 
-pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
+pub(super) fn append_missing(additions: Vec<MissingItem>, doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
+    append_missing_with_sources(additions, doc, units, evidence, &[]).map(|(document, _)| document)
+}
+
+fn append_missing_with_sources(
+    additions: Vec<MissingItem>, mut doc: Document, units: &[Unit], evidence: &[Value],
+    transmittable: &[&SourceCue],
+) -> Result<(Document, HashMap<String, Vec<String>>), String> {
+    let mut topic_source_hints = HashMap::new();
     let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
     let known_ids = known.keys().copied().collect();
     let mut represented: HashSet<_> = doc.topics.iter().flat_map(|topic| {
@@ -1430,6 +1439,12 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
                 let requested = addition.topic.as_ref().and_then(|title| doc.topics.iter().position(|topic| &topic.title == title));
                 let index = requested.filter(|index| doc.topics[*index].details.len() < DETAILS_LIMIT)
                     .or_else(|| omission_topic(&doc, &entry.sources, units)).ok_or_else(fail)?;
+                if transmittable.iter().any(|cue| {
+                    fact.evidence.contains(&cue.evidence) && super::source_coverage::facet_has_witness(
+                        super::source_coverage::PARALLEL_OBJECTS, &cue.span, "", &entry.text)
+                }) {
+                    topic_source_hints.insert(entry.text.clone(), fact.evidence);
+                }
                 doc.topics[index].details.push(entry);
             }
             Placement::Decision => doc.decisions.push(entry),
@@ -1438,7 +1453,7 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
         }
     }
     super::validate(&doc, units)?;
-    Ok(doc)
+    Ok((doc, topic_source_hints))
 }
 
 pub(super) fn restore_reported_steps(
@@ -3657,17 +3672,25 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     }
     trace[scan_index]["boundAdditions"] = json!(additions.len());
     trace[scan_index]["conflictingClaims"] = json!(conflicts);
-    let (doc, pending_coverage_quotes) = if pending.is_empty() {
-        (append_missing(additions, doc, units, &evidence)?, Vec::new())
+    let comparison_cues: Vec<_> = cues.iter().filter(|cue| {
+        cue.aspect.as_deref() == Some(super::source_coverage::PARALLEL_OBJECTS)
+    }).collect();
+    let (doc, pending_coverage_quotes, topic_source_hints) = if pending.is_empty() {
+        let (document, sources) = append_missing_with_sources(additions, doc, units, &evidence, &comparison_cues)?;
+        (document, Vec::new(), sources)
     } else {
         let mut saved = doc;
+        let mut sources = HashMap::new();
         let cue_ids: Vec<_> = cues.iter().filter(|cue| pending.contains(&cue.id)).collect();
         let mut anchors: HashSet<_> = cue_ids.iter().map(|cue| cue.evidence.clone()).collect();
         trace[scan_index]["pendingCoverageIds"] = json!(cue_ids.iter().map(|cue| &cue.id).collect::<Vec<_>>());
         for addition in additions {
             let original = addition.item.evidence.clone();
-            match append_missing(vec![addition], saved.clone(), units, &evidence) {
-                Ok(doc) => saved = doc,
+            match append_missing_with_sources(vec![addition], saved.clone(), units, &evidence, &comparison_cues) {
+                Ok((document, validated_sources)) => {
+                    saved = document;
+                    sources.extend(validated_sources);
+                }
                 Err(_) => anchors.extend(original),
             }
         }
@@ -3676,9 +3699,9 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         let quotes = evidence.iter().filter_map(|row| {
             anchors.contains(row["id"].as_str()?).then_some(row["text"].as_str()?.trim().to_owned())
         }).collect();
-        (saved, quotes)
+        (saved, quotes, sources)
     };
-    Ok(CheckedOmissions { doc, conflicts, pending_coverage_quotes })
+    Ok(CheckedOmissions { doc, conflicts, pending_coverage_quotes, topic_source_hints })
 }
 
 pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,

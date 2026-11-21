@@ -412,6 +412,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             let incomplete_coverage = !checked.pending_coverage_quotes.is_empty();
             let mut factual_draft = factual_audit::FactualDraft {
                 document: checked.doc, pending_quotes: checked.pending_coverage_quotes, adverse_claims: Vec::new(),
+                topic_source_hints: checked.topic_source_hints,
             };
             let mut verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&mut factual_draft,&units,&checked.conflicts,start,&mut trace) {
                 Ok(verified) => verified,

@@ -282,10 +282,16 @@ impl SpokenComparison<'_> {
         let statement = normalized(statement);
         self.subjects.iter().zip(self.attributes).all(|(subject, attribute)| {
             statement.match_indices(subject).any(|(offset, _)| {
+                let before = &statement[..offset];
                 let after = &statement[offset + subject.len()..];
-                let clause = after.split(['，', ',', '；', '。']).next().unwrap_or_default();
-                clause.chars().take(18).any(|part| attribute.contains(part))
-                    && !["不", "没", "未"].iter().any(|no| clause.contains(&format!("{no}{attribute}")))
+                let delimiters = ['，', ',', '；', '。'];
+                let leading = before.rsplit(delimiters).next().unwrap_or_default();
+                let trailing = after.split(delimiters).next().unwrap_or_default();
+                let clause = format!("{leading}{subject}{trailing}");
+                let property_present = leading.chars().rev().take(8).chain(trailing.chars().take(18))
+                    .any(|part| attribute.contains(part));
+                property_present && !["不", "没", "未"]
+                    .iter().any(|no| clause.contains(&format!("{no}{attribute}")))
             })
         })
     }
@@ -402,7 +408,7 @@ fn partial_same_sentence_comparisons_are_checked_for_both_objects() {
     facts[0].text = "讨论女装与男装。".into();
     assert_eq!(selected(&facts).len(), 2);
     facts[0].text = "女装潮流更新快，男装品类少。".into();
-    facts[1].text = "化妆品投入比重低一些，护肤可提高一点。".into();
+    facts[1].text = "降低男性化妆品比重，提高男性护肤品类比重。".into();
     assert!(selected(&facts).is_empty());
 }
 
