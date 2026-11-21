@@ -401,6 +401,10 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 Err(reason) => return reviewable(&doc, reason, &[], &[]),
             };
             traced_document=Some(checked.doc.clone());
+            if !checked.pending_coverage_quotes.is_empty() {
+                return reviewable(&checked.doc, "部分原话覆盖仍待核对，已保留其它通过原话核对的补充。".into(),
+                    &checked.conflicts, &checked.pending_coverage_quotes);
+            }
             let mut factual_draft = factual_audit::FactualDraft { document: checked.doc, pending_quotes: Vec::new() };
             let mut verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&mut factual_draft,&units,&checked.conflicts,start,&mut trace) {
                 Ok(verified) => verified,

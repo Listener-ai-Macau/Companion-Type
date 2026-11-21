@@ -871,7 +871,7 @@ pub(super) fn retain_opening_host(
     purpose: &mut String, evidence: &[Value], bindings: &super::source_bindings::SourceBindings<'_>,
 ) -> Option<Value> {
     static TRANSFER: LazyLock<Regex> = LazyLock::new(|| Regex::new(
-        r"(?:接下来|接着|下面|现在)由(?:咱们这个|我们这个|咱们的|我们的|这个)?(?P<host>[\p{Han}]{2,12}?)来?主持(?:一下儿?)?(?:这次|这场|这个|本次)?会议"
+        r"(?:接下来|接着|下面|现在)由(?:咱们这个|我们这个|咱们的|我们的|这个)?(?P<host>[\p{Han}]{2,12}?)来{0,2}主持(?:一下儿?)?(?:这次|这场|这个|本次)?会议"
     ).unwrap());
     for (index, issuer) in evidence.iter().take(18).enumerate() {
         let source = normalized(utterance(issuer));
@@ -881,9 +881,13 @@ pub(super) fn retain_opening_host(
             continue;
         }
         let opened = evidence.iter().skip(index + 1).take(3).find(|row| {
+            let reply = normalized(utterance(row));
+            let acknowledges = ["会议开始", "开始开会", "开始今天的会议", "会议由我来主持", "会议由我主持",
+                "这次会议我来主持", "本次会议我来主持"].iter().any(|cue| reply.contains(cue));
             row["turnSpeaker"] != issuer["turnSpeaker"] && row["turnSpeaker"].as_str()
                 .and_then(|speaker| bindings.introduction(speaker)).is_some_and(|(name, _)| name == host)
-                && ["会议开始", "开始开会", "开始今天的会议"].iter().any(|cue| utterance(row).contains(cue))
+                && acknowledges && !["如果", "是否", "不是", "不是由", "不由我", "并非", "要不要"]
+                    .iter().any(|cue| reply.contains(cue))
         });
         let Some(opened) = opened else { continue; };
         let called_by = issuer["turnSpeaker"].as_str().and_then(|speaker| bindings.introduction(speaker));
@@ -891,6 +895,8 @@ pub(super) fn retain_opening_host(
             ["叫过来", "召集", "请大家"].iter().any(|cue| source.contains(cue))
         }) {
             format!("{caller}召集会议并交由{host}主持。")
+        } else if let Some((caller, _)) = called_by {
+            format!("{caller}开场并交由{host}主持。")
         } else {
             format!("本次会议由{host}主持。")
         };
@@ -1112,6 +1118,26 @@ mod tests {
         assert!(fact[0].text.contains("老师需要去就餐"));
         let planning = "食堂开设的窗口儿比较少，如果有老师需要去就餐。";
         assert!(retain_service_audience("食堂上学期仅开三个窗口。",planning).is_none());
+    }
+
+    #[test]
+    fn a_repeated_filler_does_not_hide_a_confirmed_handoff() {
+        let mut source = [
+            turn("e0000","说话人1","零零三我是董事长"),
+            turn("e0001","说话人2","零零四我是经理"),
+            turn("e0005","说话人1","今天是季度例会，接下来由经理来来主持这次会议。"),
+            turn("e0006","说话人2","好的，感谢董事长，接下来的会议由我来主持。"),
+        ];
+        let original = "回顾上一季度情况。";
+        let mut purpose = original.to_owned();
+        let bindings = super::super::source_bindings::SourceBindings::new(&source);
+        let proof = retain_opening_host(&mut purpose, &source, &bindings).unwrap();
+        assert_eq!(proof["evidence"], serde_json::json!(["e0005","e0006"]));
+        assert_eq!(purpose, "董事长开场并交由经理主持。回顾上一季度情况。");
+        source[3] = turn("e0006","说话人2","这次会议不是由我来主持。");
+        let mut purpose = original.to_owned();
+        let bindings = super::super::source_bindings::SourceBindings::new(&source);
+        assert!(retain_opening_host(&mut purpose, &source, &bindings).is_none());
     }
 
     #[test]
