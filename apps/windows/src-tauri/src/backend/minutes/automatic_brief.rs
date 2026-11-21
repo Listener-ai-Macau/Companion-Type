@@ -334,18 +334,26 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         };
         traced_document=Some(doc.clone());
         let mut doc=if let Some(facts)=source_facts {
+            let reviewable = |draft: &Document, reason: String| {
+                check_current()?;
+                validate(draft, &units)?;
+                Ok(project_review_draft(draft, &facts, &units, session, base, &reason))
+            };
             let checked = match source_items::fill_omissions(endpoint, model, key, client, doc.clone(), &facts, &units, start, &mut trace) {
                 Ok(checked) => checked,
-                Err(reason) => {
-                    check_current()?;
-                    validate(&doc, &units)?;
-                    return Ok(project_review_draft(&doc, &facts, &units, session, base, &reason));
-                }
+                Err(reason) => return reviewable(&doc, reason),
             };
             traced_document=Some(checked.doc.clone());
-            let verified = factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace)?;
-            traced_document=Some(verified.document.clone());
-            commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace)?
+            let verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace) {
+                Ok(verified) => verified,
+                Err(reason) => return reviewable(&doc, reason),
+            };
+            let reviewed = verified.document.clone();
+            traced_document=Some(reviewed.clone());
+            match commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace) {
+                Ok(document) => document,
+                Err(reason) => return reviewable(&reviewed, reason),
+            }
         }else if coverage::enabled(){
             let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
             let doc=audited?;traced_document=Some(doc.clone());

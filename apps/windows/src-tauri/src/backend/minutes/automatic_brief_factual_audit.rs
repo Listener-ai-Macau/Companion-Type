@@ -103,6 +103,38 @@ pub(super) fn canonical_sentence_reference(id:&str,known:&HashSet<&str>)->Option
     let number=digits.parse::<u16>().ok()?;let canonical=format!("e{number:04}");
     known.contains(canonical.as_str()).then_some(canonical)
 }
+fn cited_unclear_phrase(phrase: &str, original: &Value) -> Option<String> {
+    if phrase.chars().count() > 180 {
+        return None;
+    }
+    if ["text", "owner", "due"].into_iter().any(|key| {
+        original[key].as_str().is_some_and(|text| text.contains(phrase))
+    }) {
+        return Some(phrase.to_owned());
+    }
+    // Reviewers occasionally use the source's noun phrase, while the draft
+    // spells it with a possessive particle. Bind only a unique exact phrase
+    // in prose. Names and due dates must still match their actual fields.
+    let text = original["text"].as_str()?;
+    if phrase.chars().count() < 4 {
+        return None;
+    }
+    let mut matches = phrase.char_indices().skip(1)
+        .map(|(index, _)| format!("{}的{}", &phrase[..index], &phrase[index..]))
+        .filter(|candidate| text.match_indices(candidate.as_str()).count() == 1);
+    let candidate = matches.next()?;
+    matches.all(|other| other == candidate).then_some(candidate)
+}
+
+#[cfg(test)]
+#[test]
+fn unclear_prose_can_bind_one_possessive_particle_but_due_cannot() {
+    assert_eq!(cited_unclear_phrase("发展背景", &json!({"text":"作为以后发展的背景。"})).as_deref(), Some("发展的背景"));
+    assert!(cited_unclear_phrase("具体时间", &json!({"text":"开会","due":"具体的时间"})).is_none());
+    assert!(cited_unclear_phrase("发展背景", &json!({"text":"发展的背景和发展的背景"})).is_none());
+    assert!(cited_unclear_phrase("发展背景", &json!({"text":"发展潜力"})).is_none());
+}
+
 fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity:bool)->Result<Audit,String> {
     let mut audit:Audit=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"纪要内容审核没有返回完整结果，已有结果保留。".to_string())?;
     // Some providers echo the requested JSON format descriptor. It has no
@@ -134,7 +166,8 @@ fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity
         match claim.clarity.as_deref(){
             Some("unclear")=>{
                 let phrase=claim.unclear_text.as_deref().filter(|s|!s.trim().is_empty()).ok_or("纪要审核未定位含混表达，已有结果保留。")?;
-                if phrase.chars().count()>180||!["text","owner","due"].iter().any(|key|original.get(*key).and_then(Value::as_str).is_some_and(|text|text.contains(phrase))){return Err("纪要审核的含混表达不属于本条陈述，已有结果保留。".into());}
+                claim.unclear_text = Some(cited_unclear_phrase(phrase, original)
+                    .ok_or("纪要审核的含混表达不属于本条陈述，已有结果保留。")?);
                 // Literal source support cannot certify a readable meaning.
                 // Preserve every existing negative verdict; only veto a pass.
                 if claim.status=="supported"{claim.status="unclear".into();}
