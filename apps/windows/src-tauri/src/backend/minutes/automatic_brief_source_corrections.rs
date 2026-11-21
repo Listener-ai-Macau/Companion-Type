@@ -418,13 +418,47 @@ fn same_or_adjacent_unit(a: &str, b: &str) -> bool {
     a == b || position(a).zip(position(b)).is_some_and(|(a,b)| a.abs_diff(b) == 1)
 }
 
+fn cited_real_report(summary: &str, source: &str) -> bool {
+    static COMPLETED_REPORT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:我们|我方|本公司|本部门|本组)(?:最近|刚刚|此前|上周|上月|上个月|去年|已经)(?:买|购|签|汇|支付|付|交|提交|投入|完成|收|报|启动|卖|售|寄|做|部署)"
+    ).unwrap());
+    let source = normalized(source);
+    let hypothetical = ["假设", "假如", "设例", "如果", "虚构", "设想"];
+    let actual_time = ["近期", "最近", "已", "刚", "此前", "上周", "上月", "上个月", "去年"];
+    if hypothetical.iter().any(|cue| summary.contains(cue)) {
+        return false;
+    }
+
+    // An explicit return to present conditions closes the preceding example.
+    // It qualifies only a summary that actually shares wording after the reset.
+    if ["但是就目前而言", "回到实际情况", "就目前实情", "实际情况是"].iter()
+        .filter_map(|cue| source.split_once(cue).map(|(_,tail)| tail))
+        .any(|tail| super::source_coverage::shared_literal(summary, tail, 4))
+    {
+        return true;
+    }
+    actual_time.iter().any(|cue| summary.contains(cue))
+        && COMPLETED_REPORT.find_iter(&source).any(|event| {
+            let lead = &source[..event.start()];
+            let scope = lead.rsplit(['。','！','？','；']).next().unwrap_or_default();
+            !hypothetical.iter().any(|cue| scope.contains(cue))
+                && super::source_coverage::shared_literal(summary, &source[event.start()..], 4)
+        })
+}
+
 fn example_context(text: &str, fact: &Fact, evidence: &[Value], positions: &HashMap<&str, usize>) -> bool {
     let text = normalized(text);
     let framing = ["举个例子", "举一个例子", "举例", "设例", "比方说", "比如说", "假设", "假如"];
     if framing.iter().any(|marker| text.contains(marker)) || text.starts_with("待核") {
         return false;
     }
-    fact.evidence.iter().filter_map(|id| positions.get(id.as_str()).copied()).any(|at| {
+    let anchors: Vec<_> = fact.evidence.iter().filter_map(|id| positions.get(id.as_str()).copied()).collect();
+    if anchors.iter().any(|at| {
+        evidence[*at]["text"].as_str().is_some_and(|quote| cited_real_report(&text,quote))
+    }) {
+        return false;
+    }
+    anchors.into_iter().any(|at| {
         let span = at.saturating_sub(12)..=at;
         span.rev().take_while(|index| {
             evidence[*index]["source"].as_str().zip(evidence[at]["source"].as_str())
@@ -546,6 +580,27 @@ fn published_discussion_distinguishes_a_linked_example_and_restores_a_cited_chai
     assert!(doc.topics[0].details[0].text.contains("进水致断电"));
     assert!(preserve_published_discussion(&mut doc, &facts, &raw).is_empty());
     assert!(narrated_chain("事情经过是有人报告，另一人猜测，之后再统计。").is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn reported_past_events_inside_an_example_keep_their_actual_scope() {
+    let evidence = [
+        json!({"id":"e0041","source":"u003","text":"研发成本是不是比较高？"}),
+        json!({"id":"e0042","source":"u003","text":"比如说我们最近买的这个专利是国外公司的成果，我们买回来再进行研发，但是就目前而言回本较慢，目标人群属于少数。"}),
+        json!({"id":"e0043","source":"u003","text":"假设上个月我们已经提交登记，这时手续完成后就能验收。"}),
+        json!({"id":"e0044","source":"u003","text":"我们最近提交的方案还有另一个范围。"}),
+    ];
+    let positions: HashMap<_, _> = evidence.iter().enumerate().map(|(i,r)|(r["id"].as_str().unwrap(),i)).collect();
+    let classify = |text:&str, id:&str| {
+        let fact=Fact{id:"a000".into(),kind:Kind::Status,placement:Placement::Topic,text:text.into(),
+            owner:None,due:None,evidence:vec![id.into()]};
+        example_context(text,&fact,&evidence,&positions)
+    };
+    assert!(!classify("近期购买国外公司专利并进行研发。","e0042"));
+    assert!(!classify("研发回本较慢，因目标人群属于少数。","e0042"));
+    assert!(classify("上个月我们已经提交登记，这时就能验收。","e0043"));
+    assert!(!classify("最近提交的方案还有另一个范围。","e0044"));
 }
 
 pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpose: Option<&mut String>) -> Vec<Value> {
