@@ -3014,7 +3014,8 @@ fn repeated_operational_duration(cue: &SourceCue, evidence: &[Value], doc: &Docu
         {
             return None;
         }
-        let amount = measures(&quote.replace("个小时", "小时")).next()?;
+        let measure_text = quote.replace("个小时", "小时");
+        let amount = measures(&measure_text).next()?;
         (amount == quantity && line(quote, 60)).then_some((row["id"].as_str()?, quote))
     })?;
     let text = format!("{speaker}估计所需时间，原话为「{}」。", prior.1);
