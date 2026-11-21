@@ -1784,7 +1784,7 @@ fn a_structural_extra_brace_does_not_change_quoted_text_or_other_checks() {
     assert_eq!(json["checks"][0]["reason"], "示例中的 } 和 ] 属于原话。");
     assert_eq!(json["checks"][1]["id"], "v002");
     assert!(remove_surplus_check_brace(&fixed).is_none());
-    let two = raw.replace("两分钟只是举例。"}", "两分钟只是举例。"}}");
+    let two = raw.replace(r#"两分钟只是举例。"}"#, r#"两分钟只是举例。"}}"#);
     assert!(remove_surplus_check_brace(&two).is_none());
 }
 
