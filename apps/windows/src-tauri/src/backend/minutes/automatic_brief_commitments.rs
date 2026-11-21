@@ -184,15 +184,12 @@ fn recover_collective_owner(
 ) -> Option<String> {
     let claim = &original["claim"];
     let text = claim["text"].as_str()?;
-    let original_prefix = text.trim_end_matches(['。', '！', '？']);
-    let original_modified = item.text.strip_prefix(original_prefix)?;
     let basis = original["basis"].as_array()?;
     let context = original["context"].as_array()?;
     if claim["kind"] != "action" || !claim["owner"].is_null() || !item.is_action()
         || claim["due"].as_str() != item.due.as_deref()
         || !requested.starts_with('各')
         || !["要求", "交给", "请", "由", "让"].iter().any(|cue| text.contains(&format!("{cue}{requested}")))
-        || !original_modified.is_empty() && !original_modified.starts_with(['。', '，', '；', '、', ',', ';'])
         || !basis.iter().any(|id| id == bad_proof)
     {
         return None;
@@ -236,19 +233,23 @@ fn collective_owner_rebinds_only_from_nearby_audited_assignment() {
         json!({"id":"e0042","text":"整理成一份清单。","turnSpeaker":"主持人"}),
         json!({"id":"e0043","text":"主持人：你们各组的清单随后发给经理。","turnSpeaker":"主持人"}),
     ];
-    let run = |rows: &[Value], claim: &Value| {
+    let run = |rows: &[Value], proposal: Value| {
         let known: SourceIndex<'_> = rows.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
         let ids = known.keys().copied().collect();
-        bind_edit(serde_json::from_value(proposed.clone()).unwrap(), claim, &known, &ids)
+        bind_edit(serde_json::from_value(proposal).unwrap(), &original, &known, &ids)
     };
-    let edit = run(&source, &original).unwrap().unwrap();
-    assert_eq!(edit.text, "主持人要求各组整理清单。");
-    assert_eq!(edit.owner.as_deref(), Some("各组"));
-    assert_eq!(edit.evidence, ["e0041","e0042","e0043"]);
+    let mut shortened = proposed.clone();
+    shortened["replacement"]["text"] = json!("各组整理清单，然后发给经理。");
+    for proposal in [proposed, shortened.clone()] {
+        let edit = run(&source, proposal).unwrap().unwrap();
+        assert_eq!(edit.text, "主持人要求各组整理清单。");
+        assert_eq!(edit.owner.as_deref(), Some("各组"));
+        assert_eq!(edit.evidence, ["e0041","e0042","e0043"]);
+    }
 
     let mut unrelated = source;
     unrelated[2]["turnSpeaker"] = json!("其他发言");
-    assert!(run(&unrelated, &original).is_err());
+    assert!(run(&unrelated, shortened).is_err());
 }
 
 fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids: &HashSet<&str>) -> Result<Option<Fact>, &'static str> {
