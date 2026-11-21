@@ -2020,7 +2020,7 @@ fn bind_answered_loan_amount(item: &mut SourceItem, cue: &SourceCue, evidence: &
     if answered_by == asked_by || !question.contains("借")
         || !question.strip_suffix("成立吗").is_some_and(|body| body.trim_end().ends_with(&cue.span))
         || !answer.strip_prefix("成立").is_some_and(|rest| rest.is_empty()
-            || rest.starts_with([' ', '，','。','！','	']))
+            || rest.starts_with(char::is_whitespace) || rest.starts_with(['，','。','！']))
     {
         return false;
     }
