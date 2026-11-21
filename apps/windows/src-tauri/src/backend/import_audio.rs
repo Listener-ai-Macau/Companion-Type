@@ -94,7 +94,8 @@ pub(super) fn decode_to_speech_wav(input:&Path,anchor:&Path)->Result<Vec<HostAud
     file.seek(SeekFrom::Start(0)).map_err(|e|format!("无法读取所选音频：{e}"))?;
     let stream=MediaSourceStream::new(Box::new(file),Default::default());
     let mut hint=Hint::new();if let Some(ext)=input.extension().and_then(|x|x.to_str()){hint.with_extension(ext);}
-    let mut format=symphonia::default::get_probe().format(&hint,stream,&FormatOptions::default(),&MetadataOptions::default())
+    let options = FormatOptions { enable_gapless: true, ..Default::default() };
+    let mut format=symphonia::default::get_probe().format(&hint,stream,&options,&MetadataOptions::default())
         .map_err(|e|format!("无法读取音频格式：{e}"))?.format;
     let track=format.default_track().ok_or("文件中没有可用音轨。")?;
     let track_id=track.id;

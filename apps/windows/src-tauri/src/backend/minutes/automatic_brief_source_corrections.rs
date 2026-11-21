@@ -499,29 +499,88 @@ fn narrated_chain(text: &str) -> Option<(&str, Vec<&str>)> {
     Some((narration, links))
 }
 
+fn restore_discussion_condition(
+    text: &str, sources: &[String], facts: &[Fact], evidence: &[Value], positions: &HashMap<&str, usize>,
+) -> Option<String> {
+    let (attribution, summary) = text.split_once("称，").filter(|(label, _)| {
+        !label.contains(['，', '。', '：']) && label.chars().count() <= 24
+    }).unwrap_or(("", text));
+    if ["若", "如果", "假如", "待核", "会上举例"].iter().any(|marker| summary.starts_with(marker)) {
+        return None;
+    }
+    let mut facts = facts.iter().filter(|fact| {
+        fact.placement == Placement::Topic && (fact.text == text || fact.text == summary)
+    });
+    let fact = facts.next()?;
+    if facts.next().is_some() { return None; }
+
+    let cited: Vec<_> = fact.evidence.iter().filter_map(|id| {
+        let row = &evidence[*positions.get(id.as_str())?];
+        let source = row["source"].as_str()?;
+        if !sources.iter().any(|id| id == source) { return None; }
+        let raw = row["text"].as_str()?;
+        Some(super::super::source_resolution::split_turn_label(raw).unwrap_or(("", raw)))
+    }).collect();
+
+    for (speaker, quote) in &cited {
+        if !attribution.is_empty() && *speaker != attribution { continue; }
+        let quote = normalized(quote);
+        let Some((condition, outcome)) = quote.split_once("的话") else { continue; };
+        if condition.chars().count() < 6 || condition.contains(['，', '。', '；'])
+            || !outcome.starts_with(['，', ','])
+            || !summary.strip_prefix(condition).is_some_and(|rest| rest.starts_with(['，', ',']))
+        {
+            continue;
+        }
+        // The repeated condition must have an explicit lead-in from the same speaker.
+        // A nearby discussion, or the words “的话” alone, do not establish it.
+        let corroborated = cited.iter().any(|(other_speaker, other_quote)| {
+            if speaker != other_speaker { return false; }
+            let other_quote = normalized(other_quote);
+            let opening = other_quote.trim_start_matches(['呃', '嗯']);
+            let Some(opening) = opening.strip_prefix("如果说").or_else(|| opening.strip_prefix("假如说")) else {
+                return false;
+            };
+            let condition_opening = opening.split(['，', '。', '；']).next().unwrap_or_default();
+            super::source_coverage::shared_literal(condition, condition_opening, 6)
+        });
+        if corroborated {
+            let prefix = &text[..text.len() - summary.len()];
+            let revised = format!("{prefix}若{summary}");
+            return line(&revised, 90).then_some(revised);
+        }
+    }
+    None
+}
+
 pub(super) fn preserve_published_discussion(doc: &mut Document, facts: &[Fact], evidence: &[Value]) -> Vec<Value> {
     let positions: HashMap<_, _> = evidence.iter().enumerate().filter_map(|(at,row)| Some((row["id"].as_str()?,at))).collect();
     let mut changes = Vec::new();
     for topic in &mut doc.topics {
-        let qualify = |text: &mut String| {
+        let qualify = |text: &mut String, sources: &[String]| {
+            if let Some(revised) = restore_discussion_condition(text, sources, facts, evidence, &positions) {
+                *text = revised;
+                return Some("discussionCondition");
+            }
             let original = text.trim_start_matches(super::DRAFT_CONFLICT_PREFIX);
-            let Some(fact) = facts.iter().find(|fact| fact.text == original && fact.placement == Placement::Topic) else {
-                return false;
-            };
-            if !example_context(original, fact, evidence, &positions) { return false; }
+            let fact = facts.iter().find(|fact| fact.text == original && fact.placement == Placement::Topic)?;
+            if !example_context(original, fact, evidence, &positions) { return None; }
             let revised = text.replacen(original, &format!("会上举例讨论，{original}"), 1);
-            if !line(&revised, 90) { return false; }
+            if !line(&revised, 90) { return None; }
             *text = revised;
-            true
+            Some("exampleContext")
         };
         for item in &mut topic.points {
-            if matches!(item.kind, Kind::Status | Kind::Opinion) && qualify(&mut item.text) {
+            if !matches!(item.kind, Kind::Status | Kind::Opinion) { continue; }
+            if let Some(kind) = qualify(&mut item.text, &item.sources) {
                 item.kind = Kind::Opinion;
-                changes.push(json!({"kind":"exampleContext","sources":item.sources}));
+                changes.push(json!({"kind":kind,"sources":item.sources}));
             }
         }
         for item in &mut topic.details {
-            if qualify(&mut item.text) { changes.push(json!({"kind":"exampleContext","sources":item.sources})); }
+            if let Some(kind) = qualify(&mut item.text, &item.sources) {
+                changes.push(json!({"kind":kind,"sources":item.sources}));
+            }
         }
     }
     for row in evidence {
@@ -601,6 +660,30 @@ fn reported_past_events_inside_an_example_keep_their_actual_scope() {
     assert!(!classify("研发回本较慢，因目标人群属于少数。","e0042"));
     assert!(classify("上个月我们已经提交登记，这时就能验收。","e0043"));
     assert!(!classify("最近提交的方案还有另一个范围。","e0044"));
+}
+
+#[cfg(test)]
+#[test]
+fn published_opinion_keeps_a_repeated_spoken_condition() {
+    let rows = [
+        json!({"id":"e0001","source":"u001","text":"说话人2：呃如果说送过去的样品反复出现漏液，那就暂停新的试产。"}),
+        json!({"id":"e0002","source":"u001","text":"说话人2：样品反复出现漏液的话，就暂停新的试产。"}),
+        json!({"id":"e0003","source":"u001","text":"说话人1：样品反复出现漏液，我们已经暂停新的试产。"}),
+    ];
+    let positions = HashMap::from([("e0001",0), ("e0002",1), ("e0003",2)]);
+    let text = "说话人2称，样品反复出现漏液，暂停新的试产。";
+    let mut fact = Fact {
+        id:"a001".into(), kind:Kind::Status, placement:Placement::Topic,
+        text:"样品反复出现漏液，暂停新的试产。".into(), owner:None, due:None,
+        evidence:vec!["e0001".into(), "e0002".into()],
+    };
+    let sources = ["u001".into()];
+    assert_eq!(restore_discussion_condition(text, &sources, std::slice::from_ref(&fact), &rows, &positions).as_deref(),
+        Some("说话人2称，若样品反复出现漏液，暂停新的试产。"));
+    assert!(restore_discussion_condition("说话人1称，样品反复出现漏液，暂停新的试产。",
+        &sources, std::slice::from_ref(&fact), &rows, &positions).is_none());
+    fact.evidence = vec!["e0002".into(), "e0003".into()];
+    assert!(restore_discussion_condition(text, &sources, &[fact], &rows, &positions).is_none());
 }
 
 pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpose: Option<&mut String>) -> Vec<Value> {
