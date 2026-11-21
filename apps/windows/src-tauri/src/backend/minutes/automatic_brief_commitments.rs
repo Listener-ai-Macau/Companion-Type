@@ -122,8 +122,12 @@ fn spoken_department<'a>(requested: &str, snippets: impl Iterator<Item = &'a str
     if !(2..=18).contains(&stem.chars().count()) || !stem.chars().all(|c| ('\u{3400}'..='\u{9fff}').contains(&c)) {
         return None;
     }
-    ["的部门", "这边"].into_iter().map(|ending| format!("{stem}{ending}"))
-        .find(|form| snippets.clone().any(|text| super::normalized(text).contains(form)))
+    let direct = ["的部门", "这边"].into_iter().map(|ending| format!("{stem}{ending}"))
+        .find(|form| snippets.clone().any(|text| super::normalized(text).contains(form)));
+    direct.or_else(|| ["儿那边儿", "儿这边儿", "那边儿", "儿那边", "儿这边", "那边"].into_iter()
+        .map(|ending| format!("{stem}{ending}"))
+        .find(|form| snippets.clone().any(|text| super::normalized(text).split_once(form)
+            .is_some_and(|(_, after)| after.starts_with(['你', '您', '要', '先', '得'])))))
 }
 
 fn spoken_collective(requested: &str, quote: &str) -> Option<String> {
@@ -252,6 +256,35 @@ fn collective_owner_rebinds_only_from_nearby_audited_assignment() {
     assert!(run(&unrelated, shortened).is_err());
 }
 
+fn unchanged_action_with_unbound_owner(original: &Value, item: &mut source_items::SourceItem,
+    proof: &str, known: &SourceIndex<'_>) -> bool
+{
+    let claim = &original["claim"];
+    let Some(text) = claim["text"].as_str() else { return false };
+    let Some(basis) = original["basis"].as_array() else { return false };
+    let quote = super::normalized(known[proof]["text"].as_str().unwrap_or(""));
+    if claim["kind"] != "action" || !claim["owner"].is_null() || !item.is_action()
+        || item.text.as_str() != text || claim["due"].as_str() != item.due.as_deref()
+        || !basis.iter().any(|id| id == proof)
+        || !["你那边", "你这边"].iter().any(|form| quote.contains(form))
+    {
+        return false;
+    }
+    let pending = if text.contains("负责人待核实") {
+        text.to_owned()
+    } else {
+        format!("{}（负责人待核实）。", text.trim_end_matches(['。', '！', '？']))
+    };
+    if !super::line(&pending, 90) { return false; }
+
+    // The role checker only tried to enrich an already audited assignment.
+    // An ambiguous addressee cannot replace it or add a deadline.
+    item.text = pending;
+    item.owner = None;
+    item.evidence = basis.iter().filter_map(Value::as_str).map(str::to_owned).collect();
+    true
+}
+
 fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids: &HashSet<&str>) -> Result<Option<Fact>, &'static str> {
     let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
     let basis: HashSet<_> = original["basis"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
@@ -272,10 +305,14 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
                 let owner = requested.as_deref().ok_or("ownerEvidence 需要对应明确的 owner。")?;
                 let literal = if let Some(literal) = owner_as_spoken(owner, known[proof.as_str()]) {
                     literal
-                } else {
-                    proof = recover_collective_owner(original, &mut item, owner, &proof, known)
-                        .ok_or("ownerEvidence 未出现所填负责人。请区分承接者、主持人和附近讨论者。")?;
+                } else if let Some(recovered) = recover_collective_owner(original, &mut item, owner, &proof, known) {
+                    proof = recovered;
                     owner.to_owned()
+                } else if unchanged_action_with_unbound_owner(original, &mut item, &proof, known) {
+                    return item.bind(known, known_ids).map(Some)
+                        .map_err(|_| "已核任务的负责人待核说明无法保留。");
+                } else {
+                    return Err("ownerEvidence 未出现所填负责人。请区分承接者、主持人和附近讨论者。");
                 };
                 // Store the words the source actually supports, including a
                 // collective alias or the label of an explicit self-commitment.
@@ -318,6 +355,29 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
         return Err("修正必须引用本条相邻原话，且至少包含一条 basis。");
     }
     Ok((!preserve_assigned_action(original, &fact)).then_some(fact))
+}
+
+#[cfg(test)]
+#[test]
+fn keeps_dialect_owner_and_defers_an_unbound_pronoun_without_losing_the_task() {
+    let original = json!({
+        "claim":{"kind":"action","text":"检查设备资质。","owner":null,"due":null},
+        "basis":["e0041"],"context":["e0041"]
+    });
+    let bind = |quote: &str, owner: &str, text: &str| {
+        let row = json!({"text":quote,"turnSpeaker":"主持人"});
+        let known = SourceIndex::from([("e0041",&row)]);
+        let ids = HashSet::from(["e0041"]);
+        let edit = json!({"id":"actionItems[0]","ownerEvidence":"e0041",
+            "replacement":{"role":"action","text":text,"owner":owner,"due":null,"evidence":["e0041"]}});
+        bind_edit(serde_json::from_value(edit).unwrap(),&original,&known,&ids)
+    };
+    let named = bind("主持人：物料儿那边儿你先检查这个设备资质。","物料部","检查设备资质。").unwrap().unwrap();
+    assert_eq!(named.owner.as_deref(),Some("物料儿那边儿"));
+    let pending = bind("主持人：那你那边儿先检查这个设备资质。","说话人3","检查设备资质。").unwrap().unwrap();
+    assert!(pending.owner.is_none());
+    assert_eq!(pending.text,"检查设备资质（负责人待核实）。");
+    assert!(bind("主持人：那你那边儿先检查这个设备资质。","说话人3","检查设备资质并交给财务。").is_err());
 }
 
 #[derive(Default)]
