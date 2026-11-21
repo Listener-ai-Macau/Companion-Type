@@ -396,6 +396,27 @@ impl MissingItems {
         self.checks = unique;
         count - self.checks.len()
     }
+
+    fn defer_unrequested_omissions(&mut self, expected: &HashSet<&str>) -> Vec<String> {
+        let mut requested = HashSet::new();
+        let mut deferred = Vec::new();
+        for check in &self.checks {
+            if expected.contains(check.id()) {
+                if !requested.insert(check.id()) { return Vec::new(); }
+            } else if matches!(check, SourceCheck::Missing { .. }) {
+                deferred.push(check.id().to_owned());
+            } else {
+                return Vec::new();
+            }
+        }
+        if &requested != expected || deferred.is_empty() {
+            return Vec::new();
+        }
+        // A free candidate cannot expand the coverage contract or become a
+        // certified decision. Its original content stays in the scan receipt.
+        self.checks.retain(|check| expected.contains(check.id()));
+        deferred
+    }
 }
 
 #[cfg(test)]
@@ -409,6 +430,32 @@ fn identical_source_checks_are_idempotent_but_conflicting_verdicts_stay_separate
     assert_eq!(results.coalesce_identical_checks(&HashSet::new()), 1);
     assert_eq!(results.checks.len(), 2);
     assert_eq!(results.checks[0].id(), results.checks[1].id());
+}
+
+#[cfg(test)]
+#[test]
+fn surplus_omission_keeps_the_requested_checks_without_certifying_an_extra_decision() {
+    let numbered = json!({"id":"v000","status":"background","reason":"会议开场的当场流程。"});
+    let outside = json!({"id":"v001","status":"missing","addition":{"topic":null,
+        "item":{"role":"decision","text":"必须延后演练。","evidence":["e0010"],"owner":null,"due":null}}});
+    let expected = HashSet::from(["v000"]);
+    let packet = json!({"checks":[numbered.clone(),outside.clone()],"additions":[]});
+    let mut checked: MissingItems = parse(&packet.to_string()).unwrap();
+    assert_eq!(checked.defer_unrequested_omissions(&expected),["v001"]);
+    assert_eq!(checked.checks[0].id(),"v000");
+    assert_eq!(checked.checks.len(),1);
+    assert!(checked.additions.is_empty());
+
+    let missing_expected = json!({"checks":[outside.clone()]});
+    let mut checked: MissingItems = parse(&missing_expected.to_string()).unwrap();
+    assert!(checked.defer_unrequested_omissions(&expected).is_empty());
+    assert_eq!(checked.checks[0].id(),"v001");
+
+    let contrary = json!({"id":"v000","status":"covered","claim":"purpose"});
+    let conflict = json!({"checks":[numbered,contrary,outside]});
+    let mut checked: MissingItems = parse(&conflict.to_string()).unwrap();
+    assert!(checked.defer_unrequested_omissions(&expected).is_empty());
+    assert_eq!(checked.checks.len(),3);
 }
 
 #[derive(Deserialize, PartialEq)]
@@ -2722,6 +2769,8 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     let mut checked = parse_source_check_packet(&raw, &expected_ids, &mut trace[scan_index])?;
     let duplicates = checked.coalesce_identical_checks(&claim_paths);
     if duplicates > 0 { trace[scan_index]["identicalChecksCoalesced"] = json!(duplicates); }
+    let deferred = checked.defer_unrequested_omissions(&expected_ids);
+    if !deferred.is_empty() { trace[scan_index]["deferredUnrequestedOmissionIds"] = json!(deferred); }
     restore_source_context_for_coverage(&mut checked.checks, &cues, &claim_values, &evidence, &bindings);
     let disputed = disputed_coverage(&checked, &cues, &doc, &evidence, &bindings);
     let mut verified_coverage = HashSet::new();
