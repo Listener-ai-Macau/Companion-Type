@@ -890,6 +890,31 @@ fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
 
 #[cfg(test)]
 #[test]
+fn an_agenda_period_can_be_kept_in_the_purpose_without_a_title_as_evidence() {
+    let source = "嗯今天呢把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的 呃汇报和总结，然后请各部门发言。";
+    let quote = "咱们健身中心上半年咱们的经营情况做一个简单的 呃汇报和总结";
+    let purpose = "各部门汇报上半年工作并讨论下半年安排。";
+    assert!(opening_scope_is_retained(source, quote, purpose));
+    assert!(!opening_scope_is_retained(source, quote, "各部门汇报下半年工作。"));
+    assert!(!opening_scope_is_retained(source, "上半年提交客户报告", purpose));
+    assert!(!opening_scope_is_retained(
+        &format!("{source}另有新材料必须在上半年交付。"), quote, purpose));
+    let raw = json!({"checks":[{"id":"v000","status":"covered","claim":"topics[0].title",
+        "proof":{"sourceQuote":quote,"statementQuote":"教练团队与服务"}}]});
+    let mut supplied: MissingItems = parse(&raw.to_string()).unwrap();
+    let doc: Document = serde_json::from_value(json!({"purpose":purpose,"topics":[],
+        "decisions":[],"actionItems":[],"questions":[]})).unwrap();
+    let evidence = [json!({"id":"e0008","text":source})];
+    let expected = [json!({"cue":{"id":"v000","evidence":"e0008","span":"半年"}})];
+    assert_eq!(retain_opening_scope(&mut supplied.checks,&expected,&doc,&evidence),1);
+    assert!(matches!(supplied.checks[0],SourceCheck::Background{..}));
+    let mut supplied: MissingItems = parse(&raw.to_string()).unwrap();
+    let amount = [json!({"cue":{"id":"v000","evidence":"e0008","span":"二万元"}})];
+    assert_eq!(retain_opening_scope(&mut supplied.checks,&amount,&doc,&evidence),0);
+}
+
+#[cfg(test)]
+#[test]
 fn missing_background_reasons_are_restored_only_for_grounded_context() {
     let raw = r#"{"checks":[{"id":"v002","status":"background","addition":null},{"id":"v006","status":"background","addition":null}],"additions":[]}"#;
     let expected = [json!({"cue":{"evidence":"e0043","id":"v002","span":"一个月"}}),
@@ -1424,6 +1449,44 @@ fn aspect_quote_covers_clause(quote: &str, required: &str, aspect: &str) -> bool
         && answer.contains("才能") && quote.contains(answer)
 }
 
+fn opening_scope_is_retained(source: &str, quote: &str, purpose: &str) -> bool {
+    let opening = ["今天", "会议开场", "这次会议", "本次会议", "把大家叫来"]
+        .iter().any(|marker| source.contains(marker));
+    let operational = ["最晚", "截止", "以前", "必须", "务必", "会后", "交付", "完成期限"]
+        .iter().any(|marker| quote.contains(marker) || source.contains(marker));
+    if !opening || operational || !coverage_quote_is_grounded(quote, source) {
+        return false;
+    }
+    let scope = ["上半年", "下半年"].into_iter().find(|period| quote.contains(period));
+    let same_period = scope.is_some_and(|period| {
+        purpose.contains(period) && source.match_indices("半年").all(|(index, _)| {
+            source[..index].ends_with(period.trim_end_matches("半年"))
+        })
+    });
+    same_period && ["汇报", "总结", "复盘"]
+        .iter().any(|action| quote.contains(action) && purpose.contains(action))
+}
+
+fn retain_opening_scope(checks: &mut [SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value]) -> usize {
+    let mut count = 0;
+    for check in checks {
+        let SourceCheck::Covered { id, claim, proof: Some(proof) } = check else { continue; };
+        if !claim.ends_with("].title") { continue; }
+        let Some(cue) = disputed.iter().map(|row| &row["cue"])
+            .find(|cue| cue["id"] == id.as_str() && cue["span"] == "半年" && cue["aspect"].is_null())
+        else { continue; };
+        let Some(text) = evidence.iter().find(|row| row["id"] == cue["evidence"])
+            .and_then(|row| row["text"].as_str()) else { continue; };
+        if opening_scope_is_retained(text, &proof.source_quote, &doc.purpose) {
+            *check = SourceCheck::Background {
+                id: id.clone(), reason: "逐字原话描述开场汇报范围，主线已保留相同期间和汇报动作。".into(),
+            };
+            count += 1;
+        }
+    }
+    count
+}
+
 fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value],
     bindings: &HashMap<String, &Vec<String>>,
 ) -> Vec<Value> {
@@ -1432,7 +1495,7 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         let SourceCheck::Covered { id, claim, proof } = check else { return None; };
         let context = disputed.iter().find(|row| row["cue"]["id"] == id.as_str())?;
         let source = evidence.iter().find(|row| row["id"] == context["cue"]["evidence"])?;
-        let target = clauses.iter().find(|row| row["path"] == claim.as_str());
+        let target = clauses.iter().find(|row| row["path"] == claim.as_str() && row.get("sources").is_some());
         let source_text = source["text"].as_str()?;
         let cited = bindings.get(claim);
         let grounded = proof.as_ref().is_some_and(|proof| {
@@ -1829,6 +1892,10 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty() {
             return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
         }
+        let opening = retain_opening_scope(&mut fixed.checks, &disputed, &doc, &evidence);
+        if opening > 0 {
+            trace.last_mut().unwrap()["openingScopeRetainedInPurpose"] = json!(opening);
+        }
         let mut rejected = rejected_coverage(&fixed.checks, &disputed, &doc, &evidence, &bindings);
         let acknowledgments: Vec<_> = rejected.iter().filter_map(|issue| retain_acknowledgment(issue, &evidence)).collect();
         if !acknowledgments.is_empty() {
@@ -1849,6 +1916,10 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             }
             let duplicates = repair.coalesce_identical_checks(&claim_paths);
             if duplicates > 0 { trace.last_mut().unwrap()["identicalChecksCoalesced"] = json!(duplicates); }
+            let opening = retain_opening_scope(&mut repair.checks, &rejected, &doc, &evidence);
+            if opening > 0 {
+                trace.last_mut().unwrap()["openingScopeRetainedInPurpose"] = json!(opening);
+            }
             let returned: HashSet<_> = repair.checks.iter().map(SourceCheck::id).collect();
             let unresolved = rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings);
             trace.last_mut().unwrap()["unresolvedCoverage"] = json!(unresolved);
