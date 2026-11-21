@@ -114,16 +114,18 @@ fn refund_absence(fee: &str, origin: usize, evidence: &[Value]) -> Option<(Strin
     candidates.next().is_none().then_some(candidate)
 }
 
-fn verification_before_disposal(fact: &Fact, origin: usize, evidence: &[Value]) -> Option<(String, Vec<String>)> {
+fn verification_before_disposal(statement: &str, origin: usize, evidence: &[Value]) -> Option<(String, Vec<String>)> {
     static DISPOSAL: LazyLock<Regex> = LazyLock::new(|| Regex::new(
-        r"超过(?P<limit>[零一二两三四五六七八九十百0-9]{1,5}(?:天|小时|个?月))的?(?:我们|咱们)?(?:就|即|直接|一律)?(?:要|须|必须)?(?:清理|清退|处置|销毁|报废)"
+        r"超过(?P<limit>[零一二两三四五六七八九十百0-9]{1,5}(?:天|小时|个?月))(?:的(?:[\p{Han}]{2,9}?)?)?(?:我们|咱们)?(?:就|即|直接|一律)?(?:要|须|必须)?(?:清理|清退|处置|销毁|报废)"
     ).unwrap());
     static REFERRED_CHECK: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:刚才说的|刚说的|刚才提到的|前面说的|上述)(?:那种|这种|这类|这批|的)?(?P<object>[\p{Han}]{2,12}?)(?:我们|咱们)?(?:不允许|不准|不得|若|如果)?超过(?P<limit>[零一二两三四五六七八九十百0-9]{1,5}(?:天|小时|个?月))(?:你|我们|就|要|的|先|必须|一定|得){1,8}(?P<check>核查|核实|查清|确认)"
     ).unwrap());
-    let draft = normalized(&fact.text);
+    let draft = normalized(statement);
     let limit = DISPOSAL.captures(&draft)?.name("limit")?.as_str();
-    if ["先核", "先查", "先确认", "负责核查", "待核实", "如果", "建议"].iter().any(|word| draft.contains(word)) {
+    if ["先核", "先查", "先确认", "负责核查", "待核实", "如果", "建议", "尚未", "暂不",
+        "无需", "不得清", "不清理", "不应", "不能清", "禁止"].iter().any(|word| draft.contains(word))
+    {
         return None;
     }
     let previous = &evidence[origin];
@@ -168,6 +170,22 @@ fn verification_before_disposal(fact: &Fact, origin: usize, evidence: &[Value]) 
     corrections.all(|next| next.0 == correction.0).then_some(correction)
 }
 
+pub(super) fn widens_verified_disposal(
+    original: &str, verified_ids: &[String], proposed: &Fact, evidence: &[Value],
+) -> bool {
+    if proposed.placement != Placement::Decision
+        || !proposed.evidence.iter().all(|id| verified_ids.contains(id))
+    {
+        return false;
+    }
+    proposed.evidence.iter().any(|id| {
+        let Some(position) = evidence.iter().position(|row| row["id"] == id.as_str()) else { return false; };
+        verification_before_disposal(&proposed.text, position, evidence).is_some_and(|(scope, ids)| {
+            normalized(original) == normalized(&scope) && ids.iter().all(|id| verified_ids.contains(id))
+        })
+    })
+}
+
 pub(super) fn correct(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
     let positions: HashMap<_, _> = evidence.iter().enumerate()
         .filter_map(|(index, row)| Some((row["id"].as_str()?, index))).collect();
@@ -189,7 +207,7 @@ pub(super) fn correct(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
                 return Some((reworded, sources));
             }
             if fact.placement == Placement::Decision {
-                return verification_before_disposal(fact, origin, evidence);
+                return verification_before_disposal(&fact.text, origin, evidence);
             }
             None
         });
@@ -270,6 +288,17 @@ mod tests {
         assert_eq!(correct(&mut rows, &evidence).len(), 1);
         assert_eq!(rows[0].text,"对超过一天的僵尸车先核查。后续原话「找到这辆车的主人及时开走」。");
         assert_eq!(rows[0].evidence,["e0180","e0182"]);
+        let mut later_proposal = original.clone();
+        later_proposal.text = "对超过一天的车辆要清理，须找到车主及时开走。".into();
+        later_proposal.evidence.push("e0182".into());
+        let verified = ["e0164".into(), "e0180".into(), "e0182".into()];
+        assert!(widens_verified_disposal(&rows[0].text, &verified, &later_proposal, &evidence));
+        assert!(!widens_verified_disposal(&rows[0].text, &later_proposal.evidence, &later_proposal, &evidence));
+        let mut negative = later_proposal.clone();
+        negative.text = "对超过一天的车辆暂不清理，须找到车主及时开走。".into();
+        assert!(!widens_verified_disposal(&rows[0].text, &verified, &negative, &evidence));
+        later_proposal.evidence.push("e0190".into());
+        assert!(!widens_verified_disposal(&rows[0].text, &verified, &later_proposal, &evidence));
         for (position, field, replacement) in [
             (2,"turnSpeaker","说话人1"),
             (0,"text","说话人在讨论物料报废。"),

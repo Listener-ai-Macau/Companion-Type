@@ -924,6 +924,20 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
     if !carried.is_empty() {
         trace.push(json!({"stage":"source-verified-later-settings","changes":carried}));
     }
+    let protected: Vec<_> = rows.iter().filter_map(|row| {
+        let path = row["id"].as_str()?;
+        let prior = row["claim"]["text"].as_str()?;
+        let basis = verified.evidence.get(path)?;
+        let edit = bound.accepted.get(path)?;
+        super::source_corrections::widens_verified_disposal(prior, basis, edit, &source)
+            .then(|| path.to_owned())
+    }).collect();
+    for path in &protected {
+        bound.accepted.remove(path);
+    }
+    if !protected.is_empty() {
+        trace.push(json!({"stage":"source-verified-disposal-scope","retainedPaths":protected}));
+    }
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
     // Source-scope review independently audits all changed assertions once.
     super::source_scope::review(endpoint,model,key,client,&verified,improved,units,start,trace)
