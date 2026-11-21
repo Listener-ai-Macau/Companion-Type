@@ -522,7 +522,15 @@ fn stance_checks(rows: &[Value], accepted: &HashMap<String, Fact>, known: &Sourc
         let risk = row["sourceSignals"].as_array().unwrap().iter().any(|signal| {
             signal["checks"].as_array().unwrap().iter().any(|check| check == "可选方案及其条件")
         });
-        if !risk || option || (!decision && (action || !financial_condition)) { return None; }
+        let basis = proposed.map_or_else(|| row["basis"].clone(), |fact| json!(&fact.evidence));
+        let restricted_decision = decision
+            && ["只对", "只给", "只向", "仅对", "仅给", "仅供", "仅限", "只限", "面向"]
+                .iter().any(|cue| text.contains(cue))
+            && !basis.as_array().unwrap().iter().filter_map(Value::as_str)
+                .any(|id| explicit_stance(known[id]["text"].as_str().unwrap(), text));
+        if !(risk || restricted_decision) || option || (!decision && (action || !financial_condition)) {
+            return None;
+        }
         if proposed.is_none() && decision && statement_has_literal_commitment(text, &row["basis"], known) {
             return None;
         }
@@ -866,6 +874,19 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
     // Source-scope review independently audits all changed assertions once.
     super::source_scope::review(endpoint,model,key,client,&verified,improved,units,start,trace)
+}
+
+#[cfg(test)]
+#[test]
+fn a_restricted_offer_needs_confirmation_even_when_the_source_sounds_declarative() {
+    let candidate = json!({"id":"decisions[2]","claim":{"kind":"decision","text":"前台免费赠饮面向固定客户。"},
+        "basis":["e0187"],"context":["e0187","e0191"],"sourceSignals":[]});
+    let mut evidence = json!({"text":"这个在前台免费赠送，对于一些固定的客户赠送。"});
+    let known = HashMap::from([("e0187", &evidence)]);
+    assert_eq!(stance_checks(&[candidate.clone()], &HashMap::new(), &known), [candidate.clone()]);
+    evidence["text"] = json!("明确决定前台免费赠饮面向固定客户，按这个规则执行。");
+    let known = HashMap::from([("e0187", &evidence)]);
+    assert!(stance_checks(&[candidate], &HashMap::new(), &known).is_empty());
 }
 
 #[cfg(test)]

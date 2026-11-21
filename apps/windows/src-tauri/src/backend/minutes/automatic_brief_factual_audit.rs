@@ -836,7 +836,96 @@ fn response_speaker_comes_from_a_different_cited_turn() {
     assert!(explicit_response_speaker(text, &issue, &source).is_none());
 }
 
+fn cited_claim_speech<'a>(
+    issue: &'a Value, claim: &'a Value, source: &'a [Sentence],
+) -> impl Iterator<Item = &'a str> {
+    source.iter().filter(move |sentence| {
+        issue["evidence"].as_array().is_some_and(|ids| ids.iter().any(|id| id == &sentence.id))
+            && claim["sources"].as_array().is_some_and(|ids| ids.iter().any(|id| id == &sentence.source))
+    }).map(|sentence| {
+        let text = sentence.text.trim();
+        super::super::source_resolution::split_turn_label(text).map_or(text, |(_, speech)| speech.trim())
+    })
+}
+
+fn retain_answered_condition(issue: &Value, claim: &Value, source: &[Sentence]) -> Option<String> {
+    use std::sync::LazyLock;
+    static CONDITION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:在[^，。；！？\n]{0,12}情况下|如果|假如|即使|哪怕|只要)(?:并)?(?:没有|无人|不能|不符合|不具备)[^，。；！？\n「」]{2,20}"
+    ).unwrap());
+    let reason = issue["reason"].as_str()?;
+    if !issue["path"].as_str()?.starts_with("questions[") || issue["placementUnsupported"] != true
+        || issue["status"] != "unsupported" || issue["clarity"] != "clear"
+        || !["已明确答", "已回答", "已得到答复", "已有明确答复"].iter().any(|cue| reason.contains(cue))
+    {
+        return None;
+    }
+    let mut excerpts = cited_claim_speech(issue, claim, source)
+        .flat_map(|speech| CONDITION.find_iter(speech).map(|part| part.as_str()));
+    let condition = excerpts.next()?;
+    if excerpts.any(|other| other != condition) { return None; }
+    Some(format!("提问者提到「{condition}」这一情形。"))
+}
+
+fn preserve_audited_action(
+    issue: &Value, claim: &Value, text: &str, source: &[Sentence], prior: &[Value],
+) -> Option<(String, bool)> {
+    if !issue["path"].as_str()?.starts_with("actionItems[") || issue["status"] != "unclear"
+        || issue["placementUnsupported"] != false
+    {
+        return None;
+    }
+    let rejected = issue["unclearText"].as_str().filter(|term| !term.is_empty())?;
+    let current = claim["text"].as_str().filter(|current| current.contains(rejected))?;
+    let reason = issue["reason"].as_str()?;
+    if claim["owner"] == rejected && matches!(rejected, "你" | "你这边" | "您" | "您这边")
+        && !text.contains(rejected)
+        && ["未指名", "没有指名", "未明确具体负责人", "无法确认具体责任人"]
+            .iter().any(|cue| reason.contains(cue))
+        && cited_claim_speech(issue, claim, source).any(|quote| quote.contains(rejected))
+    {
+        let revised = if unresolved_action_fields(claim, text, &[rejected.to_owned()]).contains(&"owner") {
+            text.to_owned()
+        } else {
+            format!("{}，负责人待核实。", text.trim_end_matches(['。', '！', '？', '.', ' ']))
+        };
+        return super::line(&revised, repair_text_limit(issue["path"].as_str()?)).then_some((revised, true));
+    }
+    let reference = ["列表", "名单", "清单"].into_iter().find(|noun| {
+        !rejected.contains(noun) && current.contains(noun) && text.contains(noun)
+            && reason.contains(noun) && ["所指不明", "所指待核", "无法确认", "无法确定"]
+                .iter().any(|cue| reason.contains(cue))
+    })?;
+    let mut literal = cited_claim_speech(issue, claim, source).filter(|quote| {
+        ["这个", "那个", "这份", "那份"]
+            .iter().any(|demonstrative| quote.contains(&format!("{demonstrative}{reference}")))
+            && !quote.contains(rejected)
+    });
+    let quote = literal.next()?;
+    if literal.next().is_some() { return None; }
+    let action_anchor: String = current.chars().take(4).collect();
+    if action_anchor.chars().count() != 4 || !quote.contains(&action_anchor) { return None; }
+    let mut matches = prior.iter().filter_map(|previous| {
+        let text = previous["text"].as_str()?;
+        (previous["kind"] == "action" && previous["sources"] == claim["sources"]
+            && previous["owner"] == claim["owner"] && previous["due"] == claim["due"]
+            && text.starts_with(&action_anchor) && text.contains(reference) && !text.contains(rejected))
+            .then_some(text)
+    });
+    let previous = matches.next()?;
+    if matches.next().is_some() { return None; }
+    let revised = format!("{}，{reference}所指待核实。", previous.trim_end_matches(['。', '！', '？', '.', ' ']));
+    super::line(&revised, repair_text_limit(issue["path"].as_str()?)).then_some((revised, false))
+}
+
+#[cfg(test)]
 fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], claims: &[Value]) -> (String, usize) {
+    normalize_scoped_repair_reply(raw, issues, source, claims, &[])
+}
+
+fn normalize_scoped_repair_reply(
+    raw: &str, issues: &[Value], source: &[Sentence], claims: &[Value], prior: &[Value],
+) -> (String, usize) {
     let original = || (raw.to_owned(), 0);
     let Ok(mut reply) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
         return original();
@@ -847,7 +936,29 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], clai
         let Some(body) = row.as_object_mut() else { continue; };
         let Some(path) = body.get("path").and_then(Value::as_str) else { continue; };
         let Some(issue) = issues.iter().find(|issue| issue["path"] == path) else { continue; };
-        let Some(text) = body.get("text").and_then(Value::as_str) else { continue; };
+        let claim = claims.iter().find(|claim| claim["path"] == path);
+        let text = body.get("text").and_then(Value::as_str);
+        if body.len() == 2 && (body.get("remove").and_then(Value::as_bool) == Some(true)
+            || text.is_some_and(|text| text.trim() == "remove"))
+        {
+            if let Some(revised) = claim.and_then(|claim| retain_answered_condition(issue, claim, source)) {
+                body.remove("remove");
+                body.insert("text".into(), json!(revised));
+                count += 1;
+                continue;
+            }
+        }
+        let Some(text) = text else { continue; };
+        if body.len() == 2 {
+            if let Some((revised, clear_owner)) = claim
+                .and_then(|claim| preserve_audited_action(issue, claim, text, source, prior))
+            {
+                body.insert("text".into(), json!(revised));
+                if clear_owner { body.insert("owner".into(), Value::Null); }
+                count += 1;
+                continue;
+            }
+        }
         if body.len() == 3 && body.get("remove").and_then(Value::as_bool) == Some(true)
             && issue["placementUnsupported"] == true && issue["clarity"] == "clear"
             && issue["status"] == "overstated" && independent_path(path) && super::line(text, 120)
@@ -914,6 +1025,59 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], clai
         }
     }
     if count > 0 { (reply.to_string(), count) } else { original() }
+}
+
+#[cfg(test)]
+#[test]
+fn an_answered_question_can_leave_a_cited_condition_in_discussion() {
+    let question = json!({"path":"questions[2]","text":"现场无人作证时如何处理。","sources":["u007"]});
+    let issue = json!({"path":"questions[2]","status":"unsupported","clarity":"clear",
+        "placementUnsupported":true,"reason":"追问后律师已明确答称可以进一步举证。","evidence":["e0178"]});
+    let mut source = [Sentence{id:"e0178".into(),source:"u007".into(),
+        text:"说话人5: 在当时的情况下并没有人能为我作证，还可以举证吗？".into()}];
+    let raw = r#"{"changes":[{"path":"questions[2]","remove":true}]}"#;
+    let (patched, count) = normalize_repair_reply(raw, &[issue.clone()], &source, &[question.clone()]);
+    assert_eq!(count, 1);
+    let patch: Value = serde_json::from_str(&patched).unwrap();
+    assert_eq!(patch["changes"][0], json!({"path":"questions[2]",
+        "text":"提问者提到「在当时的情况下并没有人能为我作证」这一情形。"}));
+    source[0].source = "u008".into();
+    assert_eq!(normalize_repair_reply(raw, &[issue], &source, &[question]), (raw.into(), 0));
+}
+
+#[cfg(test)]
+#[test]
+fn reviewed_assignments_keep_task_and_expose_unresolved_fields() {
+    let claims = [
+        json!({"path":"actionItems[3]","kind":"action","text":"安排专员按列表逐个去推供货商线下广告位。",
+            "owner":null,"due":null,"sources":["u008"]}),
+        json!({"path":"actionItems[4]","kind":"action","text":"由你敲定盲盒合作商。",
+            "owner":"你","due":"下周二","sources":["u008"]}),
+    ];
+    let issues = [
+        json!({"path":"actionItems[3]","status":"unclear","placementUnsupported":false,
+            "unclearText":"供货商线下广告位","reason":"列表具体所指不明，安排专员的动作本身存在。",
+            "evidence":["e0185"]}),
+        json!({"path":"actionItems[4]","status":"unclear","placementUnsupported":false,
+            "unclearText":"你","reason":"交办有原话支持，但责任人未指名。","evidence":["e0190"]}),
+    ];
+    let source = [
+        Sentence{id:"e0185".into(),source:"u008".into(),text:"把这个列表挨个去推一下，安排专员。".into()},
+        Sentence{id:"e0190".into(),source:"u008".into(),text:"由你去敲定一下合作商。".into()},
+    ];
+    let prior = [json!({"path":"actionItems[3]","kind":"action","text":"安排专员跟进列表并推广。",
+        "owner":null,"due":null,"sources":["u008"]})];
+    let raw = r#"{"changes":[{"path":"actionItems[3]","text":"安排专员按列表逐个去推线下广告位。"},{"path":"actionItems[4]","text":"敲定盲盒合作商。"}]}"#;
+    let (patched, count) = normalize_scoped_repair_reply(raw, &issues, &source, &claims, &prior);
+    assert_eq!(count, 2);
+    let patch: Value = serde_json::from_str(&patched).unwrap();
+    assert_eq!(patch["changes"], json!([
+        {"path":"actionItems[3]","text":"安排专员跟进列表并推广，列表所指待核实。"},
+        {"path":"actionItems[4]","text":"敲定盲盒合作商，负责人待核实。","owner":null},
+    ]));
+    let mut wrong_prior = prior.clone();
+    wrong_prior[0]["sources"] = json!(["u009"]);
+    assert_eq!(normalize_scoped_repair_reply(raw, &issues, &source, &claims, &wrong_prior).1, 1);
 }
 
 #[cfg(test)]
@@ -1871,7 +2035,8 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
             None => super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?,
         };
         let (raw, normalized) = if super::source_items::enabled() {
-            normalize_repair_reply(&raw, &issues, &source, &audited_claims)
+            let previous_claims = verified.map(claims).unwrap_or_default();
+            normalize_scoped_repair_reply(&raw, &issues, &source, &audited_claims, &previous_claims)
         } else { (raw, 0) };
         if normalized > 0 {
             if let Some(call) = trace.last_mut() {

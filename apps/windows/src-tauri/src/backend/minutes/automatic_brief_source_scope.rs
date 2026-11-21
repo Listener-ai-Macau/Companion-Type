@@ -51,6 +51,14 @@ fn literal_scope(quote: &str, statement: &str) -> Option<&'static str> {
     {
         return Some("ambiguousReference");
     }
+    let qualified = ["待核实", "待核对", "待确认"].iter().any(|word| statement.contains(word));
+    let categorical = ["都不", "一律", "不得", "不应", "不准", "禁止"]
+        .iter().any(|cue| statement.contains(cue));
+    if !qualified && categorical && ["不也可以", "不也能", "不能也可以", "不可以也可以"]
+        .iter().any(|cue| quote.contains(cue))
+    {
+        return Some("conflictingBoundary");
+    }
     if ["就是强迫", "前提是强迫", "必须是强迫", "是因为违背"]
         .iter()
         .any(|word| quote.contains(word))
@@ -64,6 +72,15 @@ fn literal_scope(quote: &str, statement: &str) -> Option<&'static str> {
         return Some("narrowedConclusion");
     }
     None
+}
+
+#[cfg(test)]
+#[test]
+fn a_conflicting_restriction_cannot_support_a_blanket_boundary() {
+    let quote = "顾客不能进来了，工作人员也工作人员不也可以进来";
+    assert_eq!(literal_scope(quote, "顾客和工作人员都不应进。"), Some("conflictingBoundary"));
+    assert_eq!(literal_scope(quote, "顾客不能进入，工作人员能否进入待核实。"), None);
+    assert_eq!(literal_scope("顾客不能进，工作人员也不能进。", "顾客和工作人员都不应进。"), None);
 }
 
 fn source_scope(verified: &VerifiedBrief, doc: &Document, source: &[Value]) -> Vec<Value> {
@@ -185,6 +202,9 @@ fn packet(
            "context":context.iter().map(|row| &row["id"]).collect::<Vec<_>>(),"claim":claim});
     if kind == "budgetBoundary" {
         check["instruction"] = json!("分开写谁报销和哪项经费被排除。原话明确报销方但后半句口齿含混时，保留会上提出的报销方，将经费归属列为待核实。不可把报销写成已批准，也不可把否定的经费连到报销方。");
+    }
+    if kind == "conflictingBoundary" {
+        check["instruction"] = json!("发言中存在允许和不允许的含混或自我更正。分别保留各主体可从原话确认的限制，听不清或有冲突的主体单独写待核实。引用相邻发言支持已确认部分，不把不同主体合并成一律禁止或一律允许。");
     }
     check
 }
@@ -381,7 +401,9 @@ fn apply_scope(
         {
             return Err(fail());
         }
-        if check["kind"] == "ambiguousReference" && !fact.text.contains("待核实") {
+        if matches!(check["kind"].as_str(), Some("ambiguousReference" | "conflictingBoundary"))
+            && !fact.text.contains("待核实")
+        {
             return Err(fail());
         }
         if check["kind"] == "budgetBoundary"
