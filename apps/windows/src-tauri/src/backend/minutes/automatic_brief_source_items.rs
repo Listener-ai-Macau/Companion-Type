@@ -694,6 +694,15 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     let split = bindings.split_assignments(&mut facts);
     let roles = super::source_coverage::preserve_spoken_roles(&mut facts, &evidence);
     let separated = retain_requests_before_questions(&mut facts, &evidence);
+    let source_by_id: HashMap<_, _> = evidence.iter().map(|row| {
+        (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
+    }).collect();
+    let payment_ranges = facts.iter_mut().filter_map(|fact| {
+        let sources = fact.evidence.iter().map(|id| source_by_id[id.as_str()]);
+        let corrected = retain_payment_extent(&fact.text, sources)?;
+        fact.text = corrected;
+        Some(fact.id.clone())
+    }).collect::<Vec<_>>();
     let limits = super::source_coverage::restore_cited_limits(&mut facts, &evidence);
     let delivery_scopes = super::source_coverage::restore_delivery_scope(&mut facts, &evidence);
     let spoken_scope = reconcile_spoken_scope(&mut facts, &evidence);
@@ -729,6 +738,9 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         "priorProposalsMarked":marked,"splitAssignmentEvidence":split,
         "restoredSourceRoles":roles,"separateRequests":separated,"retainedLiteralLimits":limits,
         "retainedDeliveryScopes":delivery_scopes,"spokenScopeCorrections":spoken_scope});
+    if !payment_ranges.is_empty() {
+        projection["sourceBindings"]["retainedPaymentRanges"] = json!(payment_ranges);
+    }
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),
         "details":topic.details.iter().map(|id| [id]).collect::<Vec<_>>()})).collect::<Vec<_>>();
@@ -765,6 +777,10 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
         .chain(doc.questions.iter().map(|entry| normalized(&entry.text))).collect();
     for addition in additions {
         let mut fact = addition.item.bind(&known, &known_ids)?;
+        let sources = fact.evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap());
+        if let Some(corrected) = retain_payment_extent(&fact.text, sources) {
+            fact.text = corrected;
+        }
         if fact.placement == Placement::Topic {
             super::source_bindings::mark_proposal(&mut fact);
         }
@@ -1089,6 +1105,138 @@ fn number_value(text: &str, year: bool) -> Option<f64> {
         }
     }
     Some(total + section + current.unwrap_or(0) as f64)
+}
+
+#[derive(Clone, Copy, PartialEq)]
+enum PaymentModifier {
+    BeforeNumber,
+    AfterNumber,
+    AfterCurrency,
+}
+
+struct SpokenPayment<'a> {
+    action: &'static str,
+    amount: f64,
+    currency: &'static str,
+    modifier: Option<(PaymentModifier, &'a str)>,
+    number: regex::Match<'a>,
+    currency_end: usize,
+}
+
+fn completed_payments(text: &str) -> impl Iterator<Item = SpokenPayment<'_>> {
+    static PAYMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(&format!(
+        r"(?P<action>赔偿|赔付|支付|付款|退款|退还|赔|付)(?P<completed>了)?[ 	]*(?P<estimate>大约|大概|将近|约|近)?(?P<number>{QUANTITY})(?P<excess>多|余)?(?:[ 	]*(?P<currency>美元|块钱|元))?(?P<around>左右)?"
+    )).expect("constant completed-payment expression"));
+    PAYMENT.captures_iter(text).filter_map(|matched| {
+        let verb = matched.name("action")?;
+        let begin = text[..verb.start()].rsplit(['。','！','？','；','，',';',',','
+']).next()?.trim_end();
+        if ["如果", "假如", "假设", "是否", "打算", "准备", "预计", "建议", "否认"]
+            .iter().any(|word| begin.contains(word))
+            || ["尚未", "尚不", "没有", "不再", "未", "没", "应", "需要", "必须", "将", "要", "不"]
+                .iter().any(|word| begin.ends_with(word))
+        {
+            return None;
+        }
+        let end = matched.get(0)?.end();
+        let tail = text[end..].trim_start();
+        let after_payment = ["之后", "以后", "后"].iter().any(|word| tail.starts_with(word));
+        if ["到", "至", "以上", "以下", "以内", "起"].iter().any(|word| tail.starts_with(word)) {
+            return None;
+        }
+        let currency = matched.name("currency");
+        let completed = after_payment || matched.name("completed").is_some()
+            || ["已", "已经", "曾", "曾经", "实际"].iter().any(|word| begin.ends_with(word));
+        if !completed || (currency.is_none() && !after_payment) {
+            return None;
+        }
+        let number = matched.name("number")?;
+        let mut modifiers = [
+            (PaymentModifier::BeforeNumber, matched.name("estimate")),
+            (PaymentModifier::AfterNumber, matched.name("excess")),
+            (PaymentModifier::AfterCurrency, matched.name("around")),
+        ].into_iter().filter_map(|(position, marker)| Some((position, marker?.as_str())));
+        let modifier = modifiers.next();
+        if modifiers.next().is_some() {
+            return None;
+        }
+        Some(SpokenPayment {
+            action: match verb.as_str() {
+                "赔偿" | "赔付" | "赔" => "compensation",
+                "支付" | "付款" | "付" => "payment",
+                "退款" | "退还" => "refund",
+                _ => return None,
+            },
+            amount: number_value(number.as_str(), false)?,
+            currency: match currency.map(|token| token.as_str()) {
+                Some("美元") => "美元",
+                Some(_) => "元",
+                None => "",
+            },
+            modifier, number, currency_end: currency.map_or(number.end(), |token| token.end()),
+        })
+    })
+}
+
+fn retain_payment_extent<'a>(statement: &str, sources: impl Iterator<Item = &'a str>) -> Option<String> {
+    if statement.contains(['「', '」', '“', '”', '"']) {
+        return None;
+    }
+    let claims = completed_payments(statement).collect::<Vec<_>>();
+    if claims.iter().all(|claim| claim.modifier.is_some()) {
+        return None;
+    }
+    let cited_payments = sources.flat_map(completed_payments).collect::<Vec<_>>();
+    let mut insertions = Vec::new();
+    for claim in &claims {
+        let same_payment = |other: &&SpokenPayment<'_>| {
+            claim.action == other.action && claim.amount == other.amount && claim.currency == other.currency
+        };
+        if claim.modifier.is_some() || claims.iter().filter(same_payment).count() != 1 {
+            continue;
+        }
+        // Keep the actual expression only when both the statement and its
+        // cited speech identify one completed payment of this kind and value.
+        let mut witnesses = cited_payments.iter().filter(same_payment);
+        let Some((position, wording)) = witnesses.next().and_then(|payment| payment.modifier) else { continue; };
+        if witnesses.next().is_some() {
+            continue;
+        }
+        let offset = match position {
+            PaymentModifier::BeforeNumber => claim.number.start(),
+            PaymentModifier::AfterNumber => claim.number.end(),
+            PaymentModifier::AfterCurrency => claim.currency_end,
+        };
+        insertions.push((offset, wording));
+    }
+    if insertions.is_empty() {
+        return None;
+    }
+    let mut corrected = statement.to_owned();
+    for (offset, wording) in insertions.into_iter().rev() {
+        corrected.insert_str(offset, wording);
+    }
+    line(&corrected, 90).then_some(corrected)
+}
+
+#[cfg(test)]
+#[test]
+fn a_paid_amount_preserves_its_own_spoken_extent_without_borrowing_another_payment() {
+    let source = "说话人5: 赔偿四千多之后就没有再赔偿。";
+    let draft = "咨询人C问：法院判赔四万但仅赔四千后拒赔，怎么办。";
+    assert_eq!(retain_payment_extent(draft, ["法院判赔四万元。", source].into_iter()).as_deref(),
+        Some("咨询人C问：法院判赔四万但仅赔四千多后拒赔，怎么办。"));
+    assert_eq!(retain_payment_extent("供应方已支付4000元。", ["供应方已经支付四千元左右。"].into_iter()).as_deref(),
+        Some("供应方已支付4000元左右。"));
+    assert_eq!(retain_payment_extent("公司实际退款四千元。", ["公司实际退还约四千块钱。"].into_iter()).as_deref(),
+        Some("公司实际退款约四千元。"));
+    assert!(retain_payment_extent(draft, [source, "也提到赔偿四千后未再付。"].into_iter()).is_none());
+    assert!(retain_payment_extent(draft, ["付四千多之后。"].into_iter()).is_none());
+    assert!(retain_payment_extent(draft, ["赔付四千多元之后。"].into_iter()).is_none());
+    assert!(retain_payment_extent(draft, ["如果赔偿四千多之后还欠钱，怎么办？"].into_iter()).is_none());
+    assert!(retain_payment_extent("仅赔约四千后拒赔。", [source].into_iter()).is_none());
+    assert!(retain_payment_extent("话里说「仅赔四千后拒赔」。", [source].into_iter()).is_none());
+    assert!(retain_payment_extent("仅赔四千后拒赔，隔日又赔四千后离开。", [source].into_iter()).is_none());
 }
 
 fn measure_has_witness(span: &str, claim: &Value) -> bool {
