@@ -65,7 +65,9 @@ fn material_spans(text: &str) -> Vec<(Focus, &str)> {
             let contrary = focus == Focus::Restriction && (before.trim_end().ends_with(['不', '没']) || before.trim_end().ends_with("不会"));
             let proposed = focus == Focus::CompletedChange
                 && ["如果", "准备", "计划", "建议"].iter().any(|cue| before.contains(cue));
-            if questioned || contrary || proposed {
+            let example = focus == Focus::Restriction
+                && ["比如", "比方", "举例", "不能说"].iter().any(|cue| before.contains(cue) || found.as_str().starts_with(cue));
+            if questioned || contrary || proposed || example {
                 continue;
             }
             let span = if found.as_str().chars().count() < 5 {
@@ -171,6 +173,51 @@ fn assignment_owner<'a>(statement: &str, source: &'a str) -> Option<&'a str> {
     statement.contains(owner).then_some(owner)
 }
 
+pub(super) fn restore_delivery_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
+    const PERIODS: [&str; 6] = ["上半年", "下半年", "本季度", "下季度", "本年度", "下一年度"];
+    let positions: HashMap<_, _> = evidence.iter().enumerate()
+        .map(|(position, row)| (row["id"].as_str().unwrap(), position)).collect();
+    let mut covered = Vec::new();
+    for fact in facts.iter_mut().filter(|fact| fact.placement == Placement::Action
+        && fact.evidence.len() < 8 && fact.text.contains("计划")
+        && ["发给", "提交", "交给", "报送"].iter().any(|verb| fact.text.contains(verb))) {
+        let Some(period) = PERIODS.into_iter().find(|period| fact.text.contains(period)) else {
+            continue;
+        };
+        let scopes: Vec<_> = fact.evidence.iter().filter_map(|id| positions.get(id.as_str()).copied())
+            .flat_map(|position| {
+                let anchor = &evidence[position];
+                evidence[position.saturating_sub(4)..=position].iter().filter(move |row| {
+                    anchor["source"] == row["source"] && anchor["turnSpeaker"].is_string()
+                        && anchor["turnSpeaker"] == row["turnSpeaker"]
+                })
+            }).filter_map(|row| {
+                let original = row["text"].as_str()?;
+                if ["如果", "我建议", "假如", "要不要", "不一定"].iter().any(|marker| original.contains(marker)) {
+                    return None;
+                }
+                let spans = material_spans(original);
+                let (_, span) = spans.into_iter().find(|(kind, span)| {
+                    *kind == Focus::PlanScope && span.contains(period) && span.contains("计划")
+                })?;
+                Some((row["id"].as_str()?, span))
+            }).collect();
+        let Some((id, span)) = scopes.first().copied() else { continue; };
+        if scopes.iter().any(|(_, other)| *other != span) || normalized(&fact.text).contains(&normalized(span)) {
+            continue;
+        }
+        let text = format!("{}。同一发言说明「{span}」。", fact.text.trim_end_matches('。'));
+        if line(&text, 90) {
+            if !fact.evidence.iter().any(|current| current == id) {
+                fact.evidence.push(id.to_owned());
+            }
+            fact.text = text;
+            covered.push(fact.id.clone());
+        }
+    }
+    covered
+}
+
 fn was_completed(text: &str, source: &str) -> bool {
     let past = ["上个月", "上月", "上周", "上季度", "去年"];
     let events = [("成立", "成立了"), ("组建", "组建了"), ("完成", "完成了"), ("交付", "交付了")];
@@ -178,6 +225,18 @@ fn was_completed(text: &str, source: &str) -> bool {
         && events.iter().any(|(event, original)| text.contains(event) && source.contains(original))
         && !["后续", "接下来", "还要", "需要", "要求", "必须", "没", "尚未", "计划", "打算"]
             .iter().any(|word| text.contains(word) || source.contains(word))
+}
+
+fn is_report_or_meeting_process(text: &str, source: &str) -> bool {
+    let follows_after = ["会后", "散会后", "后续", "接下来要", "必须继续", "请继续", "务必"];
+    if follows_after.iter().any(|word| text.contains(word) || source.contains(word)) {
+        return false;
+    }
+    let meeting_chair = text.contains("主持") && ["本次会议", "这场会议"].iter().any(|word| text.contains(word))
+        && source.contains("主持") && ["这场会议", "这次会议", "本次会议"].iter().any(|word| source.contains(word));
+    let ongoing = text.contains("正在") && ["现在", "目前", "正在"].iter().any(|word| source.contains(word))
+        && ["在招", "在培训", "在检查", "在处理", "在跟进"].iter().any(|word| source.contains(word));
+    meeting_chair || ongoing
 }
 
 pub(super) fn preserve_spoken_roles(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
@@ -192,7 +251,8 @@ pub(super) fn preserve_spoken_roles(facts: &mut [Fact], evidence: &[Value]) -> V
                 fact.placement = Placement::Action;
             },
             Placement::Action if fact.due.is_none() && fact.evidence.len() == 1 => {
-                if !sources.into_iter().any(|source| was_completed(&fact.text, source)) {
+                if !sources.into_iter().any(|source| was_completed(&fact.text, source)
+                    || is_report_or_meeting_process(&fact.text, source)) {
                     continue;
                 }
                 fact.kind = Kind::Status;

@@ -388,6 +388,7 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     let roles = super::source_coverage::preserve_spoken_roles(&mut facts, &evidence);
     let separated = retain_requests_before_questions(&mut facts, &evidence);
     let limits = super::source_coverage::restore_cited_limits(&mut facts, &evidence);
+    let delivery_scopes = super::source_coverage::restore_delivery_scope(&mut facts, &evidence);
     let mut projection = complete_layout(&mut layout, &facts)?;
     let mut moved = Vec::new();
     for (id, before, after) in &renamed {
@@ -418,7 +419,8 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     }
     projection["sourceBindings"] = json!({"correctedAttributions":renamed,"movedToSpeakerTopic":moved,
         "priorProposalsMarked":marked,"splitAssignmentEvidence":split,
-        "restoredSourceRoles":roles,"separateRequests":separated,"retainedLiteralLimits":limits});
+        "restoredSourceRoles":roles,"separateRequests":separated,"retainedLiteralLimits":limits,
+        "retainedDeliveryScopes":delivery_scopes});
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),
         "details":topic.details.iter().map(|id| [id]).collect::<Vec<_>>()})).collect::<Vec<_>>();
