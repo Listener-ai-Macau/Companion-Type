@@ -241,6 +241,15 @@ fn project_cloud_minutes(doc: &Document, units: &[Unit], session: &CompanionV1Ho
     minutes
 }
 
+fn append_pending_quotes(minutes: &mut CompanionV1MeetingMinutes, pending: &[String]) {
+    if pending.is_empty() { return; }
+    minutes.markdown.push_str("\n\n## 待核实原话\n\n以下原话的具体所指需要确认。\n\n");
+    let mut displayed = HashSet::new();
+    for quote in pending.iter().filter(|quote| displayed.insert(quote.as_str())) {
+        minutes.markdown.push_str(&format!("- 原话：“{quote}”\n"));
+    }
+}
+
 fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[Unit],
     session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, reason: &str,
 ) -> CompanionV1MeetingMinutes {
@@ -333,6 +342,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         (doc, None)
         };
         traced_document=Some(doc.clone());
+        let mut pending_quotes = Vec::new();
         let mut doc=if let Some(facts)=source_facts {
             let reviewable = |draft: &Document, reason: String| {
                 check_current()?;
@@ -344,15 +354,20 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 Err(reason) => return reviewable(&doc, reason),
             };
             traced_document=Some(checked.doc.clone());
-            let verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace) {
+            let mut verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace) {
                 Ok(verified) => verified,
-                Err(reason) => return reviewable(&doc, reason),
+                Err(reason) => return reviewable(&checked.doc, reason),
             };
+            pending_quotes = std::mem::take(&mut verified.pending_quotes);
             let reviewed = verified.document.clone();
             traced_document=Some(reviewed.clone());
             match commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace) {
                 Ok(document) => document,
-                Err(reason) => return reviewable(&reviewed, reason),
+                Err(reason) => {
+                    let mut draft = reviewable(&reviewed, reason)?;
+                    append_pending_quotes(&mut draft, &pending_quotes);
+                    return Ok(draft);
+                }
             }
         }else if coverage::enabled(){
             let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
@@ -364,7 +379,9 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         reconcile_citations(&mut doc, &source);
         validate(&doc, &units)?;
         traced_document=Some(doc.clone());
-        Ok(project_cloud_minutes(&doc, &units, session, base))
+        let mut minutes = project_cloud_minutes(&doc, &units, session, base);
+        append_pending_quotes(&mut minutes, &pending_quotes);
+        Ok(minutes)
     })();
     if let Ok(path)=std::env::var("COMPANION_TYPE_AUTOMATIC_BRIEF_TRACE_PATH") {
         if !path.is_empty(){if let Ok(mut f)=std::fs::OpenOptions::new().write(true).create_new(true).open(path) {

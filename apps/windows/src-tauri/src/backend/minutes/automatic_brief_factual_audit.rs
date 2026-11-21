@@ -1095,6 +1095,65 @@ fn preserves_unclear_history(doc:&Document,history:&HashMap<String,Vec<String>>)
     }
     Ok(())
 }
+fn hold_unclear_detail(
+    raw: &str, issues: &[Value], claims: &[Value], source: &[Sentence],
+    history: &HashMap<String, Vec<String>>,
+) -> Option<(String, Vec<String>)> {
+    let mut reply: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim()).ok()?;
+    let rows = reply.get_mut("changes")?.as_array_mut()?;
+    unique_repair_rows(rows, true)?;
+    let mut pending = Vec::new();
+    for row in rows {
+        let Some(text) = row["text"].as_str().filter(|_| row.as_object().is_some_and(|edit| edit.len() == 2))
+        else { continue; };
+        let Some(path) = row["path"].as_str().filter(|path| path.starts_with("topics[") && path.contains(".details["))
+        else { continue; };
+        let Some(issue) = issues.iter().find(|issue| issue["path"] == path && issue["status"] == "unclear")
+        else { continue; };
+        // The opaque placeholder was introduced by the earlier conservative edit.
+        // Only a continued failure of this detail can fall back to a literal quote.
+        let Some(phrase) = issue["unclearText"].as_str().filter(|term| *term == "含混表述")
+        else { continue; };
+        let Some(claim) = claims.iter().find(|claim| claim["path"] == path
+            && claim["text"].as_str().is_some_and(|text| text.contains(phrase)))
+        else { continue; };
+        if !history.get(path).is_some_and(|terms| terms.iter().any(|term| term == phrase)
+            && terms.iter().any(|term| term != phrase && text.contains(term)))
+        {
+            continue;
+        }
+        let Some([id]) = issue["evidence"].as_array().map(Vec::as_slice) else { continue; };
+        let Some(sentence) = source.iter().find(|sentence| id == sentence.id.as_str()
+            && claim["sources"].as_array().is_some_and(|sources| sources.iter().any(|value| value == &sentence.source)))
+        else { continue; };
+        let quote = sentence.text.trim();
+        if !super::line(quote, 180) { continue; }
+        pending.push(quote.to_owned());
+        *row = json!({"path":path,"remove":true});
+    }
+    (!pending.is_empty()).then(|| (reply.to_string(), pending))
+}
+
+#[cfg(test)]
+#[test]
+fn known_unclear_detail_is_held_without_rewriting_an_independent_edit() {
+    let path = "topics[0].details[0]";
+    let peer = json!({"path":"topics[0].details[1]","text":"由区域经理发问。"});
+    let proposal = json!({"changes":[{"path":path,"text":"确定转到老站交接，具体所指待核实。"},peer]});
+    let issues = [json!({"path":path,"status":"unclear","unclearText":"含混表述","evidence":["e0001"]})];
+    let claim = json!({"path":path,"text":"提到含混表述，具体所指待核对。","sources":["u001"]});
+    let history = HashMap::from([(path.to_owned(),vec!["老站交接".into(),"含混表述".into()])]);
+    let source = [Sentence {id:"e0001".into(),source:"u001".into(),text:"原话提到那个站的交接。".into()}];
+    let (patch, quotes) = hold_unclear_detail(&proposal.to_string(), &issues, &[claim.clone()], &source, &history).unwrap();
+    assert_eq!(serde_json::from_str::<Value>(&patch).unwrap(),
+        json!({"changes":[{"path":path,"remove":true},peer]}));
+    assert_eq!(quotes, ["原话提到那个站的交接。"]);
+
+    let wrong_source = [Sentence {source:"u002".into(),..source[0].clone()}];
+    assert!(hold_unclear_detail(&proposal.to_string(), &issues, &[claim.clone()], &wrong_source, &history).is_none());
+    assert!(hold_unclear_detail(&proposal.to_string(), &issues, &[claim], &source, &HashMap::new()).is_none());
+}
+
 fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
     let previous=verified.map(claims).unwrap_or_default().into_iter().map(|claim|(claim["path"].as_str().unwrap().to_string(),claim)).collect::<HashMap<_,_>>();
     claims(doc).into_iter().filter(|claim|previous.get(claim["path"].as_str().unwrap())!=Some(claim)).collect()
@@ -1218,6 +1277,7 @@ fn same_assertion(left: &Value, right: &Value) -> bool {
 pub(super) struct VerifiedBrief {
     pub(super) document: Document,
     pub(super) evidence: HashMap<String, Vec<String>>,
+    pub(super) pending_quotes: Vec<String>,
 }
 
 pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
@@ -1264,11 +1324,12 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
     };
     let mut evidence = HashMap::new();
     let mut supported_conflicts = HashSet::new();
+    let mut pending_quotes = Vec::new();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
         if expected.is_empty(){
             let document=finish_conflicts(current,conflicts,&supported_conflicts)?;
-            return Ok(VerifiedBrief {document,evidence});
+            return Ok(VerifiedBrief {document,evidence,pending_quotes});
         }
         emphasize_source_scope(&mut expected,&source);
         for claim in &mut expected {
@@ -1311,7 +1372,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         }).collect::<Vec<_>>();
         if issues.is_empty(){
             let document=finish_conflicts(current,conflicts,&supported_conflicts)?;
-            return Ok(VerifiedBrief {document,evidence});
+            return Ok(VerifiedBrief {document,evidence,pending_quotes});
         }
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
         let misplaced=audit.claim_audit.iter().filter(|c|super::source_items::enabled()&&c.placement_unsupported==Some(true))
@@ -1395,6 +1456,12 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
                 call["sourceBoundRepairNormalization"] = json!(normalized);
             }
         }
+        let (raw, newly_pending) = if round == 1 && super::source_items::enabled() {
+            hold_unclear_detail(&raw, &issues, &audited_claims, &source, &unclear_history)
+                .unwrap_or((raw, Vec::new()))
+        } else {
+            (raw, Vec::new())
+        };
         let next=match apply_repair(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units,scoped){
             Ok(doc)=>doc,
             Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
@@ -1411,6 +1478,10 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             Err(reason)=>return Err(reason),
         };
         preserves_unclear_history(&next.document,&unclear_history)?;
+        if !newly_pending.is_empty() {
+            if let Some(call) = trace.last_mut() { call["sourceWordingPending"] = json!(&newly_pending); }
+            pending_quotes.extend(newly_pending);
+        }
         if super::source_items::enabled() {
             carry_verified_after_scoped_repair(&next.document, &current, &mut verified_claims, &mut evidence);
         }

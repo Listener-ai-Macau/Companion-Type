@@ -590,6 +590,7 @@ fn review_from_verified_public_minutes() {
     let verified = factual_audit::VerifiedBrief {
         document: serde_json::from_value(fixture["document"].clone()).unwrap(),
         evidence: serde_json::from_value(fixture["priorEvidence"].clone()).unwrap(),
+        pending_quotes: Vec::new(),
     };
     super::validate(&verified.document, &units).unwrap();
     let client = reqwest::blocking::Client::builder().no_proxy().build().unwrap();

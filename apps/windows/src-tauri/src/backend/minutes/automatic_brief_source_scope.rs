@@ -570,6 +570,7 @@ fn review_from_verified_public_scope() {
     let verified = VerifiedBrief {
         document: serde_json::from_value(fixture["document"].clone()).unwrap(),
         evidence: serde_json::from_value(fixture["priorEvidence"].clone()).unwrap(),
+        pending_quotes: Vec::new(),
     };
     super::validate(&verified.document, &units).unwrap();
     let candidate = fixture.get("candidate").map_or_else(
