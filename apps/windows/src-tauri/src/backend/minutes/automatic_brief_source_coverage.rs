@@ -565,7 +565,7 @@ pub(super) fn retain_context_schedule(facts: &mut [Fact], context: &[Fact], evid
     let mut changes = Vec::new();
     for fact in facts.iter_mut().filter(|fact| fact.placement == Placement::Topic && !fact.text.contains('月')) {
         let mut witnesses = context.iter().filter(|alternative| alternative.placement == Placement::Topic
-            && alternative.kind == fact.kind).filter_map(|alternative| {
+            && alternative.kind.label() == fact.kind.label()).filter_map(|alternative| {
             let (opening, same_claim) = alternative.text.split_once(['，', ',', '。', '；'])?;
             let month = MONTH.captures(opening)?;
             let date = super::source_items::number_value(&month["month"], false)?;

@@ -740,11 +740,12 @@ impl Window<'_> {
                 }
             }
         }
-        let context = neighbors.into_iter().flat_map(|answer| {
-            answer.items.into_iter().filter_map(|item| {
-                let fact = item.bind(&known, &known_ids).ok()?;
+        let context = neighbors.into_iter().flat_map(|SourceAnswer { id: unit, items }| {
+            let (known, known_ids) = (&known, &known_ids);
+            items.into_iter().filter_map(move |item| {
+                let fact = item.bind(known, known_ids).ok()?;
                 (fact.placement == Placement::Topic
-                    && fact.evidence.iter().any(|id| known[id.as_str()]["source"] == answer.id)).then_some(fact)
+                    && fact.evidence.iter().any(|id| known[id.as_str()]["source"] == unit)).then_some(fact)
             })
         }).take(FACT_LIMIT).collect();
         Ok(CheckedWindow { facts, context, ignored_neighbors, ignored_neighbor_only_items, normalized_topic_metadata })
