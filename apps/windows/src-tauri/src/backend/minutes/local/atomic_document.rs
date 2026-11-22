@@ -881,16 +881,25 @@ fn source_verified_facts(
         }
         for (later,row) in sentences.iter().enumerate() {
             let second=row["id"].as_str().unwrap();
-            let Some((earlier,reading))=(later.saturating_sub(4)..later).rev().find_map(|earlier|{
-                if frames_at[earlier].is_some() || frames_at[later].is_some()
-                    || hypothetical.contains(&earlier) || hypothetical.contains(&later)
-                    || !timing.covered_by_one_utterance(&[earlier,later]) { return None; }
+            if frames_at[later].is_some() || hypothetical.contains(&later)
+                || super::source_review::recurrence_boundary(known[second]) {
+                continue;
+            }
+            let Some((earlier,reading))=timing.preceding_sentences_in_utterance(later).rev()
+                .take_while(|&earlier| {
+                    let first=sentences[earlier]["id"].as_str().unwrap();
+                    !super::source_review::recurrence_boundary(known[first])
+                })
+                .find_map(|earlier|{
+                if frames_at[earlier].is_some() || hypothetical.contains(&earlier) { return None; }
                 let first=sentences[earlier]["id"].as_str().unwrap();
                 super::source_review::opposed_recurrence(known[first],known[second]).map(|reading|(earlier,reading))
             }) else {continue;};
             let first=sentences[earlier]["id"].as_str().unwrap();
             if !canonical_brief::line(&reading,90) || verified.iter().any(|fact| {
-                fact.source_needs_review && fact.evidence.iter().any(|id| id==first || id==second)
+                fact.source_needs_review && [first,second].iter().all(|reference| {
+                    fact.evidence.iter().any(|id| id == *reference)
+                })
             }) {continue;}
             verified.retain(|fact|{
                 !matches!(fact.role.as_str(),"status"|"recommendation") || ![first,second].contains(&fact.evidence[0].as_str())
@@ -914,8 +923,11 @@ fn source_verified_facts(
         }
         let explicit_ambiguity=source_review::alternatives(original).is_some_and(|(_,hybrid)|hybrid);
         let work=source_commitments::stated_group_deliverable(original);
+        let nominated=review.by_source.get(anchor).copied();
+        let condition_from_work=work.is_none() && matches!(nominated,Some(Role::Work))
+            && source_review::explicit_operating_condition(original);
         let mark=if explicit_ambiguity { Some(Role::Pending) } else if work.is_some() { Some(Role::Work) }
-            else { review.by_source.get(anchor).copied() };
+            else if condition_from_work { Some(Role::Condition) } else { nominated };
         let Some(mark)=mark else {
             continue;
         };
@@ -962,7 +974,8 @@ fn source_verified_facts(
             let next=verified.iter().position(|item|item.evidence[0].as_str()>anchor).unwrap_or(verified.len());
             verified.insert(next,selected);
         }
-        audit.push(json!({"sentenceId":anchor,"reason":"source-review-verified-disposition","role":mark.as_str()}));
+        audit.push(json!({"sentenceId":anchor,"reason":"source-review-verified-disposition",
+            "nominatedRole":nominated.map(|role|role.as_str()),"role":mark.as_str()}));
     }
     if let Some(timing) = timing {
         let indices = sentences.iter().enumerate().map(|(index,row)|(row["id"].as_str().unwrap(),index))
@@ -2757,7 +2770,7 @@ mod tests{
             ExtractedFact::verbatim("e0003","status","签收时间往后推迟十分二十分钟。"),
         ];
         let mut review=Review::default();
-        review.by_source.insert("e0001".into(),Role::Condition);
+        review.by_source.insert("e0001".into(),Role::Work);
         review.by_source.insert("e0003".into(),Role::Report);
         review.by_source.insert("e0004".into(),Role::Work);
         let bank=build_bank_with_timing(extracted,source,&[],&review).unwrap();
@@ -2770,6 +2783,35 @@ mod tests{
         let timing=bank.facts.iter().filter(|fact|fact.text.contains("十分二十分钟")).collect::<Vec<_>>();
         assert_eq!(timing.len(),1);
         assert_eq!(bank.required_role(timing[0]),Some("source-review"));
+    }
+
+    #[test]
+    fn conflicting_frequencies_across_filler_use_the_saved_turn_boundary() {
+        use crate::companion_v1::CompanionV1UtteranceSegment;
+        let first = "保洁每天都会打扫两遍。";
+        let middle = "上班之前。我们有保洁人员。推车有固定位置。入口还有地垫。三楼要走一圈。";
+        let last = "中午也打扫，一天三次打扫。";
+        for (segments, expects_conflict) in [
+            (vec![format!("{first}{middle}{last}")], true),
+            (vec![format!("{first}{middle}"), last.to_owned()], false),
+            (vec![format!("{first}{middle}下一个议题。{last}")], false),
+        ] {
+            let source = segments.join("\n");
+            let utterances = segments.into_iter().enumerate().map(|(i,text)| CompanionV1UtteranceSegment {
+                text, start_ms:i as u64 * 2000, end_ms:(i + 1) as u64 * 2000,
+                speaker:None, approximate_timing:false,
+            }).collect::<Vec<_>>();
+            let facts = factual_audit::evidence_sentences(&source_units(&source)).iter().map(|row| {
+                ExtractedFact::verbatim(row["id"].as_str().unwrap(),"status",row["text"].as_str().unwrap().trim())
+            }).collect();
+            let bank = build_bank_with_timing(facts, &source, &utterances, &Default::default()).unwrap();
+            let conflict = bank.facts.iter().find(|fact| fact.text.contains("打扫频次"));
+            assert_eq!(conflict.is_some(), expects_conflict);
+            if let Some(fact) = conflict {
+                assert_eq!(fact.evidence.len(), 2);
+                assert_eq!(bank.required_role(fact), Some("source-review"));
+            }
+        }
     }
 
     #[test]

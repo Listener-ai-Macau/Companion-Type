@@ -96,6 +96,21 @@ impl<'a> Timing<'a> {
         })
     }
 
+    pub(super) fn preceding_sentences_in_utterance(&self, anchor: usize) -> Range<usize> {
+        let sentence = &self.sentence_offsets[anchor];
+        let Some(index) = self.utterances_by_sentence[anchor].clone().find(|&index| {
+            let segment = &self.utterance_offsets[index];
+            !self.utterances[index].approximate_timing
+                && segment.start <= sentence.start && sentence.end <= segment.end
+        }) else {
+            return anchor..anchor;
+        };
+        let candidates = &self.sentences_by_utterance[index];
+        let first = candidates.start + self.sentence_offsets[candidates.start..anchor]
+            .partition_point(|sentence| sentence.start < self.utterance_offsets[index].start);
+        first..anchor
+    }
+
     pub(super) fn neighboring_speech(&self, first: usize, second: usize) -> bool {
         let (earlier,later) = if first<second {(first,second)} else {(second,first)};
         let Some(end) = self.utterances_by_sentence[earlier].clone().last()

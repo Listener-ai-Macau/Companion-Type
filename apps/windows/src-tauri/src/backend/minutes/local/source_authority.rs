@@ -328,6 +328,14 @@ pub(super) fn protected_stance(source: &str) -> Option<&'static str> {
     if has(source, &["好像", "大概", "估计", "预计", "约莫", "大约"]) && QUANTITY.is_match(source) {
         return Some("forecast");
     }
+    let compact = source.replace(char::is_whitespace, "");
+    if !has(&compact, DECISION)
+        && (has(&compact, &["我感觉可以", "我感觉啊可以", "我想可以"])
+            || (has(&compact, &["接下来", "刚开业", "在前几个月", "后面", "将来"])
+                && has(&compact, &["工作内容可以", "运营方式可以", "活动安排可以", "试行方式可以"])))
+    {
+        return Some("recommendation");
+    }
     let hypothetical = has(source, &["如果", "假如", "假设", "比如", "举个例", "请问"]);
     let uncertain = has(source, &["可能", "会不会", "是否", "好像", "有待", "尚不清楚"]);
     let judgment = has(source, &["负主要责任", "负次要责任", "有责任", "没有责任", "违法", "违规",

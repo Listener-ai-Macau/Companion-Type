@@ -102,6 +102,10 @@ pub(super) fn bare(source: &str) -> &str {
     split_turn_label(source).map_or(source,|(_,words)|words.trim())
 }
 
+pub(super) fn explicit_operating_condition(source: &str) -> bool {
+    any(bare(source), &["不允许","不准","不让","不得","禁止","必须","务必","一定要","只有","除非"])
+}
+
 /// Scope is retained as a quote. A nominated fragment cannot remove a condition,
 /// fabricate a deadline, or turn a possibility into an assignment.
 pub(super) fn topic_quote(source: &str, role: Role) -> Option<(&str, &'static str)> {
@@ -110,11 +114,14 @@ pub(super) fn topic_quote(source: &str, role: Role) -> Option<(&str, &'static st
     if !line(literal,90) || text.chars().count()<10 || source_context::question_only(text)
         || text.contains(['？','?'])
         || any(text,&["举例","比方说","假设有","说到这儿","说到这里","你刚才问","听说","据说","您好"])
+        || ["都要","一定要","必须","需要","不允许","这个","那个","然后","因为","比如","好像","不像","像"]
+            .iter().any(|tail| text.ends_with(tail))
     {
         return None;
     }
     let condition = any(text,&["只要","只有","除非","不允许","不让","不得","禁止","不能","需要","必须","都要","先","否则","取决于",
-        "冬天","冬季","夏天","夏季","按时","到期","提前","之前","之后","才可以","还得","可以选择","主要用","以此为准"]);
+        "冬天","冬季","夏天","夏季","按时","到期","提前","之前","之后","才可以","还得","可以选择","主要用","以此为准"])
+        || explicit_operating_condition(text);
     let result = any(text,&["报表","实际","已经","已发","完成","已经开始","上半年","下半年","目前","今年","本周","累计","共计","原来","下降","上涨"]);
     let role = match role {
         Role::Condition if condition => source_authority::protected_stance(text).unwrap_or("status"),
@@ -149,14 +156,26 @@ pub(super) fn pending_quote(source: &str) -> Option<&str> {
     {
         return None;
     }
-    let (end, alternate) = if let Some((duration,_))=alternatives(text) {
-        let end=text[duration.end()..].find(['。','；']).map_or(text.len(),|offset|duration.end()+offset);
-        (end, Some(duration.as_str()))
+    let quote_fits = |quote: &str| line(&format!("原话待核：{quote}"),90);
+    if let Some((duration,_))=alternatives(text) {
+        let after = &text[duration.end()..];
+        let end = after.find(['。','；']).map_or(text.len(), |offset| duration.end() + offset);
+        if quote_fits(&text[..end]) {
+            return Some(&text[..end]);
+        }
+        let end = after.find(|ch: char| ch.is_whitespace() || matches!(ch, '，'|','|'。'|'；'))
+            .map_or(text.len(), |offset| duration.end() + offset);
+        let (start, _) = text[..duration.start()].char_indices().rev().nth(36).unwrap_or((0,' '));
+        let prefix = &text[start..duration.start()];
+        let start = prefix.rfind(['，',',','。','；']).map_or(start, |offset| {
+            start + offset + prefix[offset..].chars().next().unwrap().len_utf8()
+        });
+        let excerpt = text[start..end].trim();
+        return quote_fits(excerpt).then_some(excerpt);
     } else if any(text,&["还没有定","还没定","尚未确定","待确认","等确认","未定","仍在讨论","没有定下来","还得协商"]) {
-        (text.len(),None)
-    } else { return None };
-    let text=&text[..end];
-    line(&format!("原话待核：{text}"),90).then_some(text).or(alternate)
+        return quote_fits(text).then_some(text);
+    }
+    None
 }
 
 struct Recurrence<'a> {
@@ -202,6 +221,11 @@ pub(super) fn opposed_recurrence(earlier: &str,later: &str) -> Option<String> {
             first.period,first.operation,first.literal,second.literal))
 }
 
+pub(super) fn recurrence_boundary(source: &str) -> bool {
+    any(bare(source),&["换个话题","下一个议题","下一个问题","接下来讨论",
+        "刚才说错","前面说错","改成","改为","更正为"])
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -223,6 +247,9 @@ mod tests {
         assert!(alternatives("运行时间是十二到十五分钟。").is_none());
         assert!(topic_quote("不得把还在复查的结果发布。",Role::Condition).is_some());
         assert!(topic_quote("比方说如果今天下雨，可以暂缓出货。",Role::Condition).is_none());
+        assert!(topic_quote("我们希望所有人加上现在家里面每个人都要",Role::Condition).is_none());
+        let source = format!("考完试的时候往后推迟个十分二十分钟之内交卷儿 {}", "原话还介绍了照片验收和识别流程".repeat(10));
+        assert!(pending_quote(&source).unwrap().contains("十分二十分钟之内交卷儿"));
     }
 
     #[test]

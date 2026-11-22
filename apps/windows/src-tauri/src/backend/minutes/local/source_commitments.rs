@@ -547,10 +547,16 @@ pub(super) fn stated_group_deliverable(source: &str) -> Option<CompanionV1Action
     static DEADLINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:(?:下|这|本)?(?:周|星期)[一二三四五六日天]|今天|明天|后天|\d{1,2}月\d{1,2}[日号]|下班|开工|开学|散会)(?:上午|中午|下午|晚上)?(?:之前|前)"
     ).expect("literal time limit"));
+    static DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"都要|务必|必须|需具体|分别负责").expect("group imperative")
+    });
+    static CLAUSE_START: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"然后|至于|另外|[。；！]").expect("spoken clause boundary")
+    });
     let words=super::source_review::bare(source);
-    if contains(words, SOFT) || contains(words, NEGATION) || contains(words, CONTEXT)
+    if contains(words, CONTEXT)
         || words.contains(['？','?']) || super::source_context::question_only(words)
-        || contains(words, &["正在","已提交","已完成","已经做好","往常","通常","惯例","例行","不得","不准"])
+        || contains(words, &["举例","比如","例如","假设","假如","曾说","说过","听说","转述"])
     {
         return None;
     }
@@ -558,15 +564,25 @@ pub(super) fn stated_group_deliverable(source: &str) -> Option<CompanionV1Action
     while let Some(request)=groups.next() {
         let addressed=request.get(0)?;
         let end=groups.peek().and_then(|next|next.get(0)).map_or(words.len(),|next|next.start());
-        let instruction=words[addressed.end()..end].split(['。','！','？','；']).next()?.trim();
+        let instruction=CLAUSE_START.split(&words[addressed.end()..end]).next()?.trim();
         if instruction.chars().count()>82 { continue; }
-        let Some(deliverable)=DELIVERABLE.find(instruction) else { continue; };
+        let imperative = DIRECTIVE.find(instruction);
+        let deliverable = imperative.and_then(|marker| DELIVERABLE.find_at(instruction, marker.end()))
+            .or_else(|| DELIVERABLE.find(instruction));
+        let Some(deliverable) = deliverable else { continue; };
         let bound = &instruction[..deliverable.end()];
-        let explicitly_directed = contains(instruction,&["都要","务必","必须","需具体","分别负责"])
-            || (contains(words,&["这次","本次","接下来","会后","现在"])
-                && contains(instruction,&["要做","要提交","需要","就按"]));
+        let head = CLAUSE_START.split(&words[..addressed.start()]).last().unwrap_or("");
+        if contains(head, SOFT) || contains(instruction, SOFT)
+            || contains(head, NEGATION) || contains(instruction, NEGATION)
+            || contains(head, &["正在","已提交","已完成","已经做好","往常","通常","惯例","例行","不得","不准"])
+            || contains(instruction, &["正在","已提交","已完成","已经做好","往常","通常","惯例","例行","不得","不准"])
+        {
+            continue;
+        }
+        let explicitly_directed = imperative.is_some_and(|marker| marker.start() < bound.len())
+            || (contains(head,&["这次","本次","接下来","会后","现在"])
+                && contains(bound,&["要做","要提交","需要","就按"]));
         if !explicitly_directed { continue; }
-        let head=&words[..addressed.start()];
         let context = head.rsplit(['，',',','。','；','嗯','呃']).next().unwrap_or("").trim();
         let scope = if context.ends_with("方面") && context.chars().count()<=12 { context } else { "" };
         let owner=request.name("owner")?.as_str();
@@ -971,6 +987,25 @@ mod tests {
         rows.iter().enumerate().map(|(i, text)| json!({
             "id":format!("e{i:04}"), "source":"u000", "text":text
         })).collect()
+    }
+
+    #[test]
+    fn a_group_directive_uses_its_own_clause_and_keeps_authority_checks() {
+        let work = stated_group_deliverable(
+            "咱们可以回顾上学期各部门的工作安排，然后线上教学呢呃考试方面各部门儿嗯具体做计划怎么考试都要做个这个计划呃考试方面刚才说了"
+        ).unwrap();
+        assert_eq!(work.owner.as_deref(), Some("各部门"));
+        assert!(work.text.starts_with("考试方面"));
+        assert!(work.text.contains("都要做个这个计划"));
+        assert!(work.due.is_none());
+        for source in [
+            "现在建议各部门都要提交验收计划。",
+            "如果设备通过试运行，然后各部门都要提交验收计划。",
+            "举例说明，然后各部门都要提交验收计划。",
+            "另外各部门不得提交验收计划。",
+        ] {
+            assert!(stated_group_deliverable(source).is_none(), "{source}");
+        }
     }
 
     #[test]
