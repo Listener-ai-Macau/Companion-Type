@@ -134,7 +134,7 @@ fn source_verified_facts(
     sentences: &[Value],
 ) -> Result<(Vec<ExtractedFact>, Vec<Value>), String> {
     use std::collections::HashMap;
-    use super::{source_authority, source_commitments, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
+    use super::{delivery_evidence, source_authority, source_commitments, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
 
     let known: HashMap<_, _> = sentences.iter().map(|row| {
         (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
@@ -155,6 +155,34 @@ fn source_verified_facts(
     let mut continued_actions = HashSet::new();
     let mut mitigation_continuations = BTreeMap::<usize, String>::new();
     let mut protected_claims = HashSet::new();
+    let mut arrival_procedures = HashMap::new();
+    let mut covered_arrival_sources = HashSet::new();
+    for (index, row) in sentences.iter().enumerate() {
+        let id = row["id"].as_str().unwrap();
+        if let Some((position, sources)) = by_anchor.get(id).and_then(|facts| {
+            facts.iter().enumerate().find_map(|(position, fact)| {
+                (fact.role=="status").then(|| delivery_evidence::arrival_procedure_sources(sentences, index, &fact.text))
+                    .flatten().map(|sources| (position, sources))
+            })
+        }) {
+            if sources.iter().all(|source| !covered_arrival_sources.contains(source)) {
+                covered_arrival_sources.extend(&sources);
+                covered_arrival_sources.insert(index);
+                arrival_procedures.insert(index, (position, sources));
+            }
+        }
+    }
+    let mut disputed = HashMap::new();
+    let mut dispute_predicates = HashMap::new();
+    for index in 0..sentences.len() {
+        if let Some((opposite, statement)) = delivery_evidence::disputed_statement(sentences, index) {
+            let (_, predicate) = statement.split_once("是否会").expect("review statement");
+            let predicate = predicate.split('，').next().unwrap().to_owned();
+            dispute_predicates.insert(index, predicate.clone());
+            dispute_predicates.insert(opposite, predicate);
+            disputed.insert(index, (opposite, statement));
+        }
+    }
     // Resolve scope changes before chapter selection. The model often cites
     // the original restrictive statement without citing its later exception.
     let exceptions: Vec<_> = sentences.iter().enumerate().filter_map(|(position, sentence)| {
@@ -171,6 +199,44 @@ fn source_verified_facts(
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
+        if let Some((position, sources)) = arrival_procedures.remove(&index) {
+            let mut record = current.remove(position);
+            for source in sources {
+                let source_id = sentences[source]["id"].as_str().unwrap();
+                if !record.evidence.iter().any(|id| id==source_id) && record.evidence.len()<8 {
+                    record.evidence.push(source_id.to_owned());
+                }
+            }
+            record.execution_reading = true;
+            audit.push(json!({"sentenceId":id,"reason":"complete-entry-procedure","evidence":record.evidence}));
+            verified.push(record);
+        }
+        if let Some((opposite, statement)) = disputed.remove(&index) {
+            let opposite = sentences[opposite]["id"].as_str().unwrap();
+            let mut fact = ExtractedFact::review_quote(id, "status", &statement);
+            fact.evidence.push(opposite.to_owned());
+            verified.push(fact);
+            audit.push(json!({"sentenceId":id,"reason":"opposed-speaker-claims","other":opposite}));
+        }
+        if let Some(predicate) = dispute_predicates.get(&index) {
+            current.retain(|fact| !fact.text.contains(predicate));
+        }
+        if let Some((prior, rule)) = delivery_evidence::consistent_application(sentences, index) {
+            let basis = sentences[prior]["id"].as_str().unwrap();
+            let mut fact = ExtractedFact::verbatim(id, "status", &rule);
+            fact.execution_reading = true;
+            fact.evidence.push(basis.to_owned());
+            verified.push(fact);
+            audit.push(json!({"sentenceId":id,"reason":"same-rule-no-exemption","basis":basis}));
+        }
+        if let Some((prior, selection)) = delivery_evidence::next_meeting_selection(sentences, index) {
+            let context = sentences[prior]["id"].as_str().unwrap();
+            let mut fact = ExtractedFact::verbatim(id, "question", &selection);
+            fact.evidence.push(context.to_owned());
+            current.retain(|item| item.role!="question" && !delivery_evidence::is_selection_fragment(&item.text));
+            verified.push(fact);
+            audit.push(json!({"sentenceId":id,"reason":"selection-explicitly-deferred","context":context}));
+        }
         if let Some(previous) = source_commitments::current_procedure_reply(sentences, index) {
             let question = sentences[previous]["id"].as_str().unwrap();
             for item in &mut current {
@@ -178,7 +244,7 @@ fn source_verified_facts(
                     item.role = "status".into();
                     item.clear_non_action_metadata();
                 }
-                if !item.evidence.iter().any(|id| id == question) {
+                if !item.evidence.iter().any(|id| id == question) && item.evidence.len()<8 {
                     item.evidence.push(question.to_owned());
                 }
             }
@@ -187,26 +253,27 @@ fn source_verified_facts(
             continue;
         }
         for item in &mut current {
-            if item.role == "status" && super::delivery_evidence::presents_bid(sentences, &item.evidence) {
+            if item.role == "status" && delivery_evidence::presents_bid(sentences, &item.evidence) {
                 item.role = "recommendation".into();
                 audit.push(json!({"sentenceId":id,"reason":"proposal-during-a-comparison"}));
             }
         }
         let mut copied_execution = false;
         if !current.iter().any(|item| matches!(item.role.as_str(), "action" | "decision")) {
-            if let Some(execution) = super::delivery_evidence::execution_passage(original) {
-                let chunks = bounded_original_quotes_with_width(execution, 90);
-                if chunks.iter().all(|text| !text.ends_with('…')) {
-                    let literal = canonical_brief::normalized(execution);
-                    current.retain(|item| !is_covered_by_literal(item, &literal));
-                    for text in chunks {
-                        let mut fact = ExtractedFact::verbatim(id, "status", &text);
-                        fact.execution_reading = true;
-                        verified.push(fact);
-                    }
-                    audit.push(json!({"sentenceId":id,"reason":"literal-execution-requirement"}));
-                    copied_execution = true;
+            let chunks = delivery_evidence::execution_passages(original);
+            for text in chunks {
+                if covered_arrival_sources.contains(&index) && delivery_evidence::arrival_fragment(&text) {
+                    continue;
                 }
+                let literal = canonical_brief::normalized(&text);
+                current.retain(|item| !is_covered_by_literal(item, &literal));
+                let mut fact = ExtractedFact::verbatim(id, "status", &text);
+                fact.execution_reading = true;
+                verified.push(fact);
+                copied_execution = true;
+            }
+            if copied_execution {
+                audit.push(json!({"sentenceId":id,"reason":"literal-execution-requirement"}));
             }
         }
         if let Some(passage) = mitigation_continuations.remove(&index) {
@@ -1991,6 +2058,56 @@ mod tests{
         let layout: ChapterOrganization=serde_json::from_str(&layout).unwrap();
         assert!(layout.chapters.0.values().all(|chapter| bank.reader_order[&chapter.main_facts[0]]==0));
         assert_eq!(bank.receipt["chapterReaderCoverage"].as_array().unwrap().len(),bank.chapter_spans.len());
+    }
+
+    #[test]
+    fn preserves_complete_procedure_and_individual_goals_but_drops_incomplete_clauses() {
+        let source=concat!(
+            "说话人1: 门口要登记个人信息，并且必须要测温，因为现在就是。\n",
+            "说话人2: 对。\n",
+            "说话人1: 入口要核验健康码，然后门口也会有酒精，进门要消毒。\n",
+            "说话人1: 然后要登记最主要的是核验健康码，所以说这些必须要做好。\n",
+            "说话人3: 下半年工作目标是顾客满意程度达到百分之九十以上这个呃还有一个就是报修响应及时率达到百分之百呃就比如说有损坏，都要上报。"
+        );
+        let sentence = |i: usize| format!("e{i:04}");
+        let facts = vec![
+            ExtractedFact::verbatim(&sentence(0),"status","门口登记个人信息并测温。"),
+            ExtractedFact::verbatim(&sentence(3),"status","门口登记个人信息、测温、核验健康码和酒精消毒。"),
+            ExtractedFact::verbatim(&sentence(4),"status","保洁提出下半年工作目标。"),
+        ];
+        let bank=build_bank(facts,source).unwrap();
+        let execution=bank.facts.iter().filter(|f|bank.execution_reading.contains(&f.id)).collect::<Vec<_>>();
+        let procedure=execution.iter().find(|f| f.text.contains("核验健康码")).unwrap();
+        assert!(procedure.text.contains("酒精消毒"));
+        assert!(procedure.evidence.contains(&sentence(0)) && procedure.evidence.contains(&sentence(2)));
+        assert!(execution.iter().any(|f| f.text.contains("满意程度达到百分之九十以上")));
+        assert!(execution.iter().any(|f| f.text.contains("响应及时率达到百分之百")));
+        assert!(!execution.iter().any(|f| f.text.contains("因为现在就是")));
+    }
+
+    #[test]
+    fn binds_scope_and_deferred_selection_and_retains_both_sides_of_disagreement() {
+        let source=concat!(
+            "说话人1: 车辆超过一天必须核查。\n",
+            "说话人2: 对。\n",
+            "说话人1: 这一点不能说有个熟人就让他停着。\n",
+            "说话人2: 西双版纳好像会降冰雹之类的。\n",
+            "说话人3: 西双版纳是不会降冰雹的。\n",
+            "说话人1: 根据各部门交上来的计划下次会议宣布。\n",
+            "说话人1: 哪个部门来做接待工作。"
+        );
+        let facts=factual_audit::evidence_sentences(&source_units(source)).iter().map(|row|
+            ExtractedFact::verbatim(row["id"].as_str().unwrap(),"status",row["text"].as_str().unwrap().trim()))
+            .collect();
+        let bank=build_bank(facts,source).unwrap();
+        let exception=bank.facts.iter().find(|fact|fact.text.contains("熟人也要")).unwrap();
+        assert_eq!(exception.evidence,["e0002","e0000"]);
+        let opposed=bank.facts.iter().find(|fact|fact.text.contains("说法不同")).unwrap();
+        assert_eq!(opposed.evidence,["e0003","e0004"]);
+        assert!(bank.priority_review.contains(&opposed.id));
+        let selected=bank.facts.iter().find(|fact|fact.placement==Placement::Question).unwrap();
+        assert!(selected.text.contains("下次会议") && selected.text.contains("哪个部门"));
+        assert_eq!(selected.evidence,["e0006","e0005"]);
     }
 
     #[test]

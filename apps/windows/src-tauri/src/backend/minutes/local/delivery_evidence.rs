@@ -31,7 +31,10 @@ pub(super) fn execution_passage(original: &str) -> Option<&str> {
     }
     let source = body(original);
     let full = source.get(..full.len())?;
-    let requirement = has(full, &["必须", "务必", "不得", "不允许", "需要", "及时", "要做好", "要知道", "要控制"]);
+    let requirement = has(full, &["必须", "务必", "不得", "不允许", "及时", "一定要", "要做好", "要知道", "要控制"])
+        || full.match_indices("需要").any(|(offset, _)| {
+            !["不", "没", "不太", "无需"].iter().any(|negation| full[..offset].ends_with(negation))
+        });
     let operation = has(full, &[
         "核查", "核验", "核实", "报告", "报修", "上报", "复查", "复检", "查验", "检查", "巡逻", "巡查",
         "挂失", "消毒", "清洗", "控温", "温度", "水温", "登记", "维修", "更换", "防汛", "整改",
@@ -47,6 +50,174 @@ pub(super) fn execution_passage(original: &str) -> Option<&str> {
         return (full.chars().count() >= 8).then_some(full);
     }
     None
+}
+
+pub(super) fn execution_passages(original: &str) -> Vec<String> {
+    let words = body(original);
+    let targets = stated_targets(words).unwrap_or_default();
+    if !targets.is_empty() { return targets; }
+
+    let Some(passage) = execution_passage(words) else { return Vec::new(); };
+    let passage = [
+        "，因为现在就是", "，因为毕竟", "，这样这样才能", " 这样这样才能",
+        "，我觉的这", "，我觉得这", "，然后另外然后在",
+    ].iter().find_map(|cue| passage.split_once(cue).map(|(first, _)| first))
+        .filter(|first| execution_passage(first).is_some()).unwrap_or(passage);
+    super::source_windows::bounded_original_quotes_with_width(passage, 90).into_iter()
+        .filter(|part| {
+            !part.ends_with(['…', '在', '的'])
+                && !["因为", "或者"].iter().any(|word| part.starts_with(word))
+                && execution_passage(part).is_some()
+        }).collect()
+}
+
+fn stated_targets(text: &str) -> Option<Vec<String>> {
+    static TARGET: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?P<metric>(?:顾客|客户)?满意(?:程度|度|率)|(?:报修)?响应(?:及时)?率|及时报修率|(?:顾客|客户)?回访率|",
+        r"(?:公共)?(?:设备|设施)完好率|(?:员工|人员)?培训率|(?:考核)?通过率|合格率|到岗率|覆盖率)",
+        r"(?P<relation>[^，。！？；]{0,12}?)(?P<value>百分之[零〇一二两三四五六七八九十百点0-9]+|[0-9]{1,3}(?:\.[0-9]+)?[%％])",
+        r"(?P<bound>以上|以下|以内|左右)?"
+    )).expect("a named target, comparative bound, and literal value"));
+    if !has(text, &["目标", "必须达到", "要达到", "才可以上岗", "才可以达到上岗"]) {
+        return Some(Vec::new());
+    }
+    let mut metrics = std::collections::HashMap::new();
+    let mut checked = Vec::new();
+    for capture in TARGET.captures_iter(text) {
+        let metric = capture.name("metric")?.as_str();
+        let comparison = capture.name("relation")?.as_str();
+        if !has(comparison, &["达到", "要达", "不低于", "不高于", "超过", "至少", "不超过"])
+            && !(has(text, &["工作目标", "才可以上岗", "才可以达到上岗"]) && metric.ends_with("培训率")) {
+            continue;
+        }
+        let key = if has(metric, &["响应", "报修"]) { "响应率" } else { metric };
+        let value = capture.name("value")?.as_str();
+        let bound = capture.name("bound").map_or("", |bound| bound.as_str());
+        if let Some(previous) = metrics.insert(key, (value, bound)) {
+            // Repeated figures may be reformulations. Different figures
+            // require their respective context and cannot be collapsed.
+            if previous != (value, bound) { return None; }
+            continue;
+        }
+        let range = capture.get(0)?;
+        let mut complete = range.as_str().replace('呃', "");
+        if metric.ends_with("培训率") && has(&text[range.end()..], &["才可以上岗", "才可以达到上岗", "才能上岗"]) {
+            complete.push_str("才可上岗");
+        }
+        checked.push(complete);
+    }
+    Some(checked)
+}
+
+fn arrival_steps(text: &str) -> u8 {
+    u8::from(has(text, &["登记个人信息", "登记访客", "登记身份", "登记你的个人信息", "登记来访人员"]))
+        | (u8::from(has(text, &["测温", "测体温", "测一下体温", "测测体温"])) << 1)
+        | (u8::from(has(text, &["健康码", "核验身份", "查验预约", "核对证件", "查验身份证"])) << 2)
+        | (u8::from(has(text, &["消毒", "酒精", "消一下毒"])) << 3)
+}
+
+fn speaker_at(sentences: &[Value], index: usize) -> Option<&str> {
+    (index.saturating_sub(3)..=index).rev().find_map(|i| {
+        split_turn_label(sentences[i]["text"].as_str()?.trim()).map(|(person, _)| person)
+    })
+}
+
+/// Preserve an already extracted multi-step procedure only when its individual
+/// controls can be located in the same nearby speaker's own account.
+pub(super) fn arrival_procedure_sources(
+    sentences: &[Value], index: usize, summary: &str,
+) -> Option<Vec<usize>> {
+    let steps = arrival_steps(summary);
+    if steps.count_ones() < 3 || !has(summary, &["门口", "入口", "进门", "入场", "进场", "进来"]) {
+        return None;
+    }
+    let speaker = speaker_at(sentences, index)?;
+    let mut witnessed = 0;
+    let mut scope = false;
+    let mut evidence = Vec::new();
+    let from = index.saturating_sub(5);
+    let to = (index + 3).min(sentences.len());
+    for position in from..to {
+        if speaker_at(sentences, position)!=Some(speaker) { continue; }
+        let words = body(sentences[position]["text"].as_str()?);
+        let here = arrival_steps(words);
+        if here==0 || has(words, &["不再", "不用", "已经取消", "不做", "无需", "不需要"]) { continue; }
+        let sets_scope = has(words, &["门口", "入口", "进门", "入场", "进场", "进来"]);
+        if (witnessed | here)!=witnessed || (sets_scope && !scope) {
+            evidence.push(position);
+        }
+        scope |= sets_scope;
+        witnessed |= here;
+    }
+    (scope && witnessed==steps && evidence.len()>1).then_some(evidence)
+}
+
+pub(super) fn arrival_fragment(text: &str) -> bool {
+    arrival_steps(text)!=0
+        && !has(text, &["假设", "不再", "已经取消", "不需要", "不做", "无需", "不用", "改为", "新规定"])
+}
+
+pub(super) fn consistent_application(sentences: &[Value], index: usize) -> Option<(usize, String)> {
+    let text = body(sentences[index]["text"].as_str()?);
+    let subject = ["熟人", "亲友", "本人", "自己人"].into_iter().find(|name| text.contains(name))?;
+    if !has(text, &["不能说", "不能因为", "不能给", "也不例外", "不能例外"])
+        || !has(text, &["这一点", "这条", "这个要求", "也不例外", "不能例外"]) {
+        return None;
+    }
+    let speaker = speaker_at(sentences, index)?;
+    let prior = (index.saturating_sub(8)..index).rev().find(|&i| {
+        speaker_at(sentences, i)==Some(speaker) && sentences[i]["text"].as_str().is_some_and(|line| {
+            has(line, &["必须", "不允许", "不得"]) && has(line, &["核查", "核验", "核对", "登记"])
+        })
+    })?;
+    let source = sentences[prior]["text"].as_str()?;
+    let rule = ["核查", "核验", "核对", "登记"].into_iter().find(|operation| source.contains(operation))?;
+    Some((prior, format!("{subject}也要按同一要求{rule}。")))
+}
+
+pub(super) fn next_meeting_selection(sentences: &[Value], index: usize) -> Option<(usize, String)> {
+    let text = body(sentences[index]["text"].as_str()?);
+    let scope = ["哪个部门", "哪个团队", "哪个小组", "哪个单位"].into_iter().find(|scope| text.contains(scope))?;
+    let work = [
+        ("接待工作", "接待"), ("这项工作", "这项工作"), ("这个项目", "项目"),
+        ("负责执行", "执行"), ("接手", "接手"),
+    ].into_iter().find_map(|(phrase, brief)| text.contains(phrase).then_some(brief))?;
+    let speaker = speaker_at(sentences, index)?;
+    let previous = index.checked_sub(1)?;
+    let prior = body(sentences[previous]["text"].as_str()?);
+    if speaker_at(sentences, previous)!=Some(speaker)
+        || !has(prior, &["下次会议宣布", "下次会上公布", "下次会议确定", "下次开会决定"])
+        || !has(prior, &["根据", "等提交", "交上来", "收到"]) || !has(prior, &["方案", "计划"]) {
+        return None;
+    }
+    Some((previous, format!("下次会议根据提交的方案确定由{scope}负责{work}。")))
+}
+
+pub(super) fn is_selection_fragment(text: &str) -> bool {
+    has(text, &["哪个部门", "哪个团队", "哪个小组", "哪个单位"])
+}
+
+pub(super) fn disputed_statement(sentences: &[Value], index: usize) -> Option<(usize, String)> {
+    let (speaker, earlier) = split_turn_label(sentences[index]["text"].as_str()?.trim())?;
+    let (lead, reported) = ["好像会", "可能会", "据说会"].into_iter()
+        .find_map(|qualifier| earlier.split_once(qualifier))?;
+    let end = ["之类", "的这种", "，", "。"].iter()
+        .filter_map(|part| reported.find(part)).min().unwrap_or(reported.len());
+    let predicate = reported[..end].trim();
+    if !(2..=9).contains(&predicate.chars().count()) || !predicate.chars().all(|ch| matches!(ch, '一'..='鿿')) {
+        return None;
+    }
+    let subject = super::chapter_labels::segmenter().tag(lead, false).into_iter().rev()
+        .find(|term| ["ns", "nt", "nz", "nr", "n"].contains(&term.tag)
+            && (2..=12).contains(&term.word.chars().count()))?.word;
+    let denied = format!("不会{predicate}");
+    let opposite = (index + 1..(index+5).min(sentences.len())).find(|&position| {
+        let Some((other, later)) = sentences[position]["text"].as_str().and_then(|s|split_turn_label(s.trim())) else {return false;};
+        other!=speaker && later.split_once(&denied).is_some_and(|(prefix, _)| prefix.ends_with(subject)
+            || prefix.strip_suffix('是').is_some_and(|prefix|prefix.ends_with(subject)))
+            && !has(later, &["已核实", "实际监测", "官方通报", "已经确认", "确有记录"])
+    })?;
+    Some((opposite, format!("原话待核：{subject}是否会{predicate}，两位发言者说法不同。")))
 }
 
 pub(super) struct OpeningAgenda {
