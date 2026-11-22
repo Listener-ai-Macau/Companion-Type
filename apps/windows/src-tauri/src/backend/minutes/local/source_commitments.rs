@@ -59,7 +59,7 @@ pub(super) fn meeting_actor_labels(sentences: &[Value]) -> HashSet<&str> {
 
 fn actionable(phrase: &str) -> bool {
     static VERB: LazyLock<Regex> = LazyLock::new(|| Regex::new(
-        r"^(?:\s|[呃嗯就先也再将把去]|及时|马上|尽快|提前|继续|时刻|专门|负责|进行|直接|一定){0,11}(?:(?:与|和|跟)[^，,。！？；;]{1,22}?)?(?:协商|安排|协调|推进|提交|汇报|通知|起草|发出|发送|交付|交给|报给|登记|提供|核查|核对|核实|检查|确认|复核|整改|完成|处理|回复|整理|准备|联系|对接|沟通|协助|组织|上报|走访|投标|报名|关注|跟进|找|发给|签约|采购|培训|检测|调试|录入|上线|修改|加强|换回|接手|撤回|补齐|交接)"
+        r"^(?:\s|[呃嗯就先也再将把去]|及时|马上|尽快|提前|继续|时刻|专门|负责|进行|直接|一定){0,11}(?:(?:与|和|跟)[^，,。！？；;]{1,22}?)?(?:协商|安排|协调|推进|提交|汇报|通知|起草|制定|制订|编制|做(?:一个|一份|出)|发出|发送|交付|交给|报给|登记|提供|核查|核对|核实|检查|确认|复核|整改|完成|处理|回复|整理|准备|联系|对接|沟通|协助|组织|上报|走访|投标|报名|关注|跟进|找|发给|签约|采购|培训|检测|调试|录入|上线|修改|加强|换回|接手|撤回|补齐|交接)"
     ).expect("future operational verbs"));
     if VERB.is_match(phrase) {
         return true;
@@ -221,7 +221,8 @@ fn scoped_commitment(body: &str, institutional_voice: bool) -> Option<CompanionV
     let end = clauses.iter().enumerate().skip(last + 1).take(3)
         .take_while(|(_, part)| !contains(part, SOFT) && !contains(part, NEGATION))
         .take_while(|(_, part)| backchannel(part) || actionable(part)
-            || contains(part, &["的时候儿会把", "的时候会把", "然后"]))
+            || contains(part, &["的时候儿会把", "的时候会把", "然后"])
+            || part.starts_with("包括"))
         .last().map_or(last, |(index, _)| index);
     let first = first_condition.unwrap_or(*first);
     let mut tail = end;
@@ -249,6 +250,149 @@ fn agreed_handoff(text: &str) -> Option<CompanionV1ActionItem> {
         return None;
     }
     Some(CompanionV1ActionItem { text: body.into(), owner: None, due: None })
+}
+
+
+pub(super) struct ConfirmedDelegation {
+    pub(super) decision: String,
+    pub(super) owner: String,
+    pub(super) scope: String,
+    pub(super) confirmation: usize,
+    pub(super) followup: Option<(usize, CompanionV1ActionItem, Option<usize>)>,
+    pub(super) dispute: Option<usize>,
+}
+
+fn role_of<'a>(sentences: &'a [Value], speaker: &str) -> Option<&'a str> {
+    sentences.iter().take(80).find_map(|sentence| {
+        let (label, body) = split(sentence);
+        (label == Some(speaker)).then(|| self_introduced_identity(body)).flatten()
+    })
+}
+
+/// A conversational handoff is binding only when its scope and recipient are
+/// explicit and a nearby turn confirms it. Each part keeps its own source.
+pub(super) fn confirmed_delegation(
+    sentences: &[Value], index: usize,
+) -> Option<ConfirmedDelegation> {
+    static ASSIGNMENT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:那|好|行|这次|本次|咱们|咱|我们|\s|，|,)*(?P<scope>[\p{Han}A-Za-z0-9]{2,24}?(?:任务|工作|项目|事项|安排))(?:就|正式|统一)*(?:交给|交由)(?P<owner>[\p{Han}A-Za-z0-9·]{2,16}?)(?:这边儿?|那边儿?)?(?:来负责|负责|承接)?(?:吧|了)?$"
+    ).expect("explicit delegation"));
+    let (speaker, body) = split(&sentences[index]);
+    if contains(body, CONTEXT) || contains(body, NEGATION) || body.contains(['？', '?'])
+        || contains(body, &["假设", "假如", "举例", "比如", "例如", "听说", "曾经", "暂定"])
+    {
+        return None;
+    }
+    let text = body.split(['，', ',', '。', '！', '；']).next()?.trim();
+    if contains(text, SOFT) { return None; }
+    let assignment = ASSIGNMENT.captures(text)?;
+    let owner = assignment.name("owner")?.as_str();
+    let scope = assignment.name("scope")?.as_str();
+    if contains(owner, &["他们", "他来", "你们", "那个人", "某个", "有关方面"]) {
+        return None;
+    }
+    let speaker = speaker?;
+    let authority = role_of(sentences, speaker).unwrap_or(speaker);
+    if !["主持人", "负责人", "总经理", "总裁", "董事长", "主管", "组长", "主任"].contains(&authority)
+    {
+        return None;
+    }
+    let nearby = index + 1..(index + 9).min(sentences.len());
+    let confirmation = nearby.clone().take(4).find(|&position| {
+        let (label, words) = split(&sentences[position]);
+        if words.contains(['？', '?']) || contains(words, SOFT) || contains(words, NEGATION) {
+            return false;
+        }
+        let firm_instruction = label == Some(speaker) && words.contains(owner)
+            && contains(words, &["一定要负责", "务必负责", "正式负责", "由你们负责", "就交给"]);
+        let recipient = label.and_then(|name| role_of(sentences, name));
+        let accepts = recipient.is_some_and(|role| role.starts_with(owner))
+            && contains(words, &["我们来负责", "我们负责", "我们接下来负责", "我们接受", "我们来承接"]);
+        firm_instruction || accepts
+    });
+    let dispute = nearby.clone().find(|&position| {
+        let (_, words) = split(&sentences[position]);
+        (words.contains(owner) || words.contains(scope))
+            && contains(words, &["暂缓", "还没定", "还没有定", "没有决定", "先别定", "取消", "改由", "不能交给"])
+    });
+    if confirmation.is_none() && dispute.is_none() {
+        return None;
+    }
+    let confirmation = confirmation.unwrap_or(index);
+    let followup = nearby.clone().filter(|&position| position >= confirmation).find_map(|position| {
+        let (label, reply) = split(&sentences[position]);
+        let role = role_of(sentences, label?)?;
+        if !role.starts_with(owner) {
+            return None;
+        }
+        let mut item = scoped_commitment(reply, true)?;
+        item.owner = Some(owner.to_owned());
+        let handoff = nearby.clone().filter(|&other| other > position).find_map(|other| {
+            let (label, words) = split(&sentences[other]);
+            let current_speaker = label.or_else(|| (position..other).rev()
+                .find_map(|previous| split(&sentences[previous]).0));
+            if current_speaker != Some(speaker) || contains(words, SOFT)
+                || contains(words, NEGATION) || words.contains(['？', '?']) {
+                return None;
+            }
+            let offset = ["交给", "提交给", "发给", "报给"].into_iter()
+                .filter_map(|verb| words.find(verb)).min()?;
+            let lead = &words[..offset];
+            if !contains(lead, &["这个", "这些", "它", "计划", "清单", "方案", "材料", "报告"]) {
+                return None;
+            }
+            let delivery = words[offset..].split(['，', ',', '。', '！', '；']).next()?.trim();
+            let delivery = delivery.strip_suffix("看一").unwrap_or(delivery).trim_end();
+            if delivery.chars().count() < 5 || delivery.chars().count() > 26 {
+                return None;
+            }
+            Some((other, delivery))
+        });
+        let continuation = handoff.and_then(|(position, delivery)| {
+            let linked = format!("{}，{delivery}", item.text);
+            if !canonical_brief::line(&linked, 90) { return None; }
+            item.text = linked;
+            Some(position)
+        });
+        Some((position, item, continuation))
+    });
+    Some(ConfirmedDelegation {
+        decision: text.to_owned(), owner: owner.to_owned(), scope: scope.to_owned(),
+        confirmation, followup, dispute,
+    })
+}
+
+fn explicit_delivery_of_existing_material(text: &str) -> Option<CompanionV1ActionItem> {
+    static MATERIAL: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:拍摄了|录制了|已准备好|已整理好|已经写好|已经做完)[^，,。！？；;]{2,40}(?:视频|材料|文档|报告|清单|表格|照片|说明|录音)"
+    ).expect("existing deliverable"));
+    static DELIVERY: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:到时候|稍后|会后|散会后|之后)?(?:我|我们|咱们)(?:会|就会|将|一定会)(?:把.{1,18})?(?:发给|分享给|送给|交给)(?:你们|大家|各位|参会者)"
+    ).expect("personal delivery commitment"));
+    let material = MATERIAL.find(text)?;
+    let delivery = DELIVERY.find_at(text, material.end())?;
+    let between = &text[material.end()..delivery.start()];
+    let scope_start = text[..material.start()].rfind(['，', ',', '。', '！', '？', '；']).unwrap_or_default();
+    let utterance = &text[scope_start..delivery.end()];
+    if utterance.contains(['？', '?']) || contains(utterance, SOFT) || contains(utterance, NEGATION)
+        || contains(utterance, CONTEXT) || between.chars().count() > 26
+        || contains(between, &["另外", "改说", "或者", "但是"])
+    {
+        return None;
+    }
+    let following = text[delivery.end()..].trim_start_matches([' ', '，', ',']);
+    if CONTEXT.iter().any(|signal| following.starts_with(signal))
+        && !following.split_once(['，', ',']).is_some_and(|(_, consequence)| {
+            ["你就", "你们就", "客户就", "对方就"]
+                .iter().any(|subject| consequence.trim_start().starts_with(subject))
+        })
+    {
+        return None;
+    }
+    let text = text[material.start()..delivery.end()].trim();
+    canonical_brief::line(text, 90).then(|| CompanionV1ActionItem {
+        text: text.to_owned(), owner: None, due: None,
+    })
 }
 
 pub(super) fn at(sentences: &[Value], index: usize, linked_actors: &HashSet<&str>) -> Option<BoundCommitment> {
@@ -298,7 +442,9 @@ pub(super) fn at(sentences: &[Value], index: usize, linked_actors: &HashSet<&str
             }));
         }
     }
-    let item = agreed_handoff(first).or_else(|| scoped_commitment(first, institutional_voice))?;
+    let item = agreed_handoff(first)
+        .or_else(|| scoped_commitment(first, institutional_voice))
+        .or_else(|| explicit_delivery_of_existing_material(first))?;
     Some(attach_prerequisite(sentences, index, BoundCommitment {
         item, prerequisite: None, continuation: None, needs_review: false,
     }))
