@@ -65,9 +65,46 @@ pub(super) enum OperationalEvidence {
     ScopedProcedure,
     PendingOutcome,
     TimedForecast,
+    Schedule,
+    TimedProcedure,
+    RecipientScope,
+    SafetyRequirement,
+}
+
+pub(super) fn concrete_execution(text: &str) -> Option<OperationalEvidence> {
+    static DATE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"[0-9０-９零一二两三四五六七八九十]{1,3}月[0-9０-９零一二两三四五六七八九十]{1,3}(?:日|号)"
+    ).expect("explicit calendar date"));
+    static CADENCE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:每(?:天|周|班|月|隔[一二两三四五六七八九十0-9]+天)|[一二两三四五六七八九十半0-9]+(?:天|小时|分钟))"
+    ).expect("explicit operational cadence"));
+    let has = |signals: &[&str]| signals.iter().any(|signal| text.contains(signal));
+    if text.contains(['？', '?']) || has(&["比如说我是", "假设有", "举个例子", "上一次", "往年", "多年以前"]) {
+        return None;
+    }
+    if DATE.is_match(text) && has(&["考试", "报名", "开会", "停运", "上线", "截止", "安排", "开工", "生效"]) {
+        return Some(OperationalEvidence::Schedule);
+    }
+    if CADENCE.is_match(text) && has(&["醒花", "浸泡", "换水", "清洁", "巡查", "保养", "签到", "维护", "消毒", "复检", "静置"])
+        && has(&["每", "一次", "之后", "以后", "保持", "完成", "间隔", "到三", "到两"])
+    {
+        return Some(OperationalEvidence::TimedProcedure);
+    }
+    if has(&["发放", "免费发", "一人一卡", "只适用", "对象限于", "适用对象", "会汉语"])
+        && has(&["给", "只", "须", "要", "对象", "登记", "适用", "保安", "招聘", "尽量"])
+    {
+        return Some(OperationalEvidence::RecipientScope);
+    }
+    if has(&["消防", "防滑", "线路老化", "安全措施", "安全风险", "地面光滑", "地面比较光滑"])
+        && has(&["注意", "需要", "要", "必须", "更换", "检查", "防止", "工作人员带"])
+    {
+        return Some(OperationalEvidence::SafetyRequirement);
+    }
+    None
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
+    if let Some(kind) = concrete_execution(text) { return Some(kind); }
     if APPROVAL_STATUS.iter().any(|signal| text.contains(signal)) {
         return Some(OperationalEvidence::Approval);
     }

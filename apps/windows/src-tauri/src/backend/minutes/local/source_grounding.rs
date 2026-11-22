@@ -191,6 +191,34 @@ pub(super) fn concerns_approval(text: &str) -> bool {
     ["批准", "批复", "获批"].iter().any(|marker| text.contains(marker))
 }
 
+pub(super) fn provisional_passage(source: &str) -> Option<&str> {
+    static TENTATIVE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:暂{1,2}定){1,2}\s*[^，,。！!？?；;\r\n]{2,42}"
+    ).expect("tentative spoken decision"));
+    let found = TENTATIVE.find(source)?;
+    let lead = &source[..found.start()];
+    let lead = lead.rsplit(['。', '！', '？', '；']).next()?;
+    if !["先", "就", "咱", "我们", "暂且"].iter().any(|cue| lead.contains(cue))
+        || ["建议", "假设", "比如", "听说", "取消", "没有", "要不要"]
+            .iter().any(|cue| lead.contains(cue))
+    {
+        return None;
+    }
+    let literal = found.as_str().trim();
+    let end = ["嗯", "呃", "那咱", "然后", "行吧"]
+        .into_iter().filter_map(|cue| literal.find(cue)).min().unwrap_or(literal.len());
+    canonical_brief::line(&literal[..end], 66).then_some(literal[..end].trim())
+}
+
+pub(super) fn categorical_safety_claim(claim: &str, evidence: &str) -> bool {
+    ["存在", "已经", "肯定", "是高风险"].iter().any(|cue| claim.contains(cue))
+        && ["安全", "风险"].iter().any(|cue| claim.contains(cue) && evidence.contains(cue))
+        && ["不太安全", "我担心", "不太放心", "我不放心", "会不会有风险"]
+            .iter().any(|cue| evidence.contains(cue))
+        && !["我担心", "担忧", "顾虑", "与会者", "有人认为", "会议中提到"]
+            .iter().any(|cue| claim.contains(cue))
+}
+
 pub(super) fn loses_binary_uncertainty(claim: &str, anchor: &str) -> bool {
     anchor.contains("有无") && !has_open_qualifier(claim)
         && !["有无", "有没有", "待确认", "待核", "尚不明确", "仍不明确"].iter().any(|cue| claim.contains(cue))

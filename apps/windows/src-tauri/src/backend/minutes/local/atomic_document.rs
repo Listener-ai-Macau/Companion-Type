@@ -104,7 +104,7 @@ impl Bank {
 // or the number of facts sent to the organizer.
 pub(super) const MAX_FACTS:usize=4096;
 const CHAPTER_HIGHLIGHTS: usize = 5;
-const READER_DETAILS: usize = 3;
+const READER_DETAILS: usize = 2;
 const LAYOUT_FACT_BYTES: usize = 24 * 1024;
 const CHAPTER_REQUEST_BYTES: usize = 24 * 1024;
 const CHAPTER_READER_HIGHLIGHTS: usize = 6;
@@ -136,7 +136,9 @@ fn source_verified_facts(
     let mut verified = Vec::new();
     let mut audit = Vec::new();
     let actors = source_commitments::meeting_actor_labels(sentences);
+    let participants = source_commitments::meeting_roles(sentences);
     let mut continued_actions = HashSet::new();
+    let mut protected_claims = HashSet::new();
     let mut delegation_actions: BTreeMap<usize, (CompanionV1ActionItem, Vec<usize>, Option<usize>, bool)> = BTreeMap::new();
     for (index, sentence) in sentences.iter().enumerate() {
         let id = sentence["id"].as_str().unwrap();
@@ -163,6 +165,36 @@ fn source_verified_facts(
             // This exact continuation is already inside the source-bound action.
             continue;
         }
+        if let Some(literal) = source_grounding::provisional_passage(original) {
+            let passage = format!("原话待核：暂定事项。{literal}");
+            current.retain(|item| !source_grounding::shared_han_phrase(&item.text, literal, 3));
+            verified.push(ExtractedFact::review_quote(id, "status", &passage));
+            audit.push(json!({"sentenceId":id,"reason":"provisional-choice"}));
+        }
+        current.retain(|fact| {
+            if fact.role != "status" || fact.source_needs_review { return true; }
+            if let Some((citation, literal)) = fact.evidence.iter().find_map(|citation| {
+                let literal = known[citation.as_str()];
+                source_grounding::categorical_safety_claim(&fact.text, literal)
+                    .then_some((citation.as_str(), literal))
+            }) {
+                if protected_claims.insert(citation.to_owned()) {
+                    for excerpt in bounded_original_quotes(literal) {
+                        verified.push(ExtractedFact::verbatim(citation, "opinion", &excerpt));
+                    }
+                    audit.push(json!({"sentenceId":id,"reason":"preserved-cited-concern","source":citation}));
+                }
+                return false;
+            }
+            if let Some((citation, _)) = fact.evidence.iter().find_map(|citation| {
+                let literal = source_grounding::provisional_passage(known[citation.as_str()])?;
+                source_grounding::shared_han_phrase(&fact.text, literal, 3).then_some((citation, literal))
+            }) {
+                audit.push(json!({"sentenceId":id,"reason":"discarded-premature-confirmation","source":citation}));
+                return false;
+            }
+            true
+        });
         if let Some(record) = source_commitments::confirmed_delegation(sentences, index) {
             let quote = record.decision;
             let (mut fact, reason) = if record.dispute.is_some() {
@@ -227,6 +259,30 @@ fn source_verified_facts(
             // Earlier action heuristics cannot add the same action again.
             verified.extend(current);
             continue;
+        }
+        if !current.iter().any(|item| item.role == "action") {
+            let directed = source_commitments::directed_work(sentences, index, &participants);
+            if !directed.is_empty() {
+                for record in directed {
+                    let body = record.item.text.clone();
+                    let mut fact = ExtractedFact::original_action(id, &body, record.item);
+                    for position in record.support {
+                        let source = sentences[position]["id"].as_str().unwrap();
+                        if !fact.evidence.iter().any(|citation| citation == source) {
+                            fact.evidence.push(source.to_owned());
+                        }
+                    }
+                    let payload = canonical_brief::normalized(&body);
+                    current.retain(|item| {
+                        let item = canonical_brief::normalized(&item.text);
+                        !item.contains(&payload) && !payload.contains(&item)
+                    });
+                    audit.push(json!({"sentenceId":id,"reason":"source-bound-directed-work","evidence":fact.evidence}));
+                    verified.push(fact);
+                }
+                verified.extend(current);
+                continue;
+            }
         }
         if !current.is_empty() && current.iter().all(|item| matches!(item.role.as_str(), "status" | "opinion" | "recommendation" | "forecast")) {
             if let Some((passage, pending)) = source_grounding::preserve_distinct_scope(original) {
@@ -605,7 +661,14 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
             let position = original_positions[anchor.as_str()];
             let preceding: Vec<_> = sentences[position.saturating_sub(30)..position].iter()
                 .map(|source| source["text"].as_str().unwrap()).collect();
-            let priority = if f.text.starts_with("关于「") && f.evidence.len() > 1 {
+            let priority = if f.evidence.iter().any(|reference| {
+                let source = known[reference.as_str()];
+                super::reader_ranking::concrete_execution(&f.text).is_some_and(|category| {
+                    super::reader_ranking::concrete_execution(source) == Some(category)
+                })
+            }) {
+                4
+            } else if f.text.starts_with("关于「") && f.evidence.len() > 1 {
                 3
             } else if source_grounding::topic_relation_clarification(anchor_text, &preceding) {
                 2
@@ -1358,8 +1421,11 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         }).collect::<Vec<_>>();
         critical.sort_by_key(|(rank, _)| std::cmp::Reverse(*rank));
         let mut anchors = HashSet::new();
+        let mut execution_kinds = HashSet::new();
         let mut protected = critical.into_iter()
             .filter(|(_, fact)| fact.evidence.first().is_some_and(|anchor| anchors.insert(anchor.as_str())))
+            .filter(|(_, fact)| super::reader_ranking::concrete_execution(&fact.text)
+                .is_none_or(|kind| execution_kinds.insert(kind)))
             .take(2).map(|(_, fact)| fact.id.as_str()).collect::<Vec<_>>();
         let priority = |fact: &Fact| protected.iter().position(|id| *id == fact.id).unwrap_or(usize::MAX);
         for (fact, main) in items.iter_mut() {
@@ -1612,6 +1678,40 @@ mod tests{
     }
 
     #[test]
+    fn explicit_address_splits_deliverables_and_an_accepted_followup_keeps_the_owner() {
+        let source = concat!(
+            "说话人1: 我是校长。\n",
+            "说话人2: 我是副校长。\n",
+            "说话人3: 我是教务处。\n",
+            "说话人1: 到时候咱这个教务这边儿对招生进行一个计划书还有副校长这边儿对这个宣讲也要做一个方案。\n",
+            "说话人2: 可以\n",
+            "说话人1: 下去以后，咱们把会上的内容副校长这边儿总结一下儿。\n",
+            "说话人2: 好的\n",
+            "说话人1: 然后把学生召集过来开一个会，下次你来主持一下。\n",
+            "说话人2: 行");
+        let facts = factual_audit::evidence_sentences(&source_units(source)).iter().map(|row|
+            ExtractedFact::verbatim(row["id"].as_str().unwrap(), "status", row["text"].as_str().unwrap().trim()))
+            .collect();
+        let bank = build_bank(facts, source).unwrap();
+        let work = bank.facts.iter().filter(|item| item.placement == Placement::Action).collect::<Vec<_>>();
+        assert_eq!(work.len(), 4);
+        for (owner, term) in [("教务处","计划书"),("副校长","方案"),("副校长","总结"),("副校长","主持")] {
+            assert!(work.iter().any(|item| item.owner.as_deref() == Some(owner) && item.text.contains(term)), "{term}");
+        }
+    }
+
+    #[test]
+    fn qualification_follows_the_tentative_clause_and_the_cited_speaker() {
+        let source = "说话人1: 我们先确认滨河，嗯行那咱就暂暂定暂定滨河西区嗯，细址以后再看。\n说话人2: 但那边货车多，我担心不太安全。\n说话人3: 有专业人员会带队的。";
+        let mut paraphrase = ExtractedFact::verbatim("e0002","status","滨河西区存在安全风险。");
+        paraphrase.evidence.push("e0001".into());
+        let bank = build_bank(vec![ExtractedFact::verbatim("e0000","status","地址确认为滨河西区。"),paraphrase],source).unwrap();
+        assert!(bank.facts.iter().any(|item| item.text.starts_with("原话待核：暂定事项") && item.text.contains("滨河西区")));
+        assert!(bank.facts.iter().any(|item| matches!(item.kind,Kind::Opinion) && item.text.contains("我担心")));
+        assert!(bank.facts.iter().all(|item| !item.text.contains("确认为") && !item.text.contains("存在安全风险")));
+    }
+
+    #[test]
     fn nearby_confirmation_recovers_a_decision_and_grounds_its_followup() {
         let lines = [
             "说话人1: 我是总经理。",
@@ -1721,7 +1821,7 @@ mod tests{
     }
 
     #[test]
-    fn chapter_review_reserves_execution_information_selected_outside_main_points() {
+    fn chapter_review_reserves_explicit_schedule_even_when_both_model_fields_omit_it() {
         let mut lines=(0..150).map(|index| format!("项目进度记录{index}已完成。")).collect::<Vec<_>>();
         lines[12]="预计七月六号和七月七号考试，语数外每半天考一门。".into();
         let source = lines.join("\n");
@@ -1729,16 +1829,14 @@ mod tests{
             ExtractedFact::verbatim(&format!("e{index:04}"),"status",line)).collect();
         let mut bank = build_bank(facts, &source).unwrap();
         let date = bank.facts.iter().find(|fact| fact.text.contains("七月六号")).unwrap().id.clone();
-        let layout = review_chapters(&mut bank, None, &source, |_, input, schema, _| {
+        assert_eq!(bank.reader_priority.get(&date), Some(&4));
+        let layout = review_chapters(&mut bank, None, &source, |_, _, schema, _| {
             let properties = &schema["properties"];
             let label = &properties["labelIds"]["items"]["enum"][0];
             let main = properties["mainFacts"]["items"]["enum"].as_array().unwrap();
             let choices = main.iter().filter(|id| id.as_str() != Some(&date)).take(CHAPTER_READER_HIGHLIGHTS).collect::<Vec<_>>();
-            let execution = input["facts"].as_array().unwrap().iter().any(|row| row[0].as_str() == Some(&date));
-            Ok(json!({"labelIds":[label],"mainFacts":choices,"executionDetails":
-                if execution { vec![date.as_str()] } else { Vec::new() }}).to_string())
+            Ok(json!({"labelIds":[label],"mainFacts":choices,"executionDetails":[]}).to_string())
         }).unwrap();
-        assert_eq!(bank.reader_priority.get(&date), Some(&2));
         let session = crate::backend::minutes::tests::session_with_text(&source);
         let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
         let organized = organize(&layout, &bank, &session, &base).unwrap();

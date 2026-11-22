@@ -367,6 +367,7 @@ impl SourceWindows {
             let mut rejected_causal_claim = false;
             let mut source_quote_origin = None;
             let mut overlong = false;
+            let mut overlong_commitment = false;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
@@ -390,6 +391,7 @@ impl SourceWindows {
                 fact.evidence.insert(0, anchor.to_owned());
                 if !canonical_brief::line(&fact.text, 90) {
                     overlong = true;
+                    overlong_commitment |= matches!(fact.role.as_str(), "action" | "decision" | "question");
                     continue;
                 }
                 let sources:Vec<_>=fact.evidence.iter().map(|id|offered[id.as_str()]).collect();
@@ -470,19 +472,19 @@ impl SourceWindows {
                 accepted.push(fact);
             }
             if overlong {
-                let role = policy.safe_topic_role()
-                    .ok_or("纪要提取的决定或交办超出单条范围，原文和已有纪要保留。")?;
-                for excerpt in bounded_original_quotes(original) {
-                    let quote = ExtractedFact::review_quote(anchor, role, &excerpt);
-                    if !accepted.iter().any(|fact| fact.text == quote.text) {
-                        accepted.push(quote);
+                let prefix = if overlong_commitment { "原话待核：事项范围。" } else { "" };
+                let role = policy.discussion_role().ok_or_else(fail)?;
+                let excerpts = bounded_original_quotes_with_width(original, 90 - prefix.chars().count());
+                for excerpt in excerpts {
+                    let passage = format!("{prefix}{excerpt}");
+                    if !accepted.iter().any(|fact| fact.text == passage) {
+                        accepted.push(ExtractedFact::review_quote(anchor, role, &passage));
                     }
                 }
             }
             if unmatched.is_empty() && !rejected_causal_claim {
                 let origin = if let Some(reason) = source_quote_origin {
-                    let role = policy.safe_topic_role()
-                        .ok_or("会议原话未能支持这条改写，完整转写与已有纪要保留。")?;
+                    let role = policy.discussion_role().ok_or_else(fail)?;
                     let quote = if accepted.is_empty() || reason == "comparison-source-quote" {
                         complete_leading_excerpt(original)
                     } else {
@@ -500,6 +502,8 @@ impl SourceWindows {
                     } else {
                         "independently-supported-claims"
                     }
+                } else if overlong_commitment {
+                    "overlong-commitment-source-review"
                 } else if overlong {
                     "bounded-original-quotes"
                 } else {
@@ -657,6 +661,23 @@ impl<'de, T: Deserialize<'de>> Deserialize<'de> for UniqueMap<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn long_discussion_and_commitment_fall_back_independently() {
+        let report = "他们请的嘉宾每次来之前都会发预告。";
+        assert!(!Authority::from_source(report).allowed.contains(&"action"));
+        let source = "对，明天我负责提交整理后的检查记录。";
+        let window = SourceWindows::new(source).unwrap();
+        let long = "summary that cannot fit in one atom ".repeat(4);
+        let ordinary = json!({"e0000":[{"r":"status","t":long}]});
+        let result = window.check(0, &ordinary.to_string()).unwrap();
+        assert_eq!(result.reviewed[0]["origin"], "bounded-original-quotes");
+        assert!(result.facts.iter().all(|f| f.role == "status" && f.text.contains("检查记录")));
+        let task = json!({"e0000":[{"r":"action","t":long}]});
+        let result = window.check(0, &task.to_string()).unwrap();
+        assert_eq!(result.reviewed[0]["origin"], "overlong-commitment-source-review");
+        assert!(result.facts.iter().all(|f| f.role == "status" && f.text.starts_with("原话待核：")));
+    }
 
     #[test]
     fn local_minutes_window_has_every_sentence_once_and_rejects_duplicate_or_missing_keys() {

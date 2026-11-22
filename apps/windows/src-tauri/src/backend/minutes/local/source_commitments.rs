@@ -269,6 +269,178 @@ fn role_of<'a>(sentences: &'a [Value], speaker: &str) -> Option<&'a str> {
     })
 }
 
+fn meeting_lead(role: &str) -> bool {
+    ["主持人", "负责人", "总经理", "总裁", "董事长", "主管", "组长", "主任", "校长", "副校长"]
+        .contains(&role)
+}
+
+pub(super) fn meeting_roles(sentences: &[Value]) -> Vec<(usize, &str, &str)> {
+    sentences.iter().take(80).enumerate().filter_map(|(index, sentence)| {
+        let (speaker, text) = split(sentence);
+        Some((index, speaker?, self_introduced_identity(text)?))
+    }).collect()
+}
+
+pub(super) struct DirectedWork {
+    pub(super) item: CompanionV1ActionItem,
+    pub(super) support: Vec<usize>,
+}
+
+fn preceding_turn(sentences: &[Value], index: usize) -> Option<(usize, &str)> {
+    (index.saturating_sub(3)..index).rev().find_map(|previous| {
+        let (speaker, words) = split(&sentences[previous]);
+        if words.chars().count() > 28 && speaker.is_none() { return None; }
+        speaker.map(|speaker| (previous, speaker))
+    })
+}
+
+fn explicit_agreement(words: &str) -> bool {
+    let words = spread_trim(words);
+    ["好", "好的", "行", "可以", "收到", "明白", "没问题"].contains(&words)
+}
+
+fn spread_trim(text: &str) -> &str {
+    text.trim_matches([' ', '，', ',', '。', '！', '嗯', '呃', '啊'])
+}
+
+/// Keep the named recipients and each distinct deliverable when assignments
+/// are spoken in one turn, and resolve a following "you" through its reply.
+pub(super) fn directed_work(
+    sentences: &[Value], index: usize, roles: &[(usize, &str, &str)],
+) -> Vec<DirectedWork> {
+    static DELIVERABLE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:做|出|提交|形成|拟定|制定|编制|准备|写|进行|拿出)[^，,。！？；;]{0,26}?(?:计划书|计划|方案|报告|清单|时间表|预算表|财务表|记录|纪要)"
+    ).expect("work deliverable"));
+    static OPERATION: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:儿|呃|嗯|\s|就|也|再|先|来|要|需要|务必|具体|负责){0,12}(?:总结|整理|汇总|复核|核对|统计|主持)(?:一下儿?)?"
+    ).expect("directed operation"));
+    static CLOSING_OBJECT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:下去以后|会后|散会后|回去以后)[^。！？；;]{0,18}?(?:各部门|各单位|各团队|各小组)(?:儿)?\s*(?P<work>把[^。！？；;，,]{2,28}?(?:拿出来|交上来|报上来|发过来))"
+    ).expect("collective delivery"));
+    let (speaker, words) = split(&sentences[index]);
+    let inherited = speaker.is_none().then(|| preceding_turn(sentences, index)).flatten();
+    let Some(speaker) = speaker.or_else(|| inherited.map(|(_, label)| label)) else { return Vec::new(); };
+    if !meeting_lead(roles.iter().find(|(_, label, _)| *label == speaker).map_or(speaker, |(_, _, role)| *role))
+        || contains(words, &["听说", "转述", "当时说", "示例"])
+    {
+        return Vec::new();
+    }
+    let future = contains(words, &["会后", "散会后", "下去以后", "下次", "到时候", "接下来", "随后"]);
+    let mut addresses = Vec::new();
+    // Roles are drawn from the actual introduction. A shortened role is
+    // accepted only with a spoken address suffix.
+    for &(intro, label, role) in roles.iter().filter(|(_, label, _)| *label != speaker) {
+        let short = role.strip_suffix(['部', '组', '处']).unwrap_or(role);
+        for alias in [role, short] {
+            for (start, _) in words.match_indices(alias) {
+                let tail = start + alias.len();
+                if let Some(suffix) = ["这边儿", "这边", "这块儿", "这块", "那边儿", "那边"]
+                    .into_iter().find(|suffix| words[tail..].starts_with(suffix))
+                {
+                    addresses.push((start, tail + suffix.len(), label, role, intro));
+                }
+            }
+        }
+    }
+    addresses.sort_unstable_by_key(|x| (x.0, x.1));
+    addresses.dedup();
+    let mut work = Vec::new();
+    for (address_index, &(start, after, recipient, owner, intro)) in addresses.iter().enumerate() {
+        let end = addresses.get(address_index + 1).map_or(words.len(), |x| x.0);
+        let fragment = &words[after..end];
+        let clause = fragment.split(['。', '！', '？', '；']).next().unwrap_or(fragment);
+        let (operation, position) = if let Some(op) = OPERATION.find(clause) {
+            (op.as_str(), op.end())
+        } else if let Some(op) = DELIVERABLE.find(clause) {
+            (&clause[..op.end()], op.end())
+        } else { continue; };
+        let previous = words[..start].rsplit(['，', ',', '。', '！', '？', '；']).next().unwrap_or("");
+        if contains(operation, SOFT) || contains(operation, CONTEXT) || contains(operation, NEGATION)
+            || contains(previous, &["我建议", "比如", "如果", "假设", "如果由", "曾经", "只是在"])
+            || clause[position..].trim_start().starts_with(['？', '?', '吗'])
+        {
+            continue;
+        }
+        let agrees = sentences.get(index + 1).is_some_and(|row| {
+            let (label, reply) = split(row);
+            label == Some(recipient) && explicit_agreement(reply)
+        });
+        let force = contains(operation, &["也要", "要进行", "必须", "务必", "你来", "负责"]);
+        if !(future || agrees || force) { continue; }
+        let mut text = words[start..after + position].trim().to_owned();
+        if let Some((_, subject)) = previous.rsplit_once('把') {
+            let subject = subject.trim();
+            if (2..=25).contains(&subject.chars().count()) {
+                text = format!("把{subject}{text}");
+            }
+        }
+        if !canonical_brief::line(&text, 90) || !complete_piece(&text) { continue; }
+        let support = [
+            Some(intro), inherited.map(|(position, _)| position), agrees.then_some(index + 1),
+        ].into_iter().flatten().collect();
+        work.push(DirectedWork { item: CompanionV1ActionItem {text,owner:Some(owner.to_owned()),due:None}, support });
+    }
+    if let Some(group) = CLOSING_OBJECT.captures(words) {
+        let requested = group.name("work").unwrap().as_str();
+        let scope = group.get(0).unwrap().as_str();
+        if !contains(scope, CONTEXT) && !contains(scope, NEGATION) {
+            let owner = ["各部门", "各单位", "各团队", "各小组"].into_iter()
+                .find(|owner| scope.contains(owner)).unwrap();
+            let text = format!("{owner}会后{requested}");
+            work.push(DirectedWork {
+                item: CompanionV1ActionItem { text,owner:Some(owner.to_owned()),due:None },
+                support: inherited.map(|(position, _)| position).into_iter().collect(),
+            });
+        }
+    }
+    if work.is_empty() && future && words.contains("你来主持") {
+        if let (Some(prior), Some(reply), Some(next)) = (
+            index.checked_sub(2).and_then(|i| sentences.get(i)),
+            index.checked_sub(1).and_then(|i| sentences.get(i)),
+            sentences.get(index + 1),
+        ) {
+            let (lead, directive) = split(prior);
+            let (receiving, accepted) = split(reply);
+            let (next_label, next_reply) = split(next);
+            if lead == Some(speaker) && receiving.is_some() && receiving == next_label
+                && explicit_agreement(accepted) && explicit_agreement(next_reply)
+                && !contains(words, SOFT) && !contains(words, CONTEXT) && !contains(words, NEGATION)
+                && canonical_brief::line(words, 90)
+            {
+                if let Some((intro, _, owner)) = roles.iter().find(|(_, label, role)| Some(*label) == receiving && directive.contains(role)) {
+                    work.push(DirectedWork {
+                        item: CompanionV1ActionItem { text: words.to_owned(),owner:Some((*owner).to_owned()),due:None },
+                        support: vec![*intro, index - 2, index - 1, index + 1],
+                    });
+                }
+            }
+        }
+    }
+    if work.is_empty() && future && !contains(words, SOFT) && !contains(words, CONTEXT)
+        && !contains(words, NEGATION) && DELIVERABLE.is_match(words)
+    {
+        if let Some(row) = sentences.get(index + 1) {
+            let (recipient, reply) = split(row);
+            let reply = spread_trim(reply);
+            let acknowledgement = reply.strip_prefix("好的").or_else(|| reply.strip_prefix('对'));
+            if let (Some(label), Some(phrase)) = (recipient, acknowledgement) {
+                if let Some((intro, _, owner)) = roles.iter().find(|(_, participant, _)| *participant == label && label != speaker) {
+                    let text = spread_trim(phrase);
+                    if DELIVERABLE.find(text).is_some_and(|artifact| artifact.start() == 0 && artifact.end() == text.len())
+                        && canonical_brief::line(text, 90)
+                    {
+                        work.push(DirectedWork {
+                            item: CompanionV1ActionItem { text: text.to_owned(),owner:Some((*owner).to_owned()),due:None },
+                            support: vec![*intro, index + 1],
+                        });
+                    }
+                }
+            }
+        }
+    }
+    work
+}
+
 /// A conversational handoff is binding only when its scope and recipient are
 /// explicit and a nearby turn confirms it. Each part keeps its own source.
 pub(super) fn confirmed_delegation(
@@ -293,8 +465,7 @@ pub(super) fn confirmed_delegation(
     }
     let speaker = speaker?;
     let authority = role_of(sentences, speaker).unwrap_or(speaker);
-    if !["主持人", "负责人", "总经理", "总裁", "董事长", "主管", "组长", "主任"].contains(&authority)
-    {
+    if !meeting_lead(authority) {
         return None;
     }
     let nearby = index + 1..(index + 9).min(sentences.len());

@@ -9,8 +9,8 @@ const DECISION: &[&str] = &[
     "会议决定", "一致决定", "一致同意", "共同决定", "我们决定", "大家同意",
     "本次会议通过", "同意通过", "确认先", "最终确定", "就这么定", "就按这个执行",
 ];
-const ACTION: &[&str] = &["我承诺", "我负责", "我来负责", "由你负责", "由他负责", "请", "负责提交", "负责交付"];
-const NEXT_WORK: &[&str] = &["会后", "下次会议", "下周", "本周", "明天", "后天", "周一", "周二", "周三", "周四", "周五", "周六", "周日", "周末", "截止", "之前", "下班前"];
+const ACTION: &[&str] = &["我承诺", "我负责", "我来负责", "由你负责", "由他负责", "负责提交", "负责交付"];
+const NEXT_WORK: &[&str] = &["会后", "下次会议", "下周", "本周", "明天", "后天", "周一", "周二", "周三", "周四", "周五", "周六", "周日", "周末", "截止", "下班前"];
 const NON_BINDING: &[&str] = &[
     "没有决定", "未作决定", "还没决定", "没有同意", "不决定", "不承诺", "还未确认",
     "如果", "假如", "假设", "建议", "希望", "可能", "讨论是否", "曾经", "上周", "上次", "过去", "之前已经",
@@ -54,6 +54,20 @@ fn has(source: &str, markers: &[&str]) -> bool {
     markers.iter().any(|marker| source.contains(marker))
 }
 
+fn has_direct_request(source: &str) -> bool {
+    let body = super::super::source_resolution::split_turn_label(source)
+        .map_or(source, |(_, words)| words);
+    body.split(['，', ',', '。', '；']).any(|clause| {
+        let clause = clause.trim_start_matches([' ', '嗯', '呃', '那', '就']);
+        let after_time = NEXT_WORK.iter().find_map(|time| clause.strip_prefix(*time))
+            .map(|rest| rest.strip_prefix("之前").or_else(|| rest.strip_prefix('前')).unwrap_or(rest));
+        after_time.unwrap_or(clause).trim_start()
+            .strip_prefix('请')
+            .is_some_and(|rest| !rest.starts_with(['的', '了', '过'])
+                && !rest.starts_with("来的"))
+    })
+}
+
 #[derive(Clone)]
 pub(super) struct Authority {
     pub(super) allowed: Vec<&'static str>,
@@ -72,7 +86,9 @@ impl Authority {
         if has(source, OPINION) { allowed.push("opinion"); }
         let non_binding = has(source, NON_BINDING);
         if !non_binding && has(source, DECISION) { allowed.push("decision"); }
-        if !non_binding && !has(source, IN_MEETING) && has(source, NEXT_WORK) && has(source, ACTION) {
+        if !non_binding && !has(source, IN_MEETING) && has(source, NEXT_WORK)
+            && (has(source, ACTION) || has_direct_request(source))
+        {
             allowed.push("action");
         }
         if has(source, OPEN) && !has(source, CLOSED_AGENDA) && !has(source, REFERENCED_AGENDA) {
@@ -137,6 +153,10 @@ impl Authority {
         if self.allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question")) {
             return None;
         }
+        self.discussion_role()
+    }
+
+    pub(super) fn discussion_role(&self) -> Option<&'static str> {
         ["recommendation", "forecast", "opinion", "status"]
             .into_iter()
             .find(|role| self.allowed.contains(role))
