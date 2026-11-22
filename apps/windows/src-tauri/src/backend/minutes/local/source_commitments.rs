@@ -597,14 +597,31 @@ pub(super) fn stated_group_deliverable(source: &str) -> Option<CompanionV1Action
 
 fn closing_confirmation(words: &str) -> bool {
     let words = spread_trim(words);
-    ["会议就开到", "会议到这里", "会议到这儿", "本次会议结束", "现在散会", "今天就先到这",
+    ["会议就开到", "会议就先开到", "会议到这里", "会议到这儿", "本次会议结束", "现在散会", "今天就先到这",
         "今天就开到", "大家散会", "就到这里", "好的，散会", "好，散会"]
         .iter().any(|cue| words.contains(cue))
         || words.trim_end_matches(['。', '！', ' ', '，']) == "散会"
 }
 
+fn closing_group_delivery(words: &str) -> Option<CompanionV1ActionItem> {
+    static DELIVERY: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?P<time>下去以后|会后|散会后|回去以后|到时候)(?:儿)?\s*",
+        r"(?P<owner>各(?:个)?(?:部门|小组|单位|项目组|团队|班组|科室))(?:儿)?\s*",
+        r"(?P<request>把[^。！？；;]{2,36}?(?:方案|计划|报告|清单|报表|材料|资料|台账|记录)",
+        r"(?:发给|交给|提交给|报给)[\p{Han}]{2,14}?)(?:\s|[，,。；！]|$)"
+    )).expect("group delivery with a stated destination"));
+    let matched = DELIVERY.captures(words)?;
+    let owner = matched.name("owner")?.as_str();
+    let request = matched.name("request")?.as_str();
+    let time = matched.name("time")?.as_str();
+    let text = format!("{time}{owner}{request}");
+    canonical_brief::line(&text, 90).then(|| CompanionV1ActionItem {
+        text, owner: Some(owner.to_owned()), due: None,
+    })
+}
+
 /// A named group and a concrete deliverable survive without speaker labels.
-/// In unlabelled speech an adjacent closing or review confirms the request.
+/// In unlabelled speech an adjacent closing, acceptance or review confirms the request.
 pub(super) fn unlabelled_closing_work(
     rows: &[Value], index: usize, timing: Option<&super::timed_evidence::Timing<'_>>,
 ) -> Option<DirectedWork> {
@@ -612,24 +629,63 @@ pub(super) fn unlabelled_closing_work(
     if speaker.is_some() || contains(words, CONTEXT) || contains(words, NEGATION)
         || contains(words, SOFT) || contains(words, &["是不是", "曾经"])
         || words.contains(['?', '？']) { return None; }
-    let mut item = collective_written_plan(words)?;
+    let delivery = closing_group_delivery(words);
+    let mut item = delivery.or_else(|| collective_written_plan(words))?;
     let timing = timing?;
     if closing_confirmation(words) {
         return Some(DirectedWork { item, support: Vec::new() });
     }
-    let next = (index+1..(index+4).min(rows.len())).find(|&i| !backchannel(split(&rows[i]).1))?;
-    let (speaker, reply) = split(&rows[next]);
-    if speaker.is_some() || super::source_context::question_only(reply)
-        || contains(reply, CONTEXT) || contains(reply, NEGATION)
-        || !timing.neighboring_speech(index,next) { return None; }
-    let review = ["下次会议", "下一场会", "下回开会", "下次开会"].into_iter().find(|cue| reply.contains(cue));
-    let verb = ["讨论", "评审", "审阅", "核对"].into_iter().find(|cue| reply.contains(cue));
-    if let Some((meeting, verb)) = review.zip(verb) {
-        item.text.push_str(&format!("，{meeting}再{verb}"));
-    } else if !closing_confirmation(reply) {
+    let mut accepted = None;
+    for next in index + 1..(index + 4).min(rows.len()) {
+        let (speaker, reply) = split(&rows[next]);
+        if speaker.is_some() || !timing.neighboring_speech(index, next) {
+            break;
+        }
+        if explicit_agreement(reply) {
+            accepted.get_or_insert(next);
+            continue;
+        }
+        if backchannel(reply) {
+            continue;
+        }
+        if !super::source_context::question_only(reply) && !contains(reply, CONTEXT) && !contains(reply, NEGATION) {
+            let review = ["下次会议", "下一场会", "下回开会", "下次开会"].into_iter().find(|cue| reply.contains(cue));
+            let verb = ["讨论", "评审", "审阅", "核对"].into_iter().find(|cue| reply.contains(cue));
+            if let Some((meeting, verb)) = review.zip(verb) {
+                item.text.push_str(&format!("，{meeting}再{verb}"));
+                return Some(DirectedWork { item, support: vec![next] });
+            }
+            if closing_confirmation(reply) {
+                return Some(DirectedWork { item, support: vec![next] });
+            }
+        }
+        break;
+    }
+    Some(DirectedWork { item, support: vec![accepted?] })
+}
+
+/// A confirmed group assignment can have a second, separately addressed
+/// deliverable. Keep its owner and object from its own clause.
+pub(super) fn closing_scoped_deliverable(source: &str, primary: &CompanionV1ActionItem) -> Option<CompanionV1ActionItem> {
+    static ADDITION: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?:好了|好的|行了|[；;])\s*(?P<owner>[\p{Han}]{2,8}?)(?:这边儿?|这块儿?|那边儿?)\s*",
+        r"(?P<request>(?:嗯|呃|要|需|就|再|也|\s){0,10}(?:做|准备|整理|提交|核对|评估|估算|汇总)",
+        r"[^。！？；;]{2,46}?(?:成本估算|估算|预算表|报价|清单|报告|报表|方案|数据|材料))",
+    )).expect("second deliverable with its own stated team"));
+    let words = super::source_review::bare(source);
+    let (head, rest) = words.split_once(primary.owner.as_deref()?)?;
+    if contains(head, SOFT) || contains(head, CONTEXT) { return None; }
+    let part = ADDITION.captures(rest)?;
+    let owner = part.name("owner")?.as_str();
+    let request = part.name("request")?.as_str();
+    if !ROLES.iter().any(|role| owner == *role || owner.strip_suffix(['部', '组', '处']) == Some(*role))
+        || contains(request, SOFT) || contains(request, CONTEXT) || contains(request, NEGATION) {
         return None;
     }
-    Some(DirectedWork { item, support: vec![next] })
+    let text = format!("{owner}{}", request.trim_start_matches(['嗯','呃',' ']));
+    canonical_brief::line(&text, 90).then(|| CompanionV1ActionItem {
+        text, owner: Some(owner.to_owned()), due: None,
+    })
 }
 
 /// Keep the named recipients and each distinct deliverable when assignments
@@ -1120,6 +1176,37 @@ mod tests {
         let mut suggestion=rows.clone();
         suggestion[0]["text"]=serde_json::json!("我建议会后各部门做个方案。");
         assert!(unlabelled_closing_work(&suggestion,0,Some(&timing)).is_none());
+    }
+
+    #[test]
+    fn closing_handoff_keeps_the_recipient_and_accepted_secondary_work() {
+        use super::super::timed_evidence::Timing;
+        use crate::backend::minutes::{automatic_brief::factual_audit::evidence_sentences, canonical_brief::source_units};
+        use crate::companion_v1::CompanionV1UtteranceSegment;
+        let words = [
+            "到时候儿各部门把各自招人的计划发给人事 行，好的，本次会议就先开到这儿。",
+            "接下来下去以后各部门儿做一个具体的方案 好的后勤这边儿嗯做一个实施成本的估算 行吧。",
+            "嗯，行。",
+        ];
+        let source = words.join("\n");
+        let rows = evidence_sentences(&source_units(&source));
+        let turns = words.into_iter().enumerate().map(|(index,text)| CompanionV1UtteranceSegment {
+            text: text.to_owned(), start_ms: index as u64 * 1000, end_ms: (index + 1) as u64 * 1000,
+            speaker: None, approximate_timing: false,
+        }).collect::<Vec<_>>();
+        let timing = Timing::verified(&source, &rows, &turns).unwrap();
+        let report = unlabelled_closing_work(&rows, 0, Some(&timing)).unwrap();
+        assert_eq!(report.item.owner.as_deref(), Some("各部门"));
+        assert!(report.item.text.contains("计划发给人事"));
+        assert!(report.item.due.is_none());
+        let request = rows.iter().position(|row| row["text"].as_str().unwrap().contains("后勤")).unwrap();
+        let plan = unlabelled_closing_work(&rows, request, Some(&timing)).unwrap();
+        assert_eq!(plan.item.text, "会后完成方案");
+        let cost = closing_scoped_deliverable(rows[request]["text"].as_str().unwrap(), &plan.item).unwrap();
+        assert_eq!(cost.owner.as_deref(), Some("后勤"));
+        assert!(cost.text.contains("实施成本的估算"));
+        assert!(cost.due.is_none());
+        assert!(closing_group_delivery("各部门把招人的计划发给人事").is_none());
     }
 
     #[test]

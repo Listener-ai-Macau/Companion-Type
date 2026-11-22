@@ -111,6 +111,28 @@ fn the_period_and_contrast_stay_with_the_reported_metrics() {
     assert!(reported_change_groups(&rows[2..]).is_empty());
 }
 
+#[cfg(test)]
+#[test]
+fn guard_and_trigger_keep_the_full_instruction_with_its_condition() {
+    for text in [
+        "没有视频监控，但是安全出口不允许堆放任何杂物。",
+        "冷柜找不着的话至少改用保温车。",
+        "我们需要呃在他休婚假之前再招一个厨师。",
+    ] {
+        let (_, literal) = documented_clause(text).unwrap();
+        assert_eq!(literal, text.trim_end_matches('。'));
+        assert!(binding_requirement(text).is_some());
+    }
+    for text in [
+        "我建议这道门不允许堆放任何杂物。",
+        "我觉得冷柜找不着的话可以启用备用车。",
+        "如果不允许在那里堆放物品，我们再来讨论。",
+        "我希望在活动结束前再安排一位同事。",
+    ] {
+        assert!(documented_clause(text).is_none(), "{text}");
+    }
+}
+
 fn reported_scale(text: &str) -> bool {
     static SCALE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:累计|共计|响应了|完成了|实际有)[^。；！？]{0,12}[0-9０-９][0-9０-９.,，]*\s*(?:多|余)?\s*(?:次|例|场|项|人|家)"
@@ -143,6 +165,8 @@ pub(super) enum OperationalEvidence {
     OperatingStandard,
     ApprovalPrerequisite,
     CorrectiveRequirement,
+    Prohibition,
+    TriggeredProcedure,
 }
 
 /// Strict source dispositions deserve a slot even if the same original
@@ -241,6 +265,33 @@ pub(super) fn documented_clause(text: &str) -> Option<(OperationalEvidence, &str
         && has(&["邮寄", "另行", "线上", "由", "补办", "不得"])
     {
         return Some((OperationalEvidence::LimitedAccess, text));
+    }
+    if text.chars().count() <= 90
+        && !has(&["建议", "我觉得", "我想", "我希望", "讨论是否", "暂定", "原来", "以前", "往年",
+            "是不是", "不是说", "不一定", "还没决定", "尚未决定", "不确定", "预计"])
+        && !["都要", "然后", "这个", "那个", "主要", "的情况", "需要", "就先", "是说", "来看"]
+            .iter().any(|tail| text.ends_with(tail))
+    {
+        static PROHIBITION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+            r"[^，,。！？；]{2,36}(?:不允许|禁止|不得|不准)[^，,。！？；]{4,50}"
+        ).expect("explicit operational prohibition"));
+        static FALLBACK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
+            r"(?:找不到|找不着|来不及|无法|不通过|没通过|失败|不符合|不能)[^。！？；]{0,22}?",
+            r"(?:的话|就|时)[^。！？；]{0,18}?(?:至少|最少|改用|改走|改由|就先|也得|启用备用)[^，,。！？；]{2,32}"
+        )).expect("named contingency and fallback"));
+        static BEFORE_EVENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
+            r"(?:需要|必须|务必|一定要)[呃嗯啊\s]{0,6}在[^，,。！？；]{3,26}?(?:之前|以前|前)",
+            r"[呃嗯啊\s再先就]{0,6}(?:招|招聘|安排|完成|提交|通知|交付|采购|更换|维修|补办|准备|核验)",
+            r"[^，,。！？；]{2,28}"
+        )).expect("an explicit requirement before a stated event"));
+        if PROHIBITION.is_match(text)
+            && !has(&["如果由", "假如", "举例", "要不要", "如果不允许", "如果禁止", "如果不得"])
+        {
+            return Some((OperationalEvidence::Prohibition, text));
+        }
+        if FALLBACK.is_match(text) || BEFORE_EVENT.is_match(text) {
+            return Some((OperationalEvidence::TriggeredProcedure, text));
+        }
     }
     None
 }

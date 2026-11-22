@@ -366,12 +366,18 @@ fn source_verified_facts(
         }
         if let Some(record) = source_commitments::unlabelled_closing_work(sentences,index,timing)
             .filter(|record| record.support.iter().all(|next| frames_at[*next].is_none() && !hypothetical.contains(next))) {
-            let body = record.item.text.clone();
-            let mut fact = ExtractedFact::original_action(id,&body,record.item);
-            extend_references(&mut fact,sentences,&record.support);
-            current.retain(|item| !matches!(item.role.as_str(),"status" | "action"));
-            audit.push(json!({"sentenceId":id,"reason":"collective-plan-confirmed-at-close","evidence":fact.evidence}));
-            current.push(fact);
+            let additional = source_commitments::closing_scoped_deliverable(original, &record.item);
+            for item in [Some(record.item), additional].into_iter().flatten() {
+                let body = item.text.clone();
+                let owner = item.owner.as_deref().unwrap();
+                current.retain(|fact| !matches!(fact.role.as_str(), "status" | "action")
+                    || !(source_grounding::shared_han_phrase(&fact.text, &body, 4)
+                        && (fact.owner.as_deref() == Some(owner) || fact.text.contains(owner))));
+                let mut fact = ExtractedFact::original_action(id,&body,item);
+                extend_references(&mut fact,sentences,&record.support);
+                audit.push(json!({"sentenceId":id,"reason":"collective-plan-confirmed-at-close","evidence":fact.evidence,"owner":fact.owner}));
+                current.push(fact);
+            }
         }
         for record in source_commitments::explicitly_named_work(sentences,index) {
             let text = record.item.text.clone();
@@ -2054,16 +2060,18 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main)));
         }
         placed_critical.append(&mut protected);
-        required_chars+=items.iter().take(1)
-            .map(|(fact,_)|reader_fact_length(bank,fact)).sum::<usize>();
+        required_chars += items.iter().enumerate()
+            .filter(|(index, (fact, _))| *index == 0 || bank.required_topic(&fact.id))
+            .map(|(_, (fact, _))| reader_fact_length(bank, fact)).sum::<usize>();
     }
-    let mut optional_chars=1000_usize.checked_sub(required_chars).ok_or_else(fail)?;
+    let mut optional_chars=1000_usize.saturating_sub(required_chars);
     let mut reserved = HashSet::new();
     for items in &slots {
         for (fact, main) in items.iter().skip(1).take(2) {
             let size=reader_fact_length(bank,fact);
-            if (placed_critical.contains(&fact.id.as_str()) || important(fact, *main)) && size <= optional_chars {
-                optional_chars -= size;
+            let charged = if bank.required_topic(&fact.id) { 0 } else { size };
+            if (placed_critical.contains(&fact.id.as_str()) || important(fact, *main)) && charged <= optional_chars {
+                optional_chars -= charged;
                 reserved.insert(fact.id.as_str());
             }
         }
@@ -2109,16 +2117,18 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
                 points.push([&fact.id]);
             }else if bank.required_topic(&fact.id){
                 required.push([&fact.id]);
-            }else if main&&points.len()<3&&size<=optional_chars{
+            }else if main && points.len()<3 && size<=optional_chars && useful_reader_point(fact){
                 optional_chars-=size;points.push([&fact.id]);
-            }else if main{
+            }else if main && useful_reader_point(fact){
                 highlights.push([&fact.id]);
             }else if focus.is_some() && conversational_prompt(fact) {
                 prompts.push([&fact.id]);
             }else if bank.review_quote(&fact.id){
                 review.push([&fact.id]);
-            }else{
+            }else if useful_reader_point(fact) {
                 remainder.push([&fact.id]);
+            }else{
+                prompts.push([&fact.id]);
             }
         }
         // Keep a source-backed uncertainty visible even when a chapter has
