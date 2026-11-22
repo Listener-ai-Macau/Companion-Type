@@ -510,9 +510,14 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
                 .map(|row| row["text"].as_str().unwrap()).collect::<Vec<_>>();
             let end = (position + 5).min(sentences.len());
             let revenue_scope = (f.text.contains("业务收入") && f.text.contains("净利润")).then(|| {
-                sentences[position..end].iter().find_map(|row| {
+                sentences[position..end].iter().enumerate().find_map(|(offset, row)| {
                     let reported = row["text"].as_str().unwrap();
-                    let category = source_grounding::isolated_revenue_scope(reported, &previous, source)?;
+                    // Summaries anchored just before the numbers must use
+                    // the report's context, including the anchor itself.
+                    let report_position = position + offset;
+                    let report_context = sentences[report_position.saturating_sub(8)..report_position]
+                        .iter().map(|row| row["text"].as_str().unwrap()).collect::<Vec<_>>();
+                    let category = source_grounding::isolated_revenue_scope(reported, &report_context, source)?;
                     f.text.contains(category).then_some((row, "收入归属", "unclear-revenue-scope"))
                 })
             }).flatten();
@@ -1522,6 +1527,22 @@ mod tests{
         assert!(fact.text.starts_with("原话待核："));
         assert!(fact.text.contains("不是我们的员工"));
         assert!(bank.priority_review.contains(&fact.id));
+    }
+
+    #[test]
+    fn a_nearby_summary_cannot_bypass_review_of_the_financial_report() {
+        let source = "说话人5: 化妆品行业利润较高，下半年我们要提升服务。\n\
+            说话人1: 请说一下财务状况。\n\
+            说话人5: 旅游业务收入约八十万元，净利润七十万元。";
+        let earlier_paraphrase = ExtractedFact::verbatim(
+            "e0000", "status", "旅游业务收入约八十万元，净利润七十万元。下半年提高服务。");
+        let report = ExtractedFact::verbatim("e0002", "status", "旅游业务收入约八十万元，净利润七十万元。");
+        let bank = build_bank(vec![earlier_paraphrase, report], source).unwrap();
+        let financial: Vec<_> = bank.facts.iter().filter(|fact| fact.text.contains("旅游业务收入")).collect();
+        assert_eq!(financial.len(), 1);
+        assert!(financial[0].text.starts_with("原话待核：收入归属"));
+        assert!(financial[0].evidence.iter().any(|id| id == "e0002"));
+        assert!(bank.priority_review.contains(&financial[0].id));
     }
 
     #[test]
