@@ -10,7 +10,9 @@ use crate::companion_v1::CompanionV1ActionItem;
 
 pub(super) struct BoundCommitment {
     pub(super) item: CompanionV1ActionItem,
+    pub(super) prerequisite: Option<usize>,
     pub(super) continuation: Option<usize>,
+    pub(super) needs_review: bool,
 }
 
 const ROLES: &[&str] = &[
@@ -22,7 +24,7 @@ const SOFT: &[&str] = &[
     "可以", "未确认", "没有确认", "没决定", "不一定", "要不要", "能不能", "是否",
     "举例", "比如", "例如", "假设", "假如", "曾说", "说过", "听说", "转述",
 ];
-const CONTEXT: &[&str] = &["如果", "若是", "只有", "一旦", "除非", "等到"];
+const CONTEXT: &[&str] = &["如果", "要是", "若是", "只有", "一旦", "除非", "等到"];
 const NEGATION: &[&str] = &["不用", "无需", "不必", "不再", "不会", "不能", "取消", "没有安排"];
 
 fn contains(text: &str, choices: &[&str]) -> bool {
@@ -104,7 +106,55 @@ fn explicit_speaker(lead: &str, modal: &str) -> Option<Option<String>> {
 }
 
 fn conditional_clause(text: &str) -> Option<&str> {
-    text.split(['，', ',']).rev().map(str::trim).find(|part| contains(part, CONTEXT))
+    static SUFFIX: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:合格|通过|确认|批准|到货|同意|符合要求|验收|结束|满足|准备好)(?:儿|了)?(?:的话|以后|之后|后)"
+    ).expect("spoken prerequisite suffix"));
+    text.split(['，', ',']).rev().map(str::trim).find(|part| contains(part, CONTEXT) || SUFFIX.is_match(part))
+}
+
+/// Look back only within the speaker's continuation, allowing another speaker
+/// to acknowledge it without taking ownership of the attached action.
+fn prior_condition<'a>(sentences: &'a [Value], index: usize, action: &str) -> Option<(usize, &'a str, bool)> {
+    if !["然后", "那", "所以", "之后", "再", "接着"].iter().any(|cue| action.starts_with(cue))
+        && !contains(action, &["我们就", "咱们就", "我就", "我们再"]) {
+        return None;
+    }
+    let (speaker, _) = split(&sentences[index]);
+    let speaker = speaker?;
+    for previous in (index.saturating_sub(4)..index).rev() {
+        let (label, words) = split(&sentences[previous]);
+        if backchannel(words) { continue; }
+        if label != Some(speaker) || words.contains(['？', '?', '！', '!'])
+            || contains(words, &["转述", "举例", "假设", "我建议", "听说"]) {
+            break;
+        }
+        if let Some(condition) = conditional_clause(words) {
+            let condition = condition.trim_end_matches(['，', ',', ' ']);
+            let incomplete = !complete_piece(condition)
+                || contains(condition, &["想想的", "如果就是说", "看行不行"]);
+            return Some((previous, condition, incomplete));
+        }
+        // One short linking fragment is allowed, but a self-contained
+        // assertion starts a different record.
+        if !["这个", "那个", "然后", "嗯", "呃"].iter().any(|cue| words.starts_with(cue)) {
+            break;
+        }
+    }
+    None
+}
+
+fn attach_prerequisite(sentences: &[Value], index: usize, mut record: BoundCommitment) -> BoundCommitment {
+    if conditional_clause(&record.item.text).is_some() { return record; }
+    if let Some((previous, condition, incomplete)) = prior_condition(sentences, index, &record.item.text) {
+        record.prerequisite = Some(previous);
+        let full = format!("{condition}，{}", record.item.text);
+        if !incomplete && canonical_brief::line(&full, 90) {
+            record.item.text = full;
+        } else {
+            record.needs_review = true;
+        }
+    }
+    record
 }
 
 fn scoped_commitment(body: &str, institutional_voice: bool) -> Option<CompanionV1ActionItem> {
@@ -239,11 +289,15 @@ pub(super) fn at(sentences: &[Value], index: usize, linked_actors: &HashSet<&str
                     return None;
                 }
             }
-            return Some(BoundCommitment { item, continuation: Some(next) });
+            return Some(attach_prerequisite(sentences, index, BoundCommitment {
+                item, prerequisite: None, continuation: Some(next), needs_review: false,
+            }));
         }
     }
     let item = agreed_handoff(first).or_else(|| scoped_commitment(first, institutional_voice))?;
-    Some(BoundCommitment { item, continuation: None })
+    Some(attach_prerequisite(sentences, index, BoundCommitment {
+        item, prerequisite: None, continuation: None, needs_review: false,
+    }))
 }
 
 #[cfg(test)]
@@ -267,6 +321,33 @@ mod tests {
         assert!(result.item.text.contains("关注各大银行的官网")
             && result.item.text.contains("如果有招标信息发布的话，我们会及时投标"));
         assert!(result.item.due.is_none());
+    }
+
+    #[test]
+    fn preserves_a_prerequisite_from_the_same_speaker_before_an_acknowledgment() {
+        let rows = sentences(&[
+            "说话人2: 我是设计部。",
+            "说话人2: 图纸审核合格的话，这周会跟我们对接",
+            "说话人1: 嗯",
+            "说话人2: 然后我们会和施工队对接，让他们安排施工。",
+        ]);
+        let bound = at(&rows, 3, &meeting_actor_labels(&rows)).unwrap();
+        assert_eq!(bound.prerequisite, Some(1));
+        assert!(bound.item.text.contains("图纸审核合格的话") && bound.item.text.contains("施工队对接"));
+        assert!(!bound.needs_review);
+    }
+
+    #[test]
+    fn incomplete_condition_goes_to_review_instead_of_becoming_a_task() {
+        let rows = sentences(&[
+            "说话人4: 我是市场部。",
+            "说话人4: 如果就是说楼盘这次这个想想的那个",
+            "说话人1: 嗯",
+            "说话人4: 然后我们就会去找开发商进行洽谈",
+        ]);
+        let bound = at(&rows, 3, &meeting_actor_labels(&rows)).unwrap();
+        assert_eq!(bound.prerequisite, Some(1));
+        assert!(bound.needs_review);
     }
 
     #[test]

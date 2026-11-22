@@ -510,6 +510,7 @@ export interface CompanionV1HostSession {
   /** Speaker-attributed utterances when diarization ran (Volc + models). */
   utterances?: CompanionV1UtteranceSegment[];
   transcriptReview?: CompanionTranscriptReview | null;
+  transcriptReviewHistory?: CompanionTranscriptReview[];
   bookmarkRevision?: number;
   bookmarks?: CompanionRecordingBookmark[];
   organization?: CompanionLibraryOrganization;

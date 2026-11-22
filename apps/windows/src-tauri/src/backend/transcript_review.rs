@@ -69,7 +69,7 @@ pub fn final_transcript_available(session: &CompanionV1HostSession) -> bool {
         || (session.recovery.intent == "none" && matches!(session.status.as_str(), "transcribed" | "minutesReady")))
 }
 
-fn has_changes(review: &TranscriptReview) -> bool {
+pub(super) fn has_changes(review: &TranscriptReview) -> bool {
     review.text.is_some() || !review.utterance_edits.is_empty() || !review.speaker_names.is_empty()
 }
 
@@ -147,6 +147,7 @@ pub fn minutes_input(session: &CompanionV1HostSession) -> CompanionV1HostSession
     // User context is retained locally/exported explicitly, never silently
     // sent as ASR evidence to native or external minutes providers.
     input.meeting_notes.clear();
+    input.transcript_review_history.clear();
     input.utterances = effective_utterances(session);
     let review = active_review(session);
     if review.is_none() { input.transcript_review = None; }

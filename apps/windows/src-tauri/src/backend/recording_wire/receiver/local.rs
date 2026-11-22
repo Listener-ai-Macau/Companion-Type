@@ -597,6 +597,7 @@ mod tests {
             assert!(crate::backend::transcription::CompanionTranscriptionManager::new().transcribe_session_owned(&id,None,&[missing]).is_err());
             let mut row=crate::backend::persistence::load_sessions_from(&index).unwrap().remove(0);
             row.transcript_text.clear();row.transcript_final=false;row.transcript_review=None;row.utterances.clear();row.transcript_segments=0;
+            row.transcript_review_history.clear();
             let minutes=crate::backend::minutes::CompanionMinutesManager::new().generate(&row,"diagnostic-model");assert_ne!(minutes.quality,"final");
         });
         for operation in [crate::backend::diagnostics::Operation::RecordingRestored,crate::backend::diagnostics::Operation::Transcription,crate::backend::diagnostics::Operation::Minutes]{

@@ -395,6 +395,8 @@ pub struct CompanionV1HostSession {
     /// Human review is an overlay; never replace the provider's ASR evidence.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub transcript_review: Option<crate::backend::transcript_review::TranscriptReview>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub transcript_review_history: Vec<crate::backend::transcript_review::TranscriptReview>,
     #[serde(default)]
     pub bookmark_revision: u64,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -1425,6 +1427,7 @@ pub(crate) fn apply_control_at(
             snapshot.host.sessions[index].transcript_segments = 0;
             snapshot.host.sessions[index].utterances.clear();
             snapshot.host.sessions[index].transcript_review = None;
+            snapshot.host.sessions[index].transcript_review_history.clear();
             snapshot.host.sessions[index].meeting_notes.clear();
             snapshot.host.sessions[index].note_revision = snapshot.host.sessions[index].note_revision.saturating_add(1);
             snapshot.host.sessions[index].minutes = None;
@@ -1651,6 +1654,7 @@ pub(crate) fn create_host_session(
         organization: Default::default(),
         device_bookmark_imports: vec![],
         transcript_review: None,
+        transcript_review_history: vec![],
         id: id.clone(),
         title: request
             .title

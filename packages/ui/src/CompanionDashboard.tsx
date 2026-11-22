@@ -548,7 +548,7 @@ export function CompanionDashboard({
   const [gapPreview,setGapPreview]=useState<{sessionId:string;startMs:number;endMs:number;text:string;partial:boolean;sourceText:string;sourceReview:string}|null>(null);
   const [gapMessage,setGapMessage]=useState<{sessionId:string;text:string}|null>(null);
   const [gapSaving,setGapSaving]=useState(false);
-  const transcriptEditor = useRef<{ sessionId?: string; dirty: boolean }>({ dirty: false });
+  const transcriptEditor = useRef<{ sessionId?: string; dirty: boolean; submitted?: string }>({ dirty: false });
   const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string; targetTitle: string; selectedId: string | null; libraryKey: string } | null>(null);
   const deleteSubmitted = useRef(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -920,12 +920,16 @@ export function CompanionDashboard({
     if (snapshot) setDraftName(snapshot.bleName.stagedName);
   }, [snapshot?.bleName.stagedName]);
 
+  const savedTranscriptText = useMemo(() => selectedSession ? companionReviewedTranscript(selectedSession) : '', [selectedSession]);
   useEffect(() => {
     if (transcriptEditor.current.sessionId !== selectedSession?.id) {
       transcriptEditor.current = { sessionId: selectedSession?.id, dirty: false };
     }
-    if (!transcriptEditor.current.dirty) setTranscriptDraft(selectedSession?.transcriptText ?? '');
-  }, [selectedSession?.id, selectedSession?.transcriptText]);
+    if (transcriptEditor.current.submitted === savedTranscriptText && snapshot?.host.persistence?.status !== 'unsaved') {
+      transcriptEditor.current = { sessionId: selectedSession?.id, dirty: false };
+    }
+    if (!transcriptEditor.current.dirty) setTranscriptDraft(savedTranscriptText);
+  }, [selectedSession?.id, savedTranscriptText, snapshot?.host.persistence?.status]);
 
   useEffect(() => {
     setPendingDelete(null);
@@ -1053,7 +1057,7 @@ export function CompanionDashboard({
         : (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0))),
   );
   const unimportedTranscriptDraft = Boolean(transcriptEditor.current.dirty && selectedSession
-    && transcriptDraft.trim() !== (selectedSession.transcriptText ?? '').trim());
+    && (transcriptDraft.trim() !== savedTranscriptText.trim() || snapshot?.host.persistence?.status === 'unsaved'));
   const canGenerate = !readingPreview && finalTranscript && !recoveryView?.isProcessing && !unimportedTranscriptDraft;
   const hasOriginalAudio = Boolean(hasSyncedAudio && selectedSession?.audioStored && selectedSession.retention.audioCached
     && (selectedSession.source === 'hostMeeting' ? hostRecordingAudioConfirmed(selectedSession)
@@ -1178,8 +1182,8 @@ export function CompanionDashboard({
   const asrConfigured = productSettings?.asrProvider === 'local-paraformer'
     ? Boolean(productSettings.localAsrAvailable) : cloudAsrConfigured;
   useEffect(() => {
-    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || Boolean(retranscriptionPreview) || Boolean(gapPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||audioEditUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
-  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, retranscriptionPreview,gapPreview,transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,audioEditUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
+    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || unimportedTranscriptDraft || Boolean(retranscriptionPreview) || Boolean(gapPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||audioEditUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
+  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, unimportedTranscriptDraft, retranscriptionPreview,gapPreview,transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,audioEditUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
@@ -1749,6 +1753,46 @@ export function CompanionDashboard({
       if(minutes&&!calendarReturn)setSavedMinutesReveal({sessionId,mode});
     } catch (saveError) {
       setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: `未保存，草稿仍在：${operationErrorText(saveError,'save')}` });
+    } finally {
+      setSaveMeetingBusy(false);
+    }
+  };
+  const importTranscript = async () => {
+    if (!selectedSession || !transcriptDraft.trim() || transcriptReviewUnsaved || saveMeetingBusy) return;
+    const sessionId = selectedSession.id;
+    if (!finalTranscript || !onSaveMeeting) {
+      const text = transcriptDraft.split(/\r?\n/).map(line => line.trim()).filter(Boolean).join('\n');
+      transcriptEditor.current.submitted = text;
+      onControl({ action: 'meetingImportTranscript', sessionId, title: draftTitle, transcriptText: text });
+      return;
+    }
+    const submitted = transcriptDraft.trim();
+    setSaveMeetingBusy(true);
+    setSaveMeetingResult(null);
+    try {
+      const next = await onSaveMeeting({
+        sessionId,
+        transcriptReview: {
+          expectedTranscriptText: selectedSession.transcriptText,
+          expectedUtterances: selectedSession.utterances ?? [],
+          expectedRevision: selectedSession.transcriptReview?.revision ?? 0,
+          text: submitted,
+          utteranceEdits: [],
+          speakerNames: [],
+        },
+      });
+      const saved = next.host.sessions.find(session => session.id === sessionId);
+      if ((next.host.persistence && next.host.persistence.status !== 'ready') || !saved
+        || companionReviewedTranscript(saved).trim() !== submitted) {
+        throw new Error('导入文字尚未确认保存。');
+      }
+      if (transcriptEditor.current.sessionId === sessionId) {
+        transcriptEditor.current = { sessionId, dirty: false };
+        setTranscriptDraft(companionReviewedTranscript(saved));
+      }
+      setSaveMeetingResult({ sessionId, kind: 'saved', message: '导入文字已保存为当前转写，可用于重新整理纪要。' });
+    } catch (error) {
+      setSaveMeetingResult({ sessionId, kind: 'error', message: `${operationErrorText(error, 'save')} 草稿仍保留。` });
     } finally {
       setSaveMeetingBusy(false);
     }
@@ -3175,11 +3219,12 @@ export function CompanionDashboard({
               value={transcriptDraft}
               onChange={(event) => {
                 transcriptEditor.current.dirty = true;
+                transcriptEditor.current.submitted = undefined;
                 setTranscriptDraft(event.target.value);
               }}
               spellCheck={false}
               placeholder="转写文本…"
-              disabled={!hasSyncedAudio && !selectedSession}
+              disabled={controlsBusy || saveMeetingBusy || (!hasSyncedAudio && !selectedSession)}
             />
             {(() => {
               const utterances = (selectedSession ? companionReviewedUtterances(selectedSession) : []).filter(u=>!u.approximateTiming);
@@ -3239,18 +3284,16 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !transcriptDraft.trim() || !hasSyncedAudio}
-                onClick={() => onControl({
-                  action: 'meetingImportTranscript',
-                  sessionId: selectedSession?.id,
-                  title: draftTitle,
-                  transcriptText: transcriptDraft,
-                })}
+                disabled={controlsBusy || saveMeetingBusy || oobeBlockedByRecording || storageBlocked
+                  || transcriptReviewUnsaved || !unimportedTranscriptDraft || !hasSyncedAudio}
+                onClick={() => void importTranscript()}
               >
                 <Upload size={16} />
                 <span>导入到这条录音</span>
               </button>
             </div>
+            {saveMeetingResult && saveMeetingResult.sessionId === selectedSession?.id && !saveMeetingResult.part
+              ? <p role="status" className={saveMeetingResult.kind === 'error' ? 'ct-step-warn' : 'ct-step-ok'}>{saveMeetingResult.message}</p> : null}
           </div>
         </div>
 
@@ -3263,8 +3306,8 @@ export function CompanionDashboard({
               <p>刚输入的文字尚未导入。为避免整理成旧内容，请先导入，或还原为已保存的转写。</p>
               <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={() => {
                 if (!selectedSession) return;
-                transcriptEditor.current.dirty = false;
-                setTranscriptDraft(selectedSession.transcriptText ?? '');
+                transcriptEditor.current = { sessionId: selectedSession.id, dirty: false };
+                setTranscriptDraft(savedTranscriptText);
               }}>还原为已保存的转写</button>
             </div> : null}
             <div className="ct-button-row">

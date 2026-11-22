@@ -417,6 +417,42 @@ pub(super) fn material_condition(source: &str) -> Option<&str> {
     STATUS_BOUNDARY.find(source).map(|w| w.as_str())
 }
 
+pub(super) fn isolated_revenue_scope<'a>(reported: &'a str, prior: &[&str], meeting: &str) -> Option<&'a str> {
+    let (business, amounts) = reported.split_once("业务收入")?;
+    if !amounts.contains("净利润") { return None; }
+    let category = revenue_category(business)?;
+    let industry = prior.iter().rev().find_map(|line| {
+        let (lead, _) = line.split_once("行业")?;
+        let lead = lead.trim_end_matches(['的', ' ']).trim_end_matches("这个").trim_end_matches("那个");
+        revenue_category(lead)
+    })?;
+    (!business.contains(industry) && industry != category && meeting.matches(category).count() == 1)
+        .then_some(category)
+}
+
+fn revenue_category(text: &str) -> Option<&str> {
+    let word = super::chapter_labels::segmenter().tag(text, false).into_iter().last()?.word;
+    (word.chars().count() >= 2 && word.chars().all(|ch| matches!(ch, '一'..='鿿' | '㐀'..='䶿'))
+        && !["这个", "那个", "自己", "我们", "你们", "整个", "目前"].contains(&word)).then_some(word)
+}
+
+// A judgment can be categorical in the paraphrase even if only a different
+// circumstance in the same paraphrase retained its condition.
+pub(super) fn missing_judgment_condition<'a>(claim: &str, preceding: &[&'a str]) -> Option<(usize, &'a str)> {
+    let verdict = claim.split(['。', '！', '？', '；']).next()?;
+    let target = ["定性为", "判定为", "构成"].iter()
+        .find_map(|signal| verdict.split_once(signal).map(|(_, target)| target))?;
+    if target.chars().count() < 2
+        || ["如果", "假如", "只有", "查实", "查出来", "要是", "前提"].iter().any(|cue| verdict.contains(cue)) {
+        return None;
+    }
+    preceding.iter().enumerate().rev().find_map(|(offset, row)| {
+        let words = super::super::source_resolution::split_turn_label(row).map(|(_, words)| words).unwrap_or(row);
+        (["如果", "假如", "只有", "要是", "查出来"].iter().any(|cue| words.contains(cue))
+            && shared_han_phrase(target, words, 2)).then_some((offset, words))
+    })
+}
+
 pub(super) fn literal_repair_excerpt(original: &str, excerpt: &str) -> bool {
     if !(20..=80).contains(&excerpt.chars().count()) || !original.contains(excerpt)
         || excerpt.ends_with(['，', ',', '：', ':', '？', '?'])

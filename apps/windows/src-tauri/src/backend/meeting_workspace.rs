@@ -133,7 +133,16 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
     } else { None };
     if let Some(title) = &request.title { session.title = title.trim().to_string(); }
     if let Some(review) = updated_review {
-        session.transcript_review = Some(review);
+        if let Some(previous) = session.transcript_review.replace(review) {
+            let current = session.transcript_review.as_ref().expect("new transcript revision");
+            if previous.revision != current.revision
+                && super::transcript_review::has_changes(&previous)
+                && (previous.text.is_some() || current.text.is_some()
+                    || previous.source_transcript_text != session.transcript_text)
+            {
+                session.transcript_review_history.push(previous);
+            }
+        }
         session.recovery = Default::default();
         // Keep both minutes documents intact. Explicit regeneration is required
         // before either can be presented as based on the revised transcript.
@@ -496,6 +505,37 @@ mod tests {
         edit_session(&mut session,&request,"reviewed").unwrap();
         assert_eq!(session.minutes_by_mode.offline_store.as_ref().unwrap().source_review_revision,Some(1));
         assert!(prepare_meeting_export(&session,"offlineStore",MeetingExportFormat::Todo).is_ok());
+    }
+
+    #[test]
+    fn adopted_transcript_preserves_original_peer_minutes_and_previous_revision() {
+        use super::super::transcript_review::{self, TranscriptReviewEdit};
+        let mut session = sample();
+        session.transcript_final = true;
+        let raw = session.transcript_text.clone();
+        let mut request = edit(&session);
+        request.title = None;
+        request.markdown = None;
+        request.transcript_review = Some(TranscriptReviewEdit {
+            expected_transcript_text: raw.clone(), expected_utterances: session.utterances.clone(), expected_revision: 0,
+            restore_original: false, text: Some("上一版人工核对的文字。".into()), utterance_edits: vec![],
+            speaker_names: vec![], unrecognized: None,
+        });
+        edit_session(&mut session, &request, "previous").unwrap();
+        let minutes = serde_json::to_value(&session.minutes_by_mode).unwrap();
+        let payload = request.transcript_review.as_mut().unwrap();
+        payload.expected_revision = 1;
+        payload.text = Some("本次导入的最终文字。".into());
+        edit_session(&mut session, &request, "adopted").unwrap();
+        assert!(edit_session(&mut session, &request, "stale retry").is_err());
+        let restored: CompanionV1HostSession = serde_json::from_slice(&serde_json::to_vec(&session).unwrap()).unwrap();
+        assert_eq!(restored.transcript_text, raw);
+        assert_eq!(serde_json::to_value(&restored.minutes_by_mode).unwrap(), minutes);
+        assert_eq!(transcript_review::active_revision(&restored), Some(2));
+        assert_eq!(transcript_review::effective_text(&restored), "本次导入的最终文字。");
+        assert_eq!(restored.transcript_review_history.len(), 1);
+        assert_eq!(restored.transcript_review_history[0].text.as_deref(), Some("上一版人工核对的文字。"));
+        assert!(transcript_review::minutes_input(&restored).transcript_review_history.is_empty());
     }
 
     fn wav() -> Vec<u8> {

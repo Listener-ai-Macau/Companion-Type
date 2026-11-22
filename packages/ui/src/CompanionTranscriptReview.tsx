@@ -8,7 +8,7 @@ import {
   companionTranscriptReviewIsStale, companionTranscriptReviewRevision, companionTranscriptSpeakerLabel,
   companionTranscriptReviewedSpeakerName,
   companionTranscriptSources, companionTranscriptSourceIsCurrent, type CompanionTranscriptSource,
-  type CompanionV1HostSession, type CompanionV1Snapshot, type CompanionV1UtteranceSegment,
+  type CompanionTranscriptReview, type CompanionV1HostSession, type CompanionV1Snapshot, type CompanionV1UtteranceSegment,
 } from '@companion-type/core';
 import type { CompanionMeetingSaveRequest } from './CompanionDashboard';
 
@@ -31,6 +31,18 @@ function draftFrom(session: CompanionV1HostSession): Draft {
 function stamp(ms: number) {
   const seconds = Math.floor(ms / 1000);
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+function ArchivedReviewText({ review }: { review: CompanionTranscriptReview }) {
+  if (review.text) return <p>{review.text}</p>;
+  const edits = new Map(review.utteranceEdits.map(edit => [edit.index, edit]));
+  const names = new Map(review.speakerNames.map(name => [name.speaker, name.name]));
+  return <>{review.sourceUtterances.map((utterance, index) => {
+    const edit = edits.get(index);
+    const speaker = utterance.speaker;
+    const name = edit?.speakerName || (speaker == null ? '' : names.get(speaker) || `说话人${speaker + 1}`);
+    return <p key={index}>{stamp(utterance.startMs)} · {name} {edit?.text ?? utterance.text}</p>;
+  })}</>;
 }
 
 export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange, onDraftSessionsChange,
@@ -154,12 +166,15 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
     <p className="ct-step-meta">{draft ? importedText ? '导入原文会保留。这条记录没有原录音。' : '可对照原音修正文字和说话人。回听位置与原始识别结果会保留。' : importedText ? '只读查看。这条记录来自导入文字，没有原录音。' : '只读查看识别文字，可对照原音核对。'}</p>
     {stale ? <div className="ct-step-warn" role="status">原始转写已更新，旧修订已保留供核对，没有套用到新的时间轴。请重新核对，或恢复原始转写。
       <details><summary>查看之前的修订</summary>
-        {session.transcriptReview?.text ? <p>{session.transcriptReview.text}</p> : session.transcriptReview?.sourceUtterances.map((u,i) => {
-          const edit = session.transcriptReview?.utteranceEdits.find((e) => e.index === i);
-          const name = edit?.speakerName || session.transcriptReview?.speakerNames.find((n) => n.speaker === u.speaker)?.name;
-          return <p key={i}>{stamp(u.startMs)} · {name || (u.speaker == null ? '' : `说话人${u.speaker + 1}`)} {edit?.text ?? u.text}</p>;
-        })}
+        {session.transcriptReview ? <ArchivedReviewText review={session.transcriptReview} /> : null}
       </details></div> : null}
+    {session.transcriptReviewHistory?.length ? <details>
+      <summary>历史转写修订</summary>
+      {[...session.transcriptReviewHistory].reverse().map(review => <details key={review.revision}>
+        <summary>修订 {review.revision}</summary>
+        <ArchivedReviewText review={review} />
+      </details>)}
+    </details> : null}
     {draft ? <div className="ct-transcript-review-editor">
       {changedSource ? <p className="ct-step-warn" role="status">后台内容已变化，当前草稿仍保留。请复制需要保留的修改，再载入最新内容核对。
         <button type="button" className="ct-text-button" disabled={Boolean(saving)} onClick={start}>载入最新内容</button></p> : null}

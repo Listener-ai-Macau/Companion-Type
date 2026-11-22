@@ -62,6 +62,8 @@ pub(super) enum OperationalEvidence {
     ConditionalCost,
     RuledOutBlocker,
     BlockingCondition,
+    ScopedProcedure,
+    PendingOutcome,
     TimedForecast,
 }
 
@@ -84,6 +86,17 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     if text.contains("如果") && ["就很难", "就不能", "就没法", "无法继续", "无法开展"]
         .iter().any(|cue| text.contains(cue)) {
         return Some(OperationalEvidence::BlockingCondition);
+    }
+    let states = ["先", "再", "然后", "更严重", "否则", "必要时", "以防万一", "不得"];
+    let consequences = ["处理", "报告", "报备", "报警", "确认", "启用", "协调", "拒绝", "协商", "备用", "提交"];
+    let has = |signals: &[&str]| signals.iter().any(|signal| text.contains(signal));
+    if (has(&["如果", "要是", "只有", "除非", "等到", "的话", "以防万一"]) && has(&states)
+        && has(&consequences)) || (text.contains('先') && text.contains('再') && has(&consequences)) {
+        return Some(OperationalEvidence::ScopedProcedure);
+    }
+    if has(&["还在协商", "正在协商", "还没有协商出来结果", "仍未谈妥", "仍在追查", "还没达成一致",
+        "没有协商出来结果", "尚未确认赔付", "金额仍未确定", "仍需核对归属"]) {
+        return Some(OperationalEvidence::PendingOutcome);
     }
     super::source_authority::timed_forecast(text).then_some(OperationalEvidence::TimedForecast)
 }

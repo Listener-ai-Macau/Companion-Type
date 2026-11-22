@@ -501,6 +501,7 @@ mod tests {
     fn sample_session(id: &str, text: &str) -> CompanionV1HostSession {
         CompanionV1HostSession { document_context: Default::default(), meeting_tracks: None, device_recording_end_reason: None, processing_policy: Default::default(), recorder_control: None, recorder_control_uncertain: false, device_recording_key: None,
             transcript_review: None,
+            transcript_review_history: vec![],
             bookmark_revision: 0, bookmarks: vec![], organization: Default::default(), device_bookmark_imports: vec![],
             note_revision: 0, meeting_notes: vec![],
             id: id.to_string(),

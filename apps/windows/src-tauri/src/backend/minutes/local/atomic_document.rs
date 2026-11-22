@@ -145,26 +145,39 @@ fn source_verified_facts(
             // This exact continuation is already inside the source-bound action.
             continue;
         }
-        if !current.iter().any(|item| matches!(item.role.as_str(), "action" | "decision" | "question")) {
-            if let Some(record) = source_commitments::at(sentences, index, &actors) {
-                let literal = canonical_brief::normalized(&record.item.text);
-                let body = record.item.text.clone();
-                let mut fact = ExtractedFact::original_action(id, &body, record.item);
-                if let Some(next) = record.continuation {
-                    let continuation = sentences[next]["id"].as_str().unwrap();
-                    continued_actions.insert(next);
-                    fact.evidence.push(continuation.to_owned());
-                }
-                audit.push(json!({"sentenceId":id,"reason":"source-bound-commitment","evidence":fact.evidence}));
-                verified.push(fact);
-                current.retain(|item| {
-                    let item = canonical_brief::normalized(&item.text);
-                    !literal.contains(&item) && !item.contains(&literal)
-                });
-                // Earlier action heuristics cannot add the same action again.
-                verified.extend(current);
-                continue;
+        if let Some(record) = source_commitments::at(sentences, index, &actors).filter(|record| {
+            record.prerequisite.is_some()
+                || !current.iter().any(|item| matches!(item.role.as_str(), "action" | "decision" | "question"))
+        }) {
+            let literal = canonical_brief::normalized(&record.item.text);
+            let body = record.item.text.clone();
+            let (mut fact, reason) = if record.needs_review {
+                let quote = bounded_original_quotes_with_width(&body, 64).into_iter().next().unwrap_or(body);
+                (ExtractedFact::review_quote(id, "status", &format!("原话待核：请核对行动的前置条件。{quote}")),
+                    "unresolved-prerequisite")
+            } else {
+                (ExtractedFact::original_action(id, &body, record.item), "source-bound-commitment")
+            };
+            if let Some(previous) = record.prerequisite {
+                fact.evidence.push(sentences[previous]["id"].as_str().unwrap().to_owned());
             }
+            if let Some(next) = record.continuation {
+                let continuation = sentences[next]["id"].as_str().unwrap();
+                continued_actions.insert(next);
+                fact.evidence.push(continuation.to_owned());
+            }
+            audit.push(json!({"sentenceId":id,"reason":reason,"evidence":fact.evidence}));
+            verified.push(fact);
+            current.retain(|item| {
+                if record.prerequisite.is_some() && matches!(item.role.as_str(), "action" | "decision") {
+                    return false;
+                }
+                let item = canonical_brief::normalized(&item.text);
+                !literal.contains(&item) && !item.contains(&literal)
+            });
+            // Earlier action heuristics cannot add the same action again.
+            verified.extend(current);
+            continue;
         }
         if !current.is_empty() && current.iter().all(|item| matches!(item.role.as_str(), "status" | "opinion" | "recommendation" | "forecast")) {
             if let Some((passage, pending)) = source_grounding::preserve_distinct_scope(original) {
@@ -387,7 +400,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
             "decision"=>(Kind::Decision,Placement::Decision),"action"=>(Kind::Decision,Placement::Action),"question"=>(Kind::Status,Placement::Question),_=>return Err(fail()),
         };
         if placement!=Placement::Topic&&["无明确","暂无","没有明确","无会后","无任务","无待办","未提及"].iter().any(|p|f.text.starts_with(p)){return Err(fail());}
-        let original=f.evidence.iter().map(|id|known.get(id.as_str()).copied().ok_or_else(fail)).collect::<Result<Vec<_>,_>>()?.join("\n");
+        let mut original=f.evidence.iter().map(|id|known.get(id.as_str()).copied().ok_or_else(fail)).collect::<Result<Vec<_>,_>>()?.join("\n");
         let anchor = f.evidence.first().cloned().ok_or_else(fail)?;
         let anchor_text = known[anchor.as_str()];
         let id = format!("a{:03}", facts.len());
@@ -490,6 +503,40 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
                 }
             }
         }
+        if placement == Placement::Topic && !f.source_needs_review && !f.quantity_needs_review {
+            let position = original_positions[anchor.as_str()];
+            let start = position.saturating_sub(8);
+            let previous = sentences[start..position].iter()
+                .map(|row| row["text"].as_str().unwrap()).collect::<Vec<_>>();
+            let end = (position + 5).min(sentences.len());
+            let revenue_scope = (f.text.contains("业务收入") && f.text.contains("净利润")).then(|| {
+                sentences[position..end].iter().find_map(|row| {
+                    let reported = row["text"].as_str().unwrap();
+                    let category = source_grounding::isolated_revenue_scope(reported, &previous, source)?;
+                    f.text.contains(category).then_some((row, "收入归属", "unclear-revenue-scope"))
+                })
+            }).flatten();
+            let unclear = revenue_scope.or_else(|| {
+                let (offset, _) = source_grounding::missing_judgment_condition(&f.text, &previous)?;
+                Some((&sentences[start + offset], "结论条件", "unclear-judgment-condition"))
+            });
+            if let Some((row, scope, reason)) = unclear {
+                let evidence_id = row["id"].as_str().unwrap();
+                let evidence_text = row["text"].as_str().unwrap();
+                if !unclear_anchors.insert((evidence_id.to_owned(), reason)) { continue; }
+                let excerpt = super::source_windows::bounded_original_quotes_with_width(evidence_text, 68)
+                    .into_iter().next().unwrap_or_else(|| evidence_text.chars().take(68).collect());
+                f.text = format!("原话待核：{scope}。{excerpt}");
+                f.source_needs_review = true;
+                priority_review.insert(id.clone());
+                if !f.evidence.iter().any(|citation| citation == evidence_id) {
+                    f.evidence.push(evidence_id.to_owned());
+                    original.push('\n');
+                    original.push_str(evidence_text);
+                }
+                verification.push(json!({"sentenceId":evidence_id,"reason":reason,"factId":id}));
+            }
+        }
         if !canonical_brief::local_document::identifiers_bound(&f.text,&original){return Err(fail());}
         if f.quantity_needs_review {
             quantity_quotes.insert(id.clone());
@@ -508,8 +555,13 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
                 3
             } else if source_grounding::topic_relation_clarification(anchor_text, &preceding) {
                 2
-            } else if source_grounding::material_condition(anchor_text).is_some()
-                && source_grounding::material_condition(&f.text).is_some() {
+            } else if (source_grounding::material_condition(anchor_text).is_some()
+                && source_grounding::material_condition(&f.text).is_some())
+                || (f.text.contains("但是") && source_grounding::preserve_distinct_scope(anchor_text)
+                    .is_some_and(|(scope, needs_review)| !needs_review && scope == f.text))
+                || matches!(super::reader_ranking::operational_evidence(&f.text),
+                    Some(super::reader_ranking::OperationalEvidence::ScopedProcedure
+                        | super::reader_ranking::OperationalEvidence::PendingOutcome)) {
                 2
             } else if matches!(super::reader_ranking::operational_evidence(&f.text),
                 Some(super::reader_ranking::OperationalEvidence::ConditionalCost)) {
@@ -1210,13 +1262,29 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         && (timed_prediction(fact) || (focus.is_some()
             && (bank.reader_priority.contains_key(&fact.id)
                 || super::reader_ranking::operational_evidence(&fact.text).is_some())));
+    let mut placed_critical = Vec::new();
     for items in &mut slots{
+        // Reserve reader capacity at the last selection step. A protected
+        // record can otherwise be shortlisted and still disappear in details.
+        let mut critical = items.iter().filter_map(|(fact, _)| {
+            bank.reader_priority.get(&fact.id).map(|rank| (*rank, *fact))
+        }).collect::<Vec<_>>();
+        critical.sort_by_key(|(rank, _)| std::cmp::Reverse(*rank));
+        let mut anchors = HashSet::new();
+        let mut protected = critical.into_iter()
+            .filter(|(_, fact)| fact.evidence.first().is_some_and(|anchor| anchors.insert(anchor.as_str())))
+            .take(2).map(|(_, fact)| fact.id.as_str()).collect::<Vec<_>>();
+        let priority = |fact: &Fact| protected.iter().position(|id| *id == fact.id).unwrap_or(usize::MAX);
+        for (fact, main) in items.iter_mut() {
+            *main |= priority(fact) != usize::MAX;
+        }
         if focus.is_some() {
-            items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main),
+            items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main),
                 !useful_reader_point(fact), bank.reader_order.get(&fact.id).copied().unwrap_or(usize::MAX)));
         } else {
-            items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main)));
+            items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main)));
         }
+        placed_critical.append(&mut protected);
         required_chars+=items.iter().take(1)
             .map(|(fact,_)|reader_fact_length(bank,fact)).sum::<usize>();
     }
@@ -1225,7 +1293,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     for items in &slots {
         for (fact, main) in items.iter().skip(1).take(2) {
             let size=reader_fact_length(bank,fact);
-            if important(fact, *main) && size <= optional_chars {
+            if (placed_critical.contains(&fact.id.as_str()) || important(fact, *main)) && size <= optional_chars {
                 optional_chars -= size;
                 reserved.insert(fact.id.as_str());
             }
@@ -1287,6 +1355,9 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     if !topics.is_empty(){return Err(fail());}
     let canonical=json!({"purpose":purpose,"topics":arranged,"decisions":decisions,"actionItems":actions,"questions":questions,"excluded":excluded});
     let mut parsed = assemble(&canonical.to_string(), bank, session, base)?;
+    if !placed_critical.is_empty() {
+        parsed.receipt["priorityReaderFactIds"] = json!(placed_critical);
+    }
     if !fallback_topics.is_empty() {
         parsed.receipt["topicsGivenNeutralTitles"] = json!(fallback_topics);
     }
