@@ -149,6 +149,7 @@ fn source_verified_facts(
     extracted: Vec<ExtractedFact>,
     sentences: &[Value],
     timing: Option<&super::timed_evidence::Timing<'_>>,
+    review: &super::source_review::Review,
 ) -> Result<(Vec<ExtractedFact>, Vec<Value>), String> {
     use std::collections::HashMap;
     use super::{delivery_evidence, source_authority, source_commitments, source_context, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
@@ -878,6 +879,90 @@ fn source_verified_facts(
             let next = verified.iter().position(|item|item.evidence[0].as_str() > ids[0]).unwrap_or(verified.len());
             verified.insert(next,fact);
         }
+        for (later,row) in sentences.iter().enumerate() {
+            let second=row["id"].as_str().unwrap();
+            let Some((earlier,reading))=(later.saturating_sub(4)..later).rev().find_map(|earlier|{
+                if frames_at[earlier].is_some() || frames_at[later].is_some()
+                    || hypothetical.contains(&earlier) || hypothetical.contains(&later)
+                    || !timing.covered_by_one_utterance(&[earlier,later]) { return None; }
+                let first=sentences[earlier]["id"].as_str().unwrap();
+                super::source_review::opposed_recurrence(known[first],known[second]).map(|reading|(earlier,reading))
+            }) else {continue;};
+            let first=sentences[earlier]["id"].as_str().unwrap();
+            if !canonical_brief::line(&reading,90) || verified.iter().any(|fact| {
+                fact.source_needs_review && fact.evidence.iter().any(|id| id==first || id==second)
+            }) {continue;}
+            verified.retain(|fact|{
+                !matches!(fact.role.as_str(),"status"|"recommendation") || ![first,second].contains(&fact.evidence[0].as_str())
+                    || (super::source_review::opposed_recurrence(&fact.text,known[second]).is_none()
+                        && super::source_review::opposed_recurrence(known[first],&fact.text).is_none())
+            });
+            let mut fact=ExtractedFact::review_quote(first,"status",&reading);
+            extend_references(&mut fact,sentences,&[later]);
+            fact.execution_reading=true;
+            audit.push(json!({"sentenceId":first,"reason":"opposed-operating-frequency","evidence":fact.evidence}));
+            let next=verified.iter().position(|item|item.evidence[0].as_str()>first).unwrap_or(verified.len());
+            verified.insert(next,fact);
+        }
+    }
+    for (index, row) in sentences.iter().enumerate() {
+        use super::source_review::{self,Role};
+        let anchor=row["id"].as_str().unwrap();
+        let original=known[anchor];
+        if frames_at[index].is_some() || hypothetical.contains(&index) || superseded.contains(&index) {
+            continue;
+        }
+        let explicit_ambiguity=source_review::alternatives(original).is_some_and(|(_,hybrid)|hybrid);
+        let work=source_commitments::stated_group_deliverable(original);
+        let mark=if explicit_ambiguity { Some(Role::Pending) } else if work.is_some() { Some(Role::Work) }
+            else { review.by_source.get(anchor).copied() };
+        let Some(mark)=mark else {
+            continue;
+        };
+        let in_origin=|fact:&ExtractedFact| fact.evidence[0]==anchor;
+        if verified.iter().any(|fact|in_origin(fact) && (fact.source_needs_review || fact.quantity_needs_review
+            || (fact.execution_reading && matches!(mark,Role::Condition | Role::Report)))) {
+            audit.push(json!({"sentenceId":anchor,"reason":"source-review-existing-disposition","role":mark.as_str()}));
+            continue;
+        }
+        let fact = match mark {
+            Role::Work => {
+                if verified.iter().any(|fact|in_origin(fact) && fact.role=="action") {
+                    audit.push(json!({"sentenceId":anchor,"reason":"source-review-existing-disposition","role":mark.as_str()}));
+                    continue;
+                }
+                work.map(|item|ExtractedFact::original_action(anchor,&item.text,item.clone()))
+            },
+            Role::Pending => source_review::pending_quote(original).map(|text| {
+                if let Some((duration,_))=source_review::alternatives(original) {
+                    let ambiguous=canonical_brief::normalized(duration.as_str());
+                    verified.retain(|fact| !in_origin(fact) || !canonical_brief::normalized(&fact.text).contains(&ambiguous));
+                }
+                ExtractedFact::review_quote(anchor,"status",&format!("原话待核：{text}"))
+            }),
+            _ => source_review::topic_quote(original,mark).map(|(text,role)| {
+                ExtractedFact::verbatim(anchor,role,text)
+            }),
+        };
+        let Some(mut selected)=fact else {
+            audit.push(json!({"sentenceId":anchor,"reason":"source-review-nomination-unbound","role":mark.as_str()}));
+            continue;
+        };
+        let original_text = canonical_brief::normalized(&selected.text);
+        if let Some(existing)=verified.iter_mut().find(|fact| {
+            in_origin(fact) && fact.role == selected.role
+                && canonical_brief::normalized(&fact.text)==original_text
+        }) {
+            if !matches!(existing.role.as_str(),"action"|"decision") {existing.execution_reading=true;}
+        } else {
+            if selected.role == "action" {
+                verified.retain(|fact| !in_origin(fact) || !is_covered_by_literal(fact,&original_text));
+            }
+            if !matches!(selected.role.as_str(),"action"|"decision") {selected.execution_reading=true;}
+            let next=verified.iter().position(|item|item.evidence[0].as_str()>anchor).unwrap_or(verified.len());
+            verified.insert(next,selected);
+        }
+        audit.push(json!({"sentenceId":anchor,"reason":"source-review-verified-disposition","role":mark.as_str()}));
     }
     if let Some(timing) = timing {
         let indices = sentences.iter().enumerate().map(|(index,row)|(row["id"].as_str().unwrap(),index))
@@ -951,24 +1036,25 @@ fn opening_background(facts: &[Fact], source: &str, sentences: &[Value]) -> Hash
 
 #[cfg(test)]
 pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,String>{
-    build_bank_with_timing(extracted,source,&[])
+    build_bank_with_timing(extracted,source,&[],&super::source_review::Review::default())
 }
 
 pub(super) fn build_session_bank(
-    extracted: Vec<ExtractedFact>, session: &CompanionV1HostSession,
+    extracted: Vec<ExtractedFact>, session: &CompanionV1HostSession, review: &super::source_review::Review,
 ) -> Result<Bank,String> {
-    build_bank_with_timing(extracted,&session.transcript_text,&session.utterances)
+    build_bank_with_timing(extracted,&session.transcript_text,&session.utterances,review)
 }
 
 fn build_bank_with_timing(
     extracted: Vec<ExtractedFact>, source: &str, utterances: &[crate::companion_v1::CompanionV1UtteranceSegment],
+    review: &super::source_review::Review,
 ) -> Result<Bank,String> {
     use super::{source_grounding, source_windows::bounded_original_quotes};
     if extracted.is_empty(){return Err(fail());}
     let units=source_units(source);let sentences=factual_audit::evidence_sentences(&units);
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s["text"].as_str().unwrap())).collect::<std::collections::HashMap<_,_>>();
     let timing = super::timed_evidence::Timing::verified(source,&sentences,utterances);
-    let (extracted, mut verification) = source_verified_facts(extracted, &sentences, timing.as_ref())?;
+    let (extracted, mut verification) = source_verified_facts(extracted, &sentences, timing.as_ref(),review)?;
     let source_agenda = super::delivery_evidence::opening_agenda(
         &sentences, &super::source_commitments::meeting_roles(&sentences), timing.is_some(),
     );
@@ -1251,7 +1337,7 @@ fn build_bank_with_timing(
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids,
-        "linkedReaderReportGroups":reader_groups,
+        "linkedReaderReportGroups":reader_groups,"independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
     Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,reader_groups,source_agenda })
 }
@@ -2506,7 +2592,7 @@ mod tests{
         session.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment {
             text:source.to_owned(),start_ms:0,end_ms:3000,speaker:None,approximate_timing:false,
         }];
-        let bank=build_session_bank(vec![ExtractedFact::verbatim("e0000","status",source)],&session).unwrap();
+        let bank=build_session_bank(vec![ExtractedFact::verbatim("e0000","status",source)],&session,&super::super::source_review::Review::default()).unwrap();
         let body=bank.facts.iter().find(|fact|bank.execution_reading.contains(&fact.id)).unwrap();
         assert!(body.text.contains("酒精") && body.text.contains("健康码"));
         assert_eq!(bank.receipt["savedUtteranceContext"]["usableTimedUtterances"],1);
@@ -2655,11 +2741,35 @@ mod tests{
         let timed = [report,procedure].into_iter().enumerate().map(|(i,text)| CompanionV1UtteranceSegment {
             text:text.to_owned(),start_ms:i as u64*2000,end_ms:(i+1) as u64*2000,speaker:None,approximate_timing:false,
         }).collect::<Vec<_>>();
-        let bank=build_bank_with_timing(vec![ExtractedFact::verbatim("e0000","status",report)],&source,&timed).unwrap();
+        let bank=build_bank_with_timing(vec![ExtractedFact::verbatim("e0000","status",report)],&source,&timed,&super::super::source_review::Review::default()).unwrap();
         let condition=bank.facts.iter().find(|fact|fact.text.contains("不能返校的学生毕业证邮寄到家")).unwrap();
         assert_eq!(condition.evidence.len(),2);
         assert!(condition.text.contains("部分地区"));
         assert_eq!(bank.required_role(condition),Some("operating-condition"));
+    }
+
+    #[test]
+    fn independently_verified_source_controls_the_reading_even_if_extraction_left_it_out() {
+        use super::super::source_review::{Review,Role};
+        let source="各组开会讨论运送和验收。\n原材料未经核验不得领用。\n现在各部门务必提交检测报告，周五前。\n所以签收时间往后推迟个十分二十分钟。\n比如各部门可能要提交别的材料。";
+        let extracted=vec![
+            ExtractedFact::verbatim("e0000","status","各组开会讨论运送和验收。"),
+            ExtractedFact::verbatim("e0003","status","签收时间往后推迟十分二十分钟。"),
+        ];
+        let mut review=Review::default();
+        review.by_source.insert("e0001".into(),Role::Condition);
+        review.by_source.insert("e0003".into(),Role::Report);
+        review.by_source.insert("e0004".into(),Role::Work);
+        let bank=build_bank_with_timing(extracted,source,&[],&review).unwrap();
+        let requirement=bank.facts.iter().find(|fact|fact.text.contains("未经核验不得领用")).unwrap();
+        assert_eq!(bank.required_role(requirement),Some("operating-condition"));
+        let tasks=bank.facts.iter().filter(|fact|fact.placement==Placement::Action).collect::<Vec<_>>();
+        assert_eq!(tasks.len(),1);
+        assert_eq!(tasks[0].owner.as_deref(),Some("各部门"));
+        assert_eq!(tasks[0].due.as_deref(),Some("周五前"));
+        let timing=bank.facts.iter().filter(|fact|fact.text.contains("十分二十分钟")).collect::<Vec<_>>();
+        assert_eq!(timing.len(),1);
+        assert_eq!(bank.required_role(timing[0]),Some("source-review"));
     }
 
     #[test]

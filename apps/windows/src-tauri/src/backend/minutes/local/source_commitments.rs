@@ -535,6 +535,50 @@ fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
     Some(CompanionV1ActionItem { text, owner: Some(owner.to_owned()), due: None })
 }
 
+/// A formal group instruction can occur mid-meeting. Require the group,
+/// imperative and deliverable in the same source clause before assigning it.
+pub(super) fn stated_group_deliverable(source: &str) -> Option<CompanionV1ActionItem> {
+    static REQUEST: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<owner>各(?:个)?(?:部门|小组|单位|项目组|团队|班组|科室|学段))(?:儿)?"
+    ).expect("group and bounded instruction"));
+    static DELIVERABLE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:做|出|写|拟定|拟|准备|提交|交|整理|形成|编制|提供|补交|完成)[^，,。！？；]{0,14}?(?:方案|计划|报表|清单|报告|台账|材料|结果|记录)"
+    ).expect("document or transmittal"));
+    static DEADLINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:(?:下|这|本)?(?:周|星期)[一二三四五六日天]|今天|明天|后天|\d{1,2}月\d{1,2}[日号]|下班|开工|开学|散会)(?:上午|中午|下午|晚上)?(?:之前|前)"
+    ).expect("literal time limit"));
+    let words=super::source_review::bare(source);
+    if contains(words, SOFT) || contains(words, NEGATION) || contains(words, CONTEXT)
+        || words.contains(['？','?']) || super::source_context::question_only(words)
+        || contains(words, &["正在","已提交","已完成","已经做好","往常","通常","惯例","例行","不得","不准"])
+    {
+        return None;
+    }
+    let mut groups = REQUEST.captures_iter(words).peekable();
+    while let Some(request)=groups.next() {
+        let addressed=request.get(0)?;
+        let end=groups.peek().and_then(|next|next.get(0)).map_or(words.len(),|next|next.start());
+        let instruction=words[addressed.end()..end].split(['。','！','？','；']).next()?.trim();
+        if instruction.chars().count()>82 { continue; }
+        let Some(deliverable)=DELIVERABLE.find(instruction) else { continue; };
+        let bound = &instruction[..deliverable.end()];
+        let explicitly_directed = contains(instruction,&["都要","务必","必须","需具体","分别负责"])
+            || (contains(words,&["这次","本次","接下来","会后","现在"])
+                && contains(instruction,&["要做","要提交","需要","就按"]));
+        if !explicitly_directed { continue; }
+        let head=&words[..addressed.start()];
+        let context = head.rsplit(['，',',','。','；','嗯','呃']).next().unwrap_or("").trim();
+        let scope = if context.ends_with("方面") && context.chars().count()<=12 { context } else { "" };
+        let owner=request.name("owner")?.as_str();
+        let due = DEADLINE.find(instruction).map(|date|date.as_str());
+        let ending = due.filter(|date| !bound.contains(date)).map_or_else(String::new,|date|format!("，{date}"));
+        let action=format!("{scope}{owner}{}{ending}",bound.trim());
+        if !canonical_brief::line(&action,90) { continue; }
+        return Some(CompanionV1ActionItem{text:action,owner:Some(owner.to_owned()),due:due.map(str::to_owned)});
+    }
+    None
+}
+
 fn closing_confirmation(words: &str) -> bool {
     let words = spread_trim(words);
     ["会议就开到", "会议到这里", "会议到这儿", "本次会议结束", "现在散会", "今天就先到这",

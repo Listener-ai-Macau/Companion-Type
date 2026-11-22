@@ -16,6 +16,7 @@ mod source_context;
 mod delivery_evidence;
 mod timed_evidence;
 mod source_checkpoint;
+mod source_review;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
@@ -183,7 +184,20 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
                 if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }
-            let mut bank=atomic_document::build_session_bank(facts,session)?;
+            let review=source_review::review(&session.transcript_text,|prompt,input,schema,stage| {
+                let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,640)?;
+                record_call(&trace,stage);
+                Ok(result)
+            });
+            let review=match review {
+                Ok(review)=>review,
+                Err(reason) if !stop.load(std::sync::atomic::Ordering::Acquire)=>{
+                    if let Ok(mut trace)=trace.lock(){trace["independentSourceReviewFailure"]=json!(reason);}
+                    source_review::Review::default()
+                },
+                Err(reason)=>return Err(reason),
+            };
+            let mut bank=atomic_document::build_session_bank(facts,session,&review)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
             let layout=if atomic_document::has_chapters(&bank) {
                 let core=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
