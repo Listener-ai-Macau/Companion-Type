@@ -119,7 +119,7 @@ fn source_verified_facts(
     sentences: &[Value],
 ) -> Result<(Vec<ExtractedFact>, Vec<Value>), String> {
     use std::collections::HashMap;
-    use super::{source_authority, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
+    use super::{source_authority, source_commitments, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
 
     let known: HashMap<_, _> = sentences.iter().map(|row| {
         (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
@@ -135,10 +135,59 @@ fn source_verified_facts(
 
     let mut verified = Vec::new();
     let mut audit = Vec::new();
+    let actors = source_commitments::meeting_actor_labels(sentences);
+    let mut continued_actions = HashSet::new();
     for (index, sentence) in sentences.iter().enumerate() {
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
+        if continued_actions.contains(&index) {
+            // This exact continuation is already inside the source-bound action.
+            continue;
+        }
+        if !current.iter().any(|item| matches!(item.role.as_str(), "action" | "decision" | "question")) {
+            if let Some(record) = source_commitments::at(sentences, index, &actors) {
+                let literal = canonical_brief::normalized(&record.item.text);
+                let body = record.item.text.clone();
+                let mut fact = ExtractedFact::original_action(id, &body, record.item);
+                if let Some(next) = record.continuation {
+                    let continuation = sentences[next]["id"].as_str().unwrap();
+                    continued_actions.insert(next);
+                    fact.evidence.push(continuation.to_owned());
+                }
+                audit.push(json!({"sentenceId":id,"reason":"source-bound-commitment","evidence":fact.evidence}));
+                verified.push(fact);
+                current.retain(|item| {
+                    let item = canonical_brief::normalized(&item.text);
+                    !literal.contains(&item) && !item.contains(&literal)
+                });
+                // Earlier action heuristics cannot add the same action again.
+                verified.extend(current);
+                continue;
+            }
+        }
+        if !current.is_empty() && current.iter().all(|item| matches!(item.role.as_str(), "status" | "opinion" | "recommendation" | "forecast")) {
+            if let Some((passage, pending)) = source_grounding::preserve_distinct_scope(original) {
+                let fact = if pending { ExtractedFact::review_quote(id, "status", &passage) }
+                    else { ExtractedFact::verbatim(id, "recommendation", &passage) };
+                verified.push(fact);
+                audit.push(json!({"sentenceId":id,"reason":if pending {"unclear-scope-of-consequence"} else {"separate-scoped-permissions"}}));
+                continue;
+            }
+        }
+        if let Some(condition) = source_grounding::material_condition(original) {
+            if !original.contains(['？','?']) && !current.iter().any(|item| {
+                item.text.contains(condition) || matches!(item.role.as_str(), "action" | "decision" | "question")
+            }) {
+                let excerpts = bounded_original_quotes(original);
+                if let Some(literal) = excerpts.into_iter().find(|text| text.contains(condition) && !text.ends_with('…')) {
+                    let fact = ExtractedFact::verbatim(id, "status", &literal);
+                    current.retain(|item| !source_grounding::shared_han_phrase(&item.text, condition, 5));
+                    current.push(fact);
+                    audit.push(json!({"sentenceId":id,"reason":"retained-literal-condition"}));
+                }
+            }
+        }
         let nearby_start = index.saturating_sub(6);
         let nearby = &sentences[nearby_start..index];
         let preceding: Vec<_> = nearby.iter().map(|row| known[row["id"].as_str().unwrap()]).collect();
@@ -459,6 +508,9 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
                 3
             } else if source_grounding::topic_relation_clarification(anchor_text, &preceding) {
                 2
+            } else if source_grounding::material_condition(anchor_text).is_some()
+                && source_grounding::material_condition(&f.text).is_some() {
+                2
             } else if matches!(super::reader_ranking::operational_evidence(&f.text),
                 Some(super::reader_ranking::OperationalEvidence::ConditionalCost)) {
                 1
@@ -696,7 +748,13 @@ pub(super) fn review_chapters(
         protected.sort_by_key(|(priority, _)| std::cmp::Reverse(**priority));
         if !protected.is_empty() {
             let max = presentation.main_facts.len();
-            let mut preferred = protected.into_iter().take(2.min(max)).map(|(_, id)| id.clone()).collect::<Vec<_>>();
+            let mut condition_keys = HashSet::new();
+            let mut preferred = protected.into_iter()
+                .filter(|(_, id)| {
+                    let fact = rows.iter().find(|fact| &fact.id == *id).expect("protected fact belongs to this chapter");
+                    super::source_grounding::material_condition(&fact.text).is_none_or(|key| condition_keys.insert(key.to_owned()))
+                })
+                .take(2.min(max)).map(|(_, id)| id.clone()).collect::<Vec<_>>();
             let extras = presentation.main_facts.into_iter().filter(|id| !preferred.contains(id))
                 .take(max.saturating_sub(preferred.len())).collect::<Vec<_>>();
             preferred.extend(extras);
@@ -1371,6 +1429,28 @@ mod tests{
         assert!(scoped.text.contains("五十块钱") && scoped.text.contains("一百"));
         assert_eq!(bank.reader_priority.get(&scoped.id), Some(&3));
         assert!(bank.facts.iter().all(|fact| !fact.text.contains("违规者")));
+    }
+
+    #[test]
+    fn distinct_recording_permissions_stay_with_their_own_groups() {
+        let source = "说话人4: 等投资人体验的时候就是让他们体验但是像咱们这个员工啊志愿者去体验的时候咱们就可以支持录像或者说直播 这些都可以让大家看到实际情况。";
+        let false_claim = "投资人、员工和志愿者体验时都可以录像。";
+        let bank = build_bank(vec![ExtractedFact::verbatim("e0000","status",false_claim)], source).unwrap();
+        let [one] = bank.facts.as_slice() else { panic!("one scoped statement expected"); };
+        assert!(one.text.starts_with("等投资人体验的时候就是让他们体验"));
+        assert!(one.text.ends_with("员工啊志愿者去体验的时候咱们就可以支持录像或者说直播。"));
+        assert!(matches!(one.kind, Kind::Recommendation));
+        assert_eq!(one.evidence, ["e0000"]);
+    }
+
+    #[test]
+    fn an_unclear_payroll_scope_uses_the_literal_speech_for_review() {
+        let source = "说话人4: 这个不是我们的员工，我们是可以直接从公司里面去扣款的，但是要再协调。";
+        let bank = build_bank(vec![ExtractedFact::verbatim("e0000","status","我们不是员工，可以直接从公司扣款。")], source).unwrap();
+        let fact = &bank.facts[0];
+        assert!(fact.text.starts_with("原话待核："));
+        assert!(fact.text.contains("不是我们的员工"));
+        assert!(bank.priority_review.contains(&fact.id));
     }
 
     #[test]

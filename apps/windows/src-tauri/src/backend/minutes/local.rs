@@ -10,6 +10,7 @@ mod chapter_labels;
 mod reader_ranking;
 mod source_windows;
 mod source_authority;
+mod source_commitments;
 mod source_grounding;
 mod source_checkpoint;
 pub(crate) use probe::candidate as verify_candidate;

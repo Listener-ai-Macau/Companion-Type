@@ -1,6 +1,7 @@
 //! Checks that can be made against actual transcript spans before facts are frozen.
 //! Literal overlap helps locate supporting context; it cannot establish entailment.
 use std::{collections::HashSet,sync::LazyLock};
+use regex::Regex;
 use super::super::canonical_brief;
 
 static MEASUREMENT:LazyLock<regex::Regex>=LazyLock::new(||{
@@ -348,6 +349,72 @@ pub(super) fn topic_relation_clarification(text: &str, preceding: &[&str]) -> bo
             source.trim().ends_with(['？','?'])
                 && ["有关系", "有什么关系", "什么关系", "哪种关系"].iter().any(|cue| source.contains(cue))
         })
+}
+
+// Retain a contrast between two explicit conditions as one bounded quotation.
+// A paraphrase can attach the second condition's permission to both groups.
+pub(super) fn preserve_distinct_scope(original: &str) -> Option<(String, bool)> {
+    static CONFLICT: LazyLock<regex::Regex> = LazyLock::new(|| Regex::new(
+        r"(?:这个人?|他们|对方|这些人|顾客|游客|这种人)?(?:不是|并非|不属于)(?:我们(?:的)?|本公司|本单位|公司(?:的)?)?(?:员工|职工|职员)[，,\s]*(?:我们|公司|本单位)(?:是)?(?:可以|能够|能)(?:直接)?(?:从公司|从工资|扣工资|扣薪|扣款|罚款)[^，,。！？；;]{0,22}",
+    ).expect("unresolved scope of a payroll deduction"));
+    if let Some(witness) = CONFLICT.find(original) {
+        let line = format!("原话待核：{}。", witness.as_str().trim());
+        if canonical_brief::line(&line, 90) {
+            return Some((line, true));
+        }
+    }
+    static TIMED: LazyLock<regex::Regex> = LazyLock::new(|| Regex::new(
+        r"(?:等|当)(?:[^。！？；,，]{2,27}?)(?:的时候|时)[^。！？；]{4,33}$"
+    ).expect("first stated applicability"));
+    for (at, divider) in original.match_indices("但是") {
+        let before = original[..at].trim_end_matches(['，', ',', ' ']);
+        let after = original[at + divider.len()..].trim_start();
+        if !["像", "针对", "只给", "仅对", "对于", "如果是", "而在"]
+            .iter().any(|lead| after.starts_with(lead)) {
+            continue;
+        }
+        let Some(left) = TIMED.find_iter(before).last() else { continue; };
+        let Some((condition, outcome)) = after.split_once("的时候").or_else(|| after.split_once("时")) else { continue; };
+        if condition.chars().count() > 32 || !["可以", "允许", "支持", "不可以", "不得", "不能"].iter().any(|e| outcome.contains(e)) {
+            continue;
+        }
+        let cut = ["，", ",", "。", "；", "！", "？", "这些", "那么后面", "后面的", "然后呢"]
+            .iter().filter_map(|marker| outcome.find(marker)).min().unwrap_or(outcome.len());
+        let end = outcome[..cut].trim_end();
+        if end.chars().count() < 5 || ["这些", "那个", "然后"].iter().any(|tail| end.ends_with(tail)) {
+            continue;
+        }
+        let right = &after[..(after.len() - outcome.len()) + end.len()];
+        let line = format!("{}，但是{}。", left.as_str().trim(), right.trim());
+        if canonical_brief::line(&line, 90) {
+            return Some((line, false));
+        }
+    }
+    None
+}
+
+/// Returns the literal part that distinguishes a material condition from
+/// similar talking points in a chapter. The remainder still comes from source.
+pub(super) fn material_condition(source: &str) -> Option<&str> {
+    static ADVANCE: LazyLock<regex::Regex> = LazyLock::new(|| Regex::new(
+        r"提前[0-9０-９一二两三四五六七八九十半]{1,4}(?:个?星期|个?礼拜|个?月|周|天|小时)"
+    ).expect("explicit lead time"));
+    if let Some(lead) = ADVANCE.find(source).filter(|_| {
+        ["递交", "提交", "布置", "交付", "交给", "实施", "配合", "安排", "审查", "查看"]
+            .iter().any(|cue| source.contains(cue))
+    }) {
+        return Some(lead.as_str());
+    }
+    static PERMISSION: LazyLock<regex::Regex> = LazyLock::new(|| Regex::new(
+        r"(?:是否同意|取得同意|获得同意|得到同意|经[^，,。；]{1,14}同意|征得[^，,。；]{0,12}同意)[^。！？；]{0,42}(?:签字|签订|签合同|签署|授权|合同|协议)"
+    ).expect("consent and agreement in the original"));
+    if let Some(witness) = PERMISSION.find(source) {
+        return Some(witness.as_str());
+    }
+    static STATUS_BOUNDARY: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:暂未|尚未|还没|还没有|没有)(?:正式)?开始(?:研发|生产|施工|安装|执行|实施|采购|签约|上线)"
+    ).expect("explicit project status boundary"));
+    STATUS_BOUNDARY.find(source).map(|w| w.as_str())
 }
 
 pub(super) fn literal_repair_excerpt(original: &str, excerpt: &str) -> bool {
