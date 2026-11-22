@@ -105,8 +105,9 @@ impl SourceItem {
                 .and_then(|owner| evidence.iter().find_map(|id| {
                     super::commitments::owner_as_spoken(owner, known[id.as_str()])
                 })));
-            let due = self.due.filter(|due| line(due, 80) && snippets.iter()
-                .any(|text| due_is_bound(text, due)));
+            let due = self.due.filter(|due| line(due, 80)
+                && snippets.iter().any(|text| due_is_bound(text, due))
+                && !conflicts_with_stated_action_clock(&self.text, due, &snippets));
             (self.text, owner, due)
         } else {
             // A speaker label is not a work assignment. Preserve an exact
@@ -1144,13 +1145,57 @@ impl Window<'_> {
     }
 }
 
+static CLOCK_TIME: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+    r"(?:[0-9０-９]{1,2}[:：][0-9０-９]{2}|[零〇一二两三四五六七八九十0-9０-９]{1,3}(?:点|时)(?:半|[零〇一二两三四五六七八九十0-9０-９]{1,3}分)?)"
+).unwrap());
+
+fn conflicts_with_stated_action_clock(action: &str, due: &str, snippets: &[&str]) -> bool {
+    let mut proposed = CLOCK_TIME.find_iter(due);
+    let Some(proposed_clock) = proposed.next() else { return false; };
+    if proposed.next().is_some() { return false; }
+    let action = normalized(action);
+    let action = action.trim_end_matches(['。', '！', '？', '.', '!', '?']);
+    if action.is_empty() { return false; }
+    let anchor = format!("{action}的时间");
+    let mut stated: Option<String> = None;
+    for text in snippets {
+        let text = normalized(text);
+        for clause in text.split(['，', ',', '。', '；', ';', '！', '？']) {
+            let Some((lead, tail)) = clause.split_once(&anchor) else { continue; };
+            if ["如果", "假如", "比如", "例如", "是否", "建议"].iter().any(|cue| lead.contains(cue)) {
+                continue;
+            }
+            let Some(tail) = ["要在", "定在", "是", "为"].iter().find_map(|&link| tail.strip_prefix(link))
+                else { continue; };
+            let Some(clock) = CLOCK_TIME.find(tail).filter(|clock| clock.start() == 0) else { continue; };
+            if clock.as_str() == proposed_clock.as_str()
+                || stated.as_deref().is_some_and(|previous| previous != clock.as_str())
+            {
+                // A matching or conflicting direct statement needs ordinary
+                // source review. Do not remove a deadline based on an alternate.
+                return false;
+            }
+            stated = Some(clock.as_str().to_owned());
+        }
+    }
+    stated.is_some()
+}
+
 fn due_is_bound(sentence: &str, due: &str) -> bool {
     const BEFORE: &[&str] = &["截止到", "截止", "最迟", "不晚于", "必须在", "务必在", "须在", "截至"];
     const AFTER: &[&str] = &["之前", "以前", "前", "以内", "之内", "为止", "截止"];
     const ACTION: &[&str] = &["提交", "交付", "完成", "交稿", "报给", "发给", "交给"];
     let due = normalized(due);
     let sentence = normalized(sentence);
+    let clocks: Vec<_> = CLOCK_TIME.find_iter(&sentence).collect();
     sentence.match_indices(&due).any(|(start, _)| {
+        // The short spelling 八点 inside 八点半, or 五点 inside 十五点,
+        // is not an occurrence of the proposed time.
+        if CLOCK_TIME.find_iter(&due).any(|part| !clocks.iter().any(|actual|
+            actual.start() == start + part.start() && actual.end() == start + part.end()))
+        {
+            return false;
+        }
         let left = sentence[..start].rsplit(['，', ',', '：', ':', '。', '；']).next().unwrap_or("");
         let right = &sentence[start + due.len()..];
         BEFORE.iter().any(|marker| left.ends_with(marker) || due.starts_with(marker))
@@ -4137,6 +4182,44 @@ mod tests {
         assert!(due_is_bound("我会明天下午提交手册。", "明天下午"));
         assert!(!due_is_bound("下个月可以安排现场活动，所以请运营准备一份方案。", "下个月"));
         assert!(!due_is_bound("负责人说下个月销售，提交时间还没定。", "下个月"));
+    }
+
+    #[test]
+    fn deadline_cannot_use_part_of_a_longer_spoken_clock() {
+        assert!(due_is_bound("截止到八点半提交。", "八点半"));
+        assert!(due_is_bound("请在十五点前核对。", "十五点前"));
+        assert!(!due_is_bound("截止到八点半提交。", "八点"));
+        assert!(!due_is_bound("请在十五点前核对。", "五点前"));
+        assert!(!due_is_bound("请在17:30前确认。", "7:30前"));
+    }
+
+    #[test]
+    fn source_item_keeps_the_cleaning_deadline_off_opening_and_clock_in() {
+        let rows = [
+            json!({"id":"e0134","text":"我们开馆的时间是八点半，那么呃保洁人员上班的时间要在七点半。"}),
+            json!({"id":"e0138","text":"八点半开门儿，八点之前所有的卫生要打扫干净，先拖地后续擦拭桌面儿。"}),
+        ];
+        let known: HashMap<_, _> = rows.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+        let ids = known.keys().copied().collect();
+        for (text, proposed, expected) in [
+            ("所有的卫生要打扫干净。", "八点之前", Some("八点之前")),
+            ("所有的卫生要打扫干净。", "八点半", None),
+            ("保洁人员上班。", "八点之前", None),
+            ("开馆。", "八点之前", None),
+        ] {
+            let item = SourceItem { role:Role::Action, text:text.into(), owner:None,
+                due:Some(proposed.into()), evidence:vec!["e0134".into(),"e0138".into()] };
+            let fact = item.bind(&known, &ids).unwrap();
+            assert_eq!(fact.text, text);
+            assert_eq!(fact.due.as_deref(), expected);
+            assert_eq!(fact.evidence, ["e0134", "e0138"]);
+        }
+        assert!(!conflicts_with_stated_action_clock("开馆。", "八点前", &[
+            "如果开馆的时间是八点半，后续要另行通知。",
+        ]));
+        assert!(!conflicts_with_stated_action_clock("开馆。", "八点前", &[
+            "开馆的时间是九点。", "开馆的时间定在八点。",
+        ]));
     }
 
     #[test]
