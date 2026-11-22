@@ -117,6 +117,72 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn local_minutes_replay_saved_chapter_selection() {
+        use super::super::{atomic_document, source_checkpoint::{CheckedSourcePrefix, CheckpointInput}, source_windows::SourceWindows};
+        use super::super::super::canonical_brief::source_first_input;
+        let Some(directory)=std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_ROOT") else { return; };
+        let directory=PathBuf::from(directory);
+        let output=PathBuf::from(std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_OUTPUT").unwrap());
+        fs::create_dir(&output).unwrap();
+        for label in ["comparison","market"] {
+            let from=directory.join(label);
+            let manifest:Value=serde_json::from_slice(&fs::read(from.join("results.json")).unwrap()).unwrap();
+            for (key,run) in manifest["results"].as_object().unwrap() {
+                assert!(run["backend"]=="vulkan" && run["engineReleased"]==true);
+                let input:Input=serde_json::from_slice(&fs::read(from.join(format!("{key}-input.json"))).unwrap()).unwrap();
+                let bytes=fs::read(input.source_file).unwrap();
+                assert_eq!(format!("{:x}",Sha256::digest(&bytes)),input.expected_file_sha256);
+                let text=std::str::from_utf8(&bytes).unwrap();
+                let text=text.trim_start_matches('\u{feff}').replace("\r\n","\n");
+                let sha=format!("{:x}",Sha256::digest(text.as_bytes()));
+                let path=from.join(key).join("completed.json");
+                let raw=fs::read(&path).unwrap();
+                let original:Value=serde_json::from_slice(&raw).unwrap();
+                let original_sha=format!("{:x}",Sha256::digest(&raw));
+                let checkpoint:CheckpointInput=serde_json::from_value(json!({"path":path,"sha256":original_sha})).unwrap();
+                let prefix=CheckedSourcePrefix::load(&checkpoint,&text,&sha,input.duration_ms,true).unwrap();
+                let windows=SourceWindows::new(&text).unwrap();
+                assert_eq!(prefix.len(),windows.len());
+                let mut facts=Vec::new();
+                for index in 0..windows.len() {
+                    let (encoding,call)=prefix.window(index).unwrap();
+                    let raw=call.map(|call| call["output"].as_str().unwrap()).unwrap_or("{}");
+                    facts.extend(windows.check_encoded(index,raw,encoding).unwrap().facts);
+                }
+                let mut bank=atomic_document::build_bank(facts,&text).unwrap();
+                let calls=original["receipt"]["calls"].as_array().unwrap();
+                let core=calls.iter().find(|call| call["stage"]=="compact-core-organization").unwrap();
+                assert_eq!(core["request"]["messages"][0]["content"],atomic_document::layout_prompt(&bank));
+                assert_eq!(core["request"]["messages"][1]["content"],source_first_input(&atomic_document::layout_input(&bank)));
+                assert_eq!(core["request"]["response_format"]["json_schema"]["schema"],atomic_document::layout_schema(&bank).unwrap());
+                let mut review=calls.iter().filter(|call| call["stage"].as_str().unwrap_or("").starts_with("chapter-review-"));
+                let raw=atomic_document::review_chapters(&mut bank,core["output"].as_str(),&text,|prompt,input,schema,stage| {
+                    let call=review.next().expect("every current chapter request must have a matching GPU reply");
+                    assert_eq!(call["stage"],stage);
+                    assert_eq!(call["request"]["messages"][0]["content"],prompt);
+                    assert_eq!(call["request"]["messages"][1]["content"],source_first_input(&input));
+                    assert_eq!(call["request"]["response_format"]["json_schema"]["schema"],schema);
+                    Ok(call["output"].as_str().unwrap().to_owned())
+                }).unwrap();
+                assert!(review.next().is_none());
+                let session=session(text,&input.title,input.duration_ms).unwrap();
+                let base=super::super::super::rules_l0_minutes(&session,"engineering-candidate");
+                let rendered=atomic_document::organize(&raw,&bank,&session,&base).unwrap();
+                let result=output.join(key);
+                fs::create_dir(&result).unwrap();
+                fs::write(result.join("candidate.txt"),&rendered.minutes.markdown).unwrap();
+                save_new(&result.join("replay.json"),&json!({
+                    "mode":"deterministic-reader-replay-of-real-gpu-replies",
+                    "originalGpuReceipt":path,"originalGpuReceiptSha":original_sha,
+                    "sourceFileSha256":input.expected_file_sha256,"exactChapterRequestsVerified":true,
+                    "newModelCalls":0,"documentReceipt":rendered.receipt
+                })).unwrap();
+            }
+        }
+    }
+
     #[test]
     fn local_minutes_probe_constructor_preserves_exact_source_and_never_claims_real_capture(){
         let source="观点：预算未批准。\n赵工承诺周五报告。";

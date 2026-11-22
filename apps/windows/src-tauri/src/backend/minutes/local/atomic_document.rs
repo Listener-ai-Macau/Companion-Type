@@ -605,16 +605,18 @@ fn complement_slots<'a>(offered: &[&'a str], rows: &[&Fact]) -> (Vec<&'a str>,Ve
 }
 
 pub(super) fn review_chapters(
-    bank: &mut Bank, compact: Option<&str>,
+    bank: &mut Bank, compact: Option<&str>, source: &str,
     mut ask: impl FnMut(&'static str, Value, Value, &str) -> Result<String, String>,
 ) -> Result<String, String> {
     let mut compact: Option<ChapterOrganization>=compact.map(|raw| {
         serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_| fail())
     }).transpose()?;
     let topics = bank.topics().collect::<Vec<_>>();
+    let example_content=source_example_contents(bank,source);
     let mut chapters = BTreeMap::new();
     let mut reader_order = HashMap::new();
     let mut reviewed_counts = Vec::new();
+    let mut example_bindings=Vec::new();
     for (index, span) in bank.chapter_spans.iter().enumerate() {
         let chapter = THEME_IDS[index];
         let rows = &topics[span.clone()];
@@ -655,7 +657,7 @@ pub(super) fn review_chapters(
             let rows = rows.iter().copied().filter(|fact| shortlist.contains(&fact.id)).collect::<Vec<_>>();
             review_chapter(bank,index,&rows,&core,&mut ask,&format!("chapter-review-{chapter}-combined"))?
         };
-        let presentation=if core.is_empty() {
+        let mut presentation=if core.is_empty() {
             complement.ok_or_else(fail)?
         } else {
             let mut ids=core.iter().map(|fact| fact.id.clone()).collect::<Vec<_>>();
@@ -666,6 +668,16 @@ pub(super) fn review_chapters(
             }
             ChapterPresentation {label_ids:previous.ok_or_else(fail)?.label_ids,main_facts:ids}
         };
+        let mut seen=HashSet::new();
+        for id in &mut presentation.main_facts {
+            if let Some(content)=example_content.get(id.as_str()).filter(|content| {
+                rows.iter().any(|fact| fact.id==**content)
+            }) {
+                example_bindings.push(json!({"introFact":id,"contentFact":content}));
+                *id=(*content).to_owned();
+            }
+        }
+        presentation.main_facts.retain(|id| seen.insert(id.clone()));
         for (order, id) in presentation.main_facts.iter().enumerate() {
             reader_order.insert(id.clone(),order);
         }
@@ -674,6 +686,7 @@ pub(super) fn review_chapters(
     }
     bank.reader_order = reader_order;
     bank.receipt["chapterReaderCoverage"] = json!(reviewed_counts);
+    bank.receipt["readerExampleBindings"] = json!(example_bindings);
     let count = bank.chapter_spans.len();
     let fallback_focus = match count {
         0 => return Err(fail()),
@@ -683,6 +696,32 @@ pub(super) fn review_chapters(
     let focus=compact.map(|layout| layout.focus_chapters)
         .unwrap_or_else(|| fallback_focus.into_iter().map(str::to_owned).collect());
     Ok(json!({"chapters":chapters,"focusChapters":focus}).to_string())
+}
+
+fn source_example_contents<'a>(bank: &'a Bank, source: &str) -> HashMap<&'a str,&'a str> {
+    let units=source_units(source);
+    let sentences=factual_audit::evidence_sentences(&units);
+    let positions=sentences.iter().enumerate().map(|(offset,row)| {
+        (row["id"].as_str().unwrap(),offset)
+    }).collect::<HashMap<_,_>>();
+    bank.topics().filter_map(|lead| {
+        if !["举个例子","举一个例子","举个案例"].iter().any(|marker| lead.text.contains(marker))
+            || !["写过","叫做","名字叫","介绍一个案例"].iter().any(|marker| lead.text.contains(marker))
+        {
+            return None;
+        }
+        let start=*positions.get(lead.evidence.first()?.as_str())?;
+        let next=sentences[start+1..].iter().take(4).take_while(|row| {
+            row["source"]==sentences[start]["source"] && row["text"].as_str().is_some_and(|text| !text.starts_with("说话人"))
+        }).find(|row| row["text"].as_str().is_some_and(|text| {
+            ["大概讲的就是","大概讲的是","故事讲的是","具体说的是","具体做法是"]
+                .iter().any(|prefix| text.trim_start().starts_with(prefix))
+        }))?;
+        let anchor=next["id"].as_str()?;
+        let content=bank.topics().find(|fact| fact.evidence.first().map(String::as_str)==Some(anchor)
+            && !bank.review_quote(&fact.id) && useful_reader_point(fact))?;
+        Some((lead.id.as_str(),content.id.as_str()))
+    }).collect()
 }
 
 pub(super) fn layout_prompt(bank: &Bank) -> &'static str {
@@ -1258,7 +1297,7 @@ mod tests{
         )).collect();
         let mut bank=build_bank(facts,&source).unwrap();
         let mut offered=HashSet::new();
-        let layout=review_chapters(&mut bank,None,|_,input,schema,_| {
+        let layout=review_chapters(&mut bank,None,&source,|_,input,schema,_| {
             offered.extend(input["facts"].as_array().unwrap().iter()
                 .map(|row| row[0].as_str().unwrap().to_owned()));
             let labels=&schema["properties"]["labelIds"]["items"]["enum"];
@@ -1295,7 +1334,7 @@ mod tests{
         }).collect::<serde_json::Map<String,Value>>();
         let source=json!({"chapters":seed,"focusChapters":["t1","t2"]}).to_string();
         let mut preserved=HashSet::new();
-        let output=review_chapters(&mut bank,Some(&source),|_,input,schema,_| {
+        let output=review_chapters(&mut bank,Some(&source),&lines.join("\n"),|_,input,schema,_| {
             let examples=schema["properties"]["exampleId"]["enum"].as_array().unwrap();
             let others=schema["properties"]["otherId"]["enum"].as_array().unwrap();
             for fact in input["coreFacts"].as_array().unwrap() {

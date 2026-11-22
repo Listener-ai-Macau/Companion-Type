@@ -123,7 +123,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             let layout=if atomic_document::has_chapters(&bank) {
                 let core=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
                 record_call(&trace,"compact-core-organization");
-                atomic_document::review_chapters(&mut bank,Some(&core),|prompt,input,schema,stage| {
+                atomic_document::review_chapters(&mut bank,Some(&core),&session.transcript_text,|prompt,input,schema,stage| {
                     let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,768)?;
                     record_call(&trace,stage);
                     Ok(result)
