@@ -49,6 +49,68 @@ pub(super) fn comparative_pairs(rows: &[ReadingInput<'_>]) -> Vec<(usize, usize)
     }).collect()
 }
 
+// A spoken report often names the subject, then gives the baseline or reason
+// in a separate sentence and answers a short question about the other side.
+// Keep those claims together without moving speculation into the status claim.
+pub(super) fn reported_change_groups(sentences: &[&str]) -> Vec<Vec<usize>> {
+    static PERIOD: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:比较|相较|相比|对比|比|较|和|跟).{0,4}(?:上(?:一|个|上){0,3}(?:周|月|季度|半年|年)|去年(?:同期)?|前(?:一|几)?(?:周|月|季度)|之前|以前|以往)|同比|环比"
+    ).expect("reported comparison period"));
+    let has = |text: &str, terms: &[&str]| terms.iter().any(|term| text.contains(term));
+    let assertion = |text: &str| !text.contains(['?', '？'])
+        && !has(text, &["假如", "假设", "预计", "不知道", "不确定", "不好说", "能不能", "是否", "试试看"]);
+    let direction = |text: &str| has(text, &[
+        "比较多", "比较少", "比较差", "比较好", "明显多", "明显少", "要多一点", "要少一点",
+        "上升", "下降", "下滑", "回落", "增长", "减少", "增加", "改善", "变差", "持平", "不如",
+    ]);
+    let metric = |text: &str| has(text, &[
+        "咨询", "询问", "问询", "报名", "参加", "顾客", "用户", "访客", "订单", "出货", "销量",
+        "成交", "销售", "退货", "投诉", "故障", "工单", "事故", "响应", "交付", "时长", "效率",
+        "价格", "成本", "收入", "支出", "申请", "通过", "完工", "产量", "访问", "等待",
+    ]);
+    let mut groups = Vec::new();
+    let mut end_of_last = 0;
+    for (index, text) in sentences.iter().enumerate() {
+        if index < end_of_last || !PERIOD.is_match(text) || !assertion(text) || !direction(text) {
+            continue;
+        }
+        let subject = index.checked_sub(1).filter(|&prior| {
+            let previous = sentences[prior];
+            prior >= end_of_last && assertion(previous) && metric(previous) && direction(previous)
+                && has(text, &["这个", "这种", "这一块", "这类", "这些", "该项", "这个情况"])
+        });
+        let next = index + 1;
+        let other = sentences.get(next).filter(|s| {
+            s.contains(['?', '？']) && has(s, &["其他", "另外", "而", "另一"])
+        }).map_or(next, |_| next + 1);
+        let counterpart = sentences.get(other).filter(|s| {
+            assertion(s) && direction(s)
+                && has(s.trim_start(), &["其他", "另外", "另一方面", "但", "相反", "反过来", "而"])
+        }).map(|_| other);
+        let group = subject.into_iter().chain([index]).chain(counterpart).collect::<Vec<_>>();
+        if group.len() > 1 && (subject.is_some() || metric(text)) {
+            end_of_last = group.last().expect("comparison group") + 1;
+            groups.push(group);
+        }
+    }
+    groups
+}
+
+#[cfg(test)]
+#[test]
+fn the_period_and_contrast_stay_with_the_reported_metrics() {
+    let rows = [
+        "最近收到的付款咨询比较多。",
+        "比上个月来说，这类问题增加了，我觉得可能是页面改版。",
+        "其他哪方面比较少？",
+        "另外，退款申请量下降了。",
+        "预计明年的交付效率比上个月有所增长。",
+        "另外，邮件投诉的方向尚不清楚。",
+    ];
+    assert_eq!(reported_change_groups(&rows), [vec![0, 1, 3]]);
+    assert!(reported_change_groups(&rows[2..]).is_empty());
+}
+
 fn reported_scale(text: &str) -> bool {
     static SCALE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:累计|共计|响应了|完成了|实际有)[^。；！？]{0,12}[0-9０-９][0-9０-９.,，]*\s*(?:多|余)?\s*(?:次|例|场|项|人|家)"

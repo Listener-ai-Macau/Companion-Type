@@ -144,9 +144,15 @@ pub(super) struct LinkedWork {
     pub(super) references: Vec<usize>,
 }
 
+pub(super) enum OperatingCondition {
+    Schedule,
+    ScheduleNeedsReview,
+    Recommendation,
+}
+
 pub(super) fn operational_conditions(
     timing: &Timing<'_>, sentences: &[Value], index: usize,
-) -> Option<(LinkedWork, bool)> {
+) -> Option<(LinkedWork, OperatingCondition)> {
     static READY_BY: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"([一二两三四五六七八九十0-9]{1,3}点(?:半|[0-9一二三四五六七八九十]{1,3}分)?)(?:之)?前"
     ).expect("spoken completion time"));
@@ -156,6 +162,12 @@ pub(super) fn operational_conditions(
     static EARLIER: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"提前(?:[一二两三四五六七八九十0-9]{1,3}个?小时|半小时|[一二两三四五六七八九十0-9]{1,3}分钟)"
     ).expect("relative preparation time"));
+    static POSTED_OPENING: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:开门|开馆|开放)(?:的)?时间(?:是|为|在|定在)?\s*([一二两三四五六七八九十0-9]{1,3}点(?:半|[0-9一二三四五六七八九十]{1,3}分)?)"
+    ).expect("stated opening schedule"));
+    static CLEANING_SHIFT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:保洁|清洁)(?:人员|员)?\s*(?:上班(?:的时间)?(?:要|得|必须)?(?:是|为|在|定在)?\s*(?P<after>[一二两三四五六七八九十0-9]{1,3}点(?:半|[0-9一二三四五六七八九十]{1,3}分)?)|(?P<before>[一二两三四五六七八九十0-9]{1,3}点(?:半|[0-9一二三四五六七八九十]{1,3}分)?)\s*上班)"
+    ).expect("explicit cleaning shift"));
     static STAFFING: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"^[嗯啊呃再\s]*(?P<increase>(?:增加|增派|增配)[一二两三四五六七八九十0-9]{1,3}(?:名|个|位)?[\p{Han}]{2,10})"
     ).expect("concrete staffing proposal"));
@@ -168,10 +180,38 @@ pub(super) fn operational_conditions(
         let open = OPENING_TIME.captures(current)?.get(1)?.as_str();
         let earlier = EARLIER.find(current)?.as_str();
         if ready!=open {
+            let mut shifts = std::collections::BTreeMap::new();
+            for previous in timing.neighborhood(index,75_000,0).into_iter()
+                .flat_map(|position| timing.sentences_by_utterance[position].clone())
+                .filter(|&position| position < index)
+            {
+                let source = sentence(sentences,previous);
+                if source.contains(['?', '？']) || has(source,&["假设","例如","另一个","不同分馆","原本","过去","可能","如果","不是"]) {
+                    continue;
+                }
+                let same_opening = POSTED_OPENING.captures_iter(source)
+                    .chain(OPENING_TIME.captures_iter(source))
+                    .any(|time| &time[1] == open);
+                if same_opening {
+                    for shift in CLEANING_SHIFT.captures_iter(source) {
+                        let clock = shift.name("after").or_else(|| shift.name("before")).unwrap().as_str();
+                        shifts.entry(clock).or_insert(previous);
+                    }
+                }
+            }
+            if shifts.len() == 1 {
+                let (start, witness) = shifts.into_iter().next().unwrap();
+                return Some((LinkedWork {
+                    text:format!("保洁{start}上班，{ready}前清洁完，{open}开门。开门前先清洁地面，再擦桌面或器材。"),
+                    references:vec![index,witness],
+                }, OperatingCondition::Schedule));
+            }
+            let references = std::iter::once(index).chain(shifts.values().copied().take(4)).collect();
+            let unresolved = if shifts.is_empty() { "具体开工时点待核" } else { "上班时间有不同说法，待核" };
             return Some((LinkedWork {
-                text:format!("原话待核：开门前先清洁地面，再擦桌面或器材。原话提到{ready}前清洁完、{open}开门和{earlier}，具体开工时点待核。"),
-                references:vec![index],
-            },true));
+                text:format!("原话待核：开门前先清洁地面，再擦桌面或器材。原话提到{ready}前清洁完、{open}开门和{earlier}，{unresolved}。"),
+                references,
+            }, OperatingCondition::ScheduleNeedsReview));
         }
     }
     let prior = index.checked_sub(1)?;
@@ -189,7 +229,7 @@ pub(super) fn operational_conditions(
     Some((LinkedWork {
         text:format!("建议{}{}，会上有人表示可以，落实情况待核。",staff.as_str(),reason),
         references:vec![prior,index],
-    },false))
+    }, OperatingCondition::Recommendation))
 }
 
 pub(super) fn action_context(
@@ -321,6 +361,29 @@ mod tests {
         let timing = Timing::verified(&source, &sentences, &rows).unwrap();
         let indices: Vec<_> = timing.action_source_segments(0, "核对附件后签字").iter().map(|row| row.index).collect();
         assert_eq!(indices, [1, 0]);
+    }
+
+    #[test]
+    fn timed_procedure_reuses_an_explicit_shift_and_keeps_a_conflict_open() {
+        let first = "我们开馆的时间是八点半，保洁人员上班的时间要在七点半。";
+        let instructions = "提前一个小时，八点之前，八点半开门，先拖地再擦拭桌面。";
+        let source = format!("{first}{instructions}");
+        let sentences = evidence_sentences(&source_units(&source));
+        let rows = [row(first, 0, 5000), row(instructions, 37_000, 41_000)];
+        let timing = Timing::verified(&source, &sentences, &rows).unwrap();
+        let (schedule, kind) = operational_conditions(&timing, &sentences, 1).unwrap();
+        assert!(matches!(kind, OperatingCondition::Schedule));
+        assert_eq!(schedule.references, [1, 0]);
+        assert!(schedule.text.contains("七点半上班") && schedule.text.contains("八点前清洁完"));
+
+        let conflicting = "我们八点半开门，保洁人员八点上班。";
+        let rows = [row(first, 0, 5000), row(conflicting, 17_000, 20_000), row(instructions, 37_000, 41_000)];
+        let source = format!("{first}{conflicting}{instructions}");
+        let sentences = evidence_sentences(&source_units(&source));
+        let timing = Timing::verified(&source, &sentences, &rows).unwrap();
+        let (conflict, kind) = operational_conditions(&timing, &sentences, 2).unwrap();
+        assert!(matches!(kind, OperatingCondition::ScheduleNeedsReview));
+        assert!(conflict.references.contains(&0) && conflict.references.contains(&1));
     }
 
     #[test]

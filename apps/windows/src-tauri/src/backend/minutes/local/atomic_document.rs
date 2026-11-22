@@ -94,6 +94,7 @@ pub(super) struct Bank {
     reader_priority: HashMap<String, u8>,
     reader_order: HashMap<String, usize>,
     execution_reading: HashSet<String>,
+    reader_groups: Vec<Vec<String>>,
     source_agenda: Option<super::delivery_evidence::OpeningAgenda>,
 }
 impl Bank {
@@ -226,11 +227,15 @@ fn source_verified_facts(
             audit.push(json!({"sentenceId":id,"reason":"explicit-proposal-followup-with-timing","evidence":task.evidence}));
             verified.extend([discussion,task]);
         }
-        if let Some((conditions, review)) = timing.and_then(|timing| {
+        if let Some((conditions, statement)) = timing.and_then(|timing| {
             super::timed_evidence::operational_conditions(timing, sentences, index)
         }) {
-            let mut fact = if review { ExtractedFact::review_quote(id,"status",&conditions.text) }
-                else { ExtractedFact::verbatim(id,"recommendation",&conditions.text) };
+            use super::timed_evidence::OperatingCondition;
+            let mut fact = match statement {
+                OperatingCondition::Schedule => ExtractedFact::verbatim(id, "status", &conditions.text),
+                OperatingCondition::ScheduleNeedsReview => ExtractedFact::review_quote(id, "status", &conditions.text),
+                OperatingCondition::Recommendation => ExtractedFact::verbatim(id, "recommendation", &conditions.text),
+            };
             fact.execution_reading = true;
             extend_references(&mut fact, sentences, &conditions.references);
             audit.push(json!({"sentenceId":id,"reason":"preserved-timed-operating-conditions","evidence":fact.evidence}));
@@ -947,6 +952,20 @@ fn build_bank_with_timing(
     } else {
         (Vec::new(), Vec::new())
     };
+    let original_sentences: Vec<_> = sentences.iter().map(|sentence| sentence["text"].as_str().unwrap()).collect();
+    let reader_groups = super::reader_ranking::reported_change_groups(&original_sentences).into_iter()
+        .filter_map(|sources| {
+            sources.into_iter().map(|source| {
+                let anchor = sentences[source]["id"].as_str().unwrap();
+                topic_facts.iter().find(|fact| {
+                    matches!(fact.kind, Kind::Status | Kind::Opinion)
+                        && fact.evidence[0] == anchor
+                        && !source_quotes.contains(&fact.id) && !quantity_quotes.contains(&fact.id)
+                        && source_grounding::shared_han_phrase(&fact.text, original_sentences[source], 5)
+                }).map(|fact| fact.id.clone())
+            }).collect::<Option<Vec<_>>>()
+        }).collect::<Vec<_>>();
+    execution_reading.extend(reader_groups.iter().flatten().cloned());
     let chapter_point_choices: Vec<_> = chapter_spans.iter().map(|span| {
         use super::reader_ranking::{shortlist, ReadingInput};
         let content: Vec<_> = topic_facts[span.clone()].iter().map(|f| ReadingInput {
@@ -978,8 +997,9 @@ fn build_bank_with_timing(
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids,
+        "linkedReaderReportGroups":reader_groups,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,source_agenda })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,reader_groups,source_agenda })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -1648,6 +1668,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     }
     if !assignments.is_empty(){return Err(fail());}
     merge_linked_singletons(&mut slots, purpose_id);
+    keep_reader_groups_together(&mut slots, &bank.reader_groups, purpose_id);
     let mut required_chars=0;
     let important = |fact: &Fact, main: bool| main && !bank.review_quote(&fact.id)
         && (timed_prediction(fact) || (focus.is_some()
@@ -1791,6 +1812,27 @@ fn merge_linked_singletons(slots: &mut [Vec<(&Fact, bool)>], purpose_id: &str) {
                 slots[target].push((fact, false));
             }
         }
+    }
+}
+
+fn keep_reader_groups_together(
+    slots: &mut [Vec<(&Fact, bool)>], groups: &[Vec<String>], purpose_id: &str,
+) {
+    for group in groups {
+        let anchor = group.iter().find(|id| id.as_str() == purpose_id).unwrap_or(&group[0]);
+        let Some(target) = slots.iter().position(|rows| rows.iter().any(|(fact, _)| &fact.id == anchor)) else {
+            continue;
+        };
+        let mut related = Vec::new();
+        for (index, rows) in slots.iter_mut().enumerate() {
+            if index == target { continue; }
+            rows.retain(|&(fact, _)| {
+                if !group.contains(&fact.id) { return true; }
+                related.push((fact, false));
+                false
+            });
+        }
+        slots[target].extend(related);
     }
 }
 
