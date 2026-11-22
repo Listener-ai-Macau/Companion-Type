@@ -134,6 +134,9 @@ pub(super) enum OperationalEvidence {
     DecisionProcedure,
     AvailabilityBoundary,
     RecordedResult,
+    InProgressMilestone,
+    EntryProcedure,
+    LimitedAccess,
     ApprovalPrerequisite,
     CorrectiveRequirement,
 }
@@ -154,6 +157,51 @@ pub(super) fn binding_requirement(text: &str) -> Option<OperationalEvidence> {
         || (has(&["退还了","返还了","只退了","已经退了"]) && has(&["学费","书费","住宿费","服务费","押金","报名费"]))
     {
         return Some(OperationalEvidence::RecordedResult);
+    }
+    if let Some((kind, _)) = documented_clause(text) {
+        return Some(kind);
+    }
+    None
+}
+
+/// Select a self-contained stretch of the original speech. These clauses
+/// describe a reported stage or an operating rule, never a new assignment.
+pub(super) fn documented_clause(text: &str) -> Option<(OperationalEvidence, &str)> {
+    let text = text.trim().trim_end_matches(['，', ',', '。', '；']);
+    if text.contains(['？', '?']) || ["听说", "据说", "可能", "估计", "假如", "比如", "如果改成",
+        "没开始", "尚未开始", "还没开始", "还没有开始", "没有开始", "准备开始", "还不确定"]
+        .iter().any(|word| text.contains(word))
+    {
+        return None;
+    }
+    let has = |words: &[&str]| words.iter().any(|word| text.contains(word));
+    static STARTED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:已经|业已|现已)[^。；！？]{0,10}开始[^。；！？]{0,8}(?:采购|生产|安装|收货|实施|上线|交付|使用|办理|试运行|施工|维修)了?"
+    ).expect("started milestone"));
+    if let Some(stage) = STARTED.find(text).filter(|stage| {
+        let lead = &text[..stage.start()];
+        !["如果", "假设", "预计", "估计", "假如"].iter().any(|word| lead.contains(word))
+            && ["下半年", "本季度", "本期", "这个月", "本月", "这批", "项目", "生产线", "工序", "系统", "订单", "这款"]
+            .iter().any(|word| lead.contains(word))
+    }) {
+        let clause = text[..stage.end()].trim_start_matches(['嗯', '呃', '啊', ' ']);
+        if clause.chars().count() <= 82 {
+            return Some((OperationalEvidence::InProgressMilestone, clause));
+        }
+    }
+    if text.chars().count() <= 96
+        && has(&["进学校", "进校", "返校", "入场", "进入", "进场", "上岗"])
+        && has(&["只要", "必须", "全都要", "均需", "需要先", "都要", "须先"])
+        && has(&["测定", "检测", "隔离", "复检", "消毒", "登记", "出示", "签字", "体检", "培训", "核验"])
+    {
+        return Some((OperationalEvidence::EntryProcedure, text));
+    }
+    if text.chars().count() <= 140
+        && has(&["地区", "人员", "名单", "访客", "学生", "没有凭证", "未登记"])
+        && has(&["不允许返校", "不能返校", "不得入场", "不能入场", "不允许入场", "不得上岗"])
+        && has(&["邮寄", "另行", "线上", "由", "补办", "不得"])
+    {
+        return Some((OperationalEvidence::LimitedAccess, text));
     }
     None
 }

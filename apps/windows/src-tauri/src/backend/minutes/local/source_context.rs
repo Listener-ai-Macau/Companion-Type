@@ -53,16 +53,60 @@ const ISSUERS: &[&str] = &["国家", "政府", "财政部门", "人社部门", "
 const PUBLIC_TERMS: &[&str] = &["补贴", "补助", "资助", "贴息", "创业基金", "拨款", "贷款",
     "贷给", "利息", "申报资格", "资助额度"];
 
+fn internal_record(words: &str) -> bool {
+    has(words, &["已收到", "已经收到", "已经到账", "已到账", "下发给我们", "签订的合同",
+        "本公司的", "本公司已经", "本部门申请", "我们自己的预算", "手里现在有"])
+}
+
 fn external_terms(words: &str) -> bool {
-    !has(words, &["已收到", "已经收到", "已经到账", "已到账", "下发给我们", "签订的合同",
-        "本公司的", "本公司已经", "本部门申请"])
-        && (has(words, PUBLIC_TERMS)
+    !internal_record(words) && (has(words, PUBLIC_TERMS)
             || (has(words, &["给你", "资金额度", "他会给", "期限", "还款", "利率", "分档"])
                 && has(words, &["学历", "条件", "本科", "专科", "行业", "市场", "本金", "利息", "年", "万"])))
 }
 
 fn public_authority_reference(words: &str) -> bool {
     has(words, ISSUERS) || (words.contains("创业") && words.contains("指导中心"))
+        || words.contains("大学生创业基金")
+}
+
+fn continued_financial_terms(words: &str) -> bool {
+    if internal_record(words) {
+        return false;
+    }
+    // A nearby discussion of outside money provides the subject. Require
+    // terms of payment or eligibility in the continuation itself.
+    let limit = has(words, &["最高", "最低", "上限", "下限", "封顶", "不超过", "起步"]);
+    let tier = has(words, &["学历", "本科", "专科", "研究生", "门槛", "档次", "级别", "人均"]);
+    let money = has(words, &["万", "元", "块钱", "百分之", "资金", "额度", "金额"]);
+    let award = has(words, &["拨给", "款会拨", "划给", "打给你", "发给你", "放款", "获批后发"]);
+    let recipient = has(words, &["你", "申请人", "申请者", "企业", "申请额度", "这个资金"]);
+    money && ((limit && tier) || (award && recipient))
+}
+
+fn external_positions(sentences: &[Value]) -> Vec<bool> {
+    let mut issuer = None;
+    let mut explicit_terms = None;
+    sentences.iter().enumerate().map(|(position, _)| {
+        let words = text(sentences, position);
+        if changes_context(words) || internal_record(words) {
+            issuer = None;
+            explicit_terms = None;
+            return false;
+        }
+        if public_authority_reference(words) {
+            issuer = Some(position);
+        }
+        let current_issuer = issuer.is_some_and(|prior| position - prior <= 9);
+        let same_terms = explicit_terms.is_some_and(|prior| position - prior <= 6);
+        let named_terms = has(words, PUBLIC_TERMS);
+        if external_terms(words) && (current_issuer || (same_terms && named_terms)) {
+            explicit_terms = Some(position);
+            return true;
+        }
+        // Only an explicit term refreshes this window. Generic money talk
+        // and earlier ellipses cannot keep it open indefinitely.
+        same_terms && continued_financial_terms(words)
+    }).collect()
 }
 
 /// A short question can lose its punctuation in ASR. Protect the question
@@ -104,21 +148,19 @@ fn continues_reference(kind: Kind, words: &str) -> bool {
     match kind {
         Kind::Reported => ["其中", "上面写", "上面说", "告示里", "通知里", "里面写", "纸上", "它说",
             "告示称", "通知称"].iter().any(|cue| words.starts_with(cue)),
-        Kind::ExternalTerms => external_terms(words),
+        Kind::ExternalTerms => external_terms(words) || continued_financial_terms(words),
         Kind::Example => ["这个例子", "在这个例子", "这个假设", "假设中", "示例中"]
             .iter().any(|cue| words.starts_with(cue)),
     }
 }
 
 pub(super) fn frames(sentences: &[Value], timing: Option<&Timing<'_>>) -> Vec<Frame> {
+    let external = external_positions(sentences);
     let mut frames = Vec::new();
     let mut start = 0;
     while start < sentences.len() {
         let words = text(sentences, start);
-        let external = external_terms(words)
-            && ((start.saturating_sub(9)..=start).rev().take_while(|&i| i==start || !changes_context(text(sentences,i)))
-                .any(|i| public_authority_reference(text(sentences, i))));
-        let Some(kind) = external.then_some(Kind::ExternalTerms).or_else(|| opening(words)) else {
+        let Some(kind) = external[start].then_some(Kind::ExternalTerms).or_else(|| opening(words)) else {
             start += 1;
             continue;
         };
@@ -132,7 +174,7 @@ pub(super) fn frames(sentences: &[Value], timing: Option<&Timing<'_>>) -> Vec<Fr
         while end < (start + 8).min(sentences.len()) {
             let words = text(sentences, end);
             if changes_context(words) || opening(words).is_some()
-                || (kind == Kind::ExternalTerms && !external_terms(words) && !filler(words)) {
+                || (kind == Kind::ExternalTerms && !external[end] && !filler(words)) {
                 break;
             }
             let same_speech = if let Some(timing) = timing {
@@ -169,7 +211,8 @@ pub(super) fn external_reviews(frames: &[Frame], sentences: &[Value]) -> Vec<Ext
     for frame in frames.iter().filter(|frame| frame.kind==Kind::ExternalTerms) {
         let start = frame.sentences.start;
         let merge = reviews.last().and_then(|review| review.sources.last()).is_some_and(|last| {
-            start.saturating_sub(*last)<=7 && !(*last+1..start).any(|i| changes_context(text(sentences,i)))
+            start.saturating_sub(*last)<=7
+                && !(*last+1..start).any(|i| changes_context(text(sentences,i)) || internal_record(text(sentences,i)))
         });
         if !merge {
             reviews.push(ExternalReview { anchor:start, sources:Vec::new() });
@@ -247,6 +290,54 @@ mod tests {
         assert!(reviewed.iter().all(|frame| frame.kind==Kind::ExternalTerms));
         assert!(reviewed.last().unwrap().sentences.contains(&2));
         assert!(reviewed.iter().all(|frame| !frame.sentences.contains(&3)));
+    }
+
+    #[test]
+    fn outside_financial_terms_keep_ellipses_under_review_and_stop_at_an_actual_receipt() {
+        let samples = [
+            "我们在讨论政府补贴。",
+            "本科一般可以申请三万元的补助。",
+            "嗯。",
+            "专科儿最高的话是到三万五，本科儿的话最高的话是五万。",
+            "创业指导中心介绍另外一类创业基金。",
+            "行业不同，申请方式也不同。",
+            "这个资金就会拨给你的稍微多一点儿。",
+            "我们已经收到这笔补助两万元。",
+            "这个投资额最高五万元，申请档次是第二档。",
+            "下一项，复核我们自己的预算。",
+            "本科培训课人均最高一万元，按内部报销标准执行。",
+        ];
+        let sentences = evidence_sentences(&source_units(&samples.join("\n")));
+        let positions=external_positions(&sentences);
+        let at = |phrase: &str| positions[sentences.iter().position(|row| {
+            row["text"].as_str().unwrap().contains(phrase)
+        }).unwrap()];
+        assert!(at("专科儿最高"));
+        assert!(at("资金就会拨"));
+        assert!(!at("已经收到"));
+        assert!(!at("投资额最高"));
+        assert!(!at("培训课人均"));
+    }
+
+    #[test]
+    fn repeated_explicit_terms_keep_the_topic_past_the_name_of_the_issuer() {
+        let samples = [
+            "我们在讨论政府补助。",
+            "还会参考经营情况和申请材料。",
+            "申请者可以看看营业计划。",
+            "工作经验也有用。",
+            "嗯。",
+            "最低的那一档补助大概两万元。",
+            "申请人需要准备材料。",
+            "嗯。",
+            "还要看看专业。",
+            "哦。",
+            "本科一般说的是三万元的补助。",
+            "专科最高的话是三万五，本科最高的话是五万。",
+        ];
+        let sentences = evidence_sentences(&source_units(&samples.join("\n")));
+        let positions=external_positions(&sentences);
+        assert!(positions.last().copied().unwrap());
     }
 
     #[test]

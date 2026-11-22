@@ -659,6 +659,18 @@ fn source_verified_facts(
                 continue;
             }
         }
+        if let Some((category, clause)) = super::reader_ranking::documented_clause(original).filter(|_| {
+            !copied_execution && !scope_conflicts.iter().any(|pair| pair.earlier == index || pair.later == index)
+                && !exceptions.iter().any(|(earlier, later, _, _)| *earlier == index || *later == index)
+        }) {
+            let literal = canonical_brief::normalized(clause);
+            current.retain(|item| !matches!(item.role.as_str(), "status" | "opinion")
+                || item.source_needs_review || item.quantity_needs_review
+                || !(super::reader_ranking::binding_requirement(&item.text) == Some(category)
+                    || is_covered_by_literal(item, &literal)));
+            verified.push(ExtractedFact::verbatim(id, "status", clause));
+            audit.push(json!({"sentenceId":id,"reason":"retained-original-operating-clause"}));
+        }
         if let Some(condition) = source_grounding::material_condition(original).filter(|_| !copied_execution) {
             if !original.contains(['？','?']) && !current.iter().any(|item| {
                 item.text.contains(condition) || matches!(item.role.as_str(), "action" | "decision" | "question")
@@ -1672,6 +1684,10 @@ fn useful_reader_point(fact: &Fact) -> bool {
         && !(words <= 18 && ["第一类", "第二类", "第三类"].iter().any(|label| text.starts_with(label)))
 }
 
+fn conversational_prompt(fact: &Fact) -> bool {
+    fact.text.starts_with("会上提问：")
+}
+
 fn reader_selection<'a>(rows: &[&'a Fact], requested: &HashSet<&str>, allowed: &HashSet<&str>, terms: &[String], bank: &Bank) -> Vec<&'a Fact> {
     let mut primary: Vec<_> = rows.iter().copied().filter(|fact| requested.contains(fact.id.as_str())
         && !bank.review_quote(&fact.id) && useful_reader_point(fact)).collect();
@@ -1884,18 +1900,15 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         }).collect::<Vec<_>>();
         critical.sort_by_key(|(rank, _)| std::cmp::Reverse(*rank));
         let mut anchors = HashSet::new();
-        let mut execution_kinds = HashSet::new();
         let mut protected = critical.into_iter()
             .filter(|(_, fact)| fact.evidence.first().is_some_and(|anchor| anchors.insert(anchor.as_str())))
-            .filter(|(_, fact)| super::reader_ranking::concrete_execution(&fact.text)
-                .is_none_or(|kind| execution_kinds.insert(kind)))
             .take(2).map(|(_, fact)| fact.id.as_str()).collect::<Vec<_>>();
         let priority = |fact: &Fact| protected.iter().position(|id| *id == fact.id).unwrap_or(usize::MAX);
         for (fact, main) in items.iter_mut() {
             *main |= priority(fact) != usize::MAX;
         }
         if focus.is_some() {
-            items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main),
+            items.sort_by_key(|(fact, main)| (conversational_prompt(fact), bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main),
                 !useful_reader_point(fact), bank.reader_order.get(&fact.id).copied().unwrap_or(usize::MAX)));
         } else {
             items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main)));
@@ -1948,6 +1961,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let mut required=Vec::new();
         let mut highlights=Vec::new();
         let mut review=Vec::new();
+        let mut prompts=Vec::new();
         let mut remainder=Vec::new();
         for (index,(fact,main)) in items.into_iter().enumerate(){
             let size=reader_fact_length(bank,fact);
@@ -1959,6 +1973,8 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
                 optional_chars-=size;points.push([&fact.id]);
             }else if main{
                 highlights.push([&fact.id]);
+            }else if focus.is_some() && conversational_prompt(fact) {
+                prompts.push([&fact.id]);
             }else if bank.review_quote(&fact.id){
                 review.push([&fact.id]);
             }else{
@@ -1971,7 +1987,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let mut review=review.into_iter();
         let mut details=required;
         details.extend(review.by_ref().take(1));
-        details.extend(highlights.into_iter().chain(review).chain(remainder));
+        details.extend(highlights.into_iter().chain(review).chain(remainder).chain(prompts));
         arranged.push(json!({"title":title,"points":points,"details":details}));
     }
     if !topics.is_empty(){return Err(fail());}
@@ -2561,6 +2577,20 @@ mod tests{
         assert!(action[0].due.is_none());
         assert!(bank.facts.iter().any(|fact| matches!(fact.kind,Kind::Recommendation)
             && fact.text.contains("石家庄酒店")));
+    }
+
+    #[test]
+    fn missing_milestones_and_entry_conditions_keep_the_original_words() {
+        let source = "今天讨论了各部门近期的工作安排。\n下半年主要做新一季的外套，羽绒服和棉服已经就是开始采购了因为要提前上架。\n只要是进学校的学生我们都要去对他们进行咽拭子检测，然后隔离一段时间。\n疫情严重的地区学生不允许返校，毕业证由学校邮寄。\n如果新项目已经开始采购了，我们再提交备选方案。";
+        let reported = ExtractedFact::verbatim("e0001", "status", "今天讨论了各部门近期的工作安排。");
+        let bank = build_bank(vec![reported], source).unwrap();
+        for content in ["羽绒服和棉服", "咽拭子检测，然后隔离", "不允许返校，毕业证由学校邮寄"] {
+            let fact = bank.facts.iter().find(|fact| fact.text.contains(content)).unwrap();
+            assert_eq!(fact.placement, Placement::Topic);
+            assert!(bank.execution_reading.contains(&fact.id));
+            assert!(bank.reader_priority.contains_key(&fact.id));
+        }
+        assert!(!bank.facts.iter().any(|fact| fact.text.contains("新项目") && bank.execution_reading.contains(&fact.id)));
     }
 
     #[test]
