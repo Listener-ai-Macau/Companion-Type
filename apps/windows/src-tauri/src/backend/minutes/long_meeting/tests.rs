@@ -161,6 +161,77 @@ fn chapter_coverage_keeps_a_cited_limit_with_its_scope_and_activity() {
 }
 
 #[test]
+fn chapter_relations_adds_a_negative_outcome_to_its_original_condition() {
+    let first = "先确定如何呈现人物和世界观";
+    let source = session(&format!(
+        "说话人2：{first}。\n说话人2：如果读者对人物无感，那么世界观设定再漂亮也没有用。"
+    ));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["世界观设定要能承载人物。".into()];
+    let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:first.into()}];
+    let range = 0..source.transcript_text.len();
+    summary_relations::restore(&source, range.clone(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0],
+        "世界观设定要能承载人物。补充条件原话「如果读者对人物无感，那么世界观设定再漂亮也没有用」。");
+    assert_eq!(evidence[1].quote, "如果读者对人物无感，那么世界观设定再漂亮也没有用");
+    summary_relations::restore(&source, range, &mut minutes, &mut evidence);
+    assert_eq!(evidence.len(), 2);
+    assert!(minutes.action_items.is_empty() && minutes.decisions.is_empty());
+}
+
+#[test]
+fn chapter_relations_retains_an_exception_and_its_changed_interpretation() {
+    let first = "先谈常规的设计范围";
+    let source = session(&format!(
+        "说话人2：{first}。\n说话人2：它可以超过标准范围，比如另一个方案，不过用户的预期会变化，就会把它看作临时安排，所以要标明用途。"
+    ));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["超过标准范围会改变用户预期。".into()];
+    let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:first.into()}];
+    summary_relations::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0],
+        "超过标准范围会改变用户预期。补充条件原话「可以超过标准范围」、「用户的预期会变化，就会把它看作临时安排」。");
+    assert_eq!(evidence[1].quote, "可以超过标准范围");
+    assert_eq!(evidence[2].quote, "用户的预期会变化，就会把它看作临时安排");
+}
+
+#[test]
+fn chapter_relations_keeps_explicit_requirements_for_a_future_outcome() {
+    let first = "人工审查仍需要经验和判断";
+    let related = "拐点应该是在识别技术高度成熟之后，只有当平台能识别情绪才可以让机器替代人工审查";
+    let source = session(&format!("说话人2：{first}。\n说话人2：{related}但是还要考虑风险。"));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["人工审查很难被机器取代。".into()];
+    let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:first.into()}];
+    summary_relations::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], format!("人工审查很难被机器取代。补充条件原话「{related}」。"));
+    assert_eq!(evidence[1].quote, related);
+}
+
+#[test]
+fn chapter_relations_skips_questions_duplicate_sources_other_speakers_and_covered_claims() {
+    let quote = "先谈如何呈现人物和世界观";
+    let simple = "世界观设定要能承载人物。";
+    let cases = [
+        (format!("说话人2：{quote}。\n说话人3：如果读者对人物无感，那么世界观设定再漂亮也没有用。"), simple),
+        (format!("说话人2：{quote}。\n说话人2：如果读者对人物无感，那么世界观设定再漂亮也没有用？"), simple),
+        (format!("说话人2：{quote}。\n说话人2：如果需要更换材料，那么大号的插座不能混用。"), simple),
+        (format!("说话人2：{quote}。\n说话人2：如果读者对人物无感，那么世界观设定再漂亮也没有用。\n说话人4：{quote}。"), simple),
+        (format!("说话人2：{quote}。\n说话人2：如果读者对人物无感，那么世界观设定再漂亮也没有用。"),
+        "人物不能打动读者时，世界观设定再漂亮也无效。"),
+    ];
+    for (text, body) in cases {
+        let source = session(&text);
+        let (mut minutes, _) = response(&source);
+        minutes.summary = vec![body.into()];
+        let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:quote.into()}];
+        summary_relations::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        assert_eq!(minutes.summary[0], body);
+        assert_eq!(evidence.len(), 1);
+    }
+}
+
+#[test]
 fn context_merge_retains_unverified_drafts_and_source_evidence() {
     let original="# 旧分段汇总\n\n## 未核对的参考草稿\n\n可能需要寄样品\n\n## 分段原文依据\n\n样品待确认";
     let retained=reference_sections(original);

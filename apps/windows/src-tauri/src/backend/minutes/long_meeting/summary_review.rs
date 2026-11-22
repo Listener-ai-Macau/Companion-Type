@@ -44,6 +44,37 @@ pub(super) fn cite_turn<'a>(
     })
 }
 
+pub(super) fn one_cited_turn<'a>(
+    source: &'a str,
+    chapter: &Range<usize>,
+    quotes: &[&str],
+) -> Option<CitedTurn<'a>> {
+    let (first, rest) = quotes.split_first()?;
+    let turn = cite_turn(source, chapter, first)?;
+    rest.iter()
+        .all(|quote| cite_turn(source, chapter, quote).as_ref() == Some(&turn))
+        .then_some(turn)
+}
+
+pub(super) fn same_speaker_lines<'a>(
+    source: &'a str,
+    chapter: &Range<usize>,
+    turn: &CitedTurn<'a>,
+    names: &[String],
+) -> Option<Vec<&'a str>> {
+    let speaker =
+        super::super::speaker_line(turn.full_line, names).filter(|line| !line.unresolved)?;
+    let end = (turn.offset + turn.full_line.len()).min(chapter.end);
+    let later = source[end..chapter.end].strip_prefix('\n').unwrap_or("");
+    // A new or unlabelled speaker stops the scan. A chapter cannot borrow
+    // evidence after its source boundary.
+    let adjacent = later.split('\n').take(2).take_while(|next| {
+        super::super::speaker_line(next, names)
+            .is_some_and(|tag| !tag.unresolved && tag.label == speaker.label)
+    });
+    Some(std::iter::once(turn.chapter_text).chain(adjacent).collect())
+}
+
 fn period_label(value: &str) -> &str {
     match value {
         "每日" => "每天",

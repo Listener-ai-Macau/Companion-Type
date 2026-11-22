@@ -3,7 +3,7 @@ use std::{ops::Range, sync::LazyLock};
 use regex::Regex;
 
 use super::{
-    summary_review::{cite_turn, CitedTurn},
+    summary_review::{one_cited_turn, same_speaker_lines, CitedTurn},
     CompanionV1HostSession, CompanionV1MeetingMinutes, Evidence,
 };
 
@@ -162,18 +162,8 @@ fn cited_period<'a>(
     {
         return None;
     }
-    let speaker =
-        super::super::speaker_line(turn.full_line, names).filter(|line| !line.unresolved)?;
-    let end = (turn.offset + turn.full_line.len()).min(chapter.end);
-    let later = source[end..chapter.end].strip_prefix('\n').unwrap_or("");
-    // Keep the continued scope inside this chapter and at most two adjacent
-    // lines by the cited speaker. A new or unlabelled speaker stops the scan.
-    let adjacent = later.split('\n').take(2).take_while(|next| {
-        super::super::speaker_line(next, names)
-            .is_some_and(|tag| !tag.unresolved && tag.label == speaker.label)
-    });
-    let mut observed = std::iter::once(turn.chapter_text)
-        .chain(adjacent)
+    let mut observed = same_speaker_lines(source, chapter, turn, names)?
+        .into_iter()
         .filter_map(|line| period_in_turn(line, summary, &total));
     let first = observed.next()?;
     observed.all(|other| other == first).then_some(first)
@@ -195,15 +185,9 @@ pub(super) fn restore(
             .filter(|entry| entry.field == "summary" && entry.index == index)
             .map(|entry| entry.quote.as_str())
             .collect();
-        let mut locations = quotes
-            .iter()
-            .map(|quote| cite_turn(&session.transcript_text, &chapter, quote));
-        let Some(Some(turn)) = locations.next() else {
+        let Some(turn) = one_cited_turn(&session.transcript_text, &chapter, &quotes) else {
             continue;
         };
-        if locations.any(|location| location.as_ref() != Some(&turn)) {
-            continue;
-        }
         let Some(clause) = cited_limit(&quotes, &turn, summary)
             .or_else(|| cited_period(&session.transcript_text, &chapter, &turn, &names, summary))
         else {
