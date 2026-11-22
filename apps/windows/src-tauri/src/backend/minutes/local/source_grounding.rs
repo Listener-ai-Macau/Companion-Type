@@ -29,6 +29,9 @@ pub(super) fn named_place_context(source: &str) -> Option<&str> {
     let tokens = super::chapter_labels::segmenter().tag(source, false);
     let mut candidates = tokens.iter().enumerate().filter_map(|(index, token)| {
         if token.tag != "ns" || token.word.chars().count() < 2 { return None; }
+        if ["山区", "农村", "乡村", "城区", "郊区", "市区", "外地", "国内", "国外", "当地"].contains(&token.word) {
+            return None;
+        }
         let following = tokens.iter().skip(index+1).find(|token| !token.word.trim().is_empty());
         let named_subject = following.is_some_and(|token| {
             token.tag.starts_with('n') && token.word.chars().count() >= 2
@@ -41,6 +44,20 @@ pub(super) fn named_place_context(source: &str) -> Option<&str> {
     });
     let first = candidates.next()?;
     candidates.all(|place| place == first).then_some(first)
+}
+
+pub(super) fn unsupported_comparative(claim: &str, anchor: &str) -> bool {
+    let comparisons = ["更适用", "更适合", "更合适", "更为适用", "更为合适", "优于", "胜过"];
+    comparisons.iter().any(|cue| claim.contains(cue))
+        && !comparisons.iter().any(|cue| anchor.contains(cue))
+}
+
+pub(super) fn capability_is_proposed(claim: &str, preceding: &str) -> bool {
+    claim.contains("可以")
+        && !["已经", "目前", "现有"].iter().any(|cue| claim.contains(cue))
+        && ["我们希望做", "我们希望能", "未来希望", "我们的设想", "计划开发"]
+            .iter().any(|cue| preceding.contains(cue))
+        && shared_han_phrase(claim, preceding, 3)
 }
 
 pub(super) fn quantity_question(source: &str) -> bool {
