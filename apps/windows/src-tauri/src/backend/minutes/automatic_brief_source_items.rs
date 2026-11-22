@@ -399,6 +399,16 @@ fn in_meeting_report(fact: &Fact, cited: &[&Value], opening: &[Value]) -> bool {
             .take(2).count() == 2
 }
 
+fn mark_in_meeting_request(text: &str) -> Option<String> {
+    let text = text.trim();
+    if ["会上请", "会上要求", "会中请", "会中要求"].iter().any(|marker| text.starts_with(marker)) {
+        return Some(text.to_owned());
+    }
+    let request = text.trim_start_matches("请").replacen("在会上", "", 1);
+    let revised = format!("会上请{request}");
+    line(&revised, 90).then_some(revised)
+}
+
 fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
     let by_id: HashMap<_, _> = evidence.iter().filter_map(|row|
         Some((row["id"].as_str()?, row))).collect();
@@ -409,7 +419,8 @@ fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String>
         let quotes: Vec<_> = rows.iter().filter_map(|row| row["text"].as_str()).collect();
         let result = match fact.placement {
             Placement::Decision | Placement::Action if live_agenda(fact, &quotes) => Some((Kind::Status, None)),
-            Placement::Action if in_meeting_report(fact, &rows, opening) => Some((Kind::Status, None)),
+            Placement::Action if in_meeting_report(fact, &rows, opening) =>
+                mark_in_meeting_request(&fact.text).map(|text| (Kind::Status, Some(text))),
             Placement::Action if fact.due.is_none() && completed_report(&fact.text, &quotes) =>
                 Some((Kind::Status, None)),
             Placement::Action => live_request_topic(fact, evidence).map(|text| (Kind::Opinion, Some(text))),
@@ -464,7 +475,11 @@ fn opening_reports_are_kept_in_the_discussion_and_future_reports_stay_tasks() {
     let prior = facts.clone();
     assert_eq!(reconcile_spoken_scope(&mut facts, &evidence).len(), 5);
     for (idx, fact) in facts.iter().enumerate() {
-        assert_eq!(fact.text, prior[idx].text);
+        if idx < 4 || idx == 6 {
+            assert_eq!(fact.text, format!("会上请{}", prior[idx].text.replacen("在会上", "", 1)));
+        } else {
+            assert_eq!(fact.text, prior[idx].text);
+        }
         assert_eq!(fact.evidence, prior[idx].evidence);
     }
     assert!(facts[..4].iter().all(|fact| fact.placement == Placement::Topic));
@@ -1537,11 +1552,14 @@ fn append_missing_with_sources(
         if matches!(fact.placement, Placement::Decision | Placement::Action) {
             let rows: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]).collect();
             let quotes: Vec<_> = rows.iter().filter_map(|row| row["text"].as_str()).collect();
-            if live_agenda(&fact, &quotes) || in_meeting_report(&fact, &rows, opening) {
+            let request = in_meeting_report(&fact, &rows, opening)
+                .then(|| mark_in_meeting_request(&fact.text)).flatten();
+            if live_agenda(&fact, &quotes) || request.is_some() {
                 fact.kind = Kind::Status;
                 fact.placement = Placement::Topic;
                 fact.owner = None;
                 fact.due = None;
+                if let Some(text) = request { fact.text = text; }
             }
         } else if fact.placement == Placement::Question {
             let rows: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]).collect();
