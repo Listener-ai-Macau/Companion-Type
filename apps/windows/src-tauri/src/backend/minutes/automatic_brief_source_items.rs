@@ -107,7 +107,7 @@ impl SourceItem {
                 })));
             let due = self.due.filter(|due| line(due, 80)
                 && snippets.iter().any(|text| due_is_bound(text, due))
-                && !conflicts_with_stated_action_clock(&self.text, due, &snippets));
+                && conflicting_stated_action_clock(&self.text, due, &snippets).is_none());
             (self.text, owner, due)
         } else {
             // A speaker label is not a work assignment. Preserve an exact
@@ -1149,17 +1149,19 @@ static CLOCK_TIME: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
     r"(?:[0-9０-９]{1,2}[:：][0-9０-９]{2}|[零〇一二两三四五六七八九十0-9０-９]{1,3}(?:点|时)(?:半|[零〇一二两三四五六七八九十0-9０-９]{1,3}分)?)"
 ).unwrap());
 
-fn conflicts_with_stated_action_clock(action: &str, due: &str, snippets: &[&str]) -> bool {
+pub(super) fn conflicting_stated_action_clock<'a>(
+    action: &str, due: &str, snippets: &[&'a str],
+) -> Option<&'a str> {
     let mut proposed = CLOCK_TIME.find_iter(due);
-    let Some(proposed_clock) = proposed.next() else { return false; };
-    if proposed.next().is_some() { return false; }
+    let proposed_clock = proposed.next()?;
+    if proposed.next().is_some() { return None; }
     let action = normalized(action);
     let action = action.trim_end_matches(['。', '！', '？', '.', '!', '?']);
-    if action.is_empty() { return false; }
+    if action.is_empty() { return None; }
     let anchor = format!("{action}的时间");
-    let mut stated: Option<String> = None;
-    for text in snippets {
-        let text = normalized(text);
+    let mut stated: Option<(String, &str)> = None;
+    for &original in snippets {
+        let text = normalized(original);
         for clause in text.split(['，', ',', '。', '；', ';', '！', '？']) {
             let Some((lead, tail)) = clause.split_once(&anchor) else { continue; };
             if ["如果", "假如", "比如", "例如", "是否", "建议"].iter().any(|cue| lead.contains(cue)) {
@@ -1169,16 +1171,38 @@ fn conflicts_with_stated_action_clock(action: &str, due: &str, snippets: &[&str]
                 else { continue; };
             let Some(clock) = CLOCK_TIME.find(tail).filter(|clock| clock.start() == 0) else { continue; };
             if clock.as_str() == proposed_clock.as_str()
-                || stated.as_deref().is_some_and(|previous| previous != clock.as_str())
+                || stated.as_ref().is_some_and(|(previous, _)| previous != clock.as_str())
             {
                 // A matching or conflicting direct statement needs ordinary
                 // source review. Do not remove a deadline based on an alternate.
-                return false;
+                return None;
             }
-            stated = Some(clock.as_str().to_owned());
+            if stated.is_none() { stated = Some((clock.as_str().to_owned(), original)); }
         }
     }
-    stated.is_some()
+    stated.map(|(_, original)| original)
+}
+
+fn complete_clock_occurrence(due: &str, offset: usize, cited_clocks: &[regex::Match<'_>]) -> bool {
+    CLOCK_TIME.find_iter(due).all(|part| cited_clocks.iter().any(|actual|
+        actual.start() == offset + part.start() && actual.end() == offset + part.end()))
+}
+
+pub(super) fn truncated_action_clock<'a>(due: &str, snippets: &[&'a str]) -> Option<&'a str> {
+    let due = normalized(due);
+    if !CLOCK_TIME.is_match(&due) { return None; }
+    let mut truncated = None;
+    for &original in snippets {
+        let sentence = normalized(original);
+        let clocks = CLOCK_TIME.find_iter(&sentence).collect::<Vec<_>>();
+        for (start, _) in sentence.match_indices(&due) {
+            if complete_clock_occurrence(&due, start, &clocks) {
+                return None;
+            }
+            truncated.get_or_insert(original);
+        }
+    }
+    truncated
 }
 
 fn due_is_bound(sentence: &str, due: &str) -> bool {
@@ -1191,11 +1215,7 @@ fn due_is_bound(sentence: &str, due: &str) -> bool {
     sentence.match_indices(&due).any(|(start, _)| {
         // The short spelling 八点 inside 八点半, or 五点 inside 十五点,
         // is not an occurrence of the proposed time.
-        if CLOCK_TIME.find_iter(&due).any(|part| !clocks.iter().any(|actual|
-            actual.start() == start + part.start() && actual.end() == start + part.end()))
-        {
-            return false;
-        }
+        if !complete_clock_occurrence(&due, start, &clocks) { return false; }
         let left = sentence[..start].rsplit(['，', ',', '：', ':', '。', '；']).next().unwrap_or("");
         let right = &sentence[start + due.len()..];
         BEFORE.iter().any(|marker| left.ends_with(marker) || due.starts_with(marker))
@@ -4214,12 +4234,12 @@ mod tests {
             assert_eq!(fact.due.as_deref(), expected);
             assert_eq!(fact.evidence, ["e0134", "e0138"]);
         }
-        assert!(!conflicts_with_stated_action_clock("开馆。", "八点前", &[
+        assert!(conflicting_stated_action_clock("开馆。", "八点前", &[
             "如果开馆的时间是八点半，后续要另行通知。",
-        ]));
-        assert!(!conflicts_with_stated_action_clock("开馆。", "八点前", &[
+        ]).is_none());
+        assert!(conflicting_stated_action_clock("开馆。", "八点前", &[
             "开馆的时间是九点。", "开馆的时间定在八点。",
-        ]));
+        ]).is_none());
     }
 
     #[test]

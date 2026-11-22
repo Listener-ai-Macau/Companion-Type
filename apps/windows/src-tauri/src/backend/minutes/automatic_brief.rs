@@ -256,6 +256,49 @@ fn append_pending_quotes(minutes: &mut CompanionV1MeetingMinutes, pending: &[Str
     }
 }
 
+fn withhold_conflicting_action_clocks(doc: &mut Document, units: &[Unit]) -> Vec<String> {
+    if !doc.action_items.iter().any(|item| item.due.is_some()) { return Vec::new(); }
+    let evidence = factual_audit::evidence_sentences(units);
+    let mut withheld = Vec::new();
+    for action in &mut doc.action_items {
+        let Some(due) = action.due.as_deref() else { continue; };
+        let cited: Vec<_> = evidence.iter()
+            .filter(|row| action.sources.iter().any(|source| row["source"].as_str() == Some(source.as_str())))
+            .filter_map(|row| row["text"].as_str())
+            .collect();
+        if let Some(quote) = source_items::conflicting_stated_action_clock(&action.text, due, &cited)
+            .or_else(|| source_items::truncated_action_clock(due, &cited))
+        {
+            withheld.push(quote.trim().to_owned());
+            action.due = None;
+        }
+    }
+    withheld
+}
+
+#[test]
+fn reviewed_brief_withholds_conflicting_or_truncated_clocks_without_rewriting_tasks() {
+    let units = [
+        Unit { id: "u000".into(), text: "保洁人员上班的时间要在七点半。八点之前所有的卫生要打扫干净。".into() },
+        Unit { id: "u001".into(), text: "截止到八点半提交材料。".into() },
+    ];
+    let mut doc: Document = serde_json::from_value(json!({
+        "purpose":"确认清洁与提交安排", "topics":[], "decisions":[], "questions":[],
+        "actionItems":[
+            {"text":"保洁人员上班。","owner":null,"due":"八点之前","sources":["u000"]},
+            {"text":"所有的卫生要打扫干净。","owner":null,"due":"八点之前","sources":["u000"]},
+            {"text":"提交材料。","owner":null,"due":"八点","sources":["u001"]},
+        ]
+    })).unwrap();
+    let quotes = withhold_conflicting_action_clocks(&mut doc, &units);
+    assert_eq!(quotes, ["保洁人员上班的时间要在七点半。", "截止到八点半提交材料。"]);
+    assert_eq!(doc.action_items[0].text, "保洁人员上班。");
+    assert_eq!(doc.action_items[0].sources, ["u000"]);
+    assert_eq!(doc.action_items[0].due, None);
+    assert_eq!(doc.action_items[1].due.as_deref(), Some("八点之前"));
+    assert_eq!(doc.action_items[2].due, None);
+}
+
 fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[Unit],
     session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, reason: &str, conflicts: &[Value],
     pending_quotes: &[String],
@@ -486,14 +529,22 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 trace.push(json!({"stage":"source-reported-decision-boundary","changes":changed}));
             }
         }
-        if let Some(facts) = publication_facts {
+        if let Some(facts) = publication_facts.as_ref() {
             let evidence = factual_audit::evidence_sentences(&units);
-            let changed = source_corrections::preserve_published_discussion(&mut doc, &facts, &evidence);
+            let changed = source_corrections::preserve_published_discussion(&mut doc, facts, &evidence);
             if !changed.is_empty() {
                 trace.push(json!({"stage":"source-published-discussion-context","changes":changed}));
             }
         }
         validate(&doc, &units)?;
+        let clock_conflicts = withhold_conflicting_action_clocks(&mut doc, &units);
+        if !clock_conflicts.is_empty() {
+            trace.push(json!({"stage":"source-action-clock-protection","withheldDeadlines":clock_conflicts.len()}));
+            pending_quotes.extend(clock_conflicts);
+            traced_document = Some(doc.clone());
+            return Ok(project_review_draft(&doc, publication_facts.as_deref().unwrap_or(&[]), &units,
+                session, base, "有任务的截止与其原话时刻不一致，待核对后才能发布", &[], &pending_quotes));
+        }
         if source_items::enabled() && reconcile_overview_decisions(&mut doc) {
             trace.push(json!({"stage":"source-overview-decision-reconciliation"}));
         }
