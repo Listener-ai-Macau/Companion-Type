@@ -17,6 +17,27 @@ export interface CompanionTranscriptSource {
   speakerLabel?: string;
   approximateTiming?: boolean;
   reviewRevision: number | null;
+  /** Adjacent rows joined without a separator in the exact saved ASR text. */
+  joinedToPrevious?: boolean;
+}
+
+function savedConcatenatedTurns(text: string, rows: ReturnType<typeof companionReviewedUtterances>): boolean {
+  // Windows Volcengine groups equal consecutive IDs, including unknowns, and
+  // joins their words directly. Other providers and reviewed text use different
+  // layouts. Require the entire original to match before using this layout.
+  if (!text.startsWith('说话人') || !rows.some(row => row.speaker != null)) return false;
+  const rendered: string[] = [];
+  let previous: number | null | undefined;
+  for (const row of rows) {
+    const speaker = row.speaker ?? null;
+    if (speaker !== previous) {
+      if (rendered.length) rendered.push('\n');
+      rendered.push(`说话人${speaker == null ? '?' : speaker + 1}: `);
+    }
+    rendered.push(row.text);
+    previous = speaker;
+  }
+  return rendered.join('') === text.replace(/\r\n/g, '\n');
 }
 
 export function companionTranscriptSources(session: CompanionV1HostSession): CompanionTranscriptSource[] {
@@ -24,14 +45,17 @@ export function companionTranscriptSources(session: CompanionV1HostSession): Com
   const revision = companionTranscriptReviewRevision(session);
   // A whole-document rewrite has no verified alignment to the ASR segments.
   if (revision !== null && session.transcriptReview?.text) return [];
-  return companionReviewedUtterances(session).flatMap((row, index) =>
+  const rows = companionReviewedUtterances(session);
+  const concatenated = revision === null && savedConcatenatedTurns(session.transcriptText, rows);
+  return rows.flatMap((row, index) =>
     row.text.trim() && Number.isSafeInteger(row.startMs) && Number.isSafeInteger(row.endMs)
       && row.startMs >= 0 && row.endMs > row.startMs
       ? [{ sessionId: session.id, index, text: row.text, startMs: row.startMs, endMs: row.endMs,
         speaker: row.speaker ?? null,
         speakerLabel: companionTranscriptSpeakerLabel(session,index) === '未分配说话人'
           ? undefined : companionTranscriptSpeakerLabel(session,index),
-        approximateTiming: Boolean(row.approximateTiming), reviewRevision: revision }] : []);
+        approximateTiming: Boolean(row.approximateTiming), reviewRevision: revision,
+        joinedToPrevious: concatenated && index > 0 && (rows[index - 1].speaker ?? null) === (row.speaker ?? null) }] : []);
 }
 
 export function companionTranscriptSourceIsCurrent(session: CompanionV1HostSession,
@@ -72,14 +96,15 @@ function crossSegmentSource(sources: readonly CompanionTranscriptSource[], quote
     let text = '';
     let previousLabel: string | null = null;
     for (const row of group) {
-      if (offsets.length) text += ' ';
+      const joined = offsets.length > 0 && row.joinedToPrevious && (labels === 'none' || labels === 'turns');
+      if (offsets.length && !joined) text += ' ';
       offsets.push(text.length);
       const label=sourceLabel(row);
       if (labels === 'reviewed') {
         // Human review renders one line per source, leaving unnamed fragments
         // unlabelled. Their timestamps remain approximate when the model said so.
         if (label !== null) text += `${label}: `;
-      } else if (labels !== 'none' && (labels === 'each' || offsets.length === 1
+      } else if (labels !== 'none' && !joined && (labels === 'each' || offsets.length === 1
         || label === null || label !== previousLabel)) {
         text += `${label ?? '说话人?'}: `;
       }
@@ -112,7 +137,8 @@ export function companionMinutesReferencedSources(sources: readonly CompanionTra
   for (const quote of new Set(candidates)) {
     if (Array.from(quote).length < 4) continue;
     const matches = sources.filter((row) => row.text.includes(quote));
-    if (matches.length > 1) continue;
+    if (matches.length > 1 || (matches[0] && matches[0].text.indexOf(quote, matches[0].text.indexOf(quote) + 1) !== -1))
+      continue;
     const [firstCrossSegment, crossCount] = crossSegmentSource(sources, quote);
     // Quotes can include the verified source labels between sentences. Match
     // both current grouped turns and older per-row formatting; never strip a

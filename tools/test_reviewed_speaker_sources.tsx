@@ -46,6 +46,23 @@ assert.deepEqual(companionMinutesReferencedSources(repeated,'小王: 核对后�
 const ambiguous=repeated.map(row=>({...row,speakerLabel:'同名'}));
 assert.deepEqual(companionMinutesReferencedSources(ambiguous,'同名: 核对后再决定。'),[]);
 
+const recorded=structuredClone(original);
+recorded.utterances![0].text='先核对预算，';
+recorded.transcriptText='说话人1: 先核对预算，暂不承诺日期。\n说话人?: 核对后再决定。';
+const recordedAnchors=companionTranscriptSources(recorded);
+for (const quote of ['先核对预算，暂不承诺日期。','说话人1: 先核对预算，暂不承诺日期。']) {
+  assert.deepEqual(companionMinutesReferencedSources(recordedAnchors,quote).map(s=>s.index),[0]);
+  assert.deepEqual(companionMinutesReferencedSources(recordedAnchors.filter(s=>s.index!==1),quote),[]);
+}
+assert.deepEqual(companionMinutesReferencedSources(recordedAnchors,'先核对预算， 暂不承诺日期。'),[]);
+const spaced=structuredClone(recorded);
+spaced.transcriptText=spaced.transcriptText.replace('预算，暂','预算， 暂');
+const spacedAnchors=companionTranscriptSources(spaced);
+assert.deepEqual(companionMinutesReferencedSources(spacedAnchors,'先核对预算，暂不承诺日期。'),[]);
+assert.deepEqual(companionMinutesReferencedSources(spacedAnchors,'先核对预算， 暂不承诺日期。').map(s=>s.index),[0]);
+assert.deepEqual(companionMinutesReferencedSources([{...recordedAnchors[0],text:'原来没有批准。原来没有批准。'}],
+  '原来没有批准。'),[]);
+
 let tree:ReturnType<typeof create>;
 const sought:typeof anchors=[];
 act(()=>{tree=create(<CompanionTranscriptReview session={reopened} visible blocked={false}
