@@ -8,7 +8,7 @@
 //! - Batch: read a 16 kHz mono WAV, stream PCM, return final text.
 //! - Live (`stream_pcm_session`): accept PCM frames while recording and emit
 //!   provisional hypotheses via callback for `onlineLive`.
-//! **Meeting hotwords** are injected into first-frame `request.context`.
+//! **Meeting hotwords** are sent in first-frame `request.corpus.context`.
 //!
 //! Protocol ported from Listener-Type (`asr/volcengine.rs` + `asr/frame.rs`),
 //! trimmed to the batch `transcribe_file` shape. The binary frame codec below
@@ -323,7 +323,9 @@ impl VolcengineSaucAsr {
     }
     pub fn new(credentials: VolcengineCredentials) -> Self {
         let endpoint = endpoint_for_resource(&credentials.resource_id).to_string();
-        let payload_template = build_first_frame_payload("", is_seed_asr_v2(&credentials.resource_id));
+        let payload_template = build_first_frame_payload(
+            "", is_seed_asr_v2(&credentials.resource_id), &companion_meeting_hotwords(),
+        );
         Self {
             credentials,
             endpoint,
@@ -963,8 +965,7 @@ async fn send_binary(
     Ok(())
 }
 
-/// Build Volcengine first-frame `request.context` hotword JSON string.
-/// Mirrors Listener `hotword_context`: `{"hotwords":[{"word":"..."}, ...]}`.
+/// Encode the JSON string carried by the first request's corpus context.
 fn hotword_context(words: &[String]) -> Option<String> {
     let mut seen: Vec<String> = Vec::new();
     for w in words {
@@ -1014,7 +1015,7 @@ pub fn companion_meeting_hotwords() -> Vec<String> {
     out
 }
 
-fn build_first_frame_payload(connect_id: &str, seed_v2: bool) -> Value {
+fn build_first_frame_payload(connect_id: &str, seed_v2: bool, hotwords: &[String]) -> Value {
     let mut request = if seed_v2 {
         json!({
             "model_name": "bigmodel",
@@ -1043,8 +1044,8 @@ fn build_first_frame_payload(connect_id: &str, seed_v2: bool) -> Value {
             "result_type": "full",
         })
     };
-    if let Some(context) = hotword_context(&companion_meeting_hotwords()) {
-        request["context"] = Value::String(context);
+    if let Some(context) = hotword_context(hotwords) {
+        request["corpus"] = json!({ "context": context });
     }
     if seed_v2 {
         json!({
@@ -1494,15 +1495,19 @@ mod tests {
 
     #[test]
     fn cache_configuration_and_wire_request_share_a_frozen_hotword_snapshot() {
-        let provider = VolcengineSaucAsr::new(VolcengineCredentials {
+        let mut provider = VolcengineSaucAsr::new(VolcengineCredentials {
             app_id: "test-app".into(), access_token: "test-access-secret".into(),
             resource_id: "volc.seedasr.sauc.duration".into(),
         });
+        let no_hotwords_payload = build_first_frame_payload("", true, &[]);
+        provider.payload_template = build_first_frame_payload("", true, &["三元".into()]);
         let identity = provider.cache_configuration();
         let first = provider.session_payload("connection-one");
         let second = provider.session_payload("connection-two");
-        assert_eq!(first["request"]["context"], identity["payload"]["request"]["context"]);
-        assert_eq!(second["request"]["context"], identity["payload"]["request"]["context"]);
+        assert_eq!(first["request"]["corpus"], identity["payload"]["request"]["corpus"]);
+        assert_eq!(second["request"]["corpus"], identity["payload"]["request"]["corpus"]);
+        assert_ne!(no_hotwords_payload, identity["payload"]);
+        assert_eq!(identity["payload"]["request"]["corpus"]["context"], r#"{"hotwords":[{"word":"三元"}]}"#);
         assert_eq!(second["request"]["reqid"], "connection-two");
         assert_eq!(identity["payload"]["request"]["reqid"], "");
         assert_eq!(identity["payload"]["user"]["uid"], "");
@@ -1684,7 +1689,7 @@ mod tests {
 
     #[test]
     fn seed_asr_2_keeps_compatible_request_and_current_sauc_fields() {
-        let payload = build_first_frame_payload("seed-req", true);
+        let payload = build_first_frame_payload("seed-req", true, &[]);
         assert_eq!(payload["audio"]["sample_rate"], 16000);
         assert_eq!(payload["audio"]["rate"], 16000);
         assert_eq!(payload["request"]["reqid"], "seed-req");
@@ -1731,7 +1736,7 @@ mod tests {
         old["payload"]["request"]["enable_nonstream"] = serde_json::json!(false);
         old["payload"]["request"].as_object_mut().unwrap().remove("ssd_version");
         assert_ne!(current, old, "cached single-speaker results must not shadow the corrected request");
-        let seed = build_first_frame_payload("seed-meeting", true);
+        let seed = build_first_frame_payload("seed-meeting", true, &[]);
         assert!(seed["request"].get("enable_nonstream").is_none(), "the separate nostream route retains its transport contract");
     }
 
@@ -1861,12 +1866,20 @@ mod tests {
         assert!(DEFAULT_MEETING_HOTWORDS.is_empty());
         let defaults: Vec<String> = DEFAULT_MEETING_HOTWORDS.iter().map(|s|s.to_string()).collect();
         assert!(hotword_context(&defaults).is_none());
-        // Explicit user/domain vocabulary retains its original wire format.
+        // Explicit vocabulary belongs to the corpus context on both endpoints.
         let words = vec!["Opus 16".to_string(), "fail closed".to_string()];
-        let ctx = hotword_context(&words).expect("explicit context");
-        assert!(ctx.contains("\"hotwords\""));
-        assert!(ctx.contains("Opus 16"));
-        assert!(ctx.contains("fail closed"));
+        for seed_v2 in [false, true] {
+            let empty = build_first_frame_payload("test-session", seed_v2, &[]);
+            let mut configured = build_first_frame_payload("test-session", seed_v2, &words);
+            let request = configured["request"].as_object_mut().unwrap();
+            assert!(!request.contains_key("context"));
+            let corpus = request.remove("corpus").expect("explicit hotwords");
+            let context = corpus["context"].as_str().unwrap();
+            assert_eq!(serde_json::from_str::<Value>(context).unwrap(), json!({
+                "hotwords": [{"word": "Opus 16"}, {"word": "fail closed"}]
+            }));
+            assert_eq!(configured, empty);
+        }
     }
 
     #[test]
