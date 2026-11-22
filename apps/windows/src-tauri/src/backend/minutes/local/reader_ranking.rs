@@ -72,7 +72,10 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     let price = ["多少钱", "费用", "报价", "金额", "收费"].iter().any(|signal| text.contains(signal));
     let compared_outcomes = [("成了", "不成"), ("成功", "失败"), ("已通过", "未通过"), ("含", "另收")]
         .iter().any(|(first, second)| text.contains(first) && text.contains(second));
-    if price && compared_outcomes {
+    let conditional_refund = ["退还", "退款", "退费", "他说退", "不退", "退回"].iter().any(|cue| text.contains(cue))
+        && ["没通过", "未通过", "不过", "如果", "要是", "只有", "条件"].iter().any(|cue| text.contains(cue))
+        && ["块钱", "元", "费用", "报名费", "押金", "订金", "收费"].iter().any(|cue| text.contains(cue));
+    if (price && compared_outcomes) || conditional_refund {
         return Some(OperationalEvidence::ConditionalCost);
     }
     if ["已经不是问题", "不再是问题", "不构成障碍"].iter().any(|cue| text.contains(cue)) {

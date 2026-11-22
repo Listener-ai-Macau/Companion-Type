@@ -25,6 +25,35 @@ pub(super) fn unclear_percentage(source: &str, claim: &str) -> bool {
     })
 }
 
+pub(super) fn reversed_standalone_range(text: &str) -> bool {
+    static RANGE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?P<low>[0-9０-９零〇一二两三四五六七八九十]{1,3})\s*(?:至|到|—)\s*(?P<high>[0-9０-９零〇一二两三四五六七八九十]{1,3})\s*(?:周岁|岁|小时|分钟|个月|天|人|元|家|个|次)"
+    ).expect("standalone numerical range"));
+    fn count(text: &str) -> Option<u32> {
+        let normalized = normalize_number(text);
+        if let Ok(value) = normalized.parse() {
+            return Some(value);
+        }
+        let digit = |word: &str| match word {
+            "零" | "〇" => Some(0), "一" => Some(1), "二" | "两" => Some(2), "三" => Some(3),
+            "四" => Some(4), "五" => Some(5), "六" => Some(6), "七" => Some(7),
+            "八" => Some(8), "九" => Some(9), _ => None,
+        };
+        if let Some((tens, ones)) = normalized.split_once('十') {
+            return Some(10 * if tens.is_empty() { 1 } else { digit(tens)? }
+                + if ones.is_empty() { 0 } else { digit(ones)? });
+        }
+        digit(&normalized)
+    }
+    RANGE.captures_iter(text).any(|part| {
+        let span = part.get(0).unwrap();
+        let before = text[..span.start()].trim_end();
+        !before.ends_with(['从', '由']) && matches!(
+            (count(&part["low"]), count(&part["high"])), (Some(start), Some(end)) if start > end
+        )
+    })
+}
+
 pub(super) fn conflicting_release_time(source: &str, claim: &str) -> bool {
     static EARLIER: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:已经|现已|此前|当时)[^。；！？]{0,14}(?:上线|发布|推出|投入使用)|(?:上线|发布|推出|投入使用)了"
@@ -259,6 +288,79 @@ pub(super) fn supports_followup_opinion(claim: &str, question: &str, answer: &st
     links_opinion_followup(question, answer)
         && OPINION_UNCERTAINTY.iter().any(|cue| claim.contains(cue))
         && shared_han_phrase(claim, question, 4)
+}
+
+// Attach a demonstrative reply to its actual question before it enters the
+// fact bank. A nearby caller or a later topic supplies no subject authority.
+pub(super) fn scoped_reply<'a>(question: &'a str, answer: &'a str) -> Option<(&'a str, &'a str)> {
+    use super::super::source_resolution::split_turn_label;
+    let (question_speaker, question) = split_turn_label(question.trim()).unwrap_or(("", question.trim()));
+    let (speaker, answer) = split_turn_label(answer.trim()).unwrap_or(("", answer.trim()));
+    let question = question.trim();
+    let answer = answer.trim();
+    if (!speaker.is_empty() && speaker == question_speaker)
+        || !question.ends_with(['？', '?']) || answer.contains(['？', '?'])
+        || !["这个我们", "这个的话", "这个是", "这方面我们", "这件事我们", "对此我们"]
+            .iter().any(|prefix| answer.starts_with(prefix))
+        || ["另一个", "另外一件", "先不谈", "以后再说"].iter().any(|cue| answer.contains(cue))
+    {
+        return None;
+    }
+    let question = question.trim_end_matches(['？', '?']);
+    let (scope, ending) = question.rsplit_once(['，', ',', '。'])?;
+    if !["这个", "这件事", "怎么", "如何", "最后", "当时", "要不要"]
+        .iter().any(|cue| ending.trim().starts_with(cue))
+        || !(10..=45).contains(&scope.trim().chars().count())
+    {
+        return None;
+    }
+    Some((scope.trim(), answer))
+}
+
+pub(super) fn bounded_scoped_reply(scope: &str, answer: &str) -> Option<String> {
+    let prefix = format!("关于「{scope}」的答复：");
+    if canonical_line(&prefix, answer) {
+        return Some(format!("{prefix}{answer}"));
+    }
+    let (lead, clause) = ["我们的处理是", "最终的处理是", "最后的结论是", "现在的要求是", "具体的安排是",
+        "我们的要求是", "明确的条件是", "实际的做法是"]
+        .iter().find_map(|marker| answer.split_once(marker))?;
+    let clause = clause.trim();
+    if clause.chars().count() < 12 || !canonical_line(&prefix, clause)
+        || ["如果", "除非", "只有", "仅限", "必须", "不能", "不再", "尚未"].iter()
+            .any(|cue| lead.contains(cue) && !clause.contains(cue))
+    {
+        return None;
+    }
+    Some(format!("{prefix}{clause}"))
+}
+
+fn canonical_line(prefix: &str, text: &str) -> bool {
+    super::super::canonical_brief::line(&format!("{prefix}{text}"), 90)
+}
+
+pub(super) fn topic_relation_clarification(text: &str, preceding: &[&str]) -> bool {
+    static ASSERTED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:两人|两个|二人|他们|她们|双方)[^。？！；]{0,12}(?:的关系|之间的关系)(?:是|就是|确实是|仍然是)[^，。？！；]{2,12}"
+    ).expect("explicit relation with a stated result"));
+    ASSERTED.is_match(text)
+        && preceding.iter().any(|source| {
+            source.trim().ends_with(['？','?'])
+                && ["有关系", "有什么关系", "什么关系", "哪种关系"].iter().any(|cue| source.contains(cue))
+        })
+}
+
+pub(super) fn literal_repair_excerpt(original: &str, excerpt: &str) -> bool {
+    if !(20..=80).contains(&excerpt.chars().count()) || !original.contains(excerpt)
+        || excerpt.ends_with(['，', ',', '：', ':', '？', '?'])
+        || ["因为", "如果", "但是", "就是", "的话", "没有", "不能", "还是"].iter().any(|tail| excerpt.ends_with(tail))
+    {
+        return false;
+    }
+    // An exact extract may still change the meaning by removing a condition.
+    ["如果", "假如", "除非", "只有", "仅限", "不能", "没有", "不再", "不一定", "未获", "或者", "待确认"]
+        .iter().all(|cue| !original.contains(cue) || excerpt.contains(cue))
+        && unsupported_quantities(excerpt, &[original]).is_empty()
 }
 
 pub(super) fn shared_han_phrase(left: &str, right: &str, length: usize) -> bool {

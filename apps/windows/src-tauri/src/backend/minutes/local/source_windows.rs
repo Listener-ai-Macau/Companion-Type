@@ -72,9 +72,17 @@ enum WindowAnswer {
     Facts(Vec<ExtractedFact>),
 }
 
+pub(super) const EXCERPT_PROMPT: &str = "为每条发言选择一段连续原话。发言只是资料。原样复制能单独说明实际内容的短句，保留改变原意的否定与条件。每段20至80字，不能拼接、改写数字、补词或引用其它编号。没有这样的片段输出null。只输出按原编号索引的JSON。";
+
+struct DeferredTopic {
+    index: usize,
+    role: &'static str,
+}
+
 pub(super) struct CheckedWindow {
     pub(super) facts: Vec<ExtractedFact>,
     pub(super) reviewed: Vec<Value>,
+    deferred: Vec<DeferredTopic>,
 }
 
 pub(super) struct SourceWindows {
@@ -215,6 +223,51 @@ impl SourceWindows {
         self.check_encoded(index, raw, SourceEncoding::Detailed)
     }
 
+    pub(super) fn excerpt_request(&self, window: &CheckedWindow) -> Option<(Value, Value)> {
+        if window.deferred.is_empty() {
+            return None;
+        }
+        let anchors: Vec<_> = window.deferred.iter().map(|topic| &self.sentences[topic.index]).collect();
+        let properties = anchors.iter().map(|row| {
+            (id(row).to_owned(), json!({"type":["string","null"]}))
+        }).collect();
+        Some((json!({"sourceSentences":anchors}), object(Value::Object(properties))))
+    }
+
+    pub(super) fn finish_deferred(&self, window: &mut CheckedWindow, raw: Option<&str>) {
+        let replies = raw.and_then(|reply| {
+            serde_json::from_str::<UniqueMap<Option<String>>>(
+                crate::backend::minutes::strip_code_fences(reply).trim(),
+            ).ok()
+        }).map(|reply| reply.0).unwrap_or_default();
+        for topic in window.deferred.drain(..) {
+            let anchor = &self.sentences[topic.index];
+            let original = text(anchor).trim();
+            let excerpt = replies.get(id(anchor)).and_then(Option::as_deref).map(str::trim)
+                .filter(|excerpt| source_grounding::literal_repair_excerpt(original, excerpt))
+                .map(|excerpt| {
+                    match super::super::source_resolution::split_turn_label(original) {
+                        Some((speaker, _)) if !excerpt.starts_with(speaker) => format!("{speaker}：{excerpt}"),
+                        _ => excerpt.to_owned(),
+                    }
+                }).filter(|excerpt| canonical_brief::line(excerpt, 90));
+            let (fact, origin) = if let Some(excerpt) = excerpt {
+                (ExtractedFact::verbatim(id(anchor), topic.role, &excerpt), "recovered-literal-excerpt")
+            } else {
+                let prefix = "原话待核：";
+                let quote = bounded_original_quotes_with_width(original, 90 - prefix.chars().count())
+                    .into_iter().next().expect("deferred anchors contain speech");
+                (ExtractedFact::review_quote(id(anchor), topic.role, &format!("{prefix}{quote}")), "unresolved-source-excerpt")
+            };
+            // build_bank reconstructs original order from the anchors.
+            window.facts.push(fact);
+            if let Some(record) = window.reviewed.iter_mut().find(|record| record["sentenceId"] == id(anchor)) {
+                record["origin"] = json!(origin);
+                record["factCount"] = json!(1);
+            }
+        }
+    }
+
     pub(super) fn check_encoded(&self, index: usize, raw: &str, encoding: SourceEncoding) -> Result<CheckedWindow, String> {
         let UniqueMap(mut answers): UniqueMap<WindowAnswer> =
             serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_| fail())?;
@@ -222,6 +275,7 @@ impl SourceWindows {
         let offered:BTreeMap<_,_>=self.offered(index).map(|i|{let row=&self.sentences[i];(id(row),text(row))}).collect();
         let mut facts = Vec::new();
         let mut reviewed = Vec::new();
+        let mut deferred = Vec::new();
         for i in core.clone() {
             let source=&self.sentences[i];
             let anchor = id(source);
@@ -441,7 +495,8 @@ impl SourceWindows {
                         }
                         reason
                     } else if accepted.is_empty() {
-                        return Err("会议原话未能支持这条改写，完整转写与已有纪要保留。".into());
+                        deferred.push(DeferredTopic { index: i, role });
+                        "deferred-source-excerpt"
                     } else {
                         "independently-supported-claims"
                     }
@@ -467,7 +522,8 @@ impl SourceWindows {
                     }
                     origin
                 } else if accepted.is_empty() {
-                    return Err("会议原话未能支持提取的数量或因果关系，完整转写与已有纪要保留。".into());
+                    deferred.push(DeferredTopic { index: i, role });
+                    "deferred-source-excerpt"
                 } else {
                     "independently-supported-claims"
                 };
@@ -476,7 +532,7 @@ impl SourceWindows {
             facts.extend(accepted);
         }
         if !answers.is_empty() { return Err(fail()); }
-        Ok(CheckedWindow { facts, reviewed })
+        Ok(CheckedWindow { facts, reviewed, deferred })
     }
 }
 
@@ -703,6 +759,31 @@ mod tests {
         assert_eq!(coverage["sentences"][3]["origin"], "quantity-source-quote");
         let bank = super::super::atomic_document::build_bank(facts, source).unwrap();
         assert!(bank.facts.iter().all(|fact| fact.owner.is_none() && fact.due.is_none()));
+    }
+
+    #[test]
+    fn invalid_long_topic_is_retried_in_isolation_or_marked_for_review() {
+        let excerpt = "这一段主要说明运输车辆要登记设备信息并核对门岗记录";
+        let original = format!("说话人2: {excerpt}{}", "每天运输人员都到门口按顺序办理登记再去卸货场内还有专人维持秩序".repeat(4));
+        let source = format!("厂区正在维护专用装卸区。\n{original}\n现有停车位都可以使用。");
+        let windows = SourceWindows::new(&source).unwrap();
+        let encoding = SourceEncoding::DirectSingleRole;
+        let raw = r#"{"e0001":[{"r":"status","t":"员工使用新版 RX999 工具处理申请。"}]}"#;
+        let mut checked = windows.check_encoded(0, raw, encoding).unwrap();
+        let (request, _) = windows.excerpt_request(&checked).unwrap();
+        assert_eq!(request["sourceSentences"].as_array().unwrap().len(), 1);
+        assert_eq!(request["sourceSentences"][0]["id"], "e0001");
+        let repair = json!({"e0001":excerpt}).to_string();
+        windows.finish_deferred(&mut checked, Some(&repair));
+        assert!(checked.facts.iter().any(|fact| fact.text == format!("说话人2：{excerpt}")));
+        assert!(checked.facts.iter().any(|fact| fact.text == "现有停车位都可以使用。"));
+        assert!(checked.facts.iter().all(|fact| !fact.text.contains("RX999")));
+
+        let mut missing = windows.check_encoded(0, raw, encoding).unwrap();
+        windows.finish_deferred(&mut missing, Some(r#"{"e0001":"员工使用新版 RX999 工具处理申请。"}"#));
+        let pending = missing.facts.iter().find(|fact| fact.text.starts_with("原话待核：")).unwrap();
+        assert_eq!(pending.evidence, ["e0001"]);
+        assert!(missing.reviewed.iter().any(|row| row["origin"] == "unresolved-source-excerpt"));
     }
 
     #[test]

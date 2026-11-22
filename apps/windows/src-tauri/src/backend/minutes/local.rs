@@ -137,6 +137,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         let parsed=super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),accelerator.is_some(),|stop|{
             let mut facts=Vec::new();
             let mut reviewed=Vec::new();
+            let mut excerpt_requests = 0;
             for index in 0..windows.len(){
                 if let Ok(mut trace)=trace.lock(){trace["sourceWindow"]=json!({"current":index+1,"total":windows.len()});}
                 let (encoding, saved) = reused.window(index)
@@ -157,6 +158,21 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                     raw
                 } else { "{}".into() };
                 let mut checked = windows.check_encoded(index, &raw, encoding)?;
+                if let Some((input, schema)) = windows.excerpt_request(&checked) {
+                    let reply = if excerpt_requests < 4 {
+                        excerpt_requests += 1;
+                        let result = transport::generate(port, &key, &alias,
+                            source_windows::EXCERPT_PROMPT, input, schema, stop, &trace, 768);
+                        record_call(&trace, &format!("source-excerpt-{}", index + 1));
+                        if stop.load(std::sync::atomic::Ordering::Acquire) {
+                            return Err("已取消本地纪要整理，完整转写与已有纪要保留。".into());
+                        }
+                        result.ok()
+                    } else {
+                        None
+                    };
+                    windows.finish_deferred(&mut checked, reply.as_deref());
+                }
                 facts.append(&mut checked.facts);
                 reviewed.push(json!({"window":index+1,"sourceEncoding":encoding.name(),"sentences":checked.reviewed}));
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}

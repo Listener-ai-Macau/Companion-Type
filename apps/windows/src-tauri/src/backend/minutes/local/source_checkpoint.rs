@@ -56,7 +56,11 @@ impl CheckedSourcePrefix {
             return Err(failure());
         }
         let reviewed = trace["reviewedSourceWindows"].as_array().ok_or_else(failure)?;
-        let mut calls = trace["calls"].as_array().ok_or_else(failure)?.iter().peekable();
+        // The exact primary response is reusable. An excerpt is a local
+        // recovery decision and is checked again against the current source.
+        let mut calls = trace["calls"].as_array().ok_or_else(failure)?.iter()
+            .filter(|call| !call["stage"].as_str().is_some_and(|stage| stage.starts_with("source-excerpt-")))
+            .peekable();
         let windows = SourceWindows::new(source)?;
         if reviewed.is_empty() || reviewed.len() > windows.len() {
             return Err(failure());
