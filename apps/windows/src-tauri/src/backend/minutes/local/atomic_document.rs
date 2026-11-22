@@ -136,7 +136,7 @@ fn source_verified_facts(
     timing: Option<&super::timed_evidence::Timing<'_>>,
 ) -> Result<(Vec<ExtractedFact>, Vec<Value>), String> {
     use std::collections::HashMap;
-    use super::{delivery_evidence, source_authority, source_commitments, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
+    use super::{delivery_evidence, source_authority, source_commitments, source_context, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
 
     let known: HashMap<_, _> = sentences.iter().map(|row| {
         (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
@@ -162,9 +162,9 @@ fn source_verified_facts(
     for (index, row) in sentences.iter().enumerate() {
         let id = row["id"].as_str().unwrap();
         if let Some((position, sources)) = by_anchor.get(id).and_then(|facts| {
-            facts.iter().enumerate().find_map(|(position, fact)| {
+            facts.iter().find_map(|fact| {
                 (fact.role=="status").then(|| delivery_evidence::arrival_procedure_sources(sentences, index, &fact.text, timing))
-                    .flatten().map(|sources| (position, sources))
+                    .flatten().map(|sources| (fact.text.clone(), sources))
             })
         }) {
             if sources.iter().all(|source| !covered_arrival_sources.contains(source)) {
@@ -197,6 +197,11 @@ fn source_verified_facts(
     }
     let examples = delivery_evidence::unverified_training_examples(sentences);
     let hypothetical: HashSet<_> = examples.iter().flat_map(|example| example.hypothetical.iter().copied()).collect();
+    let frames = source_context::frames(sentences,timing);
+    let mut frames_at = vec![None; sentences.len()];
+    for (i, frame) in frames.iter().enumerate() {
+        for position in frame.sentences.clone() { frames_at[position] = Some(i); }
+    }
     // Resolve scope changes before chapter selection. The model often cites
     // the original restrictive statement without citing its later exception.
     let exceptions: Vec<_> = sentences.iter().enumerate().filter_map(|(position, sentence)| {
@@ -209,6 +214,7 @@ fn source_verified_facts(
         Some((earlier, position, subject, literal))
     }).collect();
     let mut delegation_actions: BTreeMap<usize, (CompanionV1ActionItem, Vec<usize>, Option<usize>, bool)> = BTreeMap::new();
+    let mut work_tails = HashSet::new();
     for (index, sentence) in sentences.iter().enumerate() {
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
@@ -221,12 +227,40 @@ fn source_verified_facts(
             };
             let mut fact = ExtractedFact::review_quote(id,"status",text);
             fact.execution_reading = true;
-            let evidence: Vec<_> = example.instruction.into_iter().chain(example.hypothetical.iter().copied().take(5)).collect();
+            let mut evidence = Vec::new();
+            evidence.extend(example.instruction);
+            evidence.extend(example.hypothetical.last().copied());
+            evidence.extend(example.hypothetical.iter().copied().take(4));
             extend_references(&mut fact,sentences,&evidence);
             audit.push(json!({"sentenceId":id,"reason":"unverified-training-example","evidence":fact.evidence}));
             verified.push(fact);
         }
         if hypothetical.contains(&index) { continue; }
+        if let Some(frame) = frames_at[index].map(|i| &frames[i]) {
+            if frame.sentences.start == index {
+                let mut fact = match frame.kind {
+                    source_context::Kind::Example => {
+                        let excerpt = bounded_original_quotes_with_width(original, 64)
+                            .into_iter().next().unwrap_or_else(|| original.trim().chars().take(64).collect());
+                        ExtractedFact::verbatim(id,"opinion",&format!("举例讨论：{excerpt}"))
+                    }
+                    source_context::Kind::Reported => {
+                        let mut fact = ExtractedFact::review_quote(id,"status",
+                            "原话待核：会上转述了看到或听到的外部说法，内容未核实。");
+                        fact.execution_reading = true;
+                        fact
+                    }
+                };
+                let references: Vec<_> = frame.sentences.clone().skip(1).collect();
+                extend_references(&mut fact,sentences,&references);
+                audit.push(json!({"sentenceId":id,"reason":match frame.kind {
+                    source_context::Kind::Example=>"source-example-scope",
+                    source_context::Kind::Reported=>"unverified-reported-source-scope",
+                },"evidence":fact.evidence}));
+                verified.push(fact);
+            }
+            continue;
+        }
         if let Some(change) = revised.remove(&index).filter(|_| !superseded.contains(&index)) {
             let mut fact = if change.needs_review { ExtractedFact::review_quote(id,change.role,&change.text) }
                 else { ExtractedFact::verbatim(id,change.role,&change.text) };
@@ -249,6 +283,21 @@ fn source_verified_facts(
             audit.push(json!({"sentenceId":id,"reason":"confirmed-calendar-and-arrival","evidence":fact.evidence}));
             verified.push(fact);
         }
+        if work_tails.contains(&index) {
+            current.retain(|fact| fact.role != "status"
+                || !["总结", "报告", "方案", "清单", "记录"].iter().any(|work| fact.text.starts_with(work)));
+        }
+        if let Some((record, last))=source_commitments::continued_collective_work(sentences,index,timing)
+            .filter(|(_, last)| frames_at[*last].is_none() && !hypothetical.contains(last))
+        {
+            let text = record.item.text.clone();
+            let mut fact = ExtractedFact::original_action(id,&text,record.item);
+            extend_references(&mut fact,sentences,&record.support);
+            audit.push(json!({"sentenceId":id,"reason":"continued-collective-work","evidence":fact.evidence}));
+            current.retain(|item| item.role != "status");
+            current.push(fact);
+            work_tails.insert(last);
+        }
         for record in source_commitments::explicitly_named_work(sentences,index) {
             let text = record.item.text.clone();
             let owner = record.item.owner.as_deref().unwrap();
@@ -265,17 +314,14 @@ fn source_verified_facts(
             audit.push(json!({"sentenceId":id,"reason":"literal-named-assignment","evidence":fact.evidence}));
             current.push(fact);
         }
-        if let Some((position, sources)) = arrival_procedures.remove(&index) {
-            let mut record = current.remove(position);
-            for source in sources {
-                let source_id = sentences[source]["id"].as_str().unwrap();
-                if !record.evidence.iter().any(|id| id==source_id) && record.evidence.len()<8 {
-                    record.evidence.push(source_id.to_owned());
-                }
+        if let Some((text, sources)) = arrival_procedures.remove(&index) {
+            if let Some(position) = current.iter().position(|fact| fact.role=="status" && fact.text==text) {
+                let mut record = current.remove(position);
+                extend_references(&mut record,sentences,&sources);
+                record.execution_reading = true;
+                audit.push(json!({"sentenceId":id,"reason":"complete-entry-procedure","evidence":record.evidence}));
+                verified.push(record);
             }
-            record.execution_reading = true;
-            audit.push(json!({"sentenceId":id,"reason":"complete-entry-procedure","evidence":record.evidence}));
-            verified.push(record);
         }
         if let Some((followup, proposal)) = timing.and_then(|timing| {
             super::timed_evidence::assigned_proposal(timing, sentences, index)

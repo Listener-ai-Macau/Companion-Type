@@ -331,7 +331,7 @@ pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<Di
         r"(?i:p\s*p\s*t|excel|word|pdf)|预算清单|预算表|项目方案|执行方案|交付方案|测试报告|验收报告|工作清单|活动方案|采购清单|原型|条幅"
     ).expect("literal work product"));
     let (_, words) = split(&sentences[index]);
-    if words.contains(['?', '？']) || contains(words, CONTEXT) || contains(words, NEGATION)
+    if contains(words, CONTEXT) || contains(words, NEGATION)
         || contains(words, &["我建议", "建议由", "可以考虑", "最好", "之前", "当时", "上次", "已经由", "曾由", "听说", "比如", "例如", "举例", "演示", "暂定", "尚未决定", "没有决定", "没有确认"])
         || index.checked_sub(1).is_some_and(|previous| {
             let (_, context) = split(&sentences[previous]);
@@ -353,7 +353,11 @@ pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<Di
         for m in matches {
             let owner = m.name("owner").unwrap().as_str();
             let clause = m.get(0).unwrap();
-            if contains(&words[..clause.start()], &["要不要", "是否由", "能不能", "可不可以"])
+            let tail = words[clause.end()..].trim_start();
+            let lead = words[..clause.start()].rsplit(['，', ',', '；', ';', '。']).next().unwrap_or("");
+            if tail.starts_with(['?', '？'])
+                || clause.as_str().trim_end_matches(['。', '！', ' ', '，']).ends_with(['吗', '么', '呢'])
+                || contains(lead, &["要不要", "是否", "能不能", "可不可以", "请问", "想问", "是不是"])
                 || contains(clause.as_str(), &["要不要", "能不能", "可不可以", "完成了", "提交了", "做过", "做完了", "已交付", "已经交给"]) {
                 continue;
             }
@@ -366,11 +370,13 @@ pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<Di
             let confirmation = artifact.as_ref().and_then(|(_, product)| {
                 (index + 1..(index + 5).min(sentences.len())).find(|&next| {
                     let (_, response) = split(&sentences[next]);
-                    !response.contains(['?', '？']) && !contains(response, CONTEXT)
-                        && !contains(response, NEGATION)
-                        && !contains(response, &["改由", "改让", "换个人", "换成别人", "收回"])
-                        && (contains(response, &["让他做", "让她做", "你做", "你来做", "由你", "发给你"])
-                            && canonical_brief::normalized(response).to_ascii_lowercase().contains(product))
+                    response.split_inclusive(['，', ',', '。', '？', '?', '；']).any(|part| {
+                        !part.contains(['?', '？']) && !contains(part, CONTEXT)
+                            && !contains(part, NEGATION)
+                            && !contains(response, &["改由", "改让", "换个人", "换成别人", "收回"])
+                            && contains(part, &["让他做", "让她做", "你做", "你来做", "由你", "发给你"])
+                            && canonical_brief::normalized(part).to_ascii_lowercase().contains(product)
+                    })
                 })
             });
             let tentative = form == 2 || clause.as_str().trim_end_matches(['。','！','；','，',' ']).ends_with('吧');
@@ -401,6 +407,49 @@ pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<Di
         }
     }
     output
+}
+
+/// A deliverable started by a wrap-up directive can follow a brief
+/// acknowledgment. The unfinished verb and the explicit submission must both
+/// be present before this is recorded as work.
+pub(super) fn continued_collective_work(
+    sentences: &[Value], index: usize, timing: Option<&super::timed_evidence::Timing<'_>>,
+) -> Option<(DirectedWork, usize)> {
+    static UNFINISHED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<owner>各部门|各单位|各项目组|各团队|各小组)(?:儿)?[^。！？；?]{1,40}?(?:做一个|写一个|做个|写个|整理一份|提交一份)[，,。\s]*$"
+    ).expect("an explicit group with an unfinished deliverable"));
+    static COMPLETION: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:嗯|呃|啊|\s)*(?P<work>工作总结|总结|报告|方案|清单|记录)(?:儿)?[，,\s]*(?:然后|接着|再|就|是|就是|\s){0,5}(?:发给|交给|提交给|报给)(?:咱们的|我们的|咱们|我们)?(?P<recipient>[\p{Han}]{2,12}?)(?:让|请|看|审|确认|[，,。！？；\s]|$)"
+    ).expect("a named deliverable and recipient"));
+    let (speaker, words) = split(&sentences[index]);
+    if !contains(words, &["散会后", "下去", "回去以后", "会后", "回去先"])
+        || words.contains(['?', '？']) || contains(words, CONTEXT) || contains(words, NEGATION)
+        || contains(words, &["要不要", "我的建议", "举例", "比方说", "模拟", "曾经", "已经"])
+    { return None; }
+    let start = UNFINISHED.captures(words)?;
+    let last = (index+1..(index+4).min(sentences.len())).find(|&position| {
+        !backchannel(split(&sentences[position]).1)
+    })?;
+    let (finisher, ending) = split(&sentences[last]);
+    if speaker.zip(finisher).is_some_and(|(a,b)|a != b) || contains(ending, NEGATION)
+        || contains(ending, &["还不确定", "不要交", "没决定", "要不要", "举例"]) { return None; }
+    let result = COMPLETION.captures(ending)?;
+    let confirmed = sentences.get(last+1).is_some_and(|row| explicit_agreement(split(row).1));
+    if !timing.is_some_and(|timing| timing.neighboring_speech(index,last))
+        && !speaker.zip(finisher).is_some_and(|(a,b)|a == b) && !confirmed {
+        return None;
+    }
+    let work = result.name("work")?.as_str();
+    let work = if work == "总结" && words.contains("工作") { "本部门工作总结" } else { work };
+    let recipient = result.name("recipient")?.as_str();
+    let owner = start.name("owner")?.as_str();
+    let text = format!("会后整理{work}并交给{recipient}。");
+    let mut support = vec![last];
+    if confirmed { support.push(last+1); }
+    Some((DirectedWork {
+        item: CompanionV1ActionItem { text, owner: Some(owner.to_owned()), due: None },
+        support,
+    }, last))
 }
 
 fn preceding_turn(sentences: &[Value], index: usize) -> Option<(usize, &str)> {
@@ -862,6 +911,40 @@ mod tests {
         }
         let changed = sentences(&["C同学有这些资料，她可以做一个Excel。", "行，我来做Excel。"]);
         assert!(explicitly_named_work(&changed,0).is_empty());
+    }
+
+    #[test]
+    fn a_trailing_question_does_not_erase_an_independent_named_instruction() {
+        let rows = sentences(&[
+            "嗯，那由D同学做一个P P T吧，他是学计算机的，然后是让他做那个什么？",
+            "让他做一个P P T，预算表先等下。",
+        ]);
+        let assignments=explicitly_named_work(&rows,0);
+        assert_eq!(assignments.len(),1);
+        assert_eq!(assignments[0].item.owner.as_deref(),Some("D同学"));
+        assert!(explicitly_named_work(&sentences(&["那由D同学做一个PPT吗？","我听听意见。"]),0).is_empty());
+        assert!(explicitly_named_work(&sentences(&["是否由D同学做一个PPT。","还没回答。"]),0).is_empty());
+    }
+
+    #[test]
+    fn a_split_closing_instruction_preserves_the_group_and_recipient() {
+        let rows = sentences(&[
+            "那你们下去，各部门儿都对各部门的工作做一个",
+            "嗯。",
+            "总结，然后就是交给我们的台长让他看一下儿。",
+            "好。",
+        ]);
+        let (work, last) = continued_collective_work(&rows,0,None).unwrap();
+        assert_eq!(last,2);
+        assert_eq!(work.item.owner.as_deref(),Some("各部门"));
+        assert_eq!(work.item.due,None);
+        assert!(work.item.text.contains("工作总结") && work.item.text.contains("台长"));
+        let detached = sentences(&[
+            "你们下去，各部门的工作做一个",
+            "接下来聊聊别的内容。",
+            "总结，然后交给台长。",
+        ]);
+        assert!(continued_collective_work(&detached,0,None).is_none());
     }
 
     #[test]

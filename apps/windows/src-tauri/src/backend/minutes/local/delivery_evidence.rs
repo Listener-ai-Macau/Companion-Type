@@ -381,6 +381,9 @@ pub(super) struct TrainingExample {
 }
 
 pub(super) fn unverified_training_examples(sentences: &[Value]) -> Vec<TrainingExample> {
+    static SUBJECT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:主要成分|成分)是(?P<name>[\p{Han}]{2,9}?)(?:[，,。；\s]|$)"
+    ).expect("an exact referent spoken in an unverified example"));
     let read = |position: usize| body(sentences[position]["text"].as_str().unwrap());
     let training = (0..sentences.len().min(35)).any(|i| {
         let words = read(i);
@@ -393,12 +396,17 @@ pub(super) fn unverified_training_examples(sentences: &[Value]) -> Vec<TrainingE
         let unknown = has(words, &["不了解这个产品", "不了解这种产品", "不知道这个产品", "没有见过这个产品", "不清楚这款产品"])
             || (words.contains("这个产品") && has(words, &["我也不知道", "我也不清楚"]));
         if !unknown || has(words, &["已核实", "确认了配方", "后来查到了"]) { continue; }
-        let affected = (index..(index+24).min(sentences.len())).take_while(|&position| {
+        let subject = SUBJECT.captures(words).and_then(|m| m.name("name")).map(|m| m.as_str());
+        let stop = if subject.is_some() { 48 } else { 24 };
+        let affected = (index..(index+stop).min(sentences.len())).take_while(|&position| {
             !has(read(position), &["下一个案例", "接下来看另一个", "换一个产品", "后来核实了", "已核实了"])
         }).filter(|&position| {
             let candidate = read(position);
-            has(candidate, &["成分", "配方", "添加", "混合", "功效", "保健品", "疗效"])
-                && (position == index || has(candidate, &["比方说", "比如", "可以说", "可能", "肯定", "应该", "就说"]))
+            (position < index+24 && has(candidate, &["成分", "配方", "添加", "混合", "功效", "保健品", "疗效"])
+                && (position == index || has(candidate, &["比方说", "比如", "可以说", "可能", "肯定", "应该", "就说"])))
+                || subject.is_some_and(|name| candidate.contains(name)
+                    && has(candidate, &["向顾客说明", "跟客户说", "可以说", "肯定"])
+                    && has(candidate, &["效果", "价值", "功效", "成分", "作用", "效果更好"]))
         }).collect::<Vec<_>>();
         if affected.is_empty() { continue; }
         let instruction = (index.saturating_sub(12)..(index+6).min(sentences.len())).find(|&position| {
