@@ -7,20 +7,49 @@ export type IncomingFilesStatus={rows:IncomingFile[];libraryId:string;libraryTok
 export type IncomingTarget={key:string;title:string};
 export function IncomingFilesPanel({busy,adapter,onChanged,onOpen}:{busy:boolean;adapter:{list:()=>Promise<IncomingFilesStatus>;targets:()=>Promise<IncomingTarget[]>;import:(request:{id:string;key?:string;libraryToken:string})=>Promise<IncomingFilesStatus>;remove:(id:string)=>Promise<IncomingFilesStatus>;cancel?:(id:string)=>Promise<void>};onChanged:(status:IncomingFilesStatus)=>void;onOpen:(key:string)=>void}){
  const [value,setValue]=useState<IncomingFilesStatus|null>(null),[expanded,setExpanded]=useState(true),[targets,setTargets]=useState<IncomingTarget[]>([]),[choices,setChoices]=useState<Record<string,string>>({}),[working,setWorking]=useState(''),[cancelling,setCancelling]=useState(''),[error,setError]=useState(''),[targetError,setTargetError]=useState(''),[refresh,setRefresh]=useState(0);
+ const [pollError,setPollError]=useState('');
  const current=useRef(adapter),changed=useRef(onChanged),previous=useRef('');current.current=adapter;changed.current=onChanged;
- useEffect(()=>{let alive=true,timer:number|undefined;const poll=async()=>{try{const next=await current.current.list();if(!alive)return;setValue(next);const complete=next.rows.filter(row=>row.state==='complete').map(row=>row.id).join('|');if(previous.current&&complete!==previous.current)changed.current(next);previous.current=complete||'none';}catch(e){if(alive)setError(e instanceof Error?e.message:String(e));}finally{if(alive)timer=window.setTimeout(()=>void poll(),2000);}};const receive=()=>{window.clearTimeout(timer);void poll();};window.addEventListener('companion-incoming',receive);void poll();return()=>{alive=false;window.clearTimeout(timer);window.removeEventListener('companion-incoming',receive);};},[refresh]);
+ const viewVersion=useRef(0);
+ useEffect(()=>{
+  let alive=true,timer:number|undefined,pollId=0;
+  const poll=async()=>{
+   const id=++pollId,version=viewVersion.current;
+   const isCurrent=()=>alive&&id===pollId&&version===viewVersion.current;
+   try{
+    const next=await current.current.list();
+    if(!isCurrent())return;
+    setPollError('');
+    setValue(next);
+    const complete=next.rows.filter(row=>row.state==='complete').map(row=>row.id).join('|');
+    if(previous.current&&complete!==previous.current)changed.current(next);
+    previous.current=complete||'none';
+   }catch(e){if(isCurrent())setPollError(e instanceof Error?e.message:String(e));}
+   finally{if(alive&&id===pollId)timer=window.setTimeout(()=>void poll(),2000);}
+  };
+  const receive=()=>{window.clearTimeout(timer);void poll();};
+  window.addEventListener('companion-incoming',receive);
+  void poll();
+  return()=>{alive=false;window.clearTimeout(timer);window.removeEventListener('companion-incoming',receive);};
+ },[refresh]);
  const completedKey=value?.rows.filter(row=>row.state==='complete').map(row=>row.id).join('|');
  const token=value?.libraryToken,hasAttachments=!!value?.rows.some(row=>(row.kind==='document'||row.kind==='image')&&row.state!=='complete');
  useEffect(()=>{let alive=true;setTargets([]);setTargetError('');if(hasAttachments)void current.current.targets().then(rows=>{if(alive)setTargets(rows);}).catch(e=>{if(alive)setTargetError(e instanceof Error?e.message:String(e));});return()=>{alive=false;};},[token,hasAttachments,completedKey,refresh]);
  useEffect(()=>setChoices({}),[token]);
  async function act(row:IncomingFile,remove=false){
   if(!value||busy||working)return;setWorking(row.id);setError('');
-  try{const next=remove?await current.current.remove(row.id):await current.current.import({id:row.id,key:row.key||choices[row.id]||undefined,libraryToken:value.libraryToken});setValue(next);onChanged(next);}
+  try{
+   const next=remove?await current.current.remove(row.id):await current.current.import({id:row.id,key:row.key||choices[row.id]||undefined,libraryToken:value.libraryToken});
+   viewVersion.current++;
+   setPollError('');
+   setValue(next);
+   onChanged(next);
+  }
   catch(e){setError(e instanceof Error?e.message:String(e));}finally{setWorking('');}
  }
  useEffect(()=>{if(!value?.running)setCancelling('');},[value?.running]);
  async function cancel(row:IncomingFile){if(!adapter.cancel||cancelling)return;setCancelling(row.id);try{await adapter.cancel(row.id);}catch(e){setError(e instanceof Error?e.message:String(e));setCancelling('');}}
- if(!value?.rows.length&&!error)return null;
+ const visibleError=error||pollError;
+ if(!value?.rows.length&&!visibleError)return null;
  const pending=value?.rows.filter(row=>row.state!=='complete').length||0,saved=(value?.rows.length||0)-pending;
  return <section className="incoming-files" aria-label="接收外部文件">
   <div className="incoming-files-heading"><FileInput size={20} aria-hidden="true"/><div><strong>从其他应用收到文件</strong><p>{pending?pending+' 项待接收'+(saved?' · '+saved+' 项已保存':'')+' · 确认去向后保存原件':saved+' 项已保存 · 可打开所属录音'}</p></div><button type="button" className="text-button" aria-expanded={expanded} onClick={()=>setExpanded(v=>!v)}><ChevronDown size={17}/>{expanded?'收起':'展开'}</button></div>
@@ -46,7 +75,9 @@ export function IncomingFilesPanel({busy,adapter,onChanged,onOpen}:{busy:boolean
     </article>;
    })}
    {hasAttachments&&<button type="button" className="text-button" disabled={!!working} onClick={()=>setRefresh(v=>v+1)}>重新读取资料库与所属会议</button>}
-   {targetError&&<p className="incoming-file-error" role="alert">{targetError}</p>}{error&&<p className="incoming-file-error" role="alert">{error}</p>}{(error||targetError)&&<button type="button" className="secondary" disabled={!!working} onClick={()=>{setError('');setRefresh(v=>v+1);}}>重新读取接收清单</button>}
+   {targetError&&<p className="incoming-file-error" role="alert">{targetError}</p>}
+   {visibleError&&<p className="incoming-file-error" role="alert">{visibleError}</p>}
+   {(visibleError||targetError)&&<button type="button" className="secondary" disabled={!!working} onClick={()=>{setError('');setPollError('');setRefresh(v=>v+1);}}>重新读取接收清单</button>}
    <p className="incoming-files-footnote">{pending?'移除这里只清理接收清单，不删除来源文件或已保存内容。音视频导入进度也可在资料库或系统通知中查看。':'收起记录不会删除已保存内容。来源应用中的原文件保持不变。'}</p>
   </>}
  </section>;
