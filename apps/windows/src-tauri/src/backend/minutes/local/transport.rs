@@ -70,7 +70,13 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     }
     if !ready{return Err("本地纪要引擎未就绪，已有内容保留。".into());}
     let profile=profile()?;
-    let body = request_body(alias, prompt, input, schema, max_output_tokens, &profile)?;
+    let mut body = request_body(alias, prompt, input, schema, max_output_tokens, &profile)?;
+    if trace.lock().map_err(|_| error())?["backend"] == "vulkan" {
+        // This pinned server reads the OpenAI-style wrapper. Preserve the
+        // legacy CPU wire format so existing source checkpoints remain valid.
+        let schema = body["response_format"]["schema"].take();
+        body["response_format"] = json!({"type":"json_schema","json_schema":{"schema":schema}});
+    }
     let rendered=post(&client,&address,key,"/apply-template",&json!({"messages":body["messages"],"chat_template_kwargs":body["chat_template_kwargs"]}),stop)?;
     let rendered=rendered["prompt"].as_str().ok_or_else(error)?;
     let tokenized=post(&client,&address,key,"/tokenize",&json!({"content":rendered,"add_special":false,"parse_special":true}),stop)?;

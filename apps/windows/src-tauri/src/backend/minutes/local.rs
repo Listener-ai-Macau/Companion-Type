@@ -47,13 +47,13 @@ pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingM
 }
 
 pub(crate) fn attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->(Result<CompanionV1MeetingMinutes,String>,Value){
-    recorded_attempt(session,base,new_trace(),&source_checkpoint::CheckedSourcePrefix::default())
+    recorded_attempt(session,base,new_trace(),&source_checkpoint::CheckedSourcePrefix::default(), None)
 }
 fn new_trace()->transport::Trace{
     Arc::new(Mutex::new(json!({"provider":"local","model":"Qwen3.5-4B-Q4_K_M","runtimeSha256":assets::SERVER_SHA,
         "modelSha256":assets::MODEL_SHA,"stage":"preflight","calls":[],"newCloudCalls":0,"trainingUpdates":0,"semanticAccuracyCertificate":false,"contentQualified":false})))
 }
-fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace,reused:&source_checkpoint::CheckedSourcePrefix)->(Result<CompanionV1MeetingMinutes,String>,Value){
+fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace,reused:&source_checkpoint::CheckedSourcePrefix, vulkan_root: Option<&std::path::Path>)->(Result<CompanionV1MeetingMinutes,String>,Value){
     let start=Instant::now();
     let mut release_confirmed=false;
     let outcome=(||{
@@ -66,14 +66,31 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         }
         let _lease=assets::compute_lease()?;
         let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
-        let runtime=assets::runtime()?;
+        let accelerator = vulkan_root.map(assets::engineering_vulkan).transpose()?;
+        let runtime = match &accelerator {
+            Some((path, _)) => path.clone(),
+            None => assets::runtime()?,
+        };
+        if let Ok(mut trace) = trace.lock() {
+            trace["backend"] = json!(if accelerator.is_some() { "vulkan" } else { "cpu" });
+            if let Some((_, device)) = &accelerator {
+                trace["runtimeSha256"] = json!(assets::VULKAN_SERVER_SHA);
+                trace["vulkanDevice"] = json!(device);
+            }
+        }
         let socket=TcpListener::bind(("127.0.0.1",0)).map_err(|_|"无法创建本地纪要连接。")?;
         let port=socket.local_addr().map_err(|_|"无法创建本地纪要连接。")?.port();drop(socket);
         let key=uuid::Uuid::new_v4().simple().to_string();let alias=format!("companion-local-{}",uuid::Uuid::new_v4().simple());
-        let args=arguments(&model,port,&key,&alias)?;let program=runtime.to_str().ok_or("本地纪要引擎路径无效。")?;
+        let mut args=arguments(&model,port,&key,&alias)?;
+        if let Some((_, device)) = &accelerator {
+            let layers = args.iter().position(|arg| arg == "-ngl").expect("arguments set GPU layers");
+            args[layers + 1] = "99".into();
+            args.extend(["--device".to_owned(), device.clone()]);
+        }
+        let program=runtime.to_str().ok_or("本地纪要引擎路径无效。")?;
         if let Ok(mut trace)=trace.lock(){trace["stage"]=json!("loading-engine");}
         let cancellation=super::super::meeting_processing_job::current();
-        let parsed=super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),|stop|{
+        let parsed=super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),accelerator.is_some(),|stop|{
             let mut facts=Vec::new();
             let mut reviewed=Vec::new();
             for index in 0..windows.len(){

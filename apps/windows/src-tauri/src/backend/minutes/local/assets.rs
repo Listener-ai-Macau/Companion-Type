@@ -7,6 +7,8 @@ pub(super) const MODEL_BYTES:u64=2_740_937_888;
 pub(super) const MODEL_SHA:&str="00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4";
 const MODEL_URL:&str="https://modelscope.cn/models/unsloth/Qwen3.5-4B-GGUF/resolve/167b4afc359863325cb4164418c715421b4e9118/Qwen3.5-4B-Q4_K_M.gguf";
 pub(super) const SERVER_SHA:&str="e866430b71054f4e21e3b294a60f198ae9313c08839000febb765fd5dc4d7e47";
+pub(super) const VULKAN_SERVER_SHA:&str="36b6b336a34b8ee7ddc459a72a41bb221f5e47b7efaa7b5390e17893e7eb49d8";
+
 #[derive(Deserialize)]
 struct RuntimeFile {name:String,bytes:u64,sha256:String}
 #[derive(Deserialize)]
@@ -44,6 +46,42 @@ pub(super) fn runtime()->Result<PathBuf,String>{
     if server.sha256!=SERVER_SHA{return Err("本地纪要引擎来源不匹配。".into());}
     Ok(root.join("llama-server.exe"))
 }
+#[cfg(windows)]
+pub(super) fn engineering_vulkan(root: &Path) -> Result<(PathBuf, String), String> {
+    use std::os::windows::process::CommandExt;
+    let manifest: RuntimeManifest = serde_json::from_slice(include_bytes!("local-vulkan-runtime-manifest.json"))
+        .map_err(|_| "本地 Vulkan 引擎清单无效。")?;
+    if manifest.source_archive_sha256 != "db9ab31997e93bf713d3dfec6eb1cf1b5a6a5f2940a3d4d111ad0ffab54c87d5" {
+        return Err("本地 Vulkan 引擎来源不匹配。".into());
+    }
+    for file in &manifest.files {
+        verified(&root.join(&file.name), file.bytes, &file.sha256)?;
+    }
+    let path = root.join("llama-server.exe");
+    let mut command = std::process::Command::new(&path);
+    command.arg("--list-devices").current_dir(root).creation_flags(0x08000000);
+    for (key, _) in std::env::vars_os() {
+        if key.to_string_lossy().starts_with("GGML_") || key.to_string_lossy().starts_with("LLAMA_ARG_") {
+            command.env_remove(key);
+        }
+    }
+    let result = command.output().map_err(|_| "无法枚举本地 Vulkan 独显。")?;
+    if !result.status.success() { return Err("无法枚举本地 Vulkan 独显。".into()); }
+    let devices = String::from_utf8_lossy(&result.stdout);
+    let device = devices.lines().filter_map(|line| {
+        let (id, info) = line.trim().split_once(": ")?;
+        let ordinal = id.strip_prefix("Vulkan")?;
+        if ordinal.is_empty() || !ordinal.bytes().all(|b| b.is_ascii_digit())
+            || !info.starts_with("AMD Radeon RX 6800 XT (") { return None; }
+        let free = info.strip_suffix(" MiB free)")?.rsplit_once(", ")?.1.parse::<u32>().ok()?;
+        (free >= 5_120).then(|| id.to_owned())
+    }).collect::<Vec<_>>();
+    match device.as_slice() {
+        [id] => Ok((path, id.clone())),
+        _ => Err("没有找到已验证型号且显存足够的 Vulkan 独显。".into()),
+    }
+}
+
 pub(super) fn present()->bool{
     cpu_supported()&&model_path().ok().is_some_and(|p|p.metadata().is_ok_and(|m|m.is_file()&&m.len()==MODEL_BYTES))
         &&runtime_root().ok().is_some_and(|p|p.join("llama-server.exe").is_file())

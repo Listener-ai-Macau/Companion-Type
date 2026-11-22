@@ -134,6 +134,6 @@ mod windows;
 /// caller, cancellation, memory pressure, or the bounded processing deadline.
 #[cfg(windows)]
 pub(super) fn with_local_service<T:Send>(
-    program:&str,args:&[String],cancel:Option<&AtomicBool>,
+    program:&str,args:&[String],cancel:Option<&AtomicBool>,vulkan:bool,
     work:impl FnOnce(&AtomicBool)->Result<T,String>+Send,
-)->Result<T,String>{windows::with_local_service(program,args,cancel,work)}
+)->Result<T,String>{windows::with_local_service(program,args,cancel,vulkan,work)}

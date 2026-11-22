@@ -1,4 +1,4 @@
-//! One CPU inference server, using the same atomic Windows job ownership as
+//! One local inference server, using the same atomic Windows job ownership as
 //! external wrappers. Runtime output goes to NUL; no rotating model/server logs.
 use super::*;
 use ::windows::Win32::{
@@ -6,18 +6,21 @@ use ::windows::Win32::{
     System::Memory::{CreateMemoryResourceNotification,LowMemoryResourceNotification,QueryMemoryResourceNotification},
 };
 
-const PRIVATE_BYTES:usize=2*1024*1024*1024;
+const CPU_PRIVATE_BYTES:usize=2*1024*1024*1024;
+// WDDM charges Vulkan device allocations to the process job during model
+// loading and caches prompt state across requests. Keep a separate allowance.
+const VULKAN_PRIVATE_BYTES:usize=5*1024*1024*1024;
 const WALL:Duration=Duration::from_secs(2700);
 fn failure()->String{"本地纪要引擎未能完成处理，原文和已有纪要保留。".into()}
 
 struct Service {process:Handle,job:Job}
 impl Service {
-    fn start(program:&str,args:&[String])->Result<Self,Failure>{
+    fn start(program:&str,args:&[String],private_bytes:usize)->Result<Self,Failure>{
         let mut command=command_line(program,args)?;
         let job=Job::new()?;
         let mut info=JOBOBJECT_EXTENDED_LIMIT_INFORMATION::default();
         info.BasicLimitInformation.LimitFlags=JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE|JOB_OBJECT_LIMIT_JOB_MEMORY;
-        info.JobMemoryLimit=PRIVATE_BYTES;
+        info.JobMemoryLimit=private_bytes;
         let mut cpu=JOBOBJECT_CPU_RATE_CONTROL_INFORMATION::default();
         cpu.ControlFlags=JOB_OBJECT_CPU_RATE_CONTROL_ENABLE|JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP;
         cpu.Anonymous.CpuRate=2500;
@@ -66,14 +69,15 @@ impl Pressure {
     }
 }
 
-pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
-    controlled(program,args,cancel,WALL,work)
+pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,vulkan:bool,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
+    let private_bytes = if vulkan { VULKAN_PRIVATE_BYTES } else { CPU_PRIVATE_BYTES };
+    controlled(program,args,cancel,WALL,private_bytes,work)
 }
 
-fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wall:Duration,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
+fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wall:Duration,private_bytes:usize,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     if cancel.is_some_and(|v|v.load(Ordering::SeqCst)){return Err("本地纪要已取消，已有内容保留。".into());}
     let pressure=Pressure::new()?;
-    let service=Service::start(program,args).map_err(|_|failure())?;let started=Instant::now();
+    let service=Service::start(program,args,private_bytes).map_err(|_|failure())?;let started=Instant::now();
     let aborted=AtomicBool::new(false);
     thread::scope(|scope|{
         let(tx,rx)=mpsc::sync_channel(1);
@@ -111,29 +115,29 @@ mod tests {
         vec!["/d".into(),"/c".into(),"ping -n 10 127.0.0.1 >NUL".into()])}
     #[test]
     fn local_minutes_service_releases_the_actual_owned_family_after_work(){
-        let(program,args)=command();let service=Service::start(&program,&args).unwrap();
+        let(program,args)=command();let service=Service::start(&program,&args,CPU_PRIVATE_BYTES).unwrap();
         assert!(service.running());service.stop().unwrap();assert!(!service.running());
-        let result=controlled(&program,&args,None,Duration::from_secs(2),|_|Ok(42));assert_eq!(result,Ok(42));
+        let result=controlled(&program,&args,None,Duration::from_secs(2),CPU_PRIVATE_BYTES,|_|Ok(42));assert_eq!(result,Ok(42));
     }
     #[test]
     fn local_minutes_service_preserves_work_error_and_stops_on_cancel_or_deadline(){
         let(program,args)=command();
-        assert_eq!(controlled::<()>(&program,&args,None,Duration::from_secs(2),|_|Err("controlled source failure".into())),Err("controlled source failure".into()));
+        assert_eq!(controlled::<()>(&program,&args,None,Duration::from_secs(2),CPU_PRIVATE_BYTES,|_|Err("controlled source failure".into())),Err("controlled source failure".into()));
         let cancel=AtomicBool::new(true);
-        assert!(controlled(&program,&args,Some(&cancel),Duration::from_secs(1),|_|Ok(())).unwrap_err().contains("取消"));
-        let error=controlled(&program,&args,None,Duration::from_millis(50),|_|{thread::sleep(Duration::from_millis(200));Ok(())}).unwrap_err();
+        assert!(controlled(&program,&args,Some(&cancel),Duration::from_secs(1),CPU_PRIVATE_BYTES,|_|Ok(())).unwrap_err().contains("取消"));
+        let error=controlled(&program,&args,None,Duration::from_millis(50),CPU_PRIVATE_BYTES,|_|{thread::sleep(Duration::from_millis(200));Ok(())}).unwrap_err();
         assert!(error.contains("期限"));
     }
     #[test]
     fn local_minutes_service_applies_cpu_and_private_memory_limits_before_use(){
-        let(program,args)=command();let service=Service::start(&program,&args).unwrap();
+        let(program,args)=command();let service=Service::start(&program,&args,CPU_PRIVATE_BYTES).unwrap();
         let mut memory=JOBOBJECT_EXTENDED_LIMIT_INFORMATION::default();
         let mut cpu=JOBOBJECT_CPU_RATE_CONTROL_INFORMATION::default();
         unsafe{
             QueryInformationJobObject(service.job.0.0,JobObjectExtendedLimitInformation,&mut memory as *mut _ as *mut _,size_of_val(&memory)as u32,None).unwrap();
             QueryInformationJobObject(service.job.0.0,JobObjectCpuRateControlInformation,&mut cpu as *mut _ as *mut _,size_of_val(&cpu)as u32,None).unwrap();
         }
-        assert_eq!(memory.JobMemoryLimit,PRIVATE_BYTES);
+        assert_eq!(memory.JobMemoryLimit,CPU_PRIVATE_BYTES);
         assert!(memory.BasicLimitInformation.LimitFlags.contains(JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE|JOB_OBJECT_LIMIT_JOB_MEMORY));
         assert!(cpu.ControlFlags.contains(JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP|JOB_OBJECT_CPU_RATE_CONTROL_ENABLE));
         assert_eq!(unsafe{cpu.Anonymous.CpuRate},2500);
@@ -142,7 +146,7 @@ mod tests {
     #[test]
     fn local_minutes_service_honors_cancellation_after_start(){
         let(program,args)=command();let cancel=AtomicBool::new(false);
-        let error=controlled(&program,&args,Some(&cancel),Duration::from_secs(2),|_|{
+        let error=controlled(&program,&args,Some(&cancel),Duration::from_secs(2),CPU_PRIVATE_BYTES,|_|{
             cancel.store(true,Ordering::SeqCst);thread::sleep(Duration::from_millis(220));Ok(())
         }).unwrap_err();
         assert!(error.contains("取消"));
@@ -150,7 +154,7 @@ mod tests {
     #[test]
     fn local_minutes_service_notifies_startup_waiter_when_its_deadline_stops_engine(){
         let(program,args)=command();let started=Instant::now();
-        let error=controlled(&program,&args,None,Duration::from_millis(30),|stop|{
+        let error=controlled(&program,&args,None,Duration::from_millis(30),CPU_PRIVATE_BYTES,|stop|{
             while !stop.load(Ordering::Acquire){thread::sleep(Duration::from_millis(10));}Ok(())
         }).unwrap_err();
         assert!(error.contains("期限"));assert!(started.elapsed()<Duration::from_secs(2));

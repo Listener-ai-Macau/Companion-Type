@@ -13,6 +13,7 @@ struct Input {
     title: String,
     duration_ms: u64,
     reuse_checkpoint: Option<super::source_checkpoint::CheckpointInput>,
+    vulkan_runtime_dir: Option<PathBuf>,
 }
 struct Finish<'a>(&'a AtomicBool);
 impl Drop for Finish<'_>{fn drop(&mut self){self.0.store(true,Ordering::Release);}}
@@ -49,6 +50,9 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
     let text=String::from_utf8(bytes).map_err(|_|"指定原文不是UTF-8。")?;
     let text=text.strip_prefix('\u{feff}').unwrap_or(&text).replace("\r\n","\n");
     let source_hash=format!("{:x}",Sha256::digest(text.as_bytes()));
+    if input.vulkan_runtime_dir.is_some() && input.reuse_checkpoint.is_some() {
+        return Err("Vulkan 配对验证需要从原文生成，不能复用旧 CPU 检查点。".into());
+    }
     let reused = input.reuse_checkpoint.as_ref().map(|checkpoint| {
         super::source_checkpoint::CheckedSourcePrefix::load(checkpoint, &text, &source_hash, input.duration_ms)
     }).transpose()?.unwrap_or_default();
@@ -95,7 +99,7 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
         let finish=Finish(&finished);
         let result=super::super::super::meeting_processing_job::run(&session.id,&job_id,
             super::super::super::meeting_processing_job::Kind::Minutes,||{
-                let(result,record)=super::recorded_attempt(&session,&base,trace.clone(),&reused);receipt=Some(record);result
+                let(result,record)=super::recorded_attempt(&session,&base,trace.clone(),&reused,input.vulkan_runtime_dir.as_deref());receipt=Some(record);result
             });
         drop(finish);let _=monitor.join();result
     });
