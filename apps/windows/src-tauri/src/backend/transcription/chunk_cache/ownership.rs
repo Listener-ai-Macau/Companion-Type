@@ -415,6 +415,13 @@ pub(crate) fn erase(
             };
         if shared && r.phase != Phase::Deleting {
             r.sessions.retain(|s| !sessions.contains(s));
+            let keep_source = |source: &String| !sources.contains(source) || protected.contains(source);
+            // Older entries can name a surviving session without a matching
+            // path. Keep the journal readable without inventing a replacement
+            // source for such entries.
+            if r.sources.iter().any(keep_source) {
+                r.sources.retain(keep_source);
+            }
             report.shared += 1;
             continue;
         }

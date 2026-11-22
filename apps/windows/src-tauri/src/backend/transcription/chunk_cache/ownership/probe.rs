@@ -201,6 +201,10 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
         load_journal(&root)?.records[0].sessions == BTreeSet::from(["b".into()]),
     )?;
     check(
+        "shared_cache_releases_only_the_selected_audio_reference",
+        load_journal(&root)?.records[0].sources == BTreeSet::from([audio::reference_key(&b)?]),
+    )?;
+    check(
         "clear_transcript_keeps_original_audio",
         a.is_file() && b.is_file() && cleared.host.sessions[0].transcript_text.is_empty(),
     )?;
