@@ -17,11 +17,21 @@ struct Excluded {source:usize,reason:String}
 #[serde(deny_unknown_fields)]
 struct Outline {purpose:String,topics:Vec<Topic>,#[serde(default)]excluded:Vec<Excluded>}
 
+// Oversized source-backed long meetings get an index during chapter assembly.
+pub(super) fn uses_chapter_index(session: &CompanionV1HostSession, template: Option<&MinutesTemplate>) -> bool {
+    session.meeting_notes.is_empty()
+        && template.is_none_or(|template| template.id == "meeting")
+        && std::env::var("COMPANION_TOPIC_OUTLINE_MODE").as_deref() != Ok("source-isolated")
+        && (session.transcript_text.len() >= super::long_meeting::MAX_PROMPT_BYTES
+            || json!({"sourceUnits":source_items(&source_units(&session.transcript_text))}).to_string().len()
+                + instructions(false).len() > super::long_meeting::MAX_PROMPT_BYTES)
+}
 fn eligible(session:&CompanionV1HostSession,minutes:&CompanionV1MeetingMinutes,template:Option<&MinutesTemplate>)->bool {
     !minutes.markdown.contains("## 主题脉络")
         && session.meeting_notes.is_empty() && template.map_or(true,|t|t.id=="meeting")
         && minutes.source=="llm_deepseek" && minutes.quality=="final" && minutes.summary.len()>=2
-        && minutes.processing.as_ref().map_or(true,|p|p.complete)
+        && minutes.processing.as_ref().map_or(true,|p|p.complete
+            && !(p.strategy == "chunkedSourceBacked" && uses_chapter_index(session,template)))
         && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500)
 }
 fn line(text:&str,max:usize)->bool {
@@ -37,6 +47,9 @@ fn source_units(text:&str)->Vec<String> {
         }
     }
     if !part.is_empty(){units.push(part);}units
+}
+fn source_items(units: &[String]) -> Vec<Value> {
+    units.iter().enumerate().map(|(id,text)|json!({"id":id,"text":text})).collect()
 }
 fn parse(content:&str,units:&[String])->Result<Outline,String> {
     let mut outline:Outline=serde_json::from_str(super::strip_code_fences(content).trim())
@@ -128,7 +141,7 @@ pub(super) fn attach(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostS
     }
     if !eligible(session,minutes,template){return;}
     let units=source_units(&session.transcript_text);
-    let items=units.iter().enumerate().map(|(id,text)|json!({"id":id,"text":text})).collect::<Vec<_>>();
+    let items=source_items(&units);
     let mut draft_response=None;let mut editing_response=None;let mut final_response=None;let mut repair_response=None;let mut finish_reasons=Vec::new();
     let outcome=(|| {
         let (content,finish)=request(endpoint,model,key,client,&instructions(false),json!({"sourceUnits":items}))?;

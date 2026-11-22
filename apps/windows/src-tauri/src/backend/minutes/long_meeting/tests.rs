@@ -1366,3 +1366,21 @@ fn real_public_long_meeting_fallback() {
     assert!(indices.iter().any(|&i| i >= items.len()/3 && i < items.len()*2/3));
     assert!(indices.iter().any(|&i| i >= items.len()*2/3));
 }
+
+#[test]
+fn chapter_index_rejects_rewritten_or_incomplete_topic_output() {
+    let valid = r#"{"groups":[[8,9],[1,2],[4,6]]}"#;
+    assert_eq!(parse_chapter_index(valid, 12).unwrap(), vec![1,4,8]);
+    let valid = r#"{"groups":[[10,9],[1,2],[5,6]]}"#;
+    assert_eq!(parse_chapter_index(valid, 15).unwrap(), vec![1,5,10]);
+    for invalid in [
+        r#"{"groups":[[1,2],[5,10]]}"#,
+        r#"{"groups":[[1,1],[5],[10]]}"#,
+        r#"{"groups":[[1,9],[5,9],[10]]}"#,
+        r#"{"groups":[[1],[5],[15]]}"#,
+        r#"{"groups":[[1],[],[10]]}"#,
+        r#"{"groups":[[1],[5],[10]],"takeaway":"已同意执行"}"#,
+    ] {
+        assert!(parse_chapter_index(invalid, 15).is_err(), "{invalid}");
+    }
+}
