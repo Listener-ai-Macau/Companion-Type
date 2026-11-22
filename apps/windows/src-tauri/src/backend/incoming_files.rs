@@ -4,14 +4,16 @@ use crate::coordinator::CompanionCoordinator;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{
-    fs::{self, File, OpenOptions},
+    fs::{self, File, OpenOptions, TryLockError},
     path::{Path, PathBuf},
     sync::{
         atomic::{AtomicBool, Ordering},
         Arc,
     },
+    time::{Duration, Instant},
 };
 static ACTIVE: AtomicBool = AtomicBool::new(false);
+const RECEIPT_LOCK_WAIT: Duration = Duration::from_millis(400);
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct Entry {
@@ -65,7 +67,7 @@ fn valid_id(id: &str) -> bool {
 fn root_path() -> PathBuf {
     sibling(&super::persistence::state_file_path(), ".incoming-v1.json")
 }
-fn file_lock(path: &Path) -> Result<File, String> {
+fn file_lock(path: &Path, wait: Duration) -> Result<File, String> {
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent).map_err(|_| "接收目录暂不可写，原文件保留。")?;
     }
@@ -79,20 +81,31 @@ fn file_lock(path: &Path) -> Result<File, String> {
         .truncate(false)
         .open(path)
         .map_err(|_| "无法打开接收锁，请稍后重试。")?;
-    file.try_lock()
-        .map_err(|_| "接收项正由另一操作处理，请稍后重试。")?;
-    Ok(file)
+    let deadline = Instant::now() + wait;
+    loop {
+        match file.try_lock() {
+            Ok(()) => return Ok(file),
+            Err(TryLockError::WouldBlock) if Instant::now() < deadline => {
+                std::thread::sleep(Duration::from_millis(10));
+            }
+            Err(TryLockError::WouldBlock) => return Err("接收项正由另一操作处理，请稍后重试。".into()),
+            Err(_) => return Err("无法锁定接收清单，请检查资料库后重试。".into()),
+        }
+    }
 }
 fn operation(id: &str) -> Result<File, String> {
     if !valid_id(id) {
         return Err("接收标识无效。".into());
     }
-    file_lock(&sibling(&root_path(), &format!(".{id}.operation.lock")))
+    file_lock(&sibling(&root_path(), &format!(".{id}.operation.lock")), Duration::ZERO)
 }
 impl Store {
     fn open() -> Result<Self, String> {
         let path = root_path();
-        let lock = file_lock(&sibling(&path, ".lock"))?;
+        // A list poll can overlap the receipt write after the original and
+        // index are durable. Only the metadata lock waits. While holding it,
+        // list still probes the per-item operation lock without waiting.
+        let lock = file_lock(&sibling(&path, ".lock"), RECEIPT_LOCK_WAIT)?;
         let rows = match fs::symlink_metadata(&path) {
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => Vec::new(),
             Err(_) => return Err("接收清单不可读取，原资料保留。".into()),
@@ -307,7 +320,7 @@ fn owner_lock(key: &str) -> Result<File, String> {
     let identity = hash(format!("{}\0{}", token, key).as_bytes());
     let root = root_path();
     let parent = root.parent().ok_or("资料目录不可读取。")?;
-    file_lock(&parent.join(format!(".companion-incoming-owner-{identity}.lock")))
+    file_lock(&parent.join(format!(".companion-incoming-owner-{identity}.lock")), Duration::ZERO)
 }
 /// Hold these owner locks through the caller's actual index/files commit.
 /// Unbound files and receipts for a different library are outside this deletion.
@@ -520,20 +533,20 @@ pub(crate) fn import(
         }
         Ok::<(), String>(())
     })();
+    let mut store = Store::open()?;
     match result {
         Ok(()) => {
             entry.state = "complete".into();
             entry.message = Some("原件已保存在指定资料库，可在所属录音中查看。".into());
-            Store::open()?.set(entry)?;
+            store.set(entry)?;
         }
         Err(error) => {
             entry.state = "failed".into();
             entry.message = Some(error.clone());
-            Store::open()?.set(entry)?;
+            store.set(entry)?;
             return Err(error);
         }
     }
-    let store = Store::open()?;
     view(&store, false)
 }
 
@@ -951,6 +964,42 @@ mod tests {
             assert_eq!(fs::read(path).unwrap(), bytes);
         }
     }
+    #[cfg(windows)]
+    #[test]
+    fn receipt_writer_waits_for_a_short_metadata_lock_without_restarting_import() {
+        let scope = Scope::new();
+        let source = scope.root.join("public-receipt.txt");
+        fs::write(&source, b"public attachment").unwrap();
+        receive(vec![source.clone()], &scope.root).unwrap();
+        let mut pending = Store::open().unwrap().rows[0].clone();
+        let _operation = operation(&pending.id).unwrap();
+        pending.state = "attempting".into();
+        Store::open().unwrap().set(pending.clone()).unwrap();
+
+        let lock_path = sibling(&root_path(), ".lock");
+        let metadata_reader = file_lock(&lock_path, Duration::ZERO).unwrap();
+        std::thread::scope(|threads| {
+            threads.spawn(move || {
+                std::thread::sleep(Duration::from_millis(60));
+                drop(metadata_reader);
+            });
+            let mut store = Store::open().unwrap();
+            assert_eq!(store.entry(&pending.id).unwrap().state, "attempting");
+            pending.state = "complete".into();
+            store.set(pending.clone()).unwrap();
+        });
+
+        let blocked_reader = file_lock(&lock_path, Duration::ZERO).unwrap();
+        let began = Instant::now();
+        assert!(Store::open().is_err());
+        assert!(began.elapsed() < Duration::from_secs(2));
+        drop(blocked_reader);
+        let done = list().unwrap();
+        assert_eq!(done["rows"].as_array().unwrap().len(), 1);
+        assert_eq!(done["rows"][0]["state"], "complete");
+        assert_eq!(fs::read(source).unwrap(), b"public attachment");
+    }
+
     #[cfg(windows)]
     #[test]
     fn receipt_dismissal_survives_short_snapshot_reader_and_preserves_other_entries() {
