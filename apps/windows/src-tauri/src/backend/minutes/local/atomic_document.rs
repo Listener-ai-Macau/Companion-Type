@@ -226,6 +226,17 @@ fn source_verified_facts(
             audit.push(json!({"sentenceId":id,"reason":"explicit-proposal-followup-with-timing","evidence":task.evidence}));
             verified.extend([discussion,task]);
         }
+        if let Some((conditions, review)) = timing.and_then(|timing| {
+            super::timed_evidence::operational_conditions(timing, sentences, index)
+        }) {
+            let mut fact = if review { ExtractedFact::review_quote(id,"status",&conditions.text) }
+                else { ExtractedFact::verbatim(id,"recommendation",&conditions.text) };
+            fact.execution_reading = true;
+            extend_references(&mut fact, sentences, &conditions.references);
+            audit.push(json!({"sentenceId":id,"reason":"preserved-timed-operating-conditions","evidence":fact.evidence}));
+            verified.push(fact);
+            current.retain(|item| !matches!(item.role.as_str(),"status"|"recommendation"));
+        }
         if let Some((opposite, statement)) = disputed.remove(&index) {
             let opposite = sentences[opposite]["id"].as_str().unwrap();
             let mut fact = ExtractedFact::review_quote(id, "status", &statement);
@@ -1864,6 +1875,33 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
     let mut parsed=super::evidence_document::parse_with_details_limit(&document.to_string(),session,base,MAX_FACTS,reader_limit)?;
+    if let Some(timing) = super::timed_evidence::Timing::verified(&session.transcript_text,&sentences,&session.utterances) {
+        use crate::companion_v1::{CompanionV1ActionCitation, CompanionV1MinutesActionEvidence};
+        let indices = sentences.iter().enumerate().map(|(i,s)|(s["id"].as_str().unwrap(),i))
+            .collect::<HashMap<_,_>>();
+        let actions = result.bindings.iter().filter_map(|(path,id)| {
+            let position = path.strip_prefix("/actionItems/")?.parse::<usize>().ok()?;
+            let action = result.document.action_items.get(position)?;
+            // A paraphrase shared by two independent actions is not a usable
+            // action identifier across the saved reading and editing surfaces.
+            if result.document.action_items.iter().filter(|other| other.text==action.text).count()!=1 {
+                return None;
+            }
+            let fact = bank.facts.iter().find(|fact| &fact.id==id)?;
+            let mut seen = HashSet::new();
+            let segments: Vec<_> = fact.evidence.iter()
+                .filter_map(|citation| indices.get(citation.as_str()).and_then(|index|timing.source_segment(*index)))
+                .filter(|segment| seen.insert(segment.index)).collect();
+            (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:action.text.clone(),segments})
+        }).collect::<Vec<_>>();
+        if !actions.is_empty() {
+            parsed.minutes.source_action_evidence=Some(CompanionV1MinutesActionEvidence {
+                transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
+                review_revision: session.transcript_review.as_ref().map(|review|review.revision),
+                actions,
+            });
+        }
+    }
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?
         .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
     if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str())) {

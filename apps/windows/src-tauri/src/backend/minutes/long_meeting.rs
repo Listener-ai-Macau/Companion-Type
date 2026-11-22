@@ -1598,7 +1598,7 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
         strategy: "chunkedSourceBacked".into(), source_bytes: session.transcript_text.len(),
         processed_source_bytes: checkpoint.chapters.iter().flatten().map(|c| c.end - c.start).sum(),
         total_chunks: checkpoint.chapters.len(), completed_chunks: completed, resumed_chunks: resumed, complete,
-    }), source_note_context: None, source_review_revision: None, generated_at: generated_at.into(), source: "llm_deepseek".into(),
+    }), source_note_context: None, source_action_evidence: None, source_review_revision: None, generated_at: generated_at.into(), source: "llm_deepseek".into(),
         quality: if complete { "final" } else { "draft" }.into(), summary: vec![], decisions: vec![], action_items: vec![],
         questions: vec![], keywords: vec![], markdown: String::new(), llm_note: failure.map(|e| if completed == checkpoint.chapters.len() {
             format!("本次补充未完成：{e} 已有纪要和原文保留，可再次尝试。")

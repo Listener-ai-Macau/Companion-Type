@@ -337,6 +337,15 @@ export interface CompanionV1ActionItem {
   due: string | null;
 }
 
+export interface CompanionMinutesActionEvidence {
+  transcriptSha256: string;
+  reviewRevision: number | null;
+  actions: {
+    text: string;
+    segments: { index: number; text: string; startMs: number; endMs: number }[];
+  }[];
+}
+
 export interface CompanionMinutesNoteContext {
   noteRevision: number;
   sourceTranscriptText: string;
@@ -358,6 +367,7 @@ export interface CompanionV1MeetingMinutes {
   processing?: CompanionV1MinutesProcessing | null;
   sourceReviewRevision?: number | null;
   sourceNoteContext?: CompanionMinutesNoteContext | null;
+  sourceActionEvidence?: CompanionMinutesActionEvidence | null;
   generatedAt: string;
   /** rules_l0 = deterministic host extractor; llm later. */
   source: 'rules_l0' | 'fixture';
@@ -407,6 +417,7 @@ function cacheMinutesForMode(
     partialCount,
     sourceReviewRevision: minutes.sourceReviewRevision,
     sourceNoteContext: minutes.sourceNoteContext,
+    sourceActionEvidence: minutes.sourceActionEvidence,
   };
   if (session.meetingMode === 'onlineLive') next.onlineLive = variant;
   else next.offlineStore = variant;
@@ -559,6 +570,7 @@ export interface CompanionV1MinutesVariant {
   processing?: CompanionV1MinutesProcessing | null;
   sourceReviewRevision?: number | null;
   sourceNoteContext?: CompanionMinutesNoteContext | null;
+  sourceActionEvidence?: CompanionMinutesActionEvidence | null;
   status: 'minutesReady' | 'retryPending';
   markdown: string;
   source: string;

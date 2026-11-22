@@ -77,7 +77,7 @@ pub(super) fn append(minutes:&mut CompanionV1MeetingMinutes, entries:&[Entry]) {
 mod tests {
     use super::*;
     fn minutes()->CompanionV1MeetingMinutes {
-        CompanionV1MeetingMinutes{processing:None,source_note_context:None,source_review_revision:None,
+        CompanionV1MeetingMinutes{processing:None,source_note_context:None, source_action_evidence:None,source_review_revision:None,
             generated_at:"now".into(),source:"llm_deepseek".into(),quality:"final".into(),
             summary:vec!["讨论产品包装".into()],decisions:vec![],questions:vec![],
             action_items:vec![CompanionV1ActionItem{text:"整理报价".into(),owner:Some("小王".into()),due:Some("周五".into())}],

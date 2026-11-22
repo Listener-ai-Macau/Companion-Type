@@ -5,12 +5,14 @@ use std::{ops::Range, sync::LazyLock};
 use regex::Regex;
 use serde_json::{json, Value};
 
-use crate::companion_v1::CompanionV1UtteranceSegment;
+use crate::companion_v1::{CompanionV1ActionSourceSegment, CompanionV1UtteranceSegment};
 
 pub(super) struct Timing<'a> {
     utterances: &'a [CompanionV1UtteranceSegment],
     sentences_by_utterance: Vec<Range<usize>>,
     utterances_by_sentence: Vec<Range<usize>>,
+    sentence_offsets: Vec<Range<usize>>,
+    utterance_offsets: Vec<Range<usize>>,
 }
 
 impl<'a> Timing<'a> {
@@ -45,6 +47,8 @@ impl<'a> Timing<'a> {
             utterances,
             sentences_by_utterance: utterance_offsets.iter().map(|range| overlaps(range, &sentence_offsets)).collect(),
             utterances_by_sentence: sentence_offsets.iter().map(|range| overlaps(range, &utterance_offsets)).collect(),
+            sentence_offsets,
+            utterance_offsets,
         })
     }
 
@@ -53,6 +57,22 @@ impl<'a> Timing<'a> {
             "usableTimedUtterances":self.utterances.iter().filter(|row| !row.approximate_timing).count(),
             "sentencesWithSavedUtterances":self.utterances_by_sentence.iter().filter(|range| !range.is_empty()).count(),
             "automaticSpeakerNamesUsed":false})
+    }
+
+    /// Prefer the utterance carrying most of the cited sentence, not a
+    /// greeting or interruption at the beginning of a shared text boundary.
+    pub(super) fn source_segment(&self, sentence: usize) -> Option<CompanionV1ActionSourceSegment> {
+        let expected = self.sentence_offsets.get(sentence)?;
+        let (_, std::cmp::Reverse(index)) = self.utterances_by_sentence[sentence].clone().filter_map(|index| {
+            let actual = &self.utterance_offsets[index];
+            let count = actual.end.min(expected.end).saturating_sub(actual.start.max(expected.start));
+            (count>=4 && !self.utterances[index].approximate_timing)
+                .then_some((count,std::cmp::Reverse(index)))
+        }).max()?;
+        let row = &self.utterances[index];
+        Some(CompanionV1ActionSourceSegment {
+            index, text:row.text.clone(), start_ms:row.start_ms, end_ms:row.end_ms,
+        })
     }
 
     pub(super) fn covered_by_one_utterance(&self, indices: &[usize]) -> bool {
@@ -110,6 +130,54 @@ fn has(text: &str, words: &[&str]) -> bool {
 pub(super) struct LinkedWork {
     pub(super) text: String,
     pub(super) references: Vec<usize>,
+}
+
+pub(super) fn operational_conditions(
+    timing: &Timing<'_>, sentences: &[Value], index: usize,
+) -> Option<(LinkedWork, bool)> {
+    static READY_BY: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"([一二两三四五六七八九十0-9]{1,3}点(?:半|[0-9一二三四五六七八九十]{1,3}分)?)(?:之)?前"
+    ).expect("spoken completion time"));
+    static OPENING_TIME: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"([一二两三四五六七八九十0-9]{1,3}点(?:半|[0-9一二三四五六七八九十]{1,3}分)?)(?:才)?(?:开门|开馆)"
+    ).expect("spoken opening time"));
+    static EARLIER: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"提前(?:[一二两三四五六七八九十0-9]{1,3}个?小时|半小时|[一二两三四五六七八九十0-9]{1,3}分钟)"
+    ).expect("relative preparation time"));
+    static STAFFING: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^[嗯啊呃再\s]*(?P<increase>(?:增加|增派|增配)[一二两三四五六七八九十0-9]{1,3}(?:名|个|位)?[\p{Han}]{2,10})"
+    ).expect("concrete staffing proposal"));
+    let current = sentence(sentences,index).trim();
+    if has(current,&["先拖地","先墩地","先清洁地面"]) && has(current,&["后续擦","再擦","之后擦"])
+        && has(current,&["擦拭桌面","器材","设备"])
+        && !timing.neighborhood(index,0,0).is_empty()
+    {
+        let ready = READY_BY.captures(current)?.get(1)?.as_str();
+        let open = OPENING_TIME.captures(current)?.get(1)?.as_str();
+        let earlier = EARLIER.find(current)?.as_str();
+        if ready!=open {
+            return Some((LinkedWork {
+                text:format!("原话待核：开门前先清洁地面，再擦桌面或器材。原话提到{ready}前清洁完、{open}开门和{earlier}，具体开工时点待核。"),
+                references:vec![index],
+            },true));
+        }
+    }
+    let prior = index.checked_sub(1)?;
+    let preceding = sentence(sentences,prior);
+    let staff = STAFFING.captures(current)?.name("increase")?;
+    if !has(preceding,&["我会建议","我建议","我的建议"])
+        || !has(&current[staff.end()..], &["哦可以","嗯可以","这个可以","同意这个建议"])
+        || !timing.neighboring_speech(prior,index)
+    {
+        return None;
+    }
+    let reason = if has(current,&["疲劳作业","持续的这样加班","工作效率也会下降"]) {
+        "，以减轻加班疲劳"
+    } else { "" };
+    Some((LinkedWork {
+        text:format!("建议{}{}，会上有人表示可以，落实情况待核。",staff.as_str(),reason),
+        references:vec![prior,index],
+    },false))
 }
 
 pub(super) fn action_context(
@@ -215,6 +283,19 @@ mod tests {
         let edited="上周复盘。\n检查送货登记。";
         assert!(Timing::verified(edited,&evidence_sentences(&source_units(edited)),&rows).is_none());
         assert_eq!(evidence.receipt()["automaticSpeakerNamesUsed"], false);
+    }
+
+    #[test]
+    fn action_source_uses_the_substantive_saved_fragment_and_verified_timing() {
+        let mut rows = [row("嗯，", 0, 500), row("请先核对合同附件。", 700, 2400)];
+        let source = "嗯，请先核对合同附件。";
+        let sentences = evidence_sentences(&source_units(source));
+        assert_eq!(sentences.len(), 1);
+        let evidence = Timing::verified(source, &sentences, &rows).unwrap();
+        let segment = evidence.source_segment(0).unwrap();
+        assert_eq!((segment.index, segment.text.as_str(), segment.start_ms), (1, "请先核对合同附件。", 700));
+        rows[1].approximate_timing = true;
+        assert!(Timing::verified(source, &sentences, &rows).unwrap().source_segment(0).is_none());
     }
 
     #[test]

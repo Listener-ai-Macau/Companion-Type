@@ -300,7 +300,7 @@ pub(super) fn migrate_sessions(bytes: Vec<u8>) -> Option<Vec<CompanionV1HostSess
                 if let Some(minutes) = session.minutes.as_ref() {
                     let variant = CompanionV1MinutesVariant {
                         template: None, processing: minutes.processing.clone(),
-                        source_note_context: minutes.source_note_context.clone(), source_review_revision: minutes.source_review_revision,
+                        source_note_context: minutes.source_note_context.clone(), source_action_evidence: minutes.source_action_evidence.clone(), source_review_revision: minutes.source_review_revision,
                         status: "minutesReady".to_string(),
                         markdown: minutes.markdown.clone(),
                         source: minutes.source.clone(),
@@ -571,7 +571,7 @@ mod tests {
     fn sample_minutes(markdown: &str) -> CompanionV1MeetingMinutes {
         CompanionV1MeetingMinutes {
             processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             generated_at: "test".to_string(),
             source: "rules_l0".to_string(),
             quality: "draft".to_string(),
@@ -612,7 +612,7 @@ mod tests {
         let mut session = sample_session("legacy", "决定：迁移双纪要状态。");
         session.minutes = Some(crate::companion_v1::CompanionV1MeetingMinutes {
             processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             generated_at: "2026-08-14T00:00:00Z".to_string(),
             source: "rules_l0".to_string(),
             quality: "draft".to_string(),
@@ -901,7 +901,7 @@ mod tests {
         session.minutes = Some(sample_minutes("# final"));
         session.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
             template: None, processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             status: "minutesReady".to_string(),
             markdown: "# final".to_string(),
             source: "rules_l0".to_string(),
@@ -928,7 +928,7 @@ mod tests {
         session.minutes = Some(draft);
         session.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
             template: None, processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             status: "retryPending".to_string(),
             markdown: "# readable fallback draft".to_string(),
             source: "rules_l0".to_string(),

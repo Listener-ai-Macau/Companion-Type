@@ -126,6 +126,8 @@ import {
   companionCanChangeOfflineRecordingLink,
   companionMinutesMatchTranscript,
   companionMinutesReferencedSources,
+  companionActionEvidenceInputText,
+  companionStoredActionSources,
   companionTranscriptSources,
   companionTranscriptSourceIsCurrent,
   type CompanionTranscriptSource,
@@ -1288,6 +1290,28 @@ export function CompanionDashboard({
     window.requestAnimationFrame(()=>document.getElementById('ct-recording-text-review')?.scrollIntoView({block:'start'}));
   },[qaPendingCitation,selectedSession]);
   const transcriptSources = useMemo(() => selectedSession ? companionTranscriptSources(selectedSession) : [], [selectedSession]);
+  const actionEvidence = displayedMinutes?.sourceActionEvidence;
+  const evidenceInput = useMemo(() =>
+    selectedSession && actionEvidence && !selectedMinutesStale && !transcriptReviewUnsaved
+      ? companionActionEvidenceInputText(selectedSession) : null,
+  [selectedSession, actionEvidence, selectedMinutesStale, transcriptReviewUnsaved]);
+  const [verifiedActionInput, setVerifiedActionInput] = useState<{text:string; sha:string} | null>(null);
+  const expectedActionInputSha = actionEvidence?.transcriptSha256;
+  useEffect(() => {
+    if (!evidenceInput || !expectedActionInputSha || !globalThis.crypto?.subtle) return;
+    let current = true;
+    void globalThis.crypto.subtle.digest('SHA-256', new TextEncoder().encode(evidenceInput)).then(value => {
+      if (!current) return;
+      const sha = Array.from(new Uint8Array(value), byte => byte.toString(16).padStart(2, '0')).join('');
+      if (sha === expectedActionInputSha) setVerifiedActionInput({text:evidenceInput,sha});
+    }).catch(() => {/* The existing exact-text lookup remains available. */});
+    return () => { current = false; };
+  }, [evidenceInput, expectedActionInputSha]);
+  const storedActionSources = useMemo(() => {
+    if (!actionEvidence || !verifiedActionInput || verifiedActionInput.text !== evidenceInput
+      || verifiedActionInput.sha !== actionEvidence.transcriptSha256) return undefined;
+    return companionStoredActionSources(actionEvidence, transcriptSources);
+  }, [actionEvidence, evidenceInput, transcriptSources, verifiedActionInput]);
   const sourceContext = useRef({ session: selectedSession, blocked: false });
   // Preparing the selected audio itself temporarily makes the app busy.  Once
   // a seek starts, validate the actual source and recording, not that transient
@@ -1410,6 +1434,7 @@ export function CompanionDashboard({
                 actionsBlocked={recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||selectedMinutesStale||minutesIncomplete
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
+                storedActionSources={storedActionSources}
                 blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
                 onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?(text,returnId)=>{
                   setMeetingPane('source');setSourceSelection(null);
@@ -3995,6 +4020,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   recordingTitle?:string;recordingTime?:string;actionContextKey?:string;
   onToggleAction?:(lineIndex:number,completed:boolean)=>void;actionsBlocked?:boolean;savedMarkdown?:string;
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;sourceFallbackLabel?:string;
+  storedActionSources?: ReadonlyMap<string, CompanionTranscriptSource[]>;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
   onShowTranscript?: (text?:string,returnId?:string) => void;
 }) {
@@ -4068,10 +4094,11 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   </div>;
 }
 
-function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查找原文核对（未定位）", actionChecklist, hideDocumentTitle=false,hideGeneratedNotices=false }: { markdown: string;hideDocumentTitle?:boolean;hideGeneratedNotices?:boolean;
+function MarkdownMinutes({ markdown, sources = [], storedActionSources, blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查找原文核对（未定位）", actionChecklist, hideDocumentTitle=false,hideGeneratedNotices=false }: { markdown: string;hideDocumentTitle?:boolean;hideGeneratedNotices?:boolean;
   actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean;recordingTime?:string;contextKey?:string;title?:string};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
-  onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:(text?:string,returnId?:string)=>void;sourceFallbackLabel?:string }) {
+  onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:(text?:string,returnId?:string)=>void;sourceFallbackLabel?:string;
+  storedActionSources?: ReadonlyMap<string, CompanionTranscriptSource[]> }) {
   const lookupId=useId();
   const actionRows=new Map(savedActions(markdown).flatMap((row,index)=>{
     const saved=actionChecklist?.items[index];
@@ -4125,7 +4152,11 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
         if (block.type === 'title') return hideDocumentTitle&&index===0?null:<h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
         if (block.type === 'heading') return <MeetingSectionHeading key={index} sourceTitle={block.text} className={block.text==='会议概览'?'ct-note-overview-heading':undefined}>{translateMinutesHeading(block.text)}</MeetingSectionHeading>;
         const sourceParts=block.action?nativeActionParts(block.action.text):null;
-        const bodyReferences = companionMinutesReferencedSources(sources, sourceParts?.body??block.text);
+        const savedBody = sourceParts?.body.trim();
+        const savedSources = savedBody && storedActionSources?.has(savedBody)
+          && (actionChecklist?.items ?? visibleActions).filter(action => nativeActionParts(action.text).body.trim() === savedBody).length === 1
+          ? storedActionSources.get(savedBody) : undefined;
+        const bodyReferences = savedSources ?? companionMinutesReferencedSources(sources, sourceParts?.body??block.text);
         const references = bodyReferences.filter(source=>!sourceParts||sourceParts.metadata.every(field=>source.text.includes(field.value.trim())));
         // An edited date/owner must not erase an exact, unique body anchor.
         // Keep it explicitly as a comparison, never attribute new metadata to speech.

@@ -83,7 +83,7 @@ impl CompanionMinutesManager {
     fn generate_inner(&self, session: &CompanionV1HostSession, generated_at: &str,
         template: Option<&crate::companion_v1::MinutesTemplate>) -> CompanionV1MeetingMinutes {
         if let Err(reason) = long_meeting::validate_input(session) {
-            return CompanionV1MeetingMinutes { processing: None, source_note_context: None, source_review_revision: None,
+            return CompanionV1MeetingMinutes { processing: None, source_note_context: None, source_action_evidence: None, source_review_revision: None,
                 generated_at: generated_at.into(), source: "rules_l0".into(), quality: "draft".into(),
                 summary: vec![], decisions: vec![], action_items: vec![], questions: vec![], keywords: vec![],
                 markdown: format!("> 纪要尚未生成；完整转写仍保存在本机。\n\n{reason}\n"), llm_note: Some(reason) };
@@ -182,7 +182,7 @@ pub fn rules_l0_minutes(
 
     let mut minutes = CompanionV1MeetingMinutes {
         processing: None,
-        source_note_context: None, source_review_revision: None,
+        source_note_context: None, source_action_evidence: None, source_review_revision: None,
         generated_at: generated_at.to_string(),
         source: "rules_l0".to_string(),
         quality: "draft".to_string(),
@@ -722,7 +722,7 @@ fn parse_external_minutes_stdout(
                 .unwrap_or_else(|| l0.action_items.clone());
             let mut minutes = CompanionV1MeetingMinutes {
                 processing: None,
-                source_note_context: None, source_review_revision: None,
+                source_note_context: None, source_action_evidence: None, source_review_revision: None,
                 generated_at: l0.generated_at.clone(),
                 source: value
                     .get("source")
@@ -758,7 +758,7 @@ fn parse_external_minutes_stdout(
     // Plain markdown output from command.
     Ok(CompanionV1MeetingMinutes {
         processing: None,
-        source_note_context: None, source_review_revision: None,
+        source_note_context: None, source_action_evidence: None, source_review_revision: None,
         generated_at: l0.generated_at.clone(),
         source: "llm_command".to_string(),
         quality: "final".to_string(),
@@ -1780,7 +1780,7 @@ pub(crate) mod tests {
         let l0 = rules_l0_minutes(&session, "now");
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: "llm_deepseek".into(),
             quality: "final".into(),
@@ -1832,7 +1832,7 @@ pub(crate) mod tests {
         assert!(l0.action_items.is_empty());
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: "llm_deepseek".into(),
             quality: "final".into(),
@@ -1993,7 +1993,7 @@ pub(crate) mod tests {
         assert_eq!(l0.action_items.len(), 1);
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: "llm_deepseek".into(),
             quality: "final".into(),
@@ -2297,7 +2297,7 @@ pub(crate) mod tests {
         let l0 = rules_l0_minutes(&session, "now");
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_note_context: None, source_review_revision: None,
+            source_note_context: None, source_action_evidence: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: String::new(),
             quality: String::new(),

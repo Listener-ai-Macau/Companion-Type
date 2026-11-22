@@ -78,7 +78,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
             if session.meeting_mode != mode || session.minutes_by_mode.offline_store.is_some() || session.minutes_by_mode.online_live.is_some() { return None; }
             session.minutes.as_ref().map(|m| CompanionV1MinutesVariant {
                 template: None, processing: m.processing.clone(),
-                source_note_context: m.source_note_context.clone(), source_review_revision: m.source_review_revision,
+                source_note_context: m.source_note_context.clone(), source_action_evidence: m.source_action_evidence.clone(), source_review_revision: m.source_review_revision,
                 status: session.status.clone(), markdown: m.markdown.clone(), source: m.source.clone(),
                 quality: m.quality.clone(), generated_at: Some(m.generated_at.clone()), partial_count: 0,
             })
@@ -103,7 +103,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
             }
             CompanionV1MinutesVariant {
                 template: None, processing: None, source_review_revision: super::transcript_review::active_revision(session),
-                source_note_context: Some(super::minutes_context::source(session)),
+                source_note_context: Some(super::minutes_context::source(session)), source_action_evidence: None,
                 status: "minutesReady".into(), markdown: String::new(), source: "userAuthored".into(),
                 quality: "final".into(), generated_at: Some(now.into()), partial_count: 0,
             }
@@ -165,7 +165,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
                 // library/export/recovery consumers, without inventing extracted facts.
                 session.minutes = Some(crate::companion_v1::CompanionV1MeetingMinutes {
                     processing:None, source_review_revision:variant.source_review_revision,
-                    source_note_context:variant.source_note_context.clone(), generated_at:now.into(),
+                    source_note_context:variant.source_note_context.clone(), source_action_evidence:variant.source_action_evidence.clone(), generated_at:now.into(),
                     source:variant.source.clone(), quality:variant.quality.clone(), markdown:variant.markdown.clone(),
                     summary:vec![],decisions:vec![],action_items:vec![],questions:vec![],keywords:vec![],llm_note:None,
                 });
@@ -175,6 +175,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
                 minutes.generated_at = variant.generated_at.clone().unwrap_or_else(|| now.into());
                 minutes.source_review_revision = variant.source_review_revision;
                 minutes.source_note_context = variant.source_note_context.clone();
+                minutes.source_action_evidence = variant.source_action_evidence.clone();
                 minutes.quality = variant.quality.clone();
                 minutes.processing = variant.processing.clone();
                 // A freely edited document no longer proves the old structured

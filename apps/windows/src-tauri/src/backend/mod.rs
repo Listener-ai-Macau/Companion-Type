@@ -359,7 +359,7 @@ fn minutes_variant(
 ) -> CompanionV1MinutesVariant {
     CompanionV1MinutesVariant {
         template: None, processing: minutes.processing.clone(),
-        source_note_context: minutes.source_note_context.clone(), source_review_revision: minutes.source_review_revision,
+        source_note_context: minutes.source_note_context.clone(), source_action_evidence: minutes.source_action_evidence.clone(), source_review_revision: minutes.source_review_revision,
         status: if minutes.llm_note.is_some() { "retryPending" } else { "minutesReady" }.to_string(),
         markdown: minutes.markdown.clone(),
         source: minutes.source.clone(),
@@ -5615,7 +5615,7 @@ mod tests {
             crate::control_request(CompanionV1ControlAction::MeetingStart,Some("older-meeting".into()))).unwrap();
         let mut row=fixture.host.sessions.remove(0);row.status="captured".into();
         row.minutes=Some(crate::companion_v1::CompanionV1MeetingMinutes {
-            processing:None,source_note_context:None,source_review_revision:None,
+            processing:None,source_note_context:None, source_action_evidence:None,source_review_revision:None,
             generated_at:"test".into(),source:"rules_l0".into(),quality:"draft".into(),
             summary:vec![],decisions:vec![],action_items:vec![],questions:vec![],keywords:vec![],
             markdown:"prior notes".into(),llm_note:None,

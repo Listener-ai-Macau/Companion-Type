@@ -560,6 +560,8 @@ pub struct CompanionV1MinutesVariant {
     pub source_review_revision: Option<u64>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_note_context: Option<crate::backend::minutes_context::Source>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_action_evidence: Option<CompanionV1MinutesActionEvidence>,
     pub status: String,
     pub markdown: String,
     pub source: String,
@@ -575,7 +577,7 @@ fn cache_fixture_minutes_for_mode(session: &mut CompanionV1HostSession) {
     };
     let variant = CompanionV1MinutesVariant {
         template: None, processing: minutes.processing.clone(),
-        source_note_context: minutes.source_note_context.clone(), source_review_revision: minutes.source_review_revision,
+        source_note_context: minutes.source_note_context.clone(), source_action_evidence: minutes.source_action_evidence.clone(), source_review_revision: minutes.source_review_revision,
         status: "minutesReady".to_string(),
         markdown: minutes.markdown.clone(),
         source: minutes.source.clone(),
@@ -621,6 +623,32 @@ pub struct CompanionV1ActionItem {
     pub due: Option<String>,
 }
 
+/// A generated action is tied to the transcript used for that generation.
+/// Older minutes have no stored timed evidence and keep the text lookup.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MinutesActionEvidence {
+    pub transcript_sha256: String,
+    pub review_revision: Option<u64>,
+    pub actions: Vec<CompanionV1ActionCitation>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1ActionCitation {
+    pub text: String,
+    pub segments: Vec<CompanionV1ActionSourceSegment>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1ActionSourceSegment {
+    pub index: usize,
+    pub text: String,
+    pub start_ms: u64,
+    pub end_ms: u64,
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1MeetingMinutes {
@@ -630,6 +658,8 @@ pub struct CompanionV1MeetingMinutes {
     pub source_review_revision: Option<u64>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_note_context: Option<crate::backend::minutes_context::Source>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_action_evidence: Option<CompanionV1MinutesActionEvidence>,
     pub generated_at: String,
     pub source: String,
     pub quality: String,
@@ -2036,7 +2066,7 @@ fn build_minutes(
 
     let mut minutes = CompanionV1MeetingMinutes {
         processing: None,
-        source_note_context: None, source_review_revision: None,
+        source_note_context: None, source_action_evidence: None, source_review_revision: None,
         generated_at: generated_at.to_string(),
         source: "rules_l0".to_string(),
         quality: "draft".to_string(),

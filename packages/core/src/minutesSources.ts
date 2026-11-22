@@ -1,7 +1,7 @@
-import type { CompanionV1HostSession } from './companionV1';
+import type { CompanionMinutesActionEvidence, CompanionV1HostSession } from './companionV1';
 import { companionSessionHasFinalTranscript } from './companionV1';
 import { companionReviewedUtterances, companionTranscriptReviewIsStale,
-  companionTranscriptReviewRevision, companionTranscriptSpeakerLabel } from './transcriptReview';
+  companionTranscriptReviewRevision, companionTranscriptReviewedSpeakerName, companionTranscriptSpeakerLabel } from './transcriptReview';
 
 /** A local, exact timed transcript anchor. This is not a claim that a summary
  * is semantically correct. Keep text/timing/revision so async navigation can
@@ -72,6 +72,42 @@ export function companionTranscriptSourceIsCurrent(session: CompanionV1HostSessi
     && Boolean(current.approximateTiming) === Boolean(source.approximateTiming)
     && revision === source.reviewRevision && Number.isSafeInteger(current.startMs)
     && Number.isSafeInteger(current.endMs) && current.startMs >= 0 && current.endMs > current.startMs);
+}
+
+/** The native minutes input drops unreviewed diarization labels. Keep this
+ * projection in sync with transcript_review::minutes_input. */
+export function companionActionEvidenceInputText(session: CompanionV1HostSession): string {
+  const active = companionTranscriptReviewRevision(session) !== null;
+  const review = active ? session.transcriptReview : undefined;
+  if (review && !review.text) {
+    return companionReviewedUtterances(session).map((row, index) => {
+      const label = companionTranscriptReviewedSpeakerName(session, index);
+      return label ? label + ': ' + row.text : row.text;
+    }).join('\n');
+  }
+  const text = review?.text ?? session.transcriptText;
+  const recording = !!(session.utterances?.length || session.audioStored || session.audioPath)
+    || ['boardDevice', 'deviceFlash', 'hostMicrophone', 'hostMeeting', 'importedAudio', 'derivedAudio'].includes(session.source);
+  return recording ? text.replace(/^说话人(?:[0-9]+|[?？])[:：] ?/gm, '') : text;
+}
+
+/** Call only after verifying the transcript digest. Every cited utterance must
+ * still be the same saved utterance; a partial match cannot stand in for it. */
+export function companionStoredActionSources(evidence: CompanionMinutesActionEvidence,
+  sources: readonly CompanionTranscriptSource[]): ReadonlyMap<string, CompanionTranscriptSource[]> {
+  const byIndex = new Map(sources.map(source => [source.index, source]));
+  const links = new Map<string, CompanionTranscriptSource[]>();
+  for (const item of evidence.actions) {
+    if (evidence.actions.filter(other => other.text === item.text).length !== 1) continue;
+    const matching = item.segments.flatMap(segment => {
+      const source = byIndex.get(segment.index);
+      return source && source.reviewRevision === evidence.reviewRevision && !source.approximateTiming
+        && source.text === segment.text && source.startMs === segment.startMs && source.endMs === segment.endMs
+        ? [source] : [];
+    });
+    if (matching.length > 0 && matching.length === item.segments.length) links.set(item.text.trim(), matching);
+  }
+  return links;
 }
 
 // Long-meeting evidence replaces the newline between ASR segments with a
