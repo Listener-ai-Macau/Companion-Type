@@ -71,7 +71,12 @@ pub(super) fn question_only(source: &str) -> bool {
     let source = source.trim();
     let words = split_turn_label(source).map_or(source, |(_, reply)| reply.trim());
     let body = words.trim_end_matches(['。', '！', '，', ',', '.', '？', '?', ' ', '；', ';']);
-    let asked = body.ends_with('吗') || body.contains("还是说")
+    let alternative = body.split_once("还是说").is_some_and(|(before, after)| {
+        let after = after.trim_start_matches(['，', ' ', ',']);
+        !after.starts_with("这个，") && !after.starts_with("这个,")
+            && ["是", "有", "能", "要", "可以"].iter().any(|cue| before.contains(cue))
+    });
+    let asked = body.ends_with('吗') || alternative
         || (words.ends_with(['？','?']) && has(body, &["是否", "能不能", "可不可以", "有没有",
             "会不会", "要不要", "想问", "请问", "还是", "多少", "怎么", "哪几"]))
         || ["是否", "请问", "我想问", "我想确认一下是否"].iter().any(|cue| body.starts_with(cue));
@@ -150,6 +155,41 @@ pub(super) fn frames(sentences: &[Value], timing: Option<&Timing<'_>>) -> Vec<Fr
         start = end;
     }
     frames
+}
+
+pub(super) struct ExternalReview {
+    pub(super) anchor: usize,
+    pub(super) sources: Vec<usize>,
+}
+
+/// Coalesce a run of discussion about outside terms without treating
+/// intervening original statements as covered or changing their disposition.
+pub(super) fn external_reviews(frames: &[Frame], sentences: &[Value]) -> Vec<ExternalReview> {
+    let mut reviews: Vec<ExternalReview> = Vec::new();
+    for frame in frames.iter().filter(|frame| frame.kind==Kind::ExternalTerms) {
+        let start = frame.sentences.start;
+        let merge = reviews.last().and_then(|review| review.sources.last()).is_some_and(|last| {
+            start.saturating_sub(*last)<=7 && !(*last+1..start).any(|i| changes_context(text(sentences,i)))
+        });
+        if !merge {
+            reviews.push(ExternalReview { anchor:start, sources:Vec::new() });
+        }
+        let latest = reviews.last_mut().expect("initialized external review");
+        latest.sources.extend(frame.sentences.clone());
+    }
+    // Prefer a clause with a named source and an actual term over a casual
+    // question that happened to start the discussion.
+    for review in &mut reviews {
+        let rank = |position| {
+            let words=text(sentences,position);
+            (has(words,PUBLIC_TERMS) && !question_only(words), public_authority_reference(words),
+             words.contains('万') || words.contains('元'))
+        };
+        if let Some(&position)=review.sources.iter().max_by_key(|&&i|(rank(i),std::cmp::Reverse(i))) {
+            review.anchor=position;
+        }
+    }
+    reviews
 }
 
 #[cfg(test)]

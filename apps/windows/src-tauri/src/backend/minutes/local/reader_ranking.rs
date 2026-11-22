@@ -133,9 +133,33 @@ pub(super) enum OperationalEvidence {
     SafetyRequirement,
     DecisionProcedure,
     AvailabilityBoundary,
+    RecordedResult,
+    ApprovalPrerequisite,
+    CorrectiveRequirement,
+}
+
+/// Strict source dispositions deserve a slot even if the same original
+/// clause is recovered as a quotation instead of a model-written summary.
+pub(super) fn binding_requirement(text: &str) -> Option<OperationalEvidence> {
+    const APPROVAL: &[&str] = &["上报", "报董事", "报给", "提报", "提交审批", "审批通过", "书面批准", "批复后"];
+    let has=|terms: &[&str]|terms.iter().any(|word|text.contains(word));
+    if has(&["预计", "我猜", "假设", "比如", "有没有", "能不能", "是否", "转述"]) { return None; }
+    if has(APPROVAL)
+        && has(&["还得", "还要", "尚需", "必须先", "须先", "等到", "之后才", "后才能", "待审批", "需审批"])
+    {
+        return Some(OperationalEvidence::ApprovalPrerequisite);
+    }
+    if (has(&["任务","工作","订单","交付","验收"])
+        && has(&["已完成","已经完成","还是完成了","都基本完成","都基本上是完成了","基本上都完成了"]))
+        || (has(&["退还了","返还了","只退了","已经退了"]) && has(&["学费","书费","住宿费","服务费","押金","报名费"]))
+    {
+        return Some(OperationalEvidence::RecordedResult);
+    }
+    None
 }
 
 pub(super) fn concrete_execution(text: &str) -> Option<OperationalEvidence> {
+    if let Some(kind)=binding_requirement(text) { return Some(kind); }
     static DATE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"[0-9０-９零一二两三四五六七八九十]{1,3}月[0-9０-９零一二两三四五六七八九十]{1,3}(?:日|号)"
     ).expect("explicit calendar date"));
@@ -162,6 +186,11 @@ pub(super) fn concrete_execution(text: &str) -> Option<OperationalEvidence> {
         && has(&["给", "只", "须", "要", "对象", "登记", "适用", "保安", "招聘", "尽量"])
     {
         return Some(OperationalEvidence::RecipientScope);
+    }
+    if has(&["标签","价签","标识","凭证"])
+        && has(&["标错","放错","贴错","写错","对不上","信息不符","有误"])
+        && has(&["误导","管理","核对","纠正","校对","及时","不符"]) {
+        return Some(OperationalEvidence::CorrectiveRequirement);
     }
     if has(&["消防", "防滑", "线路老化", "安全措施", "安全风险", "地面光滑", "地面比较光滑"])
         && has(&["注意", "需要", "要", "必须", "更换", "检查", "防止", "工作人员带", "工作人员，带", "采取", "陪同"])

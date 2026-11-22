@@ -213,6 +213,18 @@ fn source_verified_facts(
         })?;
         Some((earlier, position, subject, literal))
     }).collect();
+    let external: BTreeMap<_,_> = source_context::external_reviews(&frames,sentences).into_iter()
+        .map(|review|(review.anchor,review.sources)).collect();
+    let scope_conflicts: Vec<_> = (0..sentences.len()).filter(|i| frames_at[*i].is_none() && !hypothetical.contains(i))
+        .filter_map(|i| delivery_evidence::scope_conflict(sentences,i))
+        .filter(|pair| frames_at[pair.later].is_none() && !hypothetical.contains(&pair.later))
+        .collect();
+    let label_corrections: BTreeMap<_,_> = (0..sentences.len()).filter_map(|index| {
+        let (prior,reading)=delivery_evidence::price_label_correction(sentences,index)?;
+        (frames_at[index].is_none() && frames_at[prior].is_none()
+            && !hypothetical.contains(&index) && !hypothetical.contains(&prior))
+            .then_some((index,(prior,reading)))
+    }).collect();
     let mut delegation_actions: BTreeMap<usize, (CompanionV1ActionItem, Vec<usize>, Option<usize>, bool)> = BTreeMap::new();
     let mut work_tails = HashSet::new();
     for (index, sentence) in sentences.iter().enumerate() {
@@ -237,6 +249,23 @@ fn source_verified_facts(
         }
         if hypothetical.contains(&index) { continue; }
         if let Some(frame) = frames_at[index].map(|i| &frames[i]) {
+            if frame.kind == source_context::Kind::ExternalTerms {
+                if let Some(sources)=external.get(&index) {
+                    let prefix = "原话待核：外部机构的申请或资助条件。";
+                    let passage = bounded_original_quotes_with_width(original,90-prefix.chars().count())
+                        .into_iter().next().unwrap_or_default();
+                    let mut fact=ExtractedFact::review_quote(id,"status",&format!("{prefix}{passage}"));
+                    // Every underlying sentence remains archived; the concise
+                    // reading link carries bounded, representative references.
+                    let stride=sources.len().div_ceil(7).max(1);
+                    let links=sources.iter().step_by(stride).copied().collect::<Vec<_>>();
+                    extend_references(&mut fact,sentences,&links);
+                    audit.push(json!({"sentenceId":id,"reason":"unverified-external-terms",
+                        "evidence":fact.evidence,"groupedSources":sources.iter().map(|i| &sentences[*i]["id"]).collect::<Vec<_>>() }));
+                    verified.push(fact);
+                }
+                continue;
+            }
             if frame.sentences.start == index {
                 let mut fact = match frame.kind {
                     source_context::Kind::Example => {
@@ -244,13 +273,7 @@ fn source_verified_facts(
                             .into_iter().next().unwrap_or_else(|| original.trim().chars().take(64).collect());
                         ExtractedFact::verbatim(id,"opinion",&format!("举例讨论：{excerpt}"))
                     }
-                    source_context::Kind::ExternalTerms => {
-                        let prefix = "原话待核：会上谈到外部机构的申请或资助条件。";
-                        let excerpt = bounded_original_quotes_with_width(original,90-prefix.chars().count())
-                            .into_iter().next();
-                        let text = excerpt.map_or_else(|| prefix.to_owned(), |excerpt| format!("{prefix}{excerpt}"));
-                        ExtractedFact::review_quote(id,"status",&text)
-                    }
+                    source_context::Kind::ExternalTerms => unreachable!("handled as grouped review"),
                     source_context::Kind::Reported => {
                         let mut fact = ExtractedFact::review_quote(id,"status",
                             "原话待核：会上转述了看到或听到的外部说法，内容未核实。");
@@ -263,10 +286,17 @@ fn source_verified_facts(
                 audit.push(json!({"sentenceId":id,"reason":match frame.kind {
                     source_context::Kind::Example=>"source-example-scope",
                     source_context::Kind::Reported=>"unverified-reported-source-scope",
-                    source_context::Kind::ExternalTerms=>"unverified-external-terms",
+                    source_context::Kind::ExternalTerms=>unreachable!("handled as grouped review"),
                 },"evidence":fact.evidence}));
                 verified.push(fact);
             }
+            continue;
+        }
+        if let Some(reading)=delivery_evidence::inspection_time_review(original) {
+            let mut fact=ExtractedFact::review_quote(id,"status",&reading);
+            fact.execution_reading=true;
+            audit.push(json!({"sentenceId":id,"reason":"malformed-inspection-duration","evidence":fact.evidence}));
+            verified.push(fact);
             continue;
         }
         if !current.is_empty() && source_context::question_only(original) {
@@ -769,6 +799,33 @@ fn source_verified_facts(
             verified.extend(current);
         }
     }
+    for (later,(earlier,reading)) in label_corrections {
+        let ids=[sentences[earlier]["id"].as_str().unwrap(),sentences[later]["id"].as_str().unwrap()];
+        verified.retain(|fact| !matches!(fact.role.as_str(),"status" | "recommendation")
+            || !fact.evidence.iter().any(|id|ids.contains(&id.as_str()))
+            || !["价签","价格标签","标价牌"].iter().any(|word|fact.text.contains(word)));
+        let mut fact=ExtractedFact::verbatim(ids[0],"recommendation",&reading);
+        extend_references(&mut fact,sentences,&[later]);
+        fact.execution_reading=true;
+        audit.push(json!({"sentenceId":ids[0],"reason":"linked-label-error-and-correction","evidence":fact.evidence}));
+        let next=verified.iter().position(|item|item.evidence[0].as_str() > ids[0]).unwrap_or(verified.len());
+        verified.insert(next,fact);
+    }
+    // A source-level disagreement must survive even when extraction omitted
+    // one side. Withdraw the conflicting clauses, not unrelated facts in the turn.
+    for pair in scope_conflicts {
+        let ids=[sentences[pair.earlier]["id"].as_str().unwrap(),sentences[pair.later]["id"].as_str().unwrap()];
+        verified.retain(|fact| {
+            !(fact.evidence.iter().any(|reference|ids.contains(&reference.as_str()))
+                && fact.text.contains(pair.subject) && pair.operations.iter().any(|verb|fact.text.contains(verb)))
+        });
+        let mut review=ExtractedFact::review_quote(ids[0],"status",&pair.reading);
+        extend_references(&mut review,sentences,&[pair.later]);
+        review.execution_reading=true;
+        audit.push(json!({"sentenceId":ids[0],"reason":"opposed-scope-in-source","evidence":review.evidence}));
+        let next=verified.iter().position(|fact|fact.evidence[0].as_str() > ids[0]).unwrap_or(verified.len());
+        verified.insert(next,review);
+    }
     if let Some(timing) = timing {
         let indices = sentences.iter().enumerate().map(|(index,row)|(row["id"].as_str().unwrap(),index))
             .collect::<HashMap<_,_>>();
@@ -1027,6 +1084,8 @@ fn build_bank_with_timing(
         if f.quantity_needs_review {
             quantity_quotes.insert(id.clone());
         }
+        let binding = super::reader_ranking::binding_requirement(&f.text)
+            .filter(|kind|super::reader_ranking::binding_requirement(anchor_text)==Some(*kind));
         if f.source_needs_review {
             source_quotes.insert(id.clone());
             if f.text.starts_with("原话待核：") {
@@ -1068,8 +1127,11 @@ fn build_bank_with_timing(
                 reader_priority.insert(id.clone(), priority);
             }
         }
-        if f.execution_reading && placement == Placement::Topic {
+        if placement == Placement::Topic && (f.execution_reading || binding.is_some()) {
             execution_reading.insert(id.clone());
+            if binding.is_some() {
+                verification.push(json!({"sentenceId":anchor,"reason":"verified-material-condition-in-reader","factId":id}));
+            }
         }
         facts.push(Fact { id, kind, placement, text:f.text, owner:f.owner, due:f.due, evidence:f.evidence });
         if facts.len()>MAX_FACTS{return Err(fail());}

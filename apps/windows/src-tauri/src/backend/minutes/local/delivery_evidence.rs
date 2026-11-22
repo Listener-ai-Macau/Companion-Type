@@ -235,6 +235,100 @@ pub(super) fn disputed_statement(sentences: &[Value], index: usize) -> Option<(u
     Some((opposite, format!("原话待核：{subject}是否会{predicate}，两位发言者说法不同。")))
 }
 
+/// A label error and the requested response are one operational issue,
+/// even when the transcript calls the mislabeled value only a price.
+pub(super) fn price_label_correction(sentences: &[Value], index: usize) -> Option<(usize, String)> {
+    let request=body(sentences[index]["text"].as_str()?);
+    if !has(request,&["价签","价格标签","标价牌"]) || !has(request,&["管理","核对","校对","更正","纠正"])
+        || !has(request,&["希望","建议","请","需要","务必"]) || has(request,&["如果","比方","假如","不用","无需"])
+    {
+        return None;
+    }
+    let prior=(index.saturating_sub(2)..index).rev().find(|&candidate| {
+        let words=body(sentences[candidate]["text"].as_str().expect("source sentence"));
+        has(words,&["价钱","价格","价签","标价"]) && has(words,&["标错","放错","贴错","对不上"])
+            && has(words,&["误导","型号","规格","选购","顾客"]) && !has(words,&["举例","假设","比如说","听说"])
+    })?;
+    let issue=body(sentences[prior]["text"].as_str()?);
+    let errors=["标错","放错","贴错","对不上"].into_iter().filter(|phrase|issue.contains(phrase)).collect::<Vec<_>>().join("、");
+    let subject=if issue.contains("小家电") { "小家电" } else { "商品" };
+    let harm=if issue.contains("误导") { "，可能误导选购" } else { "" };
+    let remedy=if has(request,&["核对","校对"]) { "核对" } else if has(request,&["更正","纠正"]) { "纠正" } else { "加强管理" };
+    Some((prior,format!("{subject}价签有{errors}的情况{harm}；建议对价签{remedy}。")))
+}
+
+pub(super) struct ScopeConflict {
+    pub(super) earlier: usize,
+    pub(super) later: usize,
+    pub(super) subject: &'static str,
+    pub(super) operations: &'static [&'static str],
+    pub(super) reading: String,
+}
+
+/// A prohibition followed by instructions for the same people doing the
+/// prohibited activity is not permission unless an explicit change is stated.
+pub(super) fn scope_conflict(sentences: &[Value], index: usize) -> Option<ScopeConflict> {
+    const AUDIENCE: &[&str] = &["观众", "访客", "参观者", "外来人员"];
+    const ACCESS: &[&str] = &["入场", "进场", "进校", "进入"];
+    const TRADABLE: &[&str] = &["交易", "转让", "转售"];
+    let original=body(sentences[index]["text"].as_str()?);
+    if has(original,&["假设", "举例", "比如说", "曾经", "传闻"]) { return None; }
+    let limit=(index+7).min(sentences.len());
+    for &subject in AUDIENCE {
+        if !contains_access_ban(original,subject,ACCESS) { continue; }
+        for later in index+1..limit {
+            let words=body(sentences[later]["text"].as_str()?);
+            if has(words,&["改为", "作废", "据核实", "已经复核", "刚才说错", "以此为准", "下一项"]) { break; }
+            if has(words,&["如果", "假如", "设想", "是否", "能不能"])
+                || !has(words,&["要求", "一定", "必须", "需要", "分批", "登记", "应当"])
+                || !ACCESS.iter().any(|verb| words.contains(&format!("{subject}{verb}")))
+                || contains_access_ban(words,subject,ACCESS)
+            {
+                continue;
+            }
+            return Some(ScopeConflict { earlier:index,later,subject,operations:ACCESS,
+                reading:format!("原话待核：{subject}能否入场，会上既说不允许，也讨论了入场条件。") });
+        }
+    }
+    if original.contains("碎片") && has(original,&["都可以交易","都是可以交易","都能交易","都可交易"]) {
+        for later in index+1..limit {
+            let words=body(sentences[later]["text"].as_str()?);
+            if has(words,&["假设","举例","是否","能不能","吗","下一项"]) { continue; }
+            if words.contains("碎片") && has(words,&["不能交易","不可交易","不可以交易"])
+                && words.contains("游戏时长") {
+                return Some(ScopeConflict { earlier:index,later,subject:"碎片",operations:TRADABLE,
+                    reading:"原话待核：碎片的交易范围。会上有笼统的可交易说法，另明确游戏时长获得的碎片不能交易。".to_owned() });
+            }
+        }
+    }
+    None
+}
+
+fn contains_access_ban(words: &str, subject: &str, operations: &[&str]) -> bool {
+    const DENIAL: &[&str] = &["不允许有", "不允许", "禁止", "不准", "不得", "不能", "谢绝"];
+    operations.iter().any(|verb| {
+        DENIAL.iter().any(|denied| words.contains(&format!("{denied}{subject}{verb}"))
+            || words.contains(&format!("{subject}{denied}{verb}")))
+    })
+}
+
+/// A malformed quantity must not turn a real inspection requirement into a
+/// definitive numerical instruction. The original fragment remains linked.
+pub(super) fn inspection_time_review(source: &str) -> Option<String> {
+    static COMBINED_TIME: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:十[一二三四五六七八九]十|[一二三四五六七八九]十十)[一二三四五六七八九]?(?:分钟|小时|秒)"
+    ).expect("run-together whole-number time expressions"));
+    let words=body(source);
+    let amount=COMBINED_TIME.find(words)?;
+    if !has(words,&["检测","检查","校验","验收","维护","消毒"]) { return None; }
+    let lead=words[..amount.start()].trim_end_matches(['，',',',' ','、']);
+    let lead=["不低于","不少于","不超过","至少","大约","约"].iter()
+        .find_map(|suffix| lead.strip_suffix(suffix)).unwrap_or(lead).trim_end();
+    let chunk:String=lead.chars().take(54).collect();
+    let heading="原话待核：检查时长。";
+    Some(format!("{heading}{chunk}。"))
+}
+
 pub(super) struct RevisedReading {
     pub(super) superseded: Vec<usize>,
     pub(super) support: Vec<usize>,
@@ -503,4 +597,54 @@ pub(super) fn presents_bid(sentences: &[Value], evidence: &[String]) -> bool {
                     && !has(words, &["已经", "最终决定", "已确定"])
             })
     })
+}
+
+#[cfg(test)]
+mod public_condition_tests {
+    use super::*;
+
+    fn rows(words: &[&str]) -> Vec<Value> {
+        words.iter().enumerate().map(|(i, words)| serde_json::json!({"id":format!("e{i:04}"),"text":words})).collect()
+    }
+
+    #[test]
+    fn contradictory_entry_requirements_bind_both_original_turns() {
+        let evidence=rows(&[
+            "篮球赛除了参赛者和教练，不允许有观众入场，防止聚集。",
+            "观众入场一定要消毒，做好防护。",
+            "然后分批入场。",
+        ]);
+        let found=scope_conflict(&evidence,0).unwrap();
+        assert_eq!((found.earlier,found.later),(0,1));
+        assert!(found.reading.starts_with("原话待核：") && found.reading.contains("观众"));
+        let exception=rows(&["不允许有观众入场。","工作人员进入一定要做好登记。"]);
+        assert!(scope_conflict(&exception,0).is_none());
+        let clarified=rows(&["不允许访客进场。","以前的做法作废，以此为准，访客进场须登记。"]);
+        assert!(scope_conflict(&clarified,0).is_none());
+    }
+
+    #[test]
+    fn a_scoped_exception_cannot_become_all_items_are_tradable() {
+        let evidence=rows(&["这些碎片都是可以交易的。","嗯。","但是游戏时长得到的碎片是不可以交易的。"]);
+        let found=scope_conflict(&evidence,0).unwrap();
+        assert_eq!(found.later,2);
+        assert!(found.reading.contains("游戏时长获得的碎片不能交易"));
+    }
+
+    #[test]
+    fn malformed_time_not_published_as_an_inspection_duration() {
+        let pending=inspection_time_review("过山车开过十来回后，检查安全带和轨道不低于十二十分钟。").unwrap();
+        assert!(pending.contains("检查时长") && pending.contains("安全带") && pending.contains("轨道") && !pending.contains("十二十分钟"));
+        assert!(inspection_time_review("提交后检查安全带和轨道至少二十分钟。").is_none());
+    }
+
+    #[test]
+    fn labels_are_only_reconstructed_with_a_linked_correction() {
+        let evidence=rows(&["小家电型号多，价钱标错或放错，会误导顾客。","建议超市加强价签管理。"]);
+        let (prior, note)=price_label_correction(&evidence,1).unwrap();
+        assert_eq!(prior,0);
+        assert!(note.contains("小家电") && note.contains("放错") && note.contains("建议") && note.contains("价签"));
+        let unrelated=rows(&["小家电种类多，顾客选购范围大。","建议超市加强价签管理。"]);
+        assert!(price_label_correction(&unrelated,1).is_none());
+    }
 }
