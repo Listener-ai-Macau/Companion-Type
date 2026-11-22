@@ -219,6 +219,70 @@ pub(super) fn categorical_safety_claim(claim: &str, evidence: &str) -> bool {
             .iter().any(|cue| claim.contains(cue))
 }
 
+pub(super) fn risk_followed_by_mitigation(warning: &str, response: &str) -> bool {
+    let response = response.trim();
+    ["不安全", "有危险", "有风险", "容易受伤", "有安全隐患"]
+        .iter().any(|cue| warning.contains(cue))
+        && !response.contains(['？', '?'])
+        && ["然后", "所以", "因此", "那就"].iter().any(|cue| response.starts_with(cue))
+        && ["安全措施", "防护措施", "陪同", "工作人员带", "工作人员，带", "安排专人"]
+            .iter().any(|cue| response.contains(cue))
+}
+
+pub(super) fn offers_mitigation(source: &str, next: &str) -> Option<String> {
+    use super::super::source_resolution::split_turn_label;
+    let (speaker, warning) = split_turn_label(source.trim())?;
+    let continuation = if let Some((other, words)) = split_turn_label(next.trim()) {
+        if other != speaker { return None; }
+        words.trim()
+    } else {
+        if source.ends_with('\n') { return None; }
+        next.trim()
+    };
+    let warning = warning.trim();
+    if !risk_followed_by_mitigation(warning, continuation) { return None; }
+    let separator = if warning.ends_with(['？', '?', '。', '！', '!']) { "" } else { "。" };
+    let sentence = format!("{warning}{separator}{continuation}");
+    canonical_brief::line(&sentence, 90).then_some(sentence)
+}
+
+/// A qualified exception carries its own literal subject. Keep that
+/// source alongside earlier restrictions on the same object.
+pub(super) fn restriction_exception(source: &str) -> Option<(&str, &str)> {
+    static RELAXED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:如果|若是|要是|考虑到|遇到)[^。！？；]{2,36}(?:可以不{1,2}|不必|无须|无需)\s*(?:控制|禁止|限制|拦截|强制|要求|禁止携带)"
+    ).expect("condition that relaxes a restriction"));
+    let words = super::super::source_resolution::split_turn_label(source.trim())
+        .map_or(source.trim(), |(_, body)| body.trim());
+    let found = RELAXED.find(words)?;
+    let before = &words[..found.start()];
+    if before.chars().count() > 32 { return None; }
+    let subject = super::chapter_labels::segmenter().tag(before, false).into_iter().rev()
+        .filter(|tag| tag.tag.starts_with('n'))
+        .map(|tag| tag.word.trim_end_matches('儿'))
+        .find(|word| {
+            (2..=9).contains(&word.chars().count())
+                && !["事情", "情况", "问题", "方面", "东西"].contains(word)
+        })?;
+    canonical_brief::line(words, 74).then_some((subject, words))
+}
+
+pub(super) fn unqualified_restriction(claim: &str, subject: &str) -> bool {
+    claim.contains(subject)
+        && ["禁止", "不得", "不许", "不允许", "不能携带", "不可以携带", "不准", "一律不"]
+            .iter().any(|cue| claim.contains(cue))
+        && !["如果", "除非", "可以不", "不必", "无需", "例外", "视情况"]
+            .iter().any(|cue| claim.contains(cue))
+}
+
+pub(super) fn addressed_generalization(source: &str, claim: &str) -> bool {
+    let emphatic = ["基本上", "绝对", "肯定", "根本", "一定"];
+    source.contains('你')
+        && ["刚毕业", "刚入职", "进了", "去了", "到那之后"].iter().any(|cue| source.contains(cue))
+        && emphatic.iter().any(|cue| source.contains(cue) && claim.contains(cue))
+        && !["已经核实", "数据显示", "实际记录"].iter().any(|cue| source.contains(cue))
+}
+
 pub(super) fn loses_binary_uncertainty(claim: &str, anchor: &str) -> bool {
     anchor.contains("有无") && !has_open_qualifier(claim)
         && !["有无", "有没有", "待确认", "待核", "尚不明确", "仍不明确"].iter().any(|cue| claim.contains(cue))

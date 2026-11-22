@@ -114,6 +114,14 @@ pub(super) fn parse_bank(raw:&str,source:&str)->Result<Bank,String>{
     build_bank(extracted.facts,source)
 }
 
+fn is_covered_by_literal(fact: &ExtractedFact, literal: &str) -> bool {
+    if matches!(fact.role.as_str(), "action" | "decision" | "question") {
+        return false;
+    }
+    let text = canonical_brief::normalized(&fact.text);
+    !text.is_empty() && literal.contains(&text)
+}
+
 fn source_verified_facts(
     extracted: Vec<ExtractedFact>,
     sentences: &[Value],
@@ -138,12 +146,27 @@ fn source_verified_facts(
     let actors = source_commitments::meeting_actor_labels(sentences);
     let participants = source_commitments::meeting_roles(sentences);
     let mut continued_actions = HashSet::new();
+    let mut mitigation_continuations = BTreeMap::<usize, String>::new();
     let mut protected_claims = HashSet::new();
+    // Resolve scope changes before chapter selection. The model often cites
+    // the original restrictive statement without citing its later exception.
+    let exceptions: Vec<_> = sentences.iter().enumerate().filter_map(|(position, sentence)| {
+        let id = sentence["id"].as_str().unwrap();
+        let (subject, literal) = source_grounding::restriction_exception(known[id])?;
+        let earlier = (position.saturating_sub(20)..position).rev().find(|&index| {
+            let source_id = sentences[index]["id"].as_str().unwrap();
+            source_grounding::unqualified_restriction(known[source_id], subject)
+        })?;
+        Some((earlier, position, subject, literal))
+    }).collect();
     let mut delegation_actions: BTreeMap<usize, (CompanionV1ActionItem, Vec<usize>, Option<usize>, bool)> = BTreeMap::new();
     for (index, sentence) in sentences.iter().enumerate() {
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
+        if let Some(passage) = mitigation_continuations.remove(&index) {
+            current.retain(|item| !is_covered_by_literal(item, &passage));
+        }
         if let Some((item, references, continuation, disputed)) = delegation_actions.remove(&index) {
             let body = item.text.clone();
             let mut fact = if disputed {
@@ -170,6 +193,37 @@ fn source_verified_facts(
             current.retain(|item| !source_grounding::shared_han_phrase(&item.text, literal, 3));
             verified.push(ExtractedFact::review_quote(id, "status", &passage));
             audit.push(json!({"sentenceId":id,"reason":"provisional-choice"}));
+        }
+        for &(earlier, position, subject, literal) in &exceptions {
+            if position == index {
+                let source = sentences[earlier]["id"].as_str().unwrap();
+                let mut fact = ExtractedFact::review_quote(id, "status", &format!("原话待核：适用范围。{literal}"));
+                fact.evidence.push(source.to_owned());
+                current.retain(|item| !item.text.contains(subject));
+                verified.push(fact);
+                audit.push(json!({"sentenceId":id,"reason":"linked-restriction-exception","cites":source}));
+            } else if (earlier.saturating_sub(12)..position).contains(&index) {
+                current.retain(|item| !source_grounding::unqualified_restriction(&item.text, subject));
+            }
+        }
+        if let Some(next) = sentences.get(index + 1) {
+            let next_id = next["id"].as_str().unwrap();
+            if let Some(passage) = source_grounding::offers_mitigation(original, known[next_id]) {
+                let mut fact = ExtractedFact::verbatim(id, "recommendation", &passage);
+                fact.evidence.push(next_id.to_owned());
+                let literal = canonical_brief::normalized(&passage);
+                current.retain(|item| !is_covered_by_literal(item, &literal));
+                verified.push(fact);
+                mitigation_continuations.insert(index + 1, literal);
+                audit.push(json!({"sentenceId":id,"reason":"linked-safety-mitigation","cites":next_id}));
+            }
+        }
+        for fact in &mut current {
+            if fact.role == "status" && fact.evidence.iter().any(|citation| {
+                source_grounding::addressed_generalization(known[citation.as_str()], &fact.text)
+            }) {
+                fact.role = "opinion".into();
+            }
         }
         current.retain(|fact| {
             if fact.role != "status" || fact.source_needs_review { return true; }
@@ -1675,6 +1729,45 @@ mod tests{
         assert!(fact.text.starts_with("原话待核："));
         assert!(fact.text.contains("不是我们的员工"));
         assert!(bank.priority_review.contains(&fact.id));
+    }
+
+    #[test]
+    fn existing_shift_is_discussion_while_an_explicit_new_deliverable_is_action() {
+        let lines = [
+            "说话人2: 我是安保部。",
+            "说话人2: 因为我们这边儿属于三班儿倒，属于闭店状态，我们也会安排在店内休息。",
+            "说话人2: 会后我们会提交调整后的排班表。",
+        ];
+        let source = lines.join("\n");
+        let facts = factual_audit::evidence_sentences(&source_units(&source)).iter().map(|row|
+            ExtractedFact::verbatim(row["id"].as_str().unwrap(), "status", row["text"].as_str().unwrap().trim()))
+            .collect();
+        let bank = build_bank(facts,&source).unwrap();
+        let actions = bank.facts.iter().filter(|item| item.placement == Placement::Action).collect::<Vec<_>>();
+        assert_eq!(actions.len(), 1);
+        assert!(actions[0].text.contains("提交调整后的排班表"));
+        assert!(bank.facts.iter().any(|item| item.placement == Placement::Topic && item.text.contains("闭店状态")));
+    }
+
+    #[test]
+    fn keeps_the_exception_and_same_turn_safety_measure_with_literal_sources() {
+        let source = concat!(
+            "说话人1: 背包、外套全部禁止携带。\n",
+            "说话人2: 嗯。\n",
+            "说话人3: 外套如果受温度影响啊，可以不控制，就是背包要放在储藏柜里面。\n",
+            "说话人4: 这个活动快艇不安全对吧？然后可以找工作人员，带着乘坐或者采取安全措施。");
+        let facts = factual_audit::evidence_sentences(&source_units(source)).iter().map(|row|
+            ExtractedFact::verbatim(row["id"].as_str().unwrap(), "status", row["text"].as_str().unwrap().trim()))
+            .collect();
+        let bank = build_bank(facts,source).unwrap();
+        assert!(bank.facts.iter().all(|item| !item.text.contains("全部禁止携带")));
+        let exception=bank.facts.iter().find(|item| item.text.contains("外套如果受温度影响")).unwrap();
+        assert!(exception.text.starts_with("原话待核：适用范围"));
+        assert_eq!(exception.evidence, ["e0002","e0000"]);
+        let safety=bank.facts.iter().find(|item| item.text.contains("快艇不安全") && item.text.contains("工作人员")).unwrap();
+        assert!(safety.text.contains("不安全对吧？"));
+        assert_eq!(safety.evidence, ["e0003","e0004"]);
+        assert_eq!(bank.reader_priority.get(&safety.id), Some(&4));
     }
 
     #[test]

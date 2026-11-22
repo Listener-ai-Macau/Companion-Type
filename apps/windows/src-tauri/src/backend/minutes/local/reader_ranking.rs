@@ -69,6 +69,8 @@ pub(super) enum OperationalEvidence {
     TimedProcedure,
     RecipientScope,
     SafetyRequirement,
+    DecisionProcedure,
+    AvailabilityBoundary,
 }
 
 pub(super) fn concrete_execution(text: &str) -> Option<OperationalEvidence> {
@@ -79,8 +81,12 @@ pub(super) fn concrete_execution(text: &str) -> Option<OperationalEvidence> {
         r"(?:每(?:天|周|班|月|隔[一二两三四五六七八九十0-9]+天)|[一二两三四五六七八九十半0-9]+(?:天|小时|分钟))"
     ).expect("explicit operational cadence"));
     let has = |signals: &[&str]| signals.iter().any(|signal| text.contains(signal));
-    if text.contains(['？', '?']) || has(&["比如说我是", "假设有", "举个例子", "上一次", "往年", "多年以前"]) {
+    if has(&["比如说我是", "假设有", "举个例子", "上一次", "往年", "多年以前"]) {
         return None;
+    }
+    if let Some((warning, response)) = text.split_once(['？', '?']) {
+        return super::source_grounding::risk_followed_by_mitigation(warning, response)
+            .then_some(OperationalEvidence::SafetyRequirement);
     }
     if DATE.is_match(text) && has(&["考试", "报名", "开会", "停运", "上线", "截止", "安排", "开工", "生效"]) {
         return Some(OperationalEvidence::Schedule);
@@ -96,9 +102,19 @@ pub(super) fn concrete_execution(text: &str) -> Option<OperationalEvidence> {
         return Some(OperationalEvidence::RecipientScope);
     }
     if has(&["消防", "防滑", "线路老化", "安全措施", "安全风险", "地面光滑", "地面比较光滑"])
-        && has(&["注意", "需要", "要", "必须", "更换", "检查", "防止", "工作人员带"])
+        && has(&["注意", "需要", "要", "必须", "更换", "检查", "防止", "工作人员带", "工作人员，带", "采取", "陪同"])
     {
         return Some(OperationalEvidence::SafetyRequirement);
+    }
+    if text.contains('先') && has(&["尝试", "试一试", "试运行", "试一下", "先试"])
+        && has(&["再决定", "再做决定", "再去做决定", "再选择", "再评估", "再推广"])
+    {
+        return Some(OperationalEvidence::DecisionProcedure);
+    }
+    if has(&["不一定要", "并非必须", "不一定非要", "不要求", "不对口", "不匹配"])
+        && has(&["也可以", "仍可以", "也能", "不影响", "还是可以"])
+    {
+        return Some(OperationalEvidence::AvailabilityBoundary);
     }
     None
 }

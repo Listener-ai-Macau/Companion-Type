@@ -157,6 +157,26 @@ fn attach_prerequisite(sentences: &[Value], index: usize, mut record: BoundCommi
     record
 }
 
+fn established_routine(clause: &str, previous: Option<&str>) -> bool {
+    let new_work = [
+        "会后", "散会后", "下一步", "下次", "明天", "下周", "下个月",
+        "今后改", "以后改", "改成", "改为", "调整为", "新增", "第一次",
+        "从今天起", "从现在起", "开始执行",
+    ];
+    if contains(clause, &new_work) { return false; }
+    let repeated = |clause: &str| contains(clause, &[
+        "一直都是", "以前就是", "三班倒", "三班儿倒", "两班倒", "两班儿倒",
+        "轮流值守",
+        "闭店状态", "平时", "以往", "现行做法", "照例", "照常",
+    ]);
+    let describes_repetition = |words: &str| {
+        let actor_and_schedule = words.split_once('会').map_or(words, |(before, _)| before);
+        repeated(words) || contains(actor_and_schedule, &["每次", "每班", "每天", "每周"])
+    };
+    describes_repetition(clause)
+        || previous.is_some_and(|words| describes_repetition(words) && !contains(words, &new_work))
+}
+
 fn scoped_commitment(body: &str, institutional_voice: bool) -> Option<CompanionV1ActionItem> {
     static MODAL: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"一定会|会|将|来负责|负责").expect("spoken commitment"));
@@ -169,9 +189,10 @@ fn scoped_commitment(body: &str, institutional_voice: bool) -> Option<CompanionV
     let clauses: Vec<_> = body.split(['，', ',', '。', '；', ';']).map(str::trim).collect();
     let mut candidates = Vec::new();
     for (index, clause) in clauses.iter().enumerate() {
-        if contains(clause, SOFT) || contains(clause, NEGATION)
-            || index.checked_sub(1).is_some_and(|previous| {
-                contains(clauses[previous], &["举例", "比如", "例如", "假设", "如果说有人", "听说", "转述", "你建议"])
+        let previous = index.checked_sub(1).map(|previous| clauses[previous]);
+        if contains(clause, SOFT) || contains(clause, NEGATION) || established_routine(clause, previous)
+            || previous.is_some_and(|previous| {
+                contains(previous, &["举例", "比如", "例如", "假设", "如果说有人", "听说", "转述", "你建议"])
             })
         {
             continue;
