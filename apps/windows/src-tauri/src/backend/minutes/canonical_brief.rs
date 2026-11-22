@@ -4,7 +4,6 @@ use std::collections::{HashMap,HashSet};
 use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};
 use crate::companion_v1::{CompanionV1ActionItem,CompanionV1HostSession,CompanionV1MeetingMinutes};
-const MAX_REQUEST_BYTES:usize=96*1024;
 #[path="automatic_brief_local_document.rs"]
 pub(super) mod local_document;
 #[derive(Debug,Clone,Deserialize,Serialize)]

@@ -43,7 +43,9 @@ fn replace_state(root:&Path,name:&str,value:&Value)->Result<(),String>{
 pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
     if input.metadata().map_err(|_|"无法读取工程输入。")?.len()>16*1024{return Err("工程输入配置过大，未读取会议。".into());}
     let input:Input=serde_json::from_slice(&fs::read(input).map_err(|_|"无法读取工程输入。")?).map_err(|_|"工程输入配置不完整。")?;
-    if input.source_file.metadata().map_err(|_|"指定原文不存在。")?.len()>96*1024{return Err("指定原文超出本批容量，未截断内容。".into());}
+    if input.source_file.metadata().map_err(|_|"指定原文不存在。")?.len()>super::source_windows::MAX_SOURCE_BYTES as u64 + 3 {
+        return Err("指定原文超出本批容量，未截断内容。".into());
+    }
     let bytes=fs::read(&input.source_file).map_err(|_|"无法读取指定原文。")?;
     let file_hash=format!("{:x}",Sha256::digest(&bytes));
     if file_hash!=input.expected_file_sha256{return Err("指定原文哈希不匹配，未开始生成。".into());}
