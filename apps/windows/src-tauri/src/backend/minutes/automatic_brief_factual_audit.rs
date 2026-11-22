@@ -2023,6 +2023,14 @@ fn statement_identity_survives_array_compaction_without_matching_a_different_que
 pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     review_and_repair_since(endpoint,model,key,client,doc,units,None,start,trace)
 }
+
+pub(super) fn review_for_publication(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,
+    document:Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>) -> Result<VerifiedBrief,String>
+{
+    let mut draft = FactualDraft { document, pending_quotes: Vec::new(), adverse_claims: Vec::new(),
+        topic_source_hints: HashMap::new() };
+    review(endpoint, model, key, client, &mut draft, units, None, &[], start, trace)
+}
 fn newly_disproved_placement(previously_accepted: bool, current: &Claim) -> bool {
     previously_accepted && independent_path(&current.path)
         && current.placement_unsupported == Some(true) && !current.evidence.is_empty()

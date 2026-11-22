@@ -276,6 +276,14 @@ fn withhold_conflicting_action_clocks(doc: &mut Document, units: &[Unit]) -> Vec
     withheld
 }
 
+fn append_live_reports(minutes: &mut CompanionV1MeetingMinutes, quotes: &[String]) {
+    if quotes.is_empty() { return; }
+    minutes.markdown.push_str("\n\n## 会中汇报\n\n");
+    for quote in quotes {
+        minutes.markdown.push_str(&format!("- 「{}」\n", quote.replace(['\n', '\r'], " ")));
+    }
+}
+
 #[test]
 fn reviewed_brief_withholds_conflicting_or_truncated_clocks_without_rewriting_tasks() {
     let units = [
@@ -437,6 +445,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         }
         traced_document=Some(doc.clone());
         let mut pending_quotes = Vec::new();
+        let mut live_report_quotes = Vec::new();
         let mut conditional_speakers = Vec::new();
         let mut unresolved_timings = Vec::new();
         let publication_facts = source_facts.clone();
@@ -506,7 +515,17 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             let doc=audited?;traced_document=Some(doc.clone());
             let prepared=coverage::combine_omissions(prepared?,omissions?)?;
             coverage::complete_prepared(endpoint,model,key,client,&doc,&units,prepared,start,&mut trace)?
-        }else{factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?};
+        } else {
+            let mut verified = factual_audit::review_for_publication(endpoint, model, key, client, doc,
+                &units, start, &mut trace)?;
+            let before = verified.document.action_items.len();
+            live_report_quotes = final_bindings::take_live_report_quotes(&mut verified, &units);
+            let relocated = before - verified.document.action_items.len();
+            if relocated > 0 {
+                trace.push(json!({"stage":"source-live-report-reclassification","relocatedActions":relocated}));
+            }
+            verified.document
+        };
         if source_items::enabled() {
             clean_question_annotations(&mut doc);
             let bindings = final_bindings::apply(&mut doc, &units, conditional_speakers);
@@ -542,14 +561,17 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             trace.push(json!({"stage":"source-action-clock-protection","withheldDeadlines":clock_conflicts.len()}));
             pending_quotes.extend(clock_conflicts);
             traced_document = Some(doc.clone());
-            return Ok(project_review_draft(&doc, publication_facts.as_deref().unwrap_or(&[]), &units,
-                session, base, "有任务的截止与其原话时刻不一致，待核对后才能发布", &[], &pending_quotes));
+            let mut minutes = project_review_draft(&doc, publication_facts.as_deref().unwrap_or(&[]), &units,
+                session, base, "有任务的截止与其原话时刻不一致，待核对后才能发布", &[], &pending_quotes);
+            append_live_reports(&mut minutes, &live_report_quotes);
+            return Ok(minutes);
         }
         if source_items::enabled() && reconcile_overview_decisions(&mut doc) {
             trace.push(json!({"stage":"source-overview-decision-reconciliation"}));
         }
         traced_document=Some(doc.clone());
         let mut minutes = project_cloud_minutes(&doc, &units, session, base);
+        append_live_reports(&mut minutes, &live_report_quotes);
         append_pending_quotes(&mut minutes, &pending_quotes);
         Ok(minutes)
     })();

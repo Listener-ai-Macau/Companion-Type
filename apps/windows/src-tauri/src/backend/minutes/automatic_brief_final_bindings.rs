@@ -130,6 +130,90 @@ fn content(turn: &Value) -> &str {
     super::super::source_resolution::split_turn_label(text).map_or(text, |(_, speech)| speech)
 }
 
+fn retrospective_report<'a>(action: &Action, reviewed: &[String], turns: &'a [Value]) -> Option<Vec<&'a str>> {
+    const PERIODS: &[&str] = &["上周", "上个月", "上月", "上一季度", "上季度", "上半年", "上年度", "去年"];
+    const DEFERRED: &[&str] = &["会后", "散会后", "结束后", "回去后", "下次", "下周", "明天", "截止",
+        "提交", "发给", "交付", "书面", "整理", "材料", "另行", "如果", "假如", "例如", "比如"];
+    let future_or_conditional = |text: &str| DEFERRED.iter().any(|cue| text.contains(cue));
+    if action.due.is_some() || !action.text.contains("汇报") || future_or_conditional(&action.text) {
+        return None;
+    }
+    let cited: Vec<_> = turns.iter().enumerate().filter(|(_, line)| {
+        reviewed.iter().any(|id| line["id"] == id.as_str())
+            && action.sources.iter().any(|unit| line["source"] == unit.as_str())
+    }).collect();
+    if cited.len() != reviewed.len() || cited.iter().any(|(_, line)| future_or_conditional(content(line))) {
+        return None;
+    }
+    let period = *PERIODS.iter().find(|&&period| action.text.contains(period))?;
+    let (_, scope) = cited.iter().find(|(_, line)| {
+        let spoken = content(line);
+        spoken.contains(period) && spoken.contains("汇报")
+    })?;
+    let (_, request) = cited.iter().find(|(index, line)| {
+        let words = content(line);
+        if !words.contains("汇报一下") { return false; }
+        if ["在会上", "会上请", "当场", "现在就", "已经汇报", "第一就是", "第二就是", "第三就是"]
+            .iter().any(|cue| words.contains(cue))
+        {
+            return true;
+        }
+        let handoff = turns[index.saturating_sub(2)..*index].iter().any(|line| {
+            let spoken = content(line);
+            !future_or_conditional(spoken) && ["下面", "接下来"].iter().any(|cue| spoken.contains(cue))
+                && ["请", "问", "听"].iter().any(|cue| spoken.contains(cue))
+        });
+        handoff && cited.iter().any(|(after, response)| {
+            *after > *index && *after - *index <= 2 && ["我们", "我来", "我先"].iter().any(|cue|
+                content(response).trim_start().starts_with(cue))
+        })
+    })?;
+    let scope = content(scope).trim();
+    let request = content(request).trim();
+    Some(if scope == request { vec![request] } else { vec![scope, request] })
+}
+
+/// Exact evidence of an in-meeting report can support its content without assigning a future task.
+pub(super) fn take_live_report_quotes(brief: &mut factual_audit::VerifiedBrief, units: &[Unit]) -> Vec<String> {
+    if brief.document.action_items.is_empty() { return Vec::new(); }
+    let turns = factual_audit::evidence_sentences(units);
+    let mut quotes = Vec::new();
+    brief.document.action_items = std::mem::take(&mut brief.document.action_items)
+        .into_iter().enumerate().filter_map(|(index, action)| {
+            let source = brief.evidence.get(&format!("actionItems[{index}]"))
+                .and_then(|ids| retrospective_report(&action, ids, &turns));
+            if let Some(source) = source {
+                for quote in source {
+                    let quote = quote.to_owned();
+                    if !quotes.contains(&quote) { quotes.push(quote); }
+                }
+                None
+            } else {
+                Some(action)
+            }
+        }).collect();
+    quotes
+}
+
+#[cfg(test)]
+#[test]
+fn distinguishes_a_live_handoff_from_an_actual_future_report() {
+    let action = Action {text:"汇报上月的交接情况。".into(),owner:Some("调度组".into()),due:None,
+        sources:vec!["u000".into()]};
+    let source = vec![
+        serde_json::json!({"id":"e0","source":"u000","text":"下面请调度组。"}),
+        serde_json::json!({"id":"e1","source":"u000","text":"把上月的交接情况汇报一下吧。"}),
+        serde_json::json!({"id":"e2","source":"u000","text":"我们上月做了两次交接。"}),
+        serde_json::json!({"id":"e3","source":"u000","text":"会后再向负责人汇报上月的交接情况。"}),
+    ];
+    let live = ["e1".into(), "e2".into()];
+    assert_eq!(retrospective_report(&action, &live, &source), Some(vec!["把上月的交接情况汇报一下吧。"]));
+    assert!(retrospective_report(&action, &["e1".into(), "e2".into(), "e3".into()], &source).is_none());
+    assert!(retrospective_report(&action, &["e1".into()], &source).is_none());
+    let with_deadline = Action { due: Some("周五前".into()), ..action };
+    assert!(retrospective_report(&with_deadline, &live, &source).is_none());
+}
+
 fn bound_scope(action: &Action, turns: &[Value]) -> Option<[Action; 2]> {
     let owner = action.owner.as_deref()?;
     let (joint, rest) = action.text.split_once(['，', '；', ',', ';'])?;
