@@ -43,6 +43,54 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn chapter_summary_rebinds_a_relative_speaker_across_the_cut() {
+    let source = session("说话人2: 开场。\n说话人6：先谈参与者的作用。规模确认后再讨论成本。\n说话人2: 统计已完成。");
+    let quote = "规模确认后再讨论成本。";
+    let start = source.transcript_text.find(quote).unwrap();
+    let end = start + quote.len();
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["一位发言者（说话人2之前的发言者）主张先确认规模。".into()];
+    let mut evidence = vec![Evidence {field: "summary".into(), index: 0, quote: quote.into()}];
+    summary_review::review(&source, start..end, &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], "说话人6主张先确认规模。");
+    assert_eq!(evidence[0].quote, quote);
+}
+
+#[test]
+fn chapter_summary_keeps_relative_attribution_unresolved_for_repeated_or_mixed_quotes() {
+    let source = session("说话人5: 样品需要冷藏。再核一次。\n说话人2: 再核一次。箱子已到。");
+    for quotes in [vec!["再核一次。"], vec!["样品需要冷藏。", "箱子已到。"]] {
+        let (mut minutes, _) = response(&source);
+        minutes.summary = vec!["说话人2之前的发言者说明样品需要冷藏。".into()];
+        let mut evidence = quotes.into_iter().map(|quote| Evidence {
+            field: "summary".into(), index: 0, quote: quote.into(),
+        }).collect();
+        summary_review::review(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        assert_eq!(minutes.summary[0], "一位发言者（归属待核对）说明样品需要冷藏。");
+    }
+}
+
+#[test]
+fn chapter_summary_marks_only_the_inverted_frequency_for_the_same_activity() {
+    let source = session("说话人3：目前调试完成。大家每天每周 都会有一次例会，另每周归档、每天备份。");
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec![
+        "目前调试完成；每星期每日召开例会；每周归档、每天备份。".into(),
+        "每周每天检查机房。".into(),
+    ];
+    let mut evidence = (0..minutes.summary.len()).map(|index| Evidence {
+        field: "summary".into(), index, quote: "目前调试完成。".into(),
+    }).collect::<Vec<_>>();
+    let range = 0..source.transcript_text.len();
+    summary_review::review(&source, range.clone(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], "目前调试完成；（频率待核对）召开例会；每周归档、每天备份。");
+    assert_eq!(minutes.summary[1], "每周每天检查机房。");
+    assert_eq!(evidence[2].quote, "每天每周 都会有一次例会");
+    summary_review::review(&source, range, &mut minutes, &mut evidence);
+    assert_eq!(evidence.len(), 3);
+}
+
+#[test]
 fn context_merge_retains_unverified_drafts_and_source_evidence() {
     let original="# 旧分段汇总\n\n## 未核对的参考草稿\n\n可能需要寄样品\n\n## 分段原文依据\n\n样品待确认";
     let retained=reference_sections(original);
@@ -306,7 +354,7 @@ fn explicit_conditional_assignment_is_recovered_from_a_cached_chapter() {
         result_hash:chapter_digest(&minutes,&evidence,0),minutes,evidence,omitted_items:0};
     assert!(is_current(&chapter,0,text.len(),text));
     let original_summary=chapter.minutes.summary.clone();
-    repair_cached_conditionals(&mut chapter,text);
+    repair_cached_chapter(&mut chapter,&part);
     assert_eq!(chapter.minutes.summary,original_summary);
     assert_eq!(chapter.minutes.action_items.len(),2);
     for (owner,condition) in [("王芳","如果客户提出修改"),("李明","假如样品不合格")] {
@@ -315,7 +363,7 @@ fn explicit_conditional_assignment_is_recovered_from_a_cached_chapter() {
     }
     assert!(is_current(&chapter,0,text.len(),text));
     let first=chapter.result_hash.clone();
-    repair_cached_conditionals(&mut chapter,text);
+    repair_cached_chapter(&mut chapter,&part);
     assert_eq!(chapter.result_hash,first);
     assert!(is_current(&chapter,0,text.len(),text));
 }
@@ -329,7 +377,7 @@ fn conditional_time_is_not_a_responsible_person_even_in_cached_results() {
     evidence.push(Evidence {field:"actionItems".into(),index:0,quote:"如果客户修改，下周一负责确认交货时间".into()});
     let mut chapter=Chapter {start:0,end:text.len(),source_hash:hash(text.as_bytes()),
         result_hash:chapter_digest(&minutes,&evidence,0),minutes,evidence,omitted_items:0};
-    assert!(is_current(&chapter,0,text.len(),text));repair_cached_conditionals(&mut chapter,text);
+    assert!(is_current(&chapter,0,text.len(),text));repair_cached_chapter(&mut chapter,&part);
     assert_eq!(chapter.minutes.action_items.len(),3);
     for phrase in ["下周一负责确认交货时间","明天上午负责发报价"] {
         let action=chapter.minutes.action_items.iter().find(|a|a.text.contains(phrase)).unwrap();
@@ -337,7 +385,7 @@ fn conditional_time_is_not_a_responsible_person_even_in_cached_results() {
     }
     assert_eq!(chapter.minutes.action_items.iter().find(|a|a.text.contains("周一鸣负责")).unwrap().owner.as_deref(),Some("周一鸣"));
     assert!(is_current(&chapter,0,text.len(),text));let digest=chapter.result_hash.clone();
-    repair_cached_conditionals(&mut chapter,text);assert_eq!(chapter.result_hash,digest);
+    repair_cached_chapter(&mut chapter,&part);assert_eq!(chapter.result_hash,digest);
 }
 
 #[test]

@@ -8,6 +8,8 @@ use serde_json::Value;
 use sha2::{Digest, Sha256};
 use crate::companion_v1::{CompanionV1HostSession, CompanionV1MeetingMinutes, CompanionV1MinutesProcessing};
 
+mod summary_review;
+
 pub(super) const MAX_PROMPT_BYTES: usize = 48 * 1024;
 pub(super) const MAX_OUTPUT_TOKENS: u32 = 8192;
 const CHUNK_BYTES: usize = 16 * 1024;
@@ -867,11 +869,14 @@ fn append_conditional_source_actions(minutes: &mut CompanionV1MeetingMinutes,
 }
 
 // Upgrade a valid cached chapter locally rather than requesting it again.
-fn repair_cached_conditionals(chapter: &mut Chapter, source: &str) {
+fn repair_cached_chapter(chapter: &mut Chapter, session: &CompanionV1HostSession) {
+    let range = chapter.start..chapter.end;
+    let source = &session.transcript_text[range.clone()];
     let mut updated=chapter.clone();
     append_conditional_source_actions(&mut updated.minutes,&mut updated.evidence,source);
     preserve_conditional_actions(&mut updated.minutes,&mut updated.evidence,source);
     mark_uncertain_items(&mut updated.minutes,&updated.evidence);
+    summary_review::review(session, range, &mut updated.minutes, &mut updated.evidence);
     if validate_chapter(&updated.minutes,&updated.evidence,source).is_ok() {
         updated.result_hash=chapter_digest(&updated.minutes,&updated.evidence,updated.omitted_items);
         *chapter=updated;
@@ -1461,7 +1466,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
             *entry = None;
         }
         if let Some(chapter)=entry.as_mut() {
-            repair_cached_conditionals(chapter,&session.transcript_text[start..end]);
+            repair_cached_chapter(chapter,session);
         }
     }
     let mut resumed = checkpoint.chapters.iter().flatten().count();
@@ -1502,6 +1507,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
                 preserve_conditional_actions(&mut minutes, &mut evidence, &part.transcript_text);
                 let omitted_items=retain_source_backed(&mut minutes,&mut evidence,&part.transcript_text);
                 mark_uncertain_items(&mut minutes, &evidence);
+                summary_review::review(session, start..end, &mut minutes, &mut evidence);
                 if omitted_items > 0 && minutes.summary.is_empty() && minutes.decisions.is_empty()
                     && minutes.action_items.is_empty() && minutes.questions.is_empty() {
                     return Err(MISSING_EVIDENCE.to_string());
