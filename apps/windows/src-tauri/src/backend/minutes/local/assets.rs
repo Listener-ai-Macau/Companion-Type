@@ -3,8 +3,8 @@
 use std::{fs::{self,File,OpenOptions},io::Read,path::{Path,PathBuf},time::Duration};
 use serde::Deserialize;
 use sha2::{Digest,Sha256};
-pub(super) const MODEL_BYTES:u64=2_740_937_888;
-pub(super) const MODEL_SHA:&str="00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4";
+pub(super) const MODEL_BYTES:u64=5_680_522_464;
+pub(super) const MODEL_SHA:&str="03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8";
 const MODEL_URL:&str="https://modelscope.cn/models/unsloth/Qwen3.5-4B-GGUF/resolve/167b4afc359863325cb4164418c715421b4e9118/Qwen3.5-4B-Q4_K_M.gguf";
 pub(super) const SERVER_SHA:&str="e866430b71054f4e21e3b294a60f198ae9313c08839000febb765fd5dc4d7e47";
 pub(super) const VULKAN_SERVER_SHA:&str="36b6b336a34b8ee7ddc459a72a41bb221f5e47b7efaa7b5390e17893e7eb49d8";
