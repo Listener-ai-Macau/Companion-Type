@@ -455,8 +455,10 @@ impl SourceWindows {
                 let uncited_neighbors = offered.iter()
                     .filter(|(id, _)| **id != anchor)
                     .map(|(_, nearby)| *nearby);
-                if fact.evidence.len() == 1
-                    && source_grounding::copied_from_other_sentence(&fact.text, original, uncited_neighbors) {
+                if (fact.evidence.len() == 1
+                    && source_grounding::copied_from_other_sentence(&fact.text, original, uncited_neighbors))
+                    || source_grounding::repeats_only_cited_context(&fact.text, original,
+                        fact.evidence.iter().skip(1).map(|id| offered[id.as_str()])) {
                     source_quote_origin = Some("source-scope-quote");
                     continue;
                 }
@@ -780,6 +782,22 @@ mod tests {
         assert_eq!(coverage["sentences"][3]["origin"], "quantity-source-quote");
         let bank = super::super::atomic_document::build_bank(facts, source).unwrap();
         assert!(bank.facts.iter().all(|fact| fact.owner.is_none() && fact.due.is_none()));
+    }
+
+    #[test]
+    fn anchor_cannot_be_replaced_by_a_verbatim_copy_of_explicitly_cited_context() {
+        let prior = "近期渠道收到的订单比较少";
+        let answer = "中期交付工作已完成，抽检和包装达到原计划。";
+        let source = format!("{prior}。\n{answer}");
+        let window = SourceWindows::new(&source).unwrap();
+        let raw = json!({
+            "e0000": [{"r":"status","t":prior}],
+            "e0001": [{"r":"status","t":prior,"e":["e0000"]}]
+        });
+        let (facts, coverage) = window.decode(0, &raw.to_string()).unwrap();
+        assert!(facts.iter().any(|fact| fact.evidence == ["e0001"] && fact.text == answer));
+        assert!(facts.iter().all(|fact| !(fact.evidence[0] == "e0001" && fact.text == prior)));
+        assert_eq!(coverage["sentences"][1]["origin"],"source-scope-quote");
     }
 
     #[test]

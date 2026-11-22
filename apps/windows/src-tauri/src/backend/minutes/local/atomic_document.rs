@@ -244,6 +244,13 @@ fn source_verified_facts(
                             .into_iter().next().unwrap_or_else(|| original.trim().chars().take(64).collect());
                         ExtractedFact::verbatim(id,"opinion",&format!("举例讨论：{excerpt}"))
                     }
+                    source_context::Kind::ExternalTerms => {
+                        let prefix = "原话待核：会上谈到外部机构的申请或资助条件。";
+                        let excerpt = bounded_original_quotes_with_width(original,90-prefix.chars().count())
+                            .into_iter().next();
+                        let text = excerpt.map_or_else(|| prefix.to_owned(), |excerpt| format!("{prefix}{excerpt}"));
+                        ExtractedFact::review_quote(id,"status",&text)
+                    }
                     source_context::Kind::Reported => {
                         let mut fact = ExtractedFact::review_quote(id,"status",
                             "原话待核：会上转述了看到或听到的外部说法，内容未核实。");
@@ -256,8 +263,21 @@ fn source_verified_facts(
                 audit.push(json!({"sentenceId":id,"reason":match frame.kind {
                     source_context::Kind::Example=>"source-example-scope",
                     source_context::Kind::Reported=>"unverified-reported-source-scope",
+                    source_context::Kind::ExternalTerms=>"unverified-external-terms",
                 },"evidence":fact.evidence}));
                 verified.push(fact);
+            }
+            continue;
+        }
+        if !current.is_empty() && source_context::question_only(original) {
+            // An inquiry is evidence of what the meeting asked, not of the
+            // answer. The original reply remains independently eligible.
+            let prefix = "会上提问：";
+            if let Some(excerpt) = bounded_original_quotes_with_width(original,90-prefix.chars().count())
+                .into_iter().next() {
+                let fact = ExtractedFact::review_quote(id,"status",&format!("{prefix}{excerpt}"));
+                verified.push(fact);
+                audit.push(json!({"sentenceId":id,"reason":"original-inquiry-not-a-statement"}));
             }
             continue;
         }
@@ -297,6 +317,15 @@ fn source_verified_facts(
             current.retain(|item| item.role != "status");
             current.push(fact);
             work_tails.insert(last);
+        }
+        if let Some(record) = source_commitments::unlabelled_plan_for_next_meeting(sentences,index,timing)
+            .filter(|record| record.support.iter().all(|next| frames_at[*next].is_none() && !hypothetical.contains(next))) {
+            let body = record.item.text.clone();
+            let mut fact = ExtractedFact::original_action(id,&body,record.item);
+            extend_references(&mut fact,sentences,&record.support);
+            current.retain(|item| !matches!(item.role.as_str(),"status" | "action"));
+            audit.push(json!({"sentenceId":id,"reason":"collective-plan-and-next-meeting","evidence":fact.evidence}));
+            current.push(fact);
         }
         for record in source_commitments::explicitly_named_work(sentences,index) {
             let text = record.item.text.clone();

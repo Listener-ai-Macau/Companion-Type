@@ -490,8 +490,11 @@ fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
     static REQUEST: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?P<group>大家|各部门|各单位|各项目组|各团队)(?:儿)?\s*(?:下去以后|散会后|会后|回去以后)(?P<body>[^。！？；]{4,220})"
     ).expect("collective follow-up with an explicit deliverable"));
+    static BEFORE_GROUP: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:下去以后|散会后|会后|回去以后)[^。！？；?]{0,18}?(?P<group>各部门|各单位|各项目组|各团队|各小组)(?:儿)?(?P<body>[^。！？；?]{4,90})"
+    ).expect("after-meeting instruction before an explicit collective recipient"));
     static DOCUMENT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
-        r"(?:写|制订|制定|编制|形成|整理|做|提交|完成)[^，。！？；]{0,18}?(?P<name>计划书|方案|报告|清单|时间表|预算表)"
+        r"(?:写|制订|制定|编制|形成|整理|做|出|提交|完成)[^，。！？；]{0,18}?(?P<name>计划书|方案|报告|清单|时间表|预算表)"
     ).expect("requested document"));
     static SEND: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:发给|交给|提交给|报给)(?:咱们这个|我们这个|咱们|我们|这个)?\s*(?P<to>[\p{Han}]{2,14}?)(?:这边|那边|然后|[，。！？；,\s]|$)"
@@ -499,7 +502,7 @@ fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
     static DAYS: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:[0-9一二两三四五六七八九十]{1,4}天(?:半个月)?|半个月)"
     ).expect("plan duration, not a due date"));
-    let request = REQUEST.captures(words)?;
+    let request = REQUEST.captures(words).or_else(|| BEFORE_GROUP.captures(words))?;
     let body = request.name("body")?.as_str();
     if contains(body, &["要不要", "如果要做", "不用", "先别", "还没决定"]) {
         return None;
@@ -513,7 +516,9 @@ fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
         group
     };
     let duration = DAYS.find(body).filter(|m| contains(&body[m.end()..], &["路途", "行程", "路线", "安排"]));
-    let payload = duration.map_or_else(|| document.to_owned(), |span| {
+    let topic_before_request = &words[..request.get(0)?.start()];
+    let scope = ["活动", "演练", "验收", "试点", "搬迁"].into_iter().find(|topic| topic_before_request.contains(topic));
+    let payload = duration.map_or_else(|| scope.map_or_else(|| document.to_owned(), |topic| format!("{topic}{document}")), |span| {
         let duration = span.as_str().trim_end_matches("半个月");
         let duration = if duration.is_empty() { span.as_str() } else { duration };
         let scope = ["行程", "路线", "路途"].into_iter().find(|word| body.contains(word)).unwrap_or("安排");
@@ -528,6 +533,28 @@ fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
     });
     let text = recipient.map_or_else(|| format!("会后完成{payload}"), |owner| format!("会后完成{payload}并发给{owner}"));
     Some(CompanionV1ActionItem { text, owner: Some(owner.to_owned()), due: None })
+}
+
+/// Keep an explicit written handoff from a closing exchange without
+/// guessing who gave it. The linked next-meeting review confirms its scope.
+pub(super) fn unlabelled_plan_for_next_meeting(
+    rows: &[Value], index: usize, timing: Option<&super::timed_evidence::Timing<'_>>,
+) -> Option<DirectedWork> {
+    let (speaker, words) = split(&rows[index]);
+    if speaker.is_some() || contains(words, CONTEXT) || contains(words, NEGATION)
+        || contains(words, &["也可以", "建议", "比如", "比方", "要不要", "能不能", "是不是", "曾经"])
+        || words.contains(['?', '？']) { return None; }
+    let mut item = collective_written_plan(words)?;
+    let timing = timing?;
+    let next = (index+1..(index+4).min(rows.len())).find(|&i| !backchannel(split(&rows[i]).1))?;
+    let (speaker, reply) = split(&rows[next]);
+    let some_review = ["下次会议", "下一场会", "下回开会", "下次开会"].into_iter().find(|cue| reply.contains(cue))?;
+    let verb = ["讨论", "评审", "审阅", "核对"].into_iter().find(|cue| reply.contains(cue))?;
+    if speaker.is_some() || super::source_context::question_only(reply)
+        || contains(reply, CONTEXT) || contains(reply, NEGATION)
+        || !timing.neighboring_speech(index,next) { return None; }
+    item.text.push_str(&format!("，{some_review}再{verb}"));
+    Some(DirectedWork { item, support: vec![next] })
 }
 
 /// Keep the named recipients and each distinct deliverable when assignments
@@ -945,6 +972,34 @@ mod tests {
             "总结，然后交给台长。",
         ]);
         assert!(continued_collective_work(&detached,0,None).is_none());
+    }
+
+    #[test]
+    fn closing_document_with_stutter_is_bound_to_the_review() {
+        use super::super::timed_evidence::Timing;
+        use crate::backend::minutes::{automatic_brief::factual_audit::evidence_sentences, canonical_brief::source_units};
+        use crate::companion_v1::CompanionV1UtteranceSegment;
+        let words = [
+            "到时候这个活动咱们下去以后再去 嗯各部门儿出个这个出个这个方案",
+            "嗯",
+            "然后咱们下一场会咱们讨论这个事情",
+        ];
+        let text = words.join("\n");
+        let rows = evidence_sentences(&source_units(&text));
+        let turns:Vec<_> = words.into_iter().enumerate().map(|(index,text)| CompanionV1UtteranceSegment {
+            text:text.into(), start_ms:index as u64*1000,end_ms:(index+1) as u64*1000,
+            speaker:None,approximate_timing:false,
+        }).collect();
+        let timing=Timing::verified(&text,&rows,&turns).unwrap();
+        let record=unlabelled_plan_for_next_meeting(&rows,0,Some(&timing)).unwrap();
+        assert_eq!(record.item.owner.as_deref(),Some("各部门"));
+        assert_eq!(record.item.text,"会后完成活动方案，下一场会再讨论");
+        assert_eq!(record.item.due,None);
+        assert_eq!(record.support,[2]);
+        assert!(unlabelled_plan_for_next_meeting(&rows,0,None).is_none());
+        let mut question=rows.clone();
+        question[2]["text"]=serde_json::json!("咱们下一场会讨论这个事情吗，");
+        assert!(unlabelled_plan_for_next_meeting(&question,0,Some(&timing)).is_none());
     }
 
     #[test]

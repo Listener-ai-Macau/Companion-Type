@@ -187,6 +187,15 @@ pub(super) fn copied_from_other_sentence<'a>(claim: &str, anchor: &str, nearby: 
     at_anchor < 3 && nearby.into_iter().any(|text| overlap(text) >= (at_anchor + 3).max(4))
 }
 
+/// An explicitly cited neighbor may explain this clause, but it cannot
+/// stand in for the clause when the generated wording simply repeats it.
+pub(super) fn repeats_only_cited_context<'a>(claim: &str, anchor: &str, mut cited: impl Iterator<Item = &'a str>) -> bool {
+    let normalized = super::super::canonical_brief::normalized;
+    let body = normalized(claim);
+    body.chars().take(8).count() == 8 && !normalized(anchor).contains(&body)
+        && cited.any(|source| normalized(source).contains(&body))
+}
+
 pub(super) fn concerns_approval(text: &str) -> bool {
     ["批准", "批复", "获批"].iter().any(|marker| text.contains(marker))
 }
