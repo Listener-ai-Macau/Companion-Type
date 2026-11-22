@@ -1,6 +1,7 @@
 //! Checks that can be made against actual transcript spans before facts are frozen.
 //! Literal overlap helps locate supporting context; it cannot establish entailment.
 use std::{collections::HashSet,sync::LazyLock};
+use super::super::canonical_brief;
 
 static MEASUREMENT:LazyLock<regex::Regex>=LazyLock::new(||{
     let number=r"(?:[0-9０-９]+(?:[.．][0-9０-９]+)?|[零〇一二两三四五六七八九十百千万亿半]+(?:点[零〇一二两三四五六七八九]+)?)";
@@ -13,6 +14,34 @@ static HISTORICAL_YEAR: LazyLock<regex::Regex> = LazyLock::new(|| {
 });
 
 const OPEN_QUANTITY: &[&str] = &["有没有可能", "是否有可能", "能不能", "能否", "是否", "可不可以", "尚未确认", "还没确定", "待核实", "待核对"];
+
+pub(super) fn unclear_percentage(source: &str, claim: &str) -> bool {
+    static COLLIDING_UNITS: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"([0-9０-９]+(?:[.．][0-9０-９]+)?\s*[%％])\s*[年月日周天]\s*的"
+    ).expect("percentage followed by an inconsistent unit"));
+    let claim = canonical_brief::normalized(claim);
+    COLLIDING_UNITS.captures_iter(source).any(|matched| {
+        claim.contains(&canonical_brief::normalized(matched.get(1).unwrap().as_str()))
+    })
+}
+
+pub(super) fn named_place_context(source: &str) -> Option<&str> {
+    let tokens = super::chapter_labels::segmenter().tag(source, false);
+    let mut candidates = tokens.iter().enumerate().filter_map(|(index, token)| {
+        if token.tag != "ns" || token.word.chars().count() < 2 { return None; }
+        let following = tokens.iter().skip(index+1).find(|token| !token.word.trim().is_empty());
+        let named_subject = following.is_some_and(|token| {
+            token.tag.starts_with('n') && token.word.chars().count() >= 2
+        });
+        let explicit_context = source.match_indices(token.word).any(|(start, _)| {
+            let before = source[..start].trim_end();
+            ["在", "对", "于", "针对", "关于", "发生在"].iter().any(|lead| before.ends_with(lead))
+        });
+        (named_subject || explicit_context).then_some(token.word)
+    });
+    let first = candidates.next()?;
+    candidates.all(|place| place == first).then_some(first)
+}
 
 pub(super) fn quantity_question(source: &str) -> bool {
     has_open_qualifier(source) && MEASUREMENT.find_iter(source).any(|span| {

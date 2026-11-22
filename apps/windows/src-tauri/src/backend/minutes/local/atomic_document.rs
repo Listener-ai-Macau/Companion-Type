@@ -86,6 +86,7 @@ pub(super) struct Bank {
     chapter_label_choices: Vec<BTreeMap<String, String>>,
     chapter_point_choices: Vec<Vec<usize>>,
     before_opening: HashSet<String>,
+    reader_places: HashMap<String, String>,
 }
 impl Bank {
     fn review_quote(&self, id: &str) -> bool {
@@ -292,14 +293,18 @@ fn opening_background(facts: &[Fact], source: &str, sentences: &[Value]) -> Hash
 }
 
 pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,String>{
+    use super::{source_grounding, source_windows::bounded_original_quotes};
     if extracted.is_empty(){return Err(fail());}
     let units=source_units(source);let sentences=factual_audit::evidence_sentences(&units);
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s["text"].as_str().unwrap())).collect::<std::collections::HashMap<_,_>>();
-    let (extracted, verification) = source_verified_facts(extracted, &sentences)?;
+    let (extracted, mut verification) = source_verified_facts(extracted, &sentences)?;
+    let long = extracted.len() > LARGE_LAYOUT_FACTS;
     let mut facts=Vec::new();
     let mut quantity_quotes = HashSet::new();
     let mut source_quotes = HashSet::new();
-    for f in extracted{
+    let mut reader_places = HashMap::new();
+    let mut unclear_anchors = HashSet::new();
+    for mut f in extracted{
         let(kind,placement)=match f.role.as_str(){
             "status"=>(Kind::Status,Placement::Topic),"opinion"=>(Kind::Opinion,Placement::Topic),
             "recommendation"=>(Kind::Recommendation,Placement::Topic),"forecast"=>(Kind::Forecast,Placement::Topic),
@@ -307,8 +312,33 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
         };
         if placement!=Placement::Topic&&["无明确","暂无","没有明确","无会后","无任务","无待办","未提及"].iter().any(|p|f.text.starts_with(p)){return Err(fail());}
         let original=f.evidence.iter().map(|id|known.get(id.as_str()).copied().ok_or_else(fail)).collect::<Result<Vec<_>,_>>()?.join("\n");
-        if !canonical_brief::local_document::identifiers_bound(&f.text,&original){return Err(fail());}
+        let anchor = f.evidence.first().ok_or_else(fail)?;
+        let anchor_text = known[anchor.as_str()];
         let id = format!("a{:03}", facts.len());
+        if long && placement==Placement::Topic {
+            if let Some(excerpt) = bounded_original_quotes(anchor_text).into_iter()
+                .find(|excerpt| source_grounding::unclear_percentage(excerpt, &f.text))
+            {
+                if !unclear_anchors.insert(anchor.clone()) { continue; }
+                verification.push(json!({"sentenceId":anchor,"reason":"inconsistent-percentage-unit","factId":id}));
+                f.text = excerpt;
+                f.quantity_needs_review = true;
+            }
+            if let Some(place) = source_grounding::named_place_context(anchor_text) {
+                reader_places.insert(id.clone(), place.to_owned());
+                if !f.text.contains(place) && !f.quantity_needs_review && !f.source_needs_review {
+                    let contextualized = format!("{place}相关：{}", f.text);
+                    if canonical_brief::line(&contextualized, 90) {
+                        f.text = contextualized;
+                    } else if let Some(excerpt) = bounded_original_quotes(anchor_text).into_iter()
+                        .find(|excerpt| excerpt.contains(place) && source_grounding::shared_han_phrase(excerpt, &f.text, 4))
+                    {
+                        f.text = excerpt;
+                    }
+                }
+            }
+        }
+        if !canonical_brief::local_document::identifiers_bound(&f.text,&original){return Err(fail());}
         if f.quantity_needs_review {
             quantity_quotes.insert(id.clone());
         }
@@ -366,7 +396,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -599,6 +629,19 @@ fn reader_selection<'a>(rows: &[&'a Fact], requested: &HashSet<&str>, allowed: &
         && !bank.review_quote(&fact.id) && useful_reader_point(fact)
         && super::reader_ranking::operational_evidence(&fact.text).is_some_and(|kind| evidence_types.insert(kind)))
         .take(2).collect();
+    let reading = rows.iter().map(|fact| super::reader_ranking::ReadingInput {
+        text: &fact.text, judgment: false, review_only: bank.review_quote(&fact.id),
+    }).collect::<Vec<_>>();
+    if requested.len().saturating_sub(protected.len()) >= 2 {
+        if let Some(pair) = super::reader_ranking::comparative_pairs(&reading).into_iter()
+            .map(|(first, second)| [rows[first], rows[second]])
+            .find(|pair| pair.iter().any(|fact| requested.contains(fact.id.as_str()))
+                && pair.iter().all(|fact| allowed.contains(fact.id.as_str()))
+                && pair.iter().all(|fact| protected.iter().all(|saved| saved.id != fact.id)))
+        {
+            protected.extend(pair);
+        }
+    }
     let original = primary.into_iter().filter(|fact| protected.iter().all(|evidence| evidence.id != fact.id));
     let remaining: Vec<_> = original.take(requested.len().saturating_sub(protected.len())).collect();
     protected.extend(remaining);
@@ -634,7 +677,15 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
         if !(1..=2).contains(&labels.len()) || (labels.len() == 2 && labels[0] == labels[1]) {
             return Err(label_error());
         }
+        let fits_chapter = |label: &str| super::source_grounding::named_place_context(label)
+            .is_none_or(|place| rows.iter().all(|fact| bank.reader_places.get(&fact.id)
+                .is_none_or(|actual| actual == place)));
+        let mut labels = labels.into_iter().filter(|label| fits_chapter(label)).collect::<Vec<_>>();
+        if labels.is_empty() {
+            labels.extend(choices.values().map(String::as_str).find(|label| fits_chapter(label)));
+        }
         let title = match labels.as_slice() {
+            [] => format!("讨论议题{}", index + 1),
             [first, second] if first.contains(*second) => (*first).to_owned(),
             [first, second] if second.contains(*first) => (*second).to_owned(),
             _ => labels.join("、"),
@@ -926,6 +977,28 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn long_bank_keeps_event_place_and_marks_a_malformed_percentage() {
+        let source = format!("针对广东水灾，志愿者已经上线协作页面。\n现在大约是 85% 月的做法比较受欢迎。\n{}",
+            "其他内容仍需等到会后再处理。\n".repeat(85));
+        let units=source_units(&source);
+        let sentences=factual_audit::evidence_sentences(&units);
+        let mut facts=vec![
+            ExtractedFact::verbatim("e0000","status","志愿者已经上线协作页面。"),
+            ExtractedFact::verbatim("e0001","opinion","大约 85% 的人赞同做法。"),
+        ];
+        facts.extend(sentences.iter().skip(2).map(|row| ExtractedFact::verbatim(
+            row["id"].as_str().unwrap(),"status",row["text"].as_str().unwrap(),
+        )));
+        let bank=build_bank(facts,&source).unwrap();
+        let event=bank.facts.iter().find(|fact| fact.text.contains("协作页面")).unwrap();
+        assert!(event.text.contains("广东"));
+        let quantity=bank.facts.iter().find(|fact| fact.text.contains("85%")).unwrap();
+        assert!(bank.quantity_quotes.contains(&quantity.id));
+        assert!(!quantity.text.contains("的人赞同"));
+        assert!(!super::super::source_grounding::unclear_percentage("参与率已达到 85%。","有85%参加"));
+    }
 
     #[test]
     fn opening_offset_requires_a_host_transition_with_nearby_agenda() {

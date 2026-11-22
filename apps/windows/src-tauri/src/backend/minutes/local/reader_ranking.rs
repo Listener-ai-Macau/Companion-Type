@@ -1,4 +1,5 @@
 use std::collections::{BTreeMap, BTreeSet};
+use std::sync::LazyLock;
 
 use super::chapter_labels::segmenter;
 
@@ -27,6 +28,33 @@ const INCOMPLETE_ENDS: &[&str] = &[
     "比如说", "也就是说", "主要做到两点", "我们", "的话", "可能", "是这样的", "这一块",
     "很有价值", "一个方向", "我觉得", "是不是", "是一个", "的过程",
 ];
+
+fn comparison_axis(text: &str) -> Option<&str> {
+    static AXIS: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"从\s*([\p{Han}]{2,9}?)(?:角度|方面|层面|上)?(?:来)?(?:说|讲|看|而言)(?:的话)?[，,：:]"
+    ).expect("comparison axis expression"));
+    AXIS.captures(text)?.get(1).map(|axis| axis.as_str())
+}
+
+pub(super) fn comparative_pairs(rows: &[ReadingInput<'_>]) -> Vec<(usize, usize)> {
+    let axes = rows.iter().map(|row| {
+        (!row.review_only).then(|| comparison_axis(row.text)).flatten()
+    }).collect::<Vec<_>>();
+    axes.iter().enumerate().filter_map(|(index, axis)| {
+        let left = axis.as_ref()?;
+        let end = (index + 7).min(axes.len());
+        let offset = axes[index + 1..end].iter()
+            .position(|axis| axis.is_some_and(|right| *left != right))?;
+        Some((index, index + 1 + offset))
+    }).collect()
+}
+
+fn reported_scale(text: &str) -> bool {
+    static SCALE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:累计|共计|响应了|完成了|实际有)[^。；！？]{0,12}[0-9０-９][0-9０-９.,，]*\s*(?:多|余)?\s*(?:次|例|场|项|人|家)"
+    ).expect("reported scale expression"));
+    SCALE.is_match(text)
+}
 
 #[derive(Clone, Copy, Eq, Hash, PartialEq)]
 pub(super) enum OperationalEvidence {
@@ -70,8 +98,26 @@ pub(super) fn shortlist(rows: &[ReadingInput<'_>]) -> Vec<usize> {
         rank(&rows[start..rows.len() * (i + 1) / 3])
             .into_iter().map(|index| start + index).collect::<Vec<_>>()
     }).collect();
-    (0..MAX_READER_CHOICES).flat_map(|i| parts.iter().filter_map(move |part| part.get(i).copied()))
-        .take(MAX_READER_CHOICES).collect()
+    let ranked = (0..MAX_READER_CHOICES).flat_map(|i| parts.iter().filter_map(move |part| part.get(i).copied()))
+        .collect::<Vec<_>>();
+    let mut selected = Vec::with_capacity(MAX_READER_CHOICES);
+    // Reserve a comparison as a pair before charging the chapter byte budget.
+    // Otherwise the first side can look like an unqualified conclusion.
+    if let Some((first, second)) = comparative_pairs(rows).into_iter().min_by_key(|(a, b)| {
+        ranked.iter().position(|candidate| candidate == a || candidate == b).unwrap_or(usize::MAX)
+    }) {
+        selected.extend([first, second]);
+    }
+    for index in ranked.iter().copied().filter(|index| {
+        !rows[*index].review_only && reported_scale(rows[*index].text)
+    }).take(2) {
+        if !selected.contains(&index) { selected.push(index); }
+    }
+    for index in ranked {
+        if selected.len() == MAX_READER_CHOICES { break; }
+        if !selected.contains(&index) { selected.push(index); }
+    }
+    selected
 }
 
 fn rank(rows: &[ReadingInput<'_>]) -> Vec<usize> {
@@ -156,4 +202,24 @@ fn text_rank(similarity: &[Vec<f64>]) -> Vec<f64> {
         rank = next;
     }
     rank
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn shortlist_keeps_the_other_side_of_an_explicit_comparison() {
+        let mut text = vec!["检查人员需要按要求提交监测报告。"; 48];
+        text[12] = "从生产效率来说，整批生产更快。";
+        text[13] = "从生产效率来看，等待时间更少。";
+        text[15] = "从变更灵活性来说，小批量适合经常变更的要求。";
+        let rows = text.iter().map(|text| ReadingInput {text, judgment: false, review_only: false})
+            .collect::<Vec<_>>();
+        assert_eq!(comparative_pairs(&rows), vec![(12, 15), (13, 15)]);
+        let chosen = shortlist(&rows);
+        assert!(chosen.contains(&12) || chosen.contains(&13));
+        assert!(chosen.contains(&15));
+        assert_eq!(chosen.len(), MAX_READER_CHOICES);
+    }
 }
