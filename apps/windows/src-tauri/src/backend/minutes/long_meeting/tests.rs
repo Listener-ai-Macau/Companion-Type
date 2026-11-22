@@ -309,6 +309,96 @@ fn chapter_roles_skips_inferred_handoffs_and_other_speakers() {
 }
 
 #[test]
+fn chapter_stance_retains_an_intention_separately_from_a_period_description() {
+    let anchor = "先学习合作机构的做法，开展共享资料评估";
+    let plan = "就想把外部经验和本组流程整合起来，建立一套可检索的工具";
+    let stage = "资料归档管理就是这个阶段";
+    let source = session(&format!(
+        "说话人2：{anchor}。\n说话人2：参考合作机构分享的资料评估结果，{plan}。{stage}。"
+    ));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["学习合作机构的做法，开展共享资料评估。".into()];
+    let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:anchor.into()}];
+    let range = 0..source.transcript_text.len();
+    summary_stance::restore(&source, range.clone(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], format!("学习合作机构的做法，开展共享资料评估。补充设想原话「{plan}」。相关阶段原话「{stage}」。"));
+    assert_eq!(evidence[1].quote, plan);
+    assert_eq!(evidence[2].quote, stage);
+    assert!(minutes.action_items.is_empty() && minutes.decisions.is_empty());
+    summary_stance::restore(&source, range, &mut minutes, &mut evidence);
+    assert_eq!(evidence.len(), 3);
+}
+
+#[test]
+fn chapter_stance_does_not_restore_an_unmatched_canceled_or_unrelated_intention() {
+    let anchor = "先学习合作机构的做法，开展共享资料评估";
+    let related = "参考合作机构分享的资料评估结果，";
+    let plan = "就想把外部经验和本组流程整合起来，建立一套可检索的工具。资料归档管理就是这个阶段";
+    let cases = [
+        format!("说话人2：{anchor}。\n说话人3：{related}{plan}。"),
+        format!("说话人2：{anchor}。\n说话人2：{related}{plan}。\n说话人2：后来放弃这个想法。"),
+        format!("说话人2：{anchor}。\n说话人2：{related}是不是{plan}？"),
+        format!("说话人2：{anchor}。\n说话人2：{related}{}", plan.replace("就想把", "已经把")),
+        format!("说话人2：{anchor}。\n说话人2：{related}{plan}。\n说话人3：另一个小组介绍资料评估。"),
+        format!("说话人2：{anchor}。\n说话人2：接下来讨论展会的设计。{plan}。"),
+    ];
+    for (index, transcript) in cases.into_iter().enumerate() {
+        let source = session(&transcript);
+        let (mut minutes, _) = response(&source);
+        let summary = "学习合作机构的做法，开展共享资料评估。";
+        minutes.summary = vec![summary.into()];
+        let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:anchor.into()}];
+        if index == 4 {
+            evidence.push(Evidence {field:"summary".into(),index:0,quote:"另一个小组介绍资料评估。".into()});
+        }
+        let initial = evidence.len();
+        summary_stance::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        assert_eq!(minutes.summary[0], summary, "{transcript}");
+        assert_eq!(evidence.len(), initial);
+    }
+}
+
+#[test]
+fn chapter_stance_leaves_an_uncertain_explanation_in_source_evidence() {
+    let anchor = "这里的客观规律特别重要";
+    let observation = "展览里的不同参与者采用了各式各样的解决办法";
+    let dialogue = format!(
+        "因为你看看{observation}。那么这类变化据原话是一万年的时候虚拟拓找出来的。所以我认为这种客观规律是值得讨论的创新模式"
+    );
+    let source = session(&format!("说话人2：{anchor}。{dialogue}。\n说话人3：接着谈展览安排。"));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["某位嘉宾看重客观规律，并讨论展览安排。".into()];
+    let mut evidence = vec![
+        Evidence {field:"summary".into(),index:0,quote:anchor.into()},
+        Evidence {field:"summary".into(),index:0,quote:"接着谈展览安排。".into()},
+    ];
+    summary_stance::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], format!("某位嘉宾看重客观规律，并讨论展览安排。补充观察原话「{observation}」。发言者观点「所以我认为这种客观规律是值得讨论的创新模式」。中间论述待核对。"));
+    assert_eq!(evidence[2].quote, dialogue);
+    assert!(!minutes.summary[0].contains("一万年"));
+    assert!(minutes.action_items.is_empty() && minutes.decisions.is_empty());
+}
+
+#[test]
+fn chapter_stance_skips_already_represented_and_unrelated_viewpoints() {
+    let anchor = "这里的客观规律特别重要";
+    let reasoning = "因为周围很多人在实际做事时采用了各式各样的解决办法。那么这类变化在三年的时候发生。所以我认为这种客观规律是值得讨论的创新模式。";
+    let rows = [
+        (format!("说话人2：{anchor}。{reasoning}"), "嘉宾认为客观规律是创新模式。"),
+        (format!("说话人2：{anchor}。{reasoning}"), "嘉宾讨论明年的人员配置。"),
+        (format!("说话人2：{anchor}。\n说话人3：{reasoning}"), "嘉宾认为客观规律重要。"),
+    ];
+    for (transcript, summary) in rows {
+        let source = session(&transcript);
+        let (mut minutes, _) = response(&source);
+        minutes.summary = vec![summary.into()];
+        let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:anchor.into()}];
+        summary_stance::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        assert_eq!(minutes.summary[0], summary);
+    }
+}
+
+#[test]
 fn context_merge_retains_unverified_drafts_and_source_evidence() {
     let original="# 旧分段汇总\n\n## 未核对的参考草稿\n\n可能需要寄样品\n\n## 分段原文依据\n\n样品待确认";
     let retained=reference_sections(original);

@@ -28,7 +28,7 @@ static PREREQUISITE: LazyLock<Regex> = LazyLock::new(|| {
 ).unwrap()
 });
 
-fn shared_chinese(source: &str, summary: &str, width: usize, minimum: usize) -> bool {
+pub(super) fn shared_chinese(source: &str, summary: &str, width: usize, minimum: usize) -> bool {
     let chars: Vec<char> = source.chars().collect();
     let mut witnesses = Vec::with_capacity(minimum);
     for part in chars.windows(width) {

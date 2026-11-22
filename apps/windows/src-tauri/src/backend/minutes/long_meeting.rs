@@ -12,6 +12,7 @@ mod summary_review;
 mod summary_coverage;
 mod summary_relations;
 mod summary_roles;
+mod summary_stance;
 
 pub(super) const MAX_PROMPT_BYTES: usize = 48 * 1024;
 pub(super) const MAX_OUTPUT_TOKENS: u32 = 8192;
@@ -882,7 +883,8 @@ fn repair_cached_chapter(chapter: &mut Chapter, session: &CompanionV1HostSession
     summary_review::review(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
     summary_coverage::restore(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
     summary_relations::restore(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
-    summary_roles::restore(session, range, &mut updated.minutes, &mut updated.evidence);
+    summary_roles::restore(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
+    summary_stance::restore(session, range, &mut updated.minutes, &mut updated.evidence);
     if validate_chapter(&updated.minutes,&updated.evidence,source).is_ok() {
         updated.result_hash=chapter_digest(&updated.minutes,&updated.evidence,updated.omitted_items);
         *chapter=updated;
@@ -1517,6 +1519,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
                 summary_coverage::restore(session, start..end, &mut minutes, &mut evidence);
                 summary_relations::restore(session, start..end, &mut minutes, &mut evidence);
                 summary_roles::restore(session, start..end, &mut minutes, &mut evidence);
+                summary_stance::restore(session, start..end, &mut minutes, &mut evidence);
                 if omitted_items > 0 && minutes.summary.is_empty() && minutes.decisions.is_empty()
                     && minutes.action_items.is_empty() && minutes.questions.is_empty() {
                     return Err(MISSING_EVIDENCE.to_string());
