@@ -1,3 +1,5 @@
+import {nativeActionParts} from './actionMetadata';
+
 // Projection of literal list entries in a saved action section. It never
 // extracts tasks from a transcript or infers a task from ordinary prose.
 export interface SavedAction {
@@ -131,5 +133,21 @@ export function markSavedAction(markdown: string, lineIndex: number, completed: 
   const match = /^(\s*(?:[-*+] |\d+[.)] ))(?:\[[ xX]\] )?(.*?)(\r?)$/.exec(lines[lineIndex]);
   if (!match) return null;
   lines[lineIndex] = `${match[1]}[${completed ? 'x' : ' '}] ${match[2]}${match[3]}`;
+  return lines.join('\n');
+}
+
+export function updateSavedActionDeadline(markdown: string, action: SavedAction, deadline: string): string | null {
+  if (action.completed) return null;
+  const lines = markdown.split('\n');
+  const line = /^(\s*(?:[-*+] |\d+[.)] )(?:\[ \] )?\s*)(.*?)(\s*)$/.exec(lines[action.lineIndex]);
+  if (!line || line[2] !== action.text) return null;
+  const {body,metadata} = nativeActionParts(action.text);
+  const existing = metadata.find(field => field.key === 'due');
+  if (existing?.value === deadline) return null;
+  const suffix = action.text.slice(body.length);
+  const updated = existing
+    ? suffix.replace(/([(,]\s*due:\s*)[^)]*?(?=,\s*owner:|\))/, (_, prefix: string) => prefix + deadline)
+    : suffix ? suffix.slice(0, -1) + ', due: ' + deadline + ')' : ' (due: ' + deadline + ')';
+  lines[action.lineIndex] = line[1] + body + updated + line[3];
   return lines.join('\n');
 }

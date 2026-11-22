@@ -22,6 +22,7 @@ import {cardRecordingStatus} from './cardRecordingStatus';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
+import {CalendarTimeEditor} from './CalendarTimeEditor';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import {CompanionDeviceRecordings,type DeviceRecordingActions} from './CompanionDeviceRecordings';
 import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -73,7 +74,7 @@ import {ActionListEditor} from './ActionListEditor';
 
 type MeetingExportOrigin = 'pdf' | 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
 import {CalendarExportItems,effectiveCalendarAlarm,type CalendarExportItem,type CalendarReminderChoice} from './CalendarExportItems';
-import {savedActions,markSavedAction,commonActionSupplement,splitActionSupplement,compactActionSource,type SavedAction} from './savedActions';
+import {savedActions,markSavedAction,updateSavedActionDeadline,commonActionSupplement,splitActionSupplement,compactActionSource,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { companionTranscriptUnmappedEdges } from '@companion-type/core';
 import { CompanionJourney, hostRecordingAudioConfirmed, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
@@ -401,7 +402,29 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
   markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarLineIndex?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;calendarAll?:boolean;sourceSegments?:readonly CompanionTranscriptSource[];recordingTime?:string;
 }) {
   const fields = basicMinutesFields(markdown, noteContext, manual);
-  if (!fields&&calendarOnly)return <p className="ct-step-warn">清单结构已变化，请取消后重新选择事项；旧输入仍保留。</p>;
+  if (!fields && calendarOnly) {
+    const actions = savedActions(markdown);
+    const editable = actions.filter(action => !action.completed && (calendarAll || action.lineIndex === calendarLineIndex));
+    if (!editable.length) return <p role="alert">找不到所选事项，请取消后重新选择。</p>;
+    return <div className="ct-basic-minutes-editor ct-single-calendar-edit">
+      {editable.map(action => {
+        const {body,metadata} = nativeActionParts(action.text);
+        const due = metadata.find(field => field.key === 'due')?.value ?? '';
+        const sources = companionMinutesReferencedSources(sourceSegments ?? [], action.text);
+        return <div className="ct-action-edit-row" key={action.lineIndex}>
+          <p><strong>{body}</strong></p>
+          <p className="ct-step-meta">当前截止：{due ? readableCalendarTime(due) : '未注明'}</p>
+          <CalendarTimeEditor compact label={`待办 ${actions.indexOf(action)+1}`} value={due} disabled={disabled}
+            openRequestKey={calendarAll ? undefined : calendarRequestKey} openWithTime={calendarRequestTimed}
+            sourceContext={sources.length === 1 ? {text:sources[0].text,recordingTime} : undefined}
+            onPending={onCalendarPending} onConfirm={deadline => {
+              const next = updateSavedActionDeadline(markdown, action, deadline);
+              if (next !== null) onChange(next);
+            }} />
+        </div>;
+      })}
+    </div>;
+  }
   if (!fields) return <textarea value={markdown} onChange={event => onChange(event.target.value)}
     aria-label={label} spellCheck={false} disabled={disabled} />;
   const primary = fields.some(item=>item.key==='Action Items') ? fields.filter(item=>item.key==='Action Items')
@@ -1528,14 +1551,17 @@ export function CompanionDashboard({
       if(result?.calendarOpenToken&&format.startsWith('calendar'))setCalendarSaveTargets(current=>({...current,[JSON.stringify([sessionId,minutesViewMode,selectedSession.calendarCopyEpoch??0])]:{token:result.calendarOpenToken!,name:exportFileName(result.path)}}));
       setExportResult({ sessionId, format, origin, path: result?.path, calendarOpenToken:result?.calendarOpenToken,calendarFileUri:result?.calendarFileUri, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${(format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder')) && !(result.calendarOpenToken && (format === 'calendar' || format.startsWith('calendarreminder'))) ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
-      if((format==='calendar'||format.startsWith('calendarreminder'))&&calendarExportNeedsTime(error)&&onSaveMeeting&&copySourceRef.current===exportSourceKey&&basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)){
+      const pending = (format === 'calendar' || format.startsWith('calendarreminder')) && calendarExportNeedsTime(error)
+        ? savedActions(minutesMarkdown).find(action => !action.completed) : undefined;
+      if(pending&&onSaveMeeting&&copySourceRef.current===exportSourceKey){
         // Read-only native preflight refused a calendar with no confirmed
         // pending time. Continue the user's intent at that exact saved record,
         // not a fictitious storage failure or a file chooser with empty data.
         setCalendarExportReview(null);setExportResult(null);
         setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);
         setEditingMinutes(true);
-        setCalendarEditLine(undefined);setCalendarEditTimed(false);setCalendarEditAll(false);
+        setCalendarEditLine(basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes) ? undefined : pending.lineIndex);
+        setCalendarEditTimed(false);setCalendarEditAll(false);
         setCalendarReturn({sessionId,mode:minutesViewMode,origin,...reviewChoice});
         setCalendarEditRequest(`${sessionId}:${minutesViewMode}:${++calendarEditSequence.current}`);
       }else {restoreCalendarReview();setExportResult({ sessionId, format, origin, kind: 'error', message: error instanceof SavedPreviewInterrupted?error.message:`保存未完成：${operationErrorText(error,'export')}` });}
@@ -1553,7 +1579,7 @@ export function CompanionDashboard({
     const actions=savedActions(minutesMarkdown);
     if(index!==undefined&&(!review.items||actions.length!==review.items.length||actions.some((a,n)=>a.text!==review.items![n].text)))return;
     setCalendarReturn(review.format==='calendar'?{sessionId:selectedSession.id,mode:minutesViewMode,origin:review.origin,fromPreview:true,remindAtTime:review.remindAtTime,reminderFormat:review.reminderFormat,calendarReminders:review.calendarReminders,calendarSlots:review.calendarSlots,...(index!==undefined&&review.items?{singleDeadlineChange:{index,before:review.items.map(item=>({...item}))}}:{})}:null);
-    setCalendarEditAll(index===undefined&&!!basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes));
+    setCalendarEditAll(index===undefined&&review.format==='calendar');
     setCalendarEditLine(index===undefined?undefined:actions[index].lineIndex);
     setCalendarEditTimed(index!==undefined&&review.items?.[index].status==='allDay');
     setCalendarExportReview(null);setRecordingResultOpen(true);setEditingMinutes(true);
@@ -2511,7 +2537,7 @@ export function CompanionDashboard({
                   onReminders={selections=>setCalendarExportReview(current=>current?{...current,suggestedAbsolute:selections.some(s=>s.uid===current.suggestedAbsolute?.uid)?undefined:current.suggestedAbsolute,calendarReminders:[...(current.calendarReminders??[]).filter(existing=>!selections.some(selection=>selection.uid===existing.uid)),...selections]}:null)}
                   onReminder={(uid,reminder)=>setCalendarExportReview(current=>current?{...current,suggestedAbsolute:current.suggestedAbsolute?.uid===uid?undefined:current.suggestedAbsolute,calendarReminders:[...(current.calendarReminders??[]).filter(s=>s.uid!==uid),...(reminder?[{uid,reminder}]:[])]}:null)}
                   onSlot={(uid,slot)=>setCalendarExportReview(current=>current?{...current,calendarSlots:[...(current.calendarSlots??[]).filter(s=>s.uid!==uid),...(slot?[{uid,slot}]:[])]}:null)}
-                  onEdit={basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)&&savedActions(minutesMarkdown).length===calendarExportReview.items.length&&savedActions(minutesMarkdown).every((a,n)=>a.text===calendarExportReview.items![n].text)?editCalendarItem:undefined}/>:null}
+                  onEdit={savedActions(minutesMarkdown).length===calendarExportReview.items.length&&savedActions(minutesMarkdown).every((a,n)=>a.text===calendarExportReview.items![n].text)?editCalendarItem:undefined}/>:null}
                 {calendarSaveTargets[JSON.stringify([selectedSession.id,minutesViewMode,selectedSession.calendarCopyEpoch??0])]&&calendarExportReview.format==='calendar'?<div className="ct-calendar-save-again">
                   <p className="ct-step-meta">已关联本地文件的日历可在同一文件保存后读取更新。只有导入过的副本仍需另行修改；覆盖前先核对日历端是否改过内容。</p>
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||calendarPendingCount>0||calendarReminderPending>0||!calendarReminderReady}
@@ -2532,7 +2558,7 @@ export function CompanionDashboard({
                 {calendarReminderKey&&!calendarReminderReady?<p role="status">{calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?`提醒尚未核对：${calendarReminderPreview.error}`:'正在核对本次逐项提醒…'}</p>:null}
                 <div className="ct-button-row">
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale||calendarReminderPending>0}
-                    onClick={()=>editCalendarItem()}>{basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)?'核对各项截止时间':'编辑完整清单（含时间）'}</button>
+                    onClick={()=>editCalendarItem()}>{calendarExportReview.format==='calendar'?'核对各项截止时间':'编辑完整清单（含时间）'}</button>
                   <span className="ct-step-meta">只改一项截止时间，可用该事项下方的时间按钮。</span>
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete||calendarReminderPending>0||!calendarReminderReady}
                     onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarReminderKey?calendarReminderPreview?.hash:calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash,calendarExportReview)}>{calendarExportReview.format==='calendar'?(calendarExportReview.items?.some(item=>(item.status==='timed'||item.status==='allDay')&&effectiveCalendarAlarm(item,calendarExportReview).kind!=='none')?'保存日历文件（含提醒）':'保存日历文件'):'按文字说明导出'}</button>
