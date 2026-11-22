@@ -91,6 +91,76 @@ fn chapter_summary_marks_only_the_inverted_frequency_for_the_same_activity() {
 }
 
 #[test]
+fn chapter_coverage_keeps_stage_range_and_cumulative_count_distinct() {
+    let quote = "这批零件的检验流程已经上线";
+    let range = "这个阶段里我们每月也复核 10 到 20 件";
+    let source = session(&format!(
+        "说话人2：{quote}。\n说话人2：现在都在第二车间完成。\n说话人2：{range}，和供应商复盘了几轮。已复核160多件。"
+    ));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["第二车间检查，已复核160多件。".into()];
+    let mut evidence = vec![Evidence {field: "summary".into(), index: 0, quote: quote.into()}];
+    let chapter = 0..source.transcript_text.len();
+    summary_coverage::restore(&source, chapter.clone(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], format!("第二车间检查，已复核160多件。补充原话「{range}」。"));
+    assert_eq!(evidence[1].quote, range);
+    summary_coverage::restore(&source, chapter, &mut minutes, &mut evidence);
+    assert_eq!(evidence.len(), 2);
+}
+
+#[test]
+fn chapter_coverage_never_joins_another_speaker_or_an_unrelated_range() {
+    let prefix = "说话人2：复核流程上线。";
+    let variants = [
+        "说话人3：这个阶段里我们每月复核10到20件。已复核160多件。",
+        "说话人2：如果继续协作，这个阶段里我们每月复核10到20件。已复核160多件。",
+        "说话人2：这个阶段里我们每月复核10到20件。已复核220多件。",
+        "说话人2：这个阶段里我们每月交付10到20件。已复核160多件。",
+        "说话人2：这个阶段里我们每月复核10到20件，这个阶段里我们每月复核30到40件。已复核160多件。",
+        "说话人2：这个阶段里我们每月复核10到20件？已复核160多件。",
+        "说话人2：无关讨论。\n没有明确说话人。\n说话人2：这个阶段里我们每月复核10到20件。已复核160多件。",
+    ];
+    for suffix in variants {
+        let source = session(&format!("{prefix}\n{suffix}"));
+        let (mut minutes, _) = response(&source);
+        minutes.summary = vec!["已复核160多件。".into()];
+        let mut evidence = vec![Evidence {field: "summary".into(), index: 0, quote: "复核流程上线".into()}];
+        summary_coverage::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        assert_eq!(minutes.summary[0], "已复核160多件。", "{suffix}");
+        assert_eq!(evidence.len(), 1);
+    }
+}
+
+#[test]
+fn chapter_coverage_keeps_a_cited_limit_with_its_scope_and_activity() {
+    let quote = "我们学校只有这个安排。因为确实小学，在线课程就三节课，所以主科在线上，其他科目做居家锻炼记录。";
+    let source = session(&format!("说话人2：{quote}"));
+    for (body, expected) in [
+        ("学校说明了主科线上和居家锻炼记录。", true),
+        ("学校说明采购安排已完成。", false),
+        ("学校小学线上就排三节课，其他科目做居家锻炼记录。", false),
+    ] {
+        let (mut minutes, _) = response(&source);
+        minutes.summary = vec![body.into()];
+        let mut evidence = vec![Evidence {field: "summary".into(), index: 0, quote: quote.into()}];
+        summary_coverage::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        if expected {
+            assert_eq!(minutes.summary[0], format!("{body}补充原话「小学，在线课程就三节课」。"));
+            assert_eq!(evidence[1].quote, "小学，在线课程就三节课");
+        } else {
+            assert_eq!(minutes.summary[0], body);
+        }
+    }
+    let clipped = "小学，在线课程就三节课，所以在家记录锻炼过程。";
+    let source = session(&format!("说话人2：假设学校下周改个方案，{clipped}"));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["在家记录锻炼过程。".into()];
+    let mut evidence = vec![Evidence {field: "summary".into(), index: 0, quote: clipped.into()}];
+    summary_coverage::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], "在家记录锻炼过程。");
+}
+
+#[test]
 fn context_merge_retains_unverified_drafts_and_source_evidence() {
     let original="# 旧分段汇总\n\n## 未核对的参考草稿\n\n可能需要寄样品\n\n## 分段原文依据\n\n样品待确认";
     let retained=reference_sections(original);

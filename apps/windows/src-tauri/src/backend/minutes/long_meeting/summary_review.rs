@@ -14,13 +14,17 @@ static PERIOD_PAIR: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 #[derive(PartialEq, Eq)]
-struct CitedTurn<'a> {
-    offset: usize,
-    full_line: &'a str,
-    chapter_text: &'a str,
+pub(super) struct CitedTurn<'a> {
+    pub(super) offset: usize,
+    pub(super) full_line: &'a str,
+    pub(super) chapter_text: &'a str,
 }
 
-fn cite_turn<'a>(full: &'a str, chapter: &Range<usize>, quote: &str) -> Option<CitedTurn<'a>> {
+pub(super) fn cite_turn<'a>(
+    full: &'a str,
+    chapter: &Range<usize>,
+    quote: &str,
+) -> Option<CitedTurn<'a>> {
     if quote.is_empty() || quote.contains('\n') {
         return None;
     }
