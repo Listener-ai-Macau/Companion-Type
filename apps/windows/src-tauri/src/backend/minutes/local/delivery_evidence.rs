@@ -235,6 +235,189 @@ pub(super) fn disputed_statement(sentences: &[Value], index: usize) -> Option<(u
     Some((opposite, format!("原话待核：{subject}是否会{predicate}，两位发言者说法不同。")))
 }
 
+pub(super) struct RevisedReading {
+    pub(super) superseded: Vec<usize>,
+    pub(super) support: Vec<usize>,
+    pub(super) text: String,
+    pub(super) role: &'static str,
+    pub(super) needs_review: bool,
+}
+
+/// Bind a correction to the same spoken operation. A bare disagreement
+/// preserves uncertainty; an explicit correction can be carried as guidance.
+pub(super) fn corrected_instruction(sentences: &[Value], index: usize) -> Option<RevisedReading> {
+    static NEGATED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:不能|不得|不要|不可以)(?P<operation>[\p{Han}]{2,12}?)(?:[，,。！？；、啊呀嘛吧\s]|$)"
+    ).expect("explicit negative instruction"));
+    let original = sentences[index]["text"].as_str()?;
+    let words = body(original);
+    if has(words, &["举例", "假设", "如果说", "我猜", "听说", "据说", "不一定"]) {
+        return None;
+    }
+    let earlier = (index.saturating_sub(2)..index).rev().find(|&position| {
+        let previous = body(sentences[position]["text"].as_str().unwrap());
+        previous.chars().filter(|c| c.is_alphanumeric()).count() > 4
+    })?;
+    let prior_source = sentences[earlier]["text"].as_str()?;
+    let previous = body(prior_source);
+    if previous.contains(['?', '？']) || has(previous, &["如果", "假如", "假设", "比如", "举例", "听说", "不是说", "不需要"]) {
+        return None;
+    }
+    for phrase in NEGATED.captures_iter(words) {
+        let operation = phrase.name("operation")?.as_str();
+        if operation.starts_with(['把', '让', '只', '再']) || operation.starts_with("因为") {
+            continue;
+        }
+        let calls_for_operation = previous.match_indices(operation).any(|(start, _)| {
+            let lead = previous[..start].trim_end();
+            ["就是要", "一定要", "要", "应该", "必须", "得"].iter().any(|cue| lead.ends_with(cue))
+                && !["不要", "不需要", "不应该", "没必要", "不一定要"].iter().any(|cue| lead.ends_with(cue))
+        });
+        if !calls_for_operation { continue; }
+        let affirmed = words.contains(&format!("不是{operation}"))
+            || words.contains(&format!("记住不能{operation}"))
+            || has(words, &["我的意思是", "更正一下", "我刚才说错", "以这个为准", "这里纠正"]);
+        let same_speaker = split_turn_label(prior_source.trim()).zip(split_turn_label(original.trim()))
+            .is_some_and(|(before, after)| before.0 == after.0);
+        if same_speaker && !affirmed { continue; }
+        let (text, role) = if affirmed {
+            (format!("会上纠正了“{operation}”的说法，明确要求不能{operation}。"), "recommendation")
+        } else {
+            (format!("原话待核：是否{operation}，前后说法不同。"), "status")
+        };
+        return Some(RevisedReading { superseded: vec![earlier], support: Vec::new(), text, role, needs_review: !affirmed });
+    }
+    None
+}
+
+/// A choice stated after evaluating alternatives is recorded as final
+/// only when the speaker explicitly sets it and discussion moves to carrying it out.
+pub(super) fn settled_choice(sentences: &[Value], index: usize) -> Option<RevisedReading> {
+    static SELECTED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:就定在|确定定在|就安排在|就改在|就选用|最终定为)(?P<choice>[\p{Han}A-Za-z0-9]{2,18}?)(?:吧|，|,|。|；|！|\s|$)"
+    ).expect("a named final choice"));
+    let words = body(sentences[index]["text"].as_str()?);
+    let choice = SELECTED.captures(words)?.name("choice")?.as_str();
+    if words.contains(['?', '？']) || has(words, &["我觉得可以", "我建议", "假设", "要不要", "能不能", "还不确定", "先暂定", "可能要", "如果要", "听说"]) {
+        return None;
+    }
+    let scope = if has(choice, &["馆", "场", "厅", "楼", "室", "校", "公园"]) {
+        &["室内", "室外", "场地", "租赁", "礼堂", "体育馆", "操场"][..]
+    } else if has(choice, &["线上", "线下", "远程", "现场"]) {
+        &["线上", "线下", "远程", "现场"][..]
+    } else {
+        &["日期", "工作日", "周末", "时间", "周一", "周二", "周三", "周四", "周五", "周六", "周日"][..]
+    };
+    let mut superseded = (index.saturating_sub(18)..index).rev().filter(|&position| {
+        let previous = body(sentences[position]["text"].as_str().unwrap());
+        has(previous, &["如果", "要是", "备选", "两手准备", "或者"])
+            && has(previous, scope)
+    }).take(4).collect::<Vec<_>>();
+    if superseded.is_empty() { return None; }
+    superseded.sort_unstable();
+    let overlap = ["布置", "排期", "准备", "通知", "对接", "实施", "执行", "安排"].into_iter()
+        .find(|cue| words.contains(cue) && (index+1..(index+4).min(sentences.len())).any(|position| {
+            body(sentences[position]["text"].as_str().unwrap()).contains(cue)
+        }))?;
+    let followup = (index+1..(index+4).min(sentences.len())).find(|&position| {
+        body(sentences[position]["text"].as_str().unwrap()).contains(overlap)
+    })?;
+    if (index+1..(index+7).min(sentences.len())).any(|position| {
+        let response = body(sentences[position]["text"].as_str().unwrap());
+        response.contains(choice) && has(response, &["不合适", "还没定", "没有定", "暂没定", "还要考虑", "不能定"])
+    }) {
+        return None;
+    }
+    let replacement = has(words, &["不用做两手准备", "不再做两手准备", "不采用备选", "前面方案不用", "取消原方案"]);
+    if !replacement && !has(words, &["最终", "经讨论", "就这么定", "确定"]) {
+        return None;
+    }
+    let cancelled = if replacement { "，先前的备选安排不再采用" } else { "" };
+    let preparation = if has(words, &["提前布置", "早一些早点时间布置", "早点布置"]) { "，提前布置" } else { "" };
+    Some(RevisedReading {
+        superseded, support: vec![followup], role: "decision", needs_review: false,
+        text: format!("定为{choice}{preparation}{cancelled}。"),
+    })
+}
+
+pub(super) fn dated_arrival(sentences: &[Value], index: usize) -> Option<(String, Vec<usize>)> {
+    static ARRIVAL: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<time>[一二两三四五六七八九十0-9]{1,3}点(?:半|[零一二三四五六七八九十0-9]{1,3}分)?)(?:开始)?(?:入席|入场|签到|报到)"
+    ).expect("a scheduled arrival, distinct from event start"));
+    static DATE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"[一二两三四五六七八九十0-9]{1,3}月[一二两三四五六七八九十0-9]{1,3}[日号]"
+    ).expect("an actual calendar day"));
+    let words = body(sentences[index]["text"].as_str()?);
+    if words.contains(['?', '？']) || has(words, &["比如", "如果", "可能", "假设", "暂定", "还不确定", "最早", "大约"]) {
+        return None;
+    }
+    let m = ARRIVAL.find(words)?;
+    let mut days = std::collections::BTreeMap::new();
+    let mut evening = None;
+    for position in index.saturating_sub(12)..index {
+        let earlier = body(sentences[position]["text"].as_str()?);
+        if earlier.contains(['?', '？']) || has(earlier, &["如果", "暂定", "可能", "大概", "假设", "没定", "别"]) { continue; }
+        if earlier.contains("晚上开") { evening = Some(position); }
+        if has(earlier, &["肯定是", "确认是", "确定在", "就定在", "确定为", "时间为", "日期是"]) {
+            for day in DATE.find_iter(earlier) {
+                days.entry(day.as_str()).or_insert(position);
+            }
+        }
+    }
+    if days.len() != 1 { return None; }
+    let (day, day_position) = days.into_iter().next()?;
+    let mut references = vec![day_position];
+    let part_of_day = if let Some(position) = evening.filter(|&position| position >= day_position) {
+        references.push(position);
+        "晚上"
+    } else { "" };
+    Some((format!("{day}，{part_of_day}{}。",m.as_str()), references))
+}
+
+pub(super) struct TrainingExample {
+    pub(super) anchor: usize,
+    pub(super) hypothetical: Vec<usize>,
+    pub(super) instruction: Option<usize>,
+}
+
+pub(super) fn unverified_training_examples(sentences: &[Value]) -> Vec<TrainingExample> {
+    let read = |position: usize| body(sentences[position]["text"].as_str().unwrap());
+    let training = (0..sentences.len().min(35)).any(|i| {
+        let words = read(i);
+        words.contains("培训") && has(words, &["今天", "本次", "培训师", "这场", "大家"])
+    });
+    if !training { return Vec::new(); }
+    let mut examples: Vec<TrainingExample> = Vec::new();
+    for index in 0..sentences.len() {
+        let words = read(index);
+        let unknown = has(words, &["不了解这个产品", "不了解这种产品", "不知道这个产品", "没有见过这个产品", "不清楚这款产品"])
+            || (words.contains("这个产品") && has(words, &["我也不知道", "我也不清楚"]));
+        if !unknown || has(words, &["已核实", "确认了配方", "后来查到了"]) { continue; }
+        let affected = (index..(index+24).min(sentences.len())).take_while(|&position| {
+            !has(read(position), &["下一个案例", "接下来看另一个", "换一个产品", "后来核实了", "已核实了"])
+        }).filter(|&position| {
+            let candidate = read(position);
+            has(candidate, &["成分", "配方", "添加", "混合", "功效", "保健品", "疗效"])
+                && (position == index || has(candidate, &["比方说", "比如", "可以说", "可能", "肯定", "应该", "就说"]))
+        }).collect::<Vec<_>>();
+        if affected.is_empty() { continue; }
+        let instruction = (index.saturating_sub(12)..(index+6).min(sentences.len())).find(|&position| {
+            let words = read(position);
+            !words.contains(['?', '？']) && has(words, &["先了解", "需要了解", "得了解"])
+                && has(words, &["产品", "我们卖什么"])
+        });
+        if let Some(previous) = examples.last_mut().filter(|previous| index.saturating_sub(previous.anchor) <= 18) {
+            previous.hypothetical.extend(affected);
+            previous.hypothetical.sort_unstable();
+            previous.hypothetical.dedup();
+            previous.instruction = previous.instruction.or(instruction);
+        } else {
+            examples.push(TrainingExample { anchor: index, hypothetical: affected, instruction });
+        }
+    }
+    examples
+}
+
 pub(super) struct OpeningAgenda {
     pub(super) text: String,
     pub(super) citations: Vec<String>,

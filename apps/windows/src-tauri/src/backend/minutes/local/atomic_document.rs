@@ -185,6 +185,18 @@ fn source_verified_facts(
             disputed.insert(index, (opposite, statement));
         }
     }
+    let mut revised = BTreeMap::new();
+    let mut superseded = HashSet::new();
+    for index in 0..sentences.len() {
+        if let Some(change) = delivery_evidence::corrected_instruction(sentences,index)
+            .or_else(|| delivery_evidence::settled_choice(sentences,index))
+        {
+            superseded.extend(change.superseded.iter().copied());
+            revised.insert(index,change);
+        }
+    }
+    let examples = delivery_evidence::unverified_training_examples(sentences);
+    let hypothetical: HashSet<_> = examples.iter().flat_map(|example| example.hypothetical.iter().copied()).collect();
     // Resolve scope changes before chapter selection. The model often cites
     // the original restrictive statement without citing its later exception.
     let exceptions: Vec<_> = sentences.iter().enumerate().filter_map(|(position, sentence)| {
@@ -201,6 +213,58 @@ fn source_verified_facts(
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
+        if let Some(example) = examples.iter().find(|example| example.anchor == index) {
+            let text = if example.instruction.is_some() {
+                "培训要求先了解产品。会上举例的商品细节未核实，不能当成实际成分或作用。"
+            } else {
+                "会上举例的商品细节未核实，不能当成实际成分或作用。"
+            };
+            let mut fact = ExtractedFact::review_quote(id,"status",text);
+            fact.execution_reading = true;
+            let evidence: Vec<_> = example.instruction.into_iter().chain(example.hypothetical.iter().copied().take(5)).collect();
+            extend_references(&mut fact,sentences,&evidence);
+            audit.push(json!({"sentenceId":id,"reason":"unverified-training-example","evidence":fact.evidence}));
+            verified.push(fact);
+        }
+        if hypothetical.contains(&index) { continue; }
+        if let Some(change) = revised.remove(&index).filter(|_| !superseded.contains(&index)) {
+            let mut fact = if change.needs_review { ExtractedFact::review_quote(id,change.role,&change.text) }
+                else { ExtractedFact::verbatim(id,change.role,&change.text) };
+            let references: Vec<_> = change.superseded.iter().copied().chain(change.support).collect();
+            extend_references(&mut fact,sentences,&references);
+            fact.execution_reading = true;
+            audit.push(json!({"sentenceId":id,"reason":if change.role=="decision"{"settled-after-alternatives"}
+                else if change.needs_review{"conflicting-instructions"}else{"explicit-instruction-correction"},"evidence":fact.evidence}));
+            verified.push(fact);
+            // The corrected or final reading already covers the proposal
+            // and decision. Preserve separately extracted work from the turn.
+            current.retain(|fact| fact.role=="action");
+        } else if superseded.contains(&index) {
+            current.retain(|fact| fact.role=="action");
+        }
+        if let Some((text, references))=delivery_evidence::dated_arrival(sentences,index) {
+            let mut fact = ExtractedFact::verbatim(id,"status",&text);
+            extend_references(&mut fact,sentences,&references);
+            fact.execution_reading = true;
+            audit.push(json!({"sentenceId":id,"reason":"confirmed-calendar-and-arrival","evidence":fact.evidence}));
+            verified.push(fact);
+        }
+        for record in source_commitments::explicitly_named_work(sentences,index) {
+            let text = record.item.text.clone();
+            let owner = record.item.owner.as_deref().unwrap();
+            if current.iter().any(|item| item.role=="action" && item.owner.as_deref()==Some(owner)
+                && source_grounding::shared_han_phrase(&item.text,&text,4)) {
+                continue;
+            }
+            let literal = canonical_brief::normalized(&text);
+            current.retain(|item| !is_covered_by_literal(item,&literal)
+                && !(item.role=="status" && item.text.contains(owner)
+                    && source_grounding::shared_han_phrase(&item.text,&text,4)));
+            let mut fact = ExtractedFact::original_action(id,&text,record.item);
+            extend_references(&mut fact,sentences,&record.support);
+            audit.push(json!({"sentenceId":id,"reason":"literal-named-assignment","evidence":fact.evidence}));
+            current.push(fact);
+        }
         if let Some((position, sources)) = arrival_procedures.remove(&index) {
             let mut record = current.remove(position);
             for source in sources {
@@ -1975,6 +2039,38 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn explicit_followups_and_corrections_are_fixed_before_layout() {
+        let source = "由项目组提交验收报告。\n我们得扩大承诺的范围。\n不是扩大承诺的范围，记住不能扩大承诺的范围。\n";
+        let units = source_units(source);
+        let original = factual_audit::evidence_sentences(&units);
+        let baseline = original.iter().map(|row| {
+            ExtractedFact::verbatim(row["id"].as_str().unwrap(), "status", row["text"].as_str().unwrap())
+        }).collect();
+        let bank = build_bank(baseline, source).unwrap();
+        let task = bank.facts.iter().find(|fact| fact.placement == Placement::Action).unwrap();
+        assert_eq!(task.owner.as_deref(), Some("项目组"));
+        let corrected = bank.facts.iter().find(|fact| fact.text.contains("明确要求不能")).unwrap();
+        assert!(bank.execution_reading.contains(&corrected.id));
+        assert_eq!(corrected.evidence.len(), 2);
+        assert!(!bank.facts.iter().any(|fact| fact.text.contains("我们得扩大")));
+    }
+
+    #[test]
+    fn a_late_choice_supersedes_alternatives_without_changing_arrival_into_start_time() {
+        let source = "肯定是要十二月三十一号。\n晚上开始吧。\n六点开始入席。\n如果天气好就在室外，否则在室内。\n咱们就定在体育馆内吧，提前布置，不用做两手准备。\n布置还需要哪些材料？\n";
+        let original = factual_audit::evidence_sentences(&source_units(source));
+        let baseline = original.iter().map(|row| {
+            ExtractedFact::verbatim(row["id"].as_str().unwrap(), "status", row["text"].as_str().unwrap())
+        }).collect();
+        let bank = build_bank(baseline, source).unwrap();
+        let decision = bank.facts.iter().find(|fact| fact.placement == Placement::Decision).unwrap();
+        assert!(decision.text.contains("体育馆内") && decision.text.contains("不再采用"));
+        let arrival = bank.facts.iter().find(|fact| fact.text.contains("十二月三十一号，晚上六点开始入席")).unwrap();
+        assert!(bank.execution_reading.contains(&arrival.id));
+        assert!(!bank.facts.iter().any(|fact| fact.text.starts_with("如果天气好")));
+    }
 
     #[test]
     fn a_scoped_answer_keeps_the_question_and_the_conditional_amounts() {

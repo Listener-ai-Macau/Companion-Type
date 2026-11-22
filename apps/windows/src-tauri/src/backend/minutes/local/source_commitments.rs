@@ -314,6 +314,92 @@ pub(super) struct DirectedWork {
     pub(super) support: Vec<usize>,
 }
 
+/// An assignee spoken in the instruction is available even when the
+/// transcript has no reliable label for the person giving the instruction.
+pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<DirectedWork> {
+    const OWNER: &str = r"(?:[A-Z](?:[\s、和与]+[A-Z])?\s*(?:两位)?(?:同学|老师|工程师)|[\p{Han}]{1,6}?(?:小组|团队|部门|同学|经理|主管|部长|工程师|负责人|老师|组|部)|部长|副部长|负责人|项目经理|主持人)";
+    static DIRECT: LazyLock<Regex> = LazyLock::new(|| Regex::new(&format!(
+        r"由(?P<owner>{OWNER})\s*(?:来|就|负责|先|要|务必){{0,4}}(?P<work>(?:制作|做|编制|整理|提交|准备|提供|核对|复核|更新|撰写|编写|统计|计算|核算|估算)[^，,。！？；;？?\r\n]{{2,40}})"
+    )).expect("explicitly named recipient and work"));
+    static INVERTED: LazyLock<Regex> = LazyLock::new(|| Regex::new(&format!(
+        r"(?:^|[，,；;]|然后|另外|还有)\s*(?P<deliverable>[\p{{Han}}A-Za-z]{{2,12}})\s*由(?P<owner>{OWNER})\s*(?:来|就|负责)?(?:制作|做|编制|整理|提交|准备|提供|核对|更新)(?:一下儿?)?(?:吧|了)?(?:$|[，,。！；;])"
+    )).expect("deliverable followed by an explicit recipient"));
+    static REPEATED: LazyLock<Regex> = LazyLock::new(|| Regex::new(&format!(
+        r"(?P<owner>{OWNER})[^，。！？；]{{0,19}}[，,\s]+(?:她|他|他们|她们)(?:也)?(?:可以|来|负责)(?P<work>(?:制作|做|编制|整理|提交|准备|提供|核对|更新)[^，,。！？；;\r\n]{{2,50}})"
+    )).expect("named proposal with a later confirmation"));
+    static ARTIFACT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?i:p\s*p\s*t|excel|word|pdf)|预算清单|预算表|项目方案|执行方案|交付方案|测试报告|验收报告|工作清单|活动方案|采购清单|原型|条幅"
+    ).expect("literal work product"));
+    let (_, words) = split(&sentences[index]);
+    if words.contains(['?', '？']) || contains(words, CONTEXT) || contains(words, NEGATION)
+        || contains(words, &["我建议", "建议由", "可以考虑", "最好", "之前", "当时", "听说", "比如", "例如", "举例", "演示", "暂定", "尚未决定", "没有决定", "没有确认"])
+        || index.checked_sub(1).is_some_and(|previous| {
+            let (_, context) = split(&sentences[previous]);
+            contains(context, &["举个例子", "举一个例子", "模拟一下", "比如有一个", "假设一个", "作为演示"])
+        })
+    {
+        return Vec::new();
+    }
+    let accepted = (index + 1..(index + 4).min(sentences.len()))
+        .take_while(|&next| {
+            let (_, words) = split(&sentences[next]);
+            explicit_agreement(words) || backchannel(words)
+        }).find(|&next| {
+            let (_, words) = split(&sentences[next]);
+            explicit_agreement(words)
+        });
+    let mut output = Vec::new();
+    for (form, matches) in [(0, DIRECT.captures_iter(words)), (1, INVERTED.captures_iter(words)), (2, REPEATED.captures_iter(words))] {
+        for m in matches {
+            let owner = m.name("owner").unwrap().as_str();
+            let clause = m.get(0).unwrap();
+            if contains(&words[..clause.start()], &["要不要", "是否由", "能不能", "可不可以"])
+                || contains(clause.as_str(), &["要不要", "能不能", "可不可以"]) { continue; }
+            let mut text = m.name("work").map(|work| work.as_str().trim_end_matches(['吧', '。', ' ']).to_owned())
+                .unwrap_or_else(|| format!("制作{}", &m["deliverable"]));
+            if text.contains('？') || !complete_piece(&text) || !canonical_brief::line(&text, 90) { continue; }
+            let artifact = ARTIFACT.find(&text).map(|found| {
+                (found.end(), canonical_brief::normalized(found.as_str()).to_ascii_lowercase())
+            });
+            let confirmation = artifact.as_ref().and_then(|(_, product)| {
+                (index + 1..(index + 5).min(sentences.len())).find(|&next| {
+                    let (_, response) = split(&sentences[next]);
+                    !response.contains(['?', '？']) && !contains(response, CONTEXT)
+                        && !contains(response, NEGATION)
+                        && (contains(response, &["让他做", "让她做", "你做", "你来做", "由你", "我来做", "发给你"])
+                            && canonical_brief::normalized(response).to_ascii_lowercase().contains(product))
+                })
+            });
+            let tentative = form == 2 || clause.as_str().trim_end_matches(['。','！','；','，',' ']).ends_with('吧');
+            let support = if form == 2 { confirmation } else { accepted.or(confirmation) };
+            if tentative && support.is_none() { continue; }
+            // A repeated mention can confirm the work product without supplying
+            // an assignee or due date for a different instruction.
+            if let Some((end, _)) = artifact {
+                if form == 2 && contains(&text[end..], &["预算", "账目", "消费记录"]) {
+                    text = format!("{}，整理预算。", &text[..end]);
+                }
+            }
+            let tail = words[clause.end()..].trim_start_matches(['，', ',', ' ']);
+            if let Some(following) = tail.split(['，', '。', '；']).next().filter(|next| {
+                canonical_brief::line(next, 35) && contains(next, &["再看看要不要", "再决定是否", "再确认是否"])
+            }) {
+                let linked = format!("{text}，{following}");
+                if canonical_brief::line(&linked, 90) { text = linked; }
+            }
+            if output.iter().any(|work: &DirectedWork| work.item.owner.as_deref() == Some(owner)
+                && canonical_brief::normalized(&work.item.text) == canonical_brief::normalized(&text)) {
+                continue;
+            }
+            output.push(DirectedWork {
+                item: CompanionV1ActionItem { text, owner: Some(owner.to_owned()), due: None },
+                support: support.into_iter().collect(),
+            });
+        }
+    }
+    output
+}
+
 fn preceding_turn(sentences: &[Value], index: usize) -> Option<(usize, &str)> {
     (index.saturating_sub(3)..index).rev().find_map(|previous| {
         let (speaker, words) = split(&sentences[previous]);
@@ -747,6 +833,29 @@ mod tests {
         rows.iter().enumerate().map(|(i, text)| json!({
             "id":format!("e{i:04}"), "source":"u000", "text":text
         })).collect()
+    }
+
+    #[test]
+    fn explicit_work_keeps_the_spoken_recipient_and_requires_a_supported_soft_assignment() {
+        let rows = sentences(&[
+            "那由D同学做一个P P T吧。",
+            "让他做一个P P T，还有C同学也是学计算机的，她可以做一个Excel来拟定一下预算。",
+            "嗯。",
+            "我把预算清单发给你，然后你做一个Excel清单。",
+            "然后条幅由A B两位同学来做吧。",
+            "好。",
+            "先由部长计算设备和人员的钱，然后再看看要不要搞外联。",
+        ]);
+        let action = |index| explicitly_named_work(&rows,index).into_iter().next().unwrap().item;
+        assert_eq!(action(0).owner.as_deref(),Some("D同学"));
+        assert_eq!(action(1).owner.as_deref(),Some("C同学"));
+        assert_eq!(action(4).owner.as_deref(),Some("A B两位同学"));
+        assert!(action(6).text.contains("再看看要不要搞外联"));
+
+        for text in ["那由C同学做一个预算表吧。", "如果由C同学做一个预算表，这项暂时不定。",
+            "这是举例，由C同学做一个预算表。", "要不要由C同学准备预算表。"] {
+            assert!(explicitly_named_work(&sentences(&[text]),0).is_empty(),"{text}");
+        }
     }
 
     #[test]
