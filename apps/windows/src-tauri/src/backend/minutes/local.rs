@@ -23,11 +23,31 @@ const SOURCE_OUTPUT_TOKENS: usize = 2048;
 // content and installed-app gates. Diagnostics do not promote their own output.
 pub(crate) const CONTENT_QUALIFIED:bool=false;
 pub(crate) fn assets_present()->bool{assets::present()}
-pub(crate) fn supported()->bool{CONTENT_QUALIFIED&&assets::cpu_supported()}
+pub(crate) fn supported()->bool{(CONTENT_QUALIFIED||delivery_preview_root().is_some())&&assets::cpu_supported()}
 pub(crate) fn prepare()->Result<(),String>{assets::prepare()}
 pub(crate) fn check_assets()->Result<(),String>{
     if !supported(){return Err("本地会议整理尚未准备好。".into());}
     assets::runtime()?;assets::verified(&assets::model_path()?,assets::MODEL_BYTES,assets::MODEL_SHA)
+}
+
+#[cfg(feature="local-minutes-delivery-preview")]
+fn delivery_preview_root()->Option<std::path::PathBuf>{
+    let root=std::path::PathBuf::from(std::env::var_os("COMPANION_TYPE_LOCAL_MINUTES_PREVIEW_ROOT")?)
+        .canonicalize().ok()?;
+    for name in ["COMPANION_TYPE_STATE_PATH","COMPANION_TYPE_PRODUCT_SETTINGS_PATH"] {
+        let path=std::path::PathBuf::from(std::env::var_os(name)?);
+        if !path.parent()?.canonicalize().ok()?.starts_with(&root) { return None; }
+    }
+    Some(root)
+}
+
+#[cfg(not(feature="local-minutes-delivery-preview"))]
+fn delivery_preview_root()->Option<std::path::PathBuf>{None}
+
+enum RuntimePolicy<'a> {
+    Cpu,
+    ExplicitVulkan(&'a std::path::Path),
+    Application,
 }
 
 fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str)->Result<Vec<String>,String>{
@@ -42,18 +62,27 @@ fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str)->Result<Vec<St
 }
 
 pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<CompanionV1MeetingMinutes,String>{
-    if !CONTENT_QUALIFIED{return Err("本地会议整理尚未准备好，已有文字和纪要保留。".into());}
-    let(minutes,_)=attempt(session,base);let mut minutes=minutes?;minutes.quality="final".into();Ok(minutes)
+    if !supported(){return Err("本地会议整理尚未准备好，已有文字和纪要保留。".into());}
+    let (minutes,trace)=recorded_attempt(session,base,new_trace(),&source_checkpoint::CheckedSourcePrefix::default(),RuntimePolicy::Application);
+    if let Some(root)=delivery_preview_root(){
+        let fields=["backend","vulkanDevice","runtimeFallback","sourceWindow","inferenceRequestAttempts",
+            "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","newCloudCalls"];
+        let summary=fields.into_iter().map(|key|(key.to_owned(),trace[key].clone())).collect::<serde_json::Map<_,_>>();
+        let _=std::fs::write(root.join("local-minutes-delivery-trace.json"),Value::Object(summary).to_string());
+    }
+    let mut minutes=minutes?;
+    minutes.quality="final".into();
+    Ok(minutes)
 }
 
 pub(crate) fn attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->(Result<CompanionV1MeetingMinutes,String>,Value){
-    recorded_attempt(session,base,new_trace(),&source_checkpoint::CheckedSourcePrefix::default(), None)
+    recorded_attempt(session,base,new_trace(),&source_checkpoint::CheckedSourcePrefix::default(),RuntimePolicy::Cpu)
 }
 fn new_trace()->transport::Trace{
     Arc::new(Mutex::new(json!({"provider":"local","model":"Qwen3.5-4B-Q4_K_M","runtimeSha256":assets::SERVER_SHA,
         "modelSha256":assets::MODEL_SHA,"stage":"preflight","calls":[],"newCloudCalls":0,"trainingUpdates":0,"semanticAccuracyCertificate":false,"contentQualified":false})))
 }
-fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace,reused:&source_checkpoint::CheckedSourcePrefix, vulkan_root: Option<&std::path::Path>)->(Result<CompanionV1MeetingMinutes,String>,Value){
+fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace,reused:&source_checkpoint::CheckedSourcePrefix,policy:RuntimePolicy<'_>)->(Result<CompanionV1MeetingMinutes,String>,Value){
     let start=Instant::now();
     let mut release_confirmed=false;
     let outcome=(||{
@@ -66,7 +95,22 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         }
         let _lease=assets::compute_lease()?;
         let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
-        let accelerator = vulkan_root.map(assets::engineering_vulkan).transpose()?;
+        let accelerator = match policy {
+            RuntimePolicy::Cpu=>None,
+            RuntimePolicy::ExplicitVulkan(root)=>Some(assets::engineering_vulkan(root)?),
+            RuntimePolicy::Application=>{
+                let root=assets::runtime_root()?.join("vulkan");
+                match assets::engineering_vulkan(&root) {
+                    Ok(found)=>Some(found),
+                    Err(reason)=>{
+                        if let Ok(mut trace)=trace.lock(){
+                            trace["runtimeFallback"]=json!(reason);
+                        }
+                        None
+                    }
+                }
+            }
+        };
         let runtime = match &accelerator {
             Some((path, _)) => path.clone(),
             None => assets::runtime()?,

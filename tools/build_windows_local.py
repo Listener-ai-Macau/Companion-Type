@@ -19,6 +19,7 @@ def main():
     p.add_argument('--output',type=Path,help='Optional existing batch directory for one log')
     p.add_argument('--reserve-gib',type=float,default=3,help='Explicit incremental-job space estimate, 1 to 3GiB; use the shared configured cache budget')
     p.add_argument('--native-output',type=Path,help='Freeze the two CLI binaries under the shared build lock; new absolute output directory only')
+    p.add_argument('--local-minutes-preview',action='store_true',help='Build the isolated desktop candidate without opening the public minutes feature')
     a=p.parse_args()
     if os.name!='nt':p.error('Windows native build entry')
     if a.filter and a.task!='test':p.error('--filter applies to test')
@@ -42,7 +43,7 @@ def main():
                 a.native_output.mkdir(parents=True,exist_ok=False)
                 profile='release' if a.release else 'debug'
                 for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copyfile(target/profile/name,a.native_output/name)
-                receipt={'authoringHead':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'profile':profile,'nativeSourceHashes':hashes,'binaries':{n:hashlib.sha256((a.native_output/n).read_bytes()).hexdigest() for n in ['companion-type.exe','companion_type_lib.dll']},'scope':'Engineering native CLI candidate, copied before releasing the shared target lock; no GUI/install/frozen release claim'}
+                receipt={'authoringHead':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'profile':profile,'nativeSourceHashes':hashes,'binaries':{n:hashlib.sha256((a.native_output/n).read_bytes()).hexdigest() for n in ['companion-type.exe','companion_type_lib.dll']},'deliveryPreview':a.local_minutes_preview,'scope':'Engineering native candidate copied under the shared target lock; acceptance recorded separately'}
                 (a.native_output/'source.json').write_text(json.dumps(receipt,indent=2),encoding='utf8')
             return result
     except (StorageLimit,OSError) as error:
@@ -59,6 +60,7 @@ def build(a,target):
     env.setdefault('CARGO_BUILD_JOBS','2')
     cmd=['cargo',a.task,'--locked','--manifest-path',str(ROOT/'apps/windows/src-tauri/Cargo.toml')]
     if a.release:cmd.append('--release')
+    if a.local_minutes_preview:cmd.extend(['--features','local-minutes-delivery-preview'])
     if a.filter:cmd.extend(['--lib',a.filter])
     print('Using reusable native target: '+str(target),flush=True)
     if a.output:

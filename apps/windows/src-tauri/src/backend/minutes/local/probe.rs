@@ -99,7 +99,8 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
         let finish=Finish(&finished);
         let result=super::super::super::meeting_processing_job::run(&session.id,&job_id,
             super::super::super::meeting_processing_job::Kind::Minutes,||{
-                let(result,record)=super::recorded_attempt(&session,&base,trace.clone(),&reused,input.vulkan_runtime_dir.as_deref());receipt=Some(record);result
+                let policy=input.vulkan_runtime_dir.as_deref().map_or(super::RuntimePolicy::Cpu,super::RuntimePolicy::ExplicitVulkan);
+                let(result,record)=super::recorded_attempt(&session,&base,trace.clone(),&reused,policy);receipt=Some(record);result
             });
         drop(finish);let _=monitor.join();result
     });
