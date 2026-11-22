@@ -1117,14 +1117,15 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main),
             bank.reader_order.get(&fact.id).copied().unwrap_or(usize::MAX)));
         required_chars+=items.iter().take(1)
-            .map(|(fact,_)|fact.text.chars().count()).sum::<usize>();
+            .map(|(fact,_)|reader_fact_length(bank,fact)).sum::<usize>();
     }
     let mut optional_chars=1000_usize.checked_sub(required_chars).ok_or_else(fail)?;
     let mut reserved = HashSet::new();
     for items in &slots {
         for (fact, main) in items.iter().skip(1).take(2) {
-            if important(fact, *main) && fact.text.chars().count() <= optional_chars {
-                optional_chars -= fact.text.chars().count();
+            let size=reader_fact_length(bank,fact);
+            if important(fact, *main) && size <= optional_chars {
+                optional_chars -= size;
                 reserved.insert(fact.id.as_str());
             }
         }
@@ -1161,7 +1162,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let mut review=Vec::new();
         let mut remainder=Vec::new();
         for (index,(fact,main)) in items.into_iter().enumerate(){
-            let size=fact.text.chars().count();
+            let size=reader_fact_length(bank,fact);
             if index==0 || reserved.contains(fact.id.as_str()){
                 points.push([&fact.id]);
             }else if main&&points.len()<3&&size<=optional_chars{
@@ -1237,6 +1238,19 @@ fn explicit_reader_recommendation(source: &str) -> bool {
             .iter().any(|verb| action.starts_with(verb)))
 }
 
+fn reader_story_framing<'a>(bank: &'a Bank, fact: &Fact) -> Option<(String,&'a Fact)> {
+    let intro=bank.receipt["readerExampleBindings"].as_array()?.iter()
+        .find(|binding| binding["contentFact"]==fact.id)?["introFact"].as_str()?;
+    let intro=bank.facts.iter().find(|fact| fact.id==intro)?;
+    if !["写过","小说","电影"].iter().any(|cue| intro.text.contains(cue)) { return None; }
+    let text=format!("作品情节：{}",fact.text);
+    canonical_brief::line(&text,90).then_some((text,intro))
+}
+
+fn reader_fact_length(bank: &Bank, fact: &Fact) -> usize {
+    reader_story_framing(bank,fact).map_or_else(||fact.text.chars().count(),|(text,_)|text.chars().count())
+}
+
 pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
     let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS,MAX_FACTS)?;
@@ -1250,6 +1264,16 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     for(pointer,id)in &result.bindings{
         let fact=bank.facts.iter().find(|f|&f.id==id).ok_or_else(fail)?;
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
+        let mut evidence_ids=fact.evidence.iter().map(String::as_str).collect::<Vec<_>>();
+        if entry.contains_key("kind") {
+            if let Some((framed,intro))=reader_story_framing(bank,fact) {
+                entry.insert("kind".into(),json!(Kind::Opinion));
+                entry.insert("text".into(),json!(framed));
+                for source in &intro.evidence {
+                    if !evidence_ids.contains(&source.as_str()) { evidence_ids.push(source); }
+                }
+            }
+        }
         if matches!(fact.kind, Kind::Status) && entry.contains_key("kind")
             && fact.evidence.first().and_then(|source| known[source.as_str()]["text"].as_str())
                 .is_some_and(explicit_reader_recommendation)
@@ -1260,8 +1284,8 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
-        entry.remove("sources");entry.insert("evidence".into(),json!(fact.evidence.iter().map(|id|{
-            let s=known[id.as_str()];json!({"source":s["source"],"quote":s["text"]})
+        entry.remove("sources");entry.insert("evidence".into(),json!(evidence_ids.iter().map(|id|{
+            let s=known[*id];json!({"source":s["source"],"quote":s["text"]})
         }).collect::<Vec<_>>()));
     }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(READER_DETAILS);
