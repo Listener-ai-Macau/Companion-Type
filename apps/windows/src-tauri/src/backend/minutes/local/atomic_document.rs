@@ -101,6 +101,7 @@ impl Bank {
 pub(super) const MAX_FACTS:usize=4096;
 const CHAPTER_HIGHLIGHTS: usize = 5;
 const READER_DETAILS: usize = 3;
+const LAYOUT_FACT_BYTES: usize = 24 * 1024;
 #[cfg(test)]
 pub(super) fn parse_bank(raw:&str,source:&str)->Result<Bank,String>{
     let extracted:Extracted=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|fail())?;
@@ -341,7 +342,17 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
             judgment: matches!(f.kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast),
             review_only: quantity_quotes.contains(&f.id) || source_quotes.contains(&f.id),
         }).collect();
-        let mut candidates = shortlist(&content);
+        // Shortlist by relevance across the chapter, then charge its actual
+        // serialized input against a fixed share of the whole-layout budget.
+        let mut bytes=0;
+        let budget=LAYOUT_FACT_BYTES/chapter_spans.len();
+        let mut candidates = shortlist(&content).into_iter().filter(|&offset| {
+            let fact=topic_facts[span.start+offset];
+            let size=json!([fact.id,fact.kind,fact.text]).to_string().len()+1;
+            if bytes+size>budget { return false; }
+            bytes+=size;
+            true
+        }).collect::<Vec<_>>();
         candidates.sort_unstable();
         candidates
     }).collect();

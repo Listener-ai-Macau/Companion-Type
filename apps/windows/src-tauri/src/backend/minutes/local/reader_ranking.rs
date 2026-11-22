@@ -4,7 +4,7 @@ use super::chapter_labels::segmenter;
 
 // The whole fact bank is retained. This shortlist only bounds what the model
 // can put in the reading layer and keeps quieter parts of each chapter in view.
-const MAX_READER_CHOICES: usize = 14;
+const MAX_READER_CHOICES: usize = 24;
 const STOP_WORDS: &str = "嗯 呃 就是 其实 后来 因为 所以 这个 那个 一点 方面 如果 那样 呢 啊 那么 但是 比如 真的 那一 一些 目前 还是 这样 所谓 而且 东西 时候 事情 一样 主要 之前 现在 希望 可能 确实 认为 我们 你们 他们 大家 我个人";
 const FACT_CUES: &[&str] = &[
     "必须", "要求", "应当", "应该", "需要", "建议", "只要", "必要", "承诺", "缺乏", "缺少",
