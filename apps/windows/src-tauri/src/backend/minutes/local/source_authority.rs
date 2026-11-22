@@ -165,6 +165,25 @@ pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::Com
         return None;
     }
     const NEGATIONS: &[&str] = &["无需", "不用", "不再", "不要", "没有安排", "不必", "不需要", "取消"];
+    // Direct exchanges often omit dates. Require both the requested verb and
+    // the receiving party's undertaking, keeping the two spoken roles literal.
+    static PAIRED_HANDOFF: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:你们|您|你)(?:这边儿?|那边儿?)\s*(?:负责|来|要|就)?(?:出|提交|整理|准备|提供|完成|拟定)[^，,。！？；;\r\n]{2,36}[，,]\s*(?:我们|我)(?:这边儿?|那边儿?)\s*(?:来|负责|进行)?(?:一些|一下)?(?:审批|审核|验收|确认|汇总|统计|复核)(?:[，,]?\s*(?:并|再)?(?:报告|上报)[^，,。！？；;\r\n]{1,16})?"
+    ).expect("valid direct handoff pattern"));
+    static COLLECT_HANDOFF: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:你们|您|你)(?:这边儿?|那边儿?)?\s*把[^，,。！？；;\r\n]{1,24}?(?:报给|发给|交给)我[，,]?\s*我(?:这边儿?)?\s*(?:来|负责)(?:汇总|统计|登记|复核|审核)"
+    ).expect("valid collection handoff pattern"));
+    if !has(text, NEGATIONS) && !has(text, OPINION)
+        && !has(text, &["曾说", "说过", "转述", "演示", "设想", "我建议", "可以考虑"])
+    {
+        let mut pairs = PAIRED_HANDOFF.find_iter(text).chain(COLLECT_HANDOFF.find_iter(text));
+        if let Some(pair) = pairs.next().filter(|_| pairs.next().is_none()) {
+            let action = pair.as_str().trim();
+            if canonical_brief::line(action, 90) {
+                return Some(CompanionV1ActionItem { text: action.to_owned(), owner: None, due: None });
+            }
+        }
+    }
     let mut group_work = GROUP_WORK.find_iter(text);
     if let Some(task) = group_work.next().filter(|_| group_work.next().is_none()) {
         // The preceding description can mention something unnecessary. An
@@ -201,6 +220,35 @@ pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::Com
         owner: Some(owner.to_owned()),
         due: None,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::spoken_assignment;
+
+    #[test]
+    fn a_pair_of_spoken_undertakings_remains_a_handoff_without_an_invented_owner_or_date() {
+        for (source, second_party) in [
+            ("嗯，年关的时候，这不是马上呃 元旦了嘛，咱也也要搞一次活动，这个的话，呃你这边儿出一个具体的一个方案实施，我这边儿进行一些审批，报告上边儿领导，呃，咱把这个活动搞起来。", "审批，报告上边儿领导"),
+            ("就是你们下边就各个定时间你们把时间报给我我来统计别的应该就是没有什么大问题了。", "把时间报给我我来统计"),
+            ("你们这边整理交付清单，我们这边负责验收。", "负责验收"),
+        ] {
+            let assignment = spoken_assignment(source).expect("both sides make a concrete undertaking");
+            assert!(source.contains(&assignment.text) && assignment.text.contains(second_party));
+            assert!(assignment.owner.is_none() && assignment.due.is_none());
+        }
+        for source in [
+            "比如你这边出一份方案，我这边来审批。",
+            "如果你这边出方案，我这边审批。",
+            "有人曾说你这边出方案，我这边审批。",
+            "你这边不要准备方案，我这边负责审核。",
+            "我觉得你这边准备一份方案，我这边审批。",
+            "你这边出一份方案，我这边可以审批。",
+            "请你这边介绍方案，我这边来审批。",
+        ] {
+            assert!(spoken_assignment(source).is_none(), "{source}");
+        }
+    }
 }
 
 pub(super) fn explicit_followup_object(assignment: &str, source: &str, previous: &str) -> Option<String> {

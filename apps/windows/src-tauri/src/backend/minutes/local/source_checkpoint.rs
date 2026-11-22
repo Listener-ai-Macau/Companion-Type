@@ -24,7 +24,7 @@ fn failure() -> String {
 }
 
 impl CheckedSourcePrefix {
-    pub(super) fn load(input: &CheckpointInput, source: &str, source_sha256: &str, duration_ms: u64) -> Result<Self, String> {
+    pub(super) fn load(input: &CheckpointInput, source: &str, source_sha256: &str, duration_ms: u64, vulkan: bool) -> Result<Self, String> {
         const MAX_BYTES: u64 = 8 * 1024 * 1024;
         let mut bytes = Vec::new();
         File::open(&input.path).map_err(|_| failure())?.take(MAX_BYTES + 1)
@@ -33,17 +33,23 @@ impl CheckedSourcePrefix {
             return Err(failure());
         }
         let report: Value = serde_json::from_slice(&bytes).map_err(|_| failure())?;
-        Self::from_report(&report, source, source_sha256, duration_ms)
+        Self::from_runtime_report(&report, source, source_sha256, duration_ms, vulkan)
     }
 
+    #[cfg(test)]
     fn from_report(report: &Value, source: &str, source_sha256: &str, duration_ms: u64) -> Result<Self, String> {
+        Self::from_runtime_report(report, source, source_sha256, duration_ms, false)
+    }
+
+    fn from_runtime_report(report: &Value, source: &str, source_sha256: &str, duration_ms: u64, vulkan: bool) -> Result<Self, String> {
         let trace = &report["receipt"];
+        let runtime_sha = if vulkan { assets::VULKAN_SERVER_SHA } else { assets::SERVER_SHA };
         if !matches!(report["state"].as_str(), Some("native-candidate-failed-retained" | "native-candidate-engineer-review-required"))
             || report["sourceSha256"] != source_sha256
             || report["durationMs"] != duration_ms
             || trace["provider"] != "local"
             || trace["modelSha256"] != assets::MODEL_SHA
-            || trace["runtimeSha256"] != assets::SERVER_SHA
+            || trace["runtimeSha256"] != runtime_sha
             || trace["newCloudCalls"] != 0
             || trace["trainingUpdates"] != 0
         {
@@ -82,7 +88,10 @@ impl CheckedSourcePrefix {
                 let request = &call["request"];
                 let alias = request["model"].as_str().ok_or_else(failure)?;
                 let (input, schema) = windows.contract(index, encoding);
-                let expected = transport::request_body(alias, encoding.prompt(), input, schema, super::SOURCE_OUTPUT_TOKENS, &profile)?;
+                let mut expected = transport::request_body(alias, encoding.prompt(), input, schema, super::SOURCE_OUTPUT_TOKENS, &profile)?;
+                if vulkan {
+                    transport::use_vulkan_schema(&mut expected);
+                }
                 if *request != expected || call["finishReason"] != "stop" {
                     return Err(failure());
                 }

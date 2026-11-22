@@ -54,6 +54,13 @@ pub(super) fn request_body(alias: &str, prompt: &str, input: Value, schema: Valu
     Ok(body)
 }
 
+pub(super) fn use_vulkan_schema(body: &mut Value) {
+    // The pinned Vulkan server reads the OpenAI-style wrapper. The CPU wire
+    // format is preserved to keep validated CPU checkpoints compatible.
+    let schema = body["response_format"]["schema"].take();
+    body["response_format"] = json!({"type":"json_schema","json_schema":{"schema":schema}});
+}
+
 pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,schema:Value,stop:&AtomicBool,trace:&Trace,max_output_tokens:usize)->Result<String,String>{
     let address=format!("http://127.0.0.1:{port}");
     let client=Client::builder().no_proxy().redirect(reqwest::redirect::Policy::none()).connect_timeout(Duration::from_secs(2))
@@ -72,10 +79,7 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     let profile=profile()?;
     let mut body = request_body(alias, prompt, input, schema, max_output_tokens, &profile)?;
     if trace.lock().map_err(|_| error())?["backend"] == "vulkan" {
-        // This pinned server reads the OpenAI-style wrapper. Preserve the
-        // legacy CPU wire format so existing source checkpoints remain valid.
-        let schema = body["response_format"]["schema"].take();
-        body["response_format"] = json!({"type":"json_schema","json_schema":{"schema":schema}});
+        use_vulkan_schema(&mut body);
     }
     let rendered=post(&client,&address,key,"/apply-template",&json!({"messages":body["messages"],"chat_template_kwargs":body["chat_template_kwargs"]}),stop)?;
     let rendered=rendered["prompt"].as_str().ok_or_else(error)?;

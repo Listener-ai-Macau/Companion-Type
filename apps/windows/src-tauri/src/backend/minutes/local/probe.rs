@@ -50,11 +50,9 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
     let text=String::from_utf8(bytes).map_err(|_|"指定原文不是UTF-8。")?;
     let text=text.strip_prefix('\u{feff}').unwrap_or(&text).replace("\r\n","\n");
     let source_hash=format!("{:x}",Sha256::digest(text.as_bytes()));
-    if input.vulkan_runtime_dir.is_some() && input.reuse_checkpoint.is_some() {
-        return Err("Vulkan 配对验证需要从原文生成，不能复用旧 CPU 检查点。".into());
-    }
     let reused = input.reuse_checkpoint.as_ref().map(|checkpoint| {
-        super::source_checkpoint::CheckedSourcePrefix::load(checkpoint, &text, &source_hash, input.duration_ms)
+        super::source_checkpoint::CheckedSourcePrefix::load(checkpoint, &text, &source_hash, input.duration_ms,
+            input.vulkan_runtime_dir.is_some())
     }).transpose()?.unwrap_or_default();
     let session=session(text,&input.title,input.duration_ms)?;
     fs::create_dir(output).map_err(|_|"工程输出目录必须是新的目录，已有证据保留。")?;
