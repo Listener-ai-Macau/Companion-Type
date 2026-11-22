@@ -178,7 +178,7 @@ mod tests{
         let parsed=parse_with_details_limit(&d.to_string(),&s,&b,8,Some(1)).unwrap();
         assert!(parsed.minutes.markdown.contains("补充：测试未通过。"));
         assert!(!parsed.minutes.markdown.contains("原文给出当前预算"));
-        assert!(parsed.minutes.markdown.contains("李敏周五"));
+        assert!(parsed.minutes.markdown.contains("李敏承诺周五提交测试报告"));
         assert_eq!(parsed.receipt["bankDetailsOutsideReader"],1);
         assert_eq!(parsed.receipt["evidenceAnchors"].as_array().unwrap().len(),3);
     }
