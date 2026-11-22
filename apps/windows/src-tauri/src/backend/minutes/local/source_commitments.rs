@@ -200,12 +200,16 @@ fn scoped_commitment(body: &str, institutional_voice: bool) -> Option<CompanionV
             // already stated department without treating a recipient as owner.
             if owner.is_none() {
                 owner = candidates.iter().rev().take(1)
-                    .find_map(|(_, _, actor): &(usize, Option<&str>, Option<String>)| actor.clone());
+                    .find_map(|(_, _, actor): &(usize, Option<usize>, Option<String>)| actor.clone());
             }
-            let condition = index.checked_sub(1).and_then(|previous| {
-                let context = clauses[previous];
-                conditional_clause(context).filter(|part| !contains(part, &["哈哈", "举例", "建议", "假设"]))
-            });
+            // One prerequisite can govern an exchange and the action that
+            // follows it. Retain both steps when the speaker joins them.
+            let continued = ["然后", "接着", "再", "之后"].iter().any(|cue| clause.starts_with(cue));
+            let lookback = if continued { 2 } else { 1 };
+            let condition = (index.saturating_sub(lookback)..index).rev()
+                .take_while(|&previous| !contains(clauses[previous], &["另一个", "另外", "回到", "换个"]))
+                .find(|&previous| conditional_clause(clauses[previous]).is_some_and(|part|
+                    !contains(part, &["哈哈", "举例", "建议", "假设"])));
             candidates.push((index, condition, owner));
             break;
         }
@@ -219,7 +223,7 @@ fn scoped_commitment(body: &str, institutional_voice: bool) -> Option<CompanionV
         .take_while(|(_, part)| backchannel(part) || actionable(part)
             || contains(part, &["的时候儿会把", "的时候会把", "然后"]))
         .last().map_or(last, |(index, _)| index);
-    let first = if first_condition.is_some() { first - 1 } else { *first };
+    let first = first_condition.unwrap_or(*first);
     let mut tail = end;
     if clauses[tail].is_empty() { tail = tail.checked_sub(1)?; }
     let text = clauses[first..=tail].iter().filter(|s| !s.is_empty()).copied().collect::<Vec<_>>().join("，");
@@ -335,6 +339,17 @@ mod tests {
         assert_eq!(bound.prerequisite, Some(1));
         assert!(bound.item.text.contains("图纸审核合格的话") && bound.item.text.contains("施工队对接"));
         assert!(!bound.needs_review);
+    }
+
+    #[test]
+    fn keeps_a_prerequisite_shared_by_two_linked_steps_in_one_speech() {
+        let rows = sentences(&[
+            "说话人2: 我是设计部。",
+            "说话人2: 对 已经发给他们的那个构造师让他们去检查，看合不合格儿合格儿的话，这周儿会和我们对接，然后我们会和这个施工队儿也对接，让他们去施工",
+        ]);
+        let item = at(&rows, 1, &meeting_actor_labels(&rows)).unwrap().item;
+        assert!(item.text.contains("合格儿的话，这周儿会和我们对接，然后我们会和这个施工队儿也对接"));
+        assert_eq!(item.owner, None);
     }
 
     #[test]
