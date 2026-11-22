@@ -1031,7 +1031,7 @@ mod tests{
             let id = THEME_IDS[index];
             let allowed = schema["properties"]["chapters"]["properties"][id]["properties"]["mainFacts"]["items"]["enum"]
                 .as_array().unwrap();
-            assert_eq!(allowed.len(), span.len().min(14));
+            assert_eq!(allowed.len(), span.len().min(24));
             assert!(allowed.iter().all(|point| {
                 let number = point.as_str().unwrap()[1..].parse::<usize>().unwrap();
                 span.contains(&number)
@@ -1047,7 +1047,9 @@ mod tests{
         let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
         let result = organize(&organization.to_string(), &bank, &session, &base).unwrap();
         assert_eq!(result.receipt["retainedFactIds"].as_array().unwrap().len(), 150);
-        assert!(result.minutes.markdown.contains("项目记录149已核对"));
+        assert!(result.receipt["atomicFactBank"]["facts"].as_array().unwrap().iter().any(|fact| {
+            fact["id"] == "a149" && fact["text"].as_str().unwrap().contains("项目记录149已核对")
+        }));
         assert_eq!(result.receipt["document"]["topics"].as_array().unwrap().len(), 2);
         assert_eq!(result.receipt["document"]["purpose"], "这场会议讨论了项目记录和合作项目。");
         assert_eq!(result.receipt["openingTopicFactIds"], json!(["a000",format!("a{:03}", spans[1].start)]));
