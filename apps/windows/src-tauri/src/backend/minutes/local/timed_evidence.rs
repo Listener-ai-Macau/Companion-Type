@@ -59,20 +59,32 @@ impl<'a> Timing<'a> {
             "automaticSpeakerNamesUsed":false})
     }
 
-    /// Prefer the utterance carrying most of the cited sentence, not a
-    /// greeting or interruption at the beginning of a shared text boundary.
-    pub(super) fn source_segment(&self, sentence: usize) -> Option<CompanionV1ActionSourceSegment> {
-        let expected = self.sentence_offsets.get(sentence)?;
-        let (_, std::cmp::Reverse(index)) = self.utterances_by_sentence[sentence].clone().filter_map(|index| {
+    /// ASR may split a single instruction. Keep the substantive fragments,
+    /// opening at the one carrying the action wording when it can be found.
+    pub(super) fn action_source_segments(&self, sentence: usize, action: &str) -> Vec<CompanionV1ActionSourceSegment> {
+        let Some(expected) = self.sentence_offsets.get(sentence) else { return Vec::new(); };
+        let action: Vec<_> = action.chars().collect();
+        let action_terms: std::collections::HashSet<_> = action.windows(2)
+            .filter(|term| term.iter().all(|c| c.is_alphanumeric()))
+            .map(|term| (term[0], term[1]))
+            .collect();
+        let mut matches: Vec<_> = self.utterances_by_sentence[sentence].clone().filter_map(|index| {
             let actual = &self.utterance_offsets[index];
-            let count = actual.end.min(expected.end).saturating_sub(actual.start.max(expected.start));
-            (count>=4 && !self.utterances[index].approximate_timing)
-                .then_some((count,std::cmp::Reverse(index)))
-        }).max()?;
-        let row = &self.utterances[index];
-        Some(CompanionV1ActionSourceSegment {
-            index, text:row.text.clone(), start_ms:row.start_ms, end_ms:row.end_ms,
-        })
+            let start = actual.start.max(expected.start);
+            let count = actual.end.min(expected.end).saturating_sub(start);
+            let row = &self.utterances[index];
+            if count < 4 || row.approximate_timing { return None; }
+            let fragment: Vec<_> = row.text.chars().filter(|c| !c.is_whitespace())
+                .skip(start - actual.start).take(count).collect();
+            let overlap = fragment.windows(2)
+                .filter(|term| action_terms.contains(&(term[0], term[1]))).count();
+            Some((std::cmp::Reverse(overlap), std::cmp::Reverse(count), index))
+        }).collect();
+        matches.sort_unstable();
+        matches.into_iter().map(|(_, _, index)| {
+            let row = &self.utterances[index];
+            CompanionV1ActionSourceSegment { index, text: row.text.clone(), start_ms: row.start_ms, end_ms: row.end_ms }
+        }).collect()
     }
 
     pub(super) fn covered_by_one_utterance(&self, indices: &[usize]) -> bool {
@@ -292,10 +304,23 @@ mod tests {
         let sentences = evidence_sentences(&source_units(source));
         assert_eq!(sentences.len(), 1);
         let evidence = Timing::verified(source, &sentences, &rows).unwrap();
-        let segment = evidence.source_segment(0).unwrap();
+        let segments = evidence.action_source_segments(0, "核对合同附件");
+        let segment = &segments[0];
         assert_eq!((segment.index, segment.text.as_str(), segment.start_ms), (1, "请先核对合同附件。", 700));
         rows[1].approximate_timing = true;
-        assert!(Timing::verified(source, &sentences, &rows).unwrap().source_segment(0).is_none());
+        assert!(Timing::verified(source, &sentences, &rows).unwrap().action_source_segments(0, "核对合同附件").is_empty());
+    }
+
+    #[test]
+    fn a_short_action_fragment_opens_before_longer_introductory_speech() {
+        let intro = "刚才我们已经把大家的意见全部收集起来了，下一步请先";
+        let instruction = "核对附件再签字。";
+        let source = format!("{intro}{instruction}");
+        let rows = [row(intro, 0, 1900), row(instruction, 1900, 3400)];
+        let sentences = evidence_sentences(&source_units(&source));
+        let timing = Timing::verified(&source, &sentences, &rows).unwrap();
+        let indices: Vec<_> = timing.action_source_segments(0, "核对附件后签字").iter().map(|row| row.index).collect();
+        assert_eq!(indices, [1, 0]);
     }
 
     #[test]

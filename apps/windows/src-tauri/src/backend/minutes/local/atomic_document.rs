@@ -1892,7 +1892,8 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             let fact = bank.facts.iter().find(|fact| &fact.id==id)?;
             let mut seen = HashSet::new();
             let segments: Vec<_> = fact.evidence.iter()
-                .filter_map(|citation| indices.get(citation.as_str()).and_then(|index|timing.source_segment(*index)))
+                .filter_map(|citation| indices.get(citation.as_str()))
+                .flat_map(|index| timing.action_source_segments(*index, &action.text))
                 .filter(|segment| seen.insert(segment.index)).collect();
             (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:action.text.clone(),segments})
         }).collect::<Vec<_>>();
