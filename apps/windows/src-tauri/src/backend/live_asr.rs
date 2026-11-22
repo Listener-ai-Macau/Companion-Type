@@ -114,6 +114,14 @@ impl LiveAsrHub {
             return Ok(true);
         }
 
+        // A saved key may remain available for a future explicit switch.
+        // Online capture alone does not select Volcengine.
+        if !super::transcription::volcengine_provider_selected() {
+            if let Ok(mut m) = self.mode.lock() {
+                *m = "idle-provider-not-selected".to_string();
+            }
+            return Ok(false);
+        }
         let Some(creds) = volcengine::credentials_from_env() else {
             if let Ok(mut m) = self.mode.lock() {
                 *m = "idle-no-credentials".to_string();
@@ -222,6 +230,35 @@ fn env_truthy(name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn live_asr_checks_the_selected_provider_before_credentials() {
+        struct RestoreEnv(Vec<(&'static str, Option<std::ffi::OsString>)>);
+        impl Drop for RestoreEnv {
+            fn drop(&mut self) {
+                for (name, value) in &self.0 {
+                    match value {
+                        Some(value) => std::env::set_var(name, value),
+                        None => std::env::remove_var(name),
+                    }
+                }
+            }
+        }
+        let names = ["COMPANION_TYPE_ASR_PROVIDER", "COMPANION_TYPE_VOLC_APP_KEY",
+            "COMPANION_TYPE_VOLC_ACCESS_KEY", "COMPANION_TYPE_LIVE_ASR_MOCK", "COMPANION_TYPE_LIVE_ASR_OFF"];
+        let _restore = RestoreEnv(names.into_iter().map(|name| (name, std::env::var_os(name))).collect());
+        for name in names { std::env::remove_var(name); }
+        let hub = LiveAsrHub::new();
+        for (provider, mode) in [("local-paraformer", "idle-provider-not-selected"),
+            ("openai-compatible", "idle-provider-not-selected"), ("volcengine", "idle-no-credentials")] {
+            std::env::set_var("COMPANION_TYPE_ASR_PROVIDER", provider);
+            assert_eq!(hub.try_start_for_online_live(), Ok(false));
+            let state = hub.snapshot();
+            assert_eq!(state.mode, mode);
+            assert!(!state.active);
+        }
+    }
+
     #[test]
     fn finished_failed_worker_is_not_reported_as_active_and_keeps_partial() {
         let hub=LiveAsrHub::new();

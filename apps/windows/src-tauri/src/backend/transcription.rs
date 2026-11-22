@@ -116,7 +116,7 @@ impl CompanionTranscriptionManager {
     /// not rewrite or substitute this microphone utterance.
     pub(crate) fn transcribe_pet_audio(&self,path:&Path)->Result<String,String> {
         let _usage=super::audio_artifacts::usage(path)?;
-        let provider=std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default();
+        let provider = selected_asr_provider();
         let text=if provider.eq_ignore_ascii_case("local-paraformer") {
             #[cfg(windows)] { local_paraformer::transcribe_pet_utterance(path)? }
             #[cfg(not(windows))] { return Err("此平台暂不支持本地语音聊天。".into()); }
@@ -389,16 +389,24 @@ impl CompanionTranscriptionManager {
             reject_listener_type_command()?;
         }
 
-        if volcengine_provider_configured() {
-            return volcengine_transcript(audio);
-        }
-
-        if openai_provider_configured() {
-            return openai_compatible_transcript(audio);
-        }
-
-        if std::env::var("COMPANION_TYPE_ASR_COMMAND").is_ok() {
-            return command_transcript(audio);
+        match selected_asr_provider().as_str() {
+            // An explicit provider stays selected if its key is missing.
+            // Saved credentials for a different provider do not authorize fallback.
+            "volcengine" => return volcengine_transcript(audio),
+            "openai" | "openai-compatible" => return openai_compatible_transcript(audio),
+            "command" => return command_transcript(audio),
+            "" | "auto" => {
+                if openai_provider_configured() {
+                    return openai_compatible_transcript(audio);
+                }
+                if std::env::var("COMPANION_TYPE_ASR_COMMAND").is_ok() {
+                    return command_transcript(audio);
+                }
+            }
+            super::product_settings::ASR_SETTINGS_CONFIRMATION_REQUIRED => {
+                return Err(super::product_settings::ASR_SETTINGS_REVIEW_MESSAGE.into());
+            }
+            _ => return Err("转写服务设置无效 (unsupported provider)。请检查设置，原录音已保留。".into()),
         }
 
         Err(
@@ -408,7 +416,16 @@ impl CompanionTranscriptionManager {
 }
 
 pub(super) fn local_provider_selected() -> bool {
-    std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default().eq_ignore_ascii_case("local-paraformer")
+    selected_asr_provider() == "local-paraformer"
+}
+
+fn selected_asr_provider() -> String {
+    std::env::var_os("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default()
+        .to_string_lossy().trim().to_ascii_lowercase()
+}
+
+pub(super) fn volcengine_provider_selected() -> bool {
+    selected_asr_provider() == "volcengine"
 }
 
 impl Default for CompanionTranscriptionManager {
@@ -477,28 +494,15 @@ fn reject_listener_type_command() -> Result<(), String> {
 }
 
 fn volcengine_provider_configured() -> bool {
-    // Explicit opt-in only: COMPANION_TYPE_ASR_PROVIDER=volcengine gates this
-    // branch so it is never shadowed by a stray OPENAI_API_KEY (the OpenAI
-    // check below is greedy and matches on any of four env vars).
-    std::env::var("COMPANION_TYPE_ASR_PROVIDER")
-        .unwrap_or_default()
-        .eq_ignore_ascii_case("volcengine")
-        && std::env::var("COMPANION_TYPE_VOLC_APP_KEY").is_ok()
-        && std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY").is_ok()
+    volcengine_provider_selected() && super::volcengine::credentials_from_env().is_some()
 }
 
 /// Low-level: transcribe one WAV via Volcengine SAUC, returning the clean
 /// merged text and the timed utterances (no diarization yet).
 fn volcengine_client() -> Result<VolcengineSaucAsr, String> {
-    let app_id = std::env::var("COMPANION_TYPE_VOLC_APP_KEY")
-        .map_err(|_| "COMPANION_TYPE_VOLC_APP_KEY is not set".to_string())?;
-    let access_token = std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY")
-        .map_err(|_| "COMPANION_TYPE_VOLC_ACCESS_KEY is not set".to_string())?;
-    Ok(VolcengineSaucAsr::new(VolcengineCredentials {
-        app_id,
-        access_token,
-        resource_id: configured_volcengine_resource_id(),
-    }))
+    let credentials = super::volcengine::credentials_from_env().ok_or(
+        "火山转写密钥未配置 (credentials not configured)。请检查火山转写设置，原录音已保留。")?;
+    Ok(VolcengineSaucAsr::new(credentials))
 }
 
 fn configured_volcengine_resource_id() -> String {

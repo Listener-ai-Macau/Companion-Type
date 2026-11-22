@@ -66,6 +66,22 @@ pub(crate) fn auto_local_card_transcription_enabled() -> bool {
     try_load_settings().map(|settings| settings.auto_local_card_transcription).unwrap_or(false)
 }
 
+pub(super) const ASR_SETTINGS_CONFIRMATION_REQUIRED: &str = "settings-confirmation-required";
+pub(super) const ASR_SETTINGS_REVIEW_MESSAGE: &str =
+    "转写设置正在使用备份 (missing confirmed settings)。请确认转写方式并保存后重试，原录音已保留。";
+
+fn recovered_asr_requires_confirmation(loaded: &storage::Loaded) -> bool {
+    loaded.recovered && !loaded.settings.asr_provider.trim().eq_ignore_ascii_case("local-paraformer")
+}
+
+pub(super) fn load_asr_service_settings() -> Result<CompanionProductSettings, String> {
+    with_store(|store| {
+        let loaded = store.load()?;
+        if recovered_asr_requires_confirmation(&loaded) { return Err(ASR_SETTINGS_REVIEW_MESSAGE.into()); }
+        Ok(loaded.settings)
+    })
+}
+
 pub(crate) fn new_card_processing_policy() -> crate::companion_v1::CompanionV1ProcessingPolicy {
     use crate::companion_v1::CompanionV1ProcessingPolicy as Policy;
     if auto_local_card_transcription_enabled() { Policy::LocalTranscription } else { Policy::Manual }
@@ -320,7 +336,9 @@ pub fn public_report() -> CompanionProductSettingsPublic {
     match with_store(|store| store.load()) {
         Ok(loaded) => {
             let mut public = loaded.settings.to_effective_public(&path.to_string_lossy());
-            public.storage_warning = loaded.warning;
+            public.storage_warning = if recovered_asr_requires_confirmation(&loaded) {
+                loaded.warning.map(|warning| format!("{warning} 云端转写需确认方式并重新保存后才可使用。"))
+            } else { loaded.warning };
             public
         }
         Err(error) => {
@@ -481,6 +499,7 @@ pub fn load_and_apply() -> CompanionProductSettings {
         }
     };
     let configured = loaded.configured;
+    let confirm_asr = recovered_asr_requires_confirmation(&loaded);
     #[allow(unused_mut)]
     let mut settings = loaded.settings;
     #[cfg(windows)]
@@ -499,6 +518,9 @@ pub fn load_and_apply() -> CompanionProductSettings {
     }
     if configured {
         apply_to_process_env(&settings);
+        if confirm_asr {
+            set_env("COMPANION_TYPE_ASR_PROVIDER", Some(ASR_SETTINGS_CONFIRMATION_REQUIRED));
+        }
     } else {
         /* Defaults must not clobber an explicit launch environment. This is
          * important for service/CLI deployments whose secrets remain in the
@@ -525,7 +547,7 @@ pub fn load_and_apply() -> CompanionProductSettings {
             );
         }
     }
-    if !settings.credential_blocks.volc_app_key && !settings.credential_blocks.volc_access_key {
+    if !confirm_asr && !settings.credential_blocks.volc_app_key && !settings.credential_blocks.volc_access_key {
         apply_legacy_product_vault_if_needed();
     }
     settings

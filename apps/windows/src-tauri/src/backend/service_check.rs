@@ -109,7 +109,7 @@ fn http_probe(service: Service, address: &str, key: &str, model: &str) -> Result
 fn probe(service: Service) -> Result<ProbeKind, Failure> {
     let (settings,minutes_provider)=match service{
         Service::Minutes=>super::product_settings::load_minutes_settings().map_err(|_|Failure::Configuration)?,
-        Service::Asr=>(super::product_settings::try_load_settings().map_err(|_|Failure::Configuration)?,None),
+        Service::Asr=>(super::product_settings::load_asr_service_settings().map_err(|_|Failure::Configuration)?,None),
     };
     let public = settings.to_effective_public("");
     match service {
