@@ -373,7 +373,7 @@ fn chapter_stance_leaves_an_uncertain_explanation_in_source_evidence() {
         Evidence {field:"summary".into(),index:0,quote:"接着谈展览安排。".into()},
     ];
     summary_stance::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
-    assert_eq!(minutes.summary[0], format!("某位嘉宾看重客观规律，并讨论展览安排。补充观察原话「{observation}」。发言者观点「所以我认为这种客观规律是值得讨论的创新模式」。中间论述待核对。"));
+    assert_eq!(minutes.summary[0], format!("某位嘉宾看重客观规律，并讨论展览安排。补充观察原话（说话人2）「{observation}」。同一发言者观点「所以我认为这种客观规律是值得讨论的创新模式」。中间论述待核对。"));
     assert_eq!(evidence[2].quote, dialogue);
     assert!(!minutes.summary[0].contains("一万年"));
     assert!(minutes.action_items.is_empty() && minutes.decisions.is_empty());

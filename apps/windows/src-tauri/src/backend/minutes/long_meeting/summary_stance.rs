@@ -27,6 +27,7 @@ enum Addition<'a> {
         stage: &'a str,
     },
     View {
+        speaker: &'a str,
         observation: &'a str,
         view: &'a str,
         original_reasoning: &'a str,
@@ -40,9 +41,12 @@ impl<'a> Addition<'a> {
                 format!("{PLAN_LABEL}「{plan}」。相关阶段原话「{stage}」。")
             }
             Self::View {
-                observation, view, ..
+                speaker,
+                observation,
+                view,
+                ..
             } => {
-                format!("{EXAMPLE_LABEL}「{observation}」。发言者观点「{view}」。中间论述待核对。")
+                format!("{EXAMPLE_LABEL}（{speaker}）「{observation}」。同一发言者观点「{view}」。中间论述待核对。")
             }
         }
     }
@@ -130,7 +134,12 @@ fn cited_topic(anchor: &str, claim: &str, base: &str) -> bool {
     })
 }
 
-fn reasoned_view<'a>(line: &'a str, anchor: &str, base: &str) -> Option<Addition<'a>> {
+fn reasoned_view<'a>(
+    line: &'a str,
+    speaker: &'a str,
+    anchor: &str,
+    base: &str,
+) -> Option<Addition<'a>> {
     let mut candidates = REASONED_VIEW.captures_iter(line).filter_map(|reasoning| {
         let whole = reasoning.name("whole")?;
         let claim = reasoning.name("claim")?.as_str();
@@ -153,6 +162,7 @@ fn reasoned_view<'a>(line: &'a str, anchor: &str, base: &str) -> Option<Addition
             return None;
         }
         Some(Addition::View {
+            speaker,
             observation,
             view: reasoning.name("view")?.as_str(),
             original_reasoning: whole.as_str(),
@@ -213,8 +223,8 @@ pub(super) fn restore(
         let base = base_summary(summary);
         let mut added = Vec::new();
         let mut plan_context = HashSet::new();
-        for (turn, quote, _) in &resolved {
-            if let Some(view) = reasoned_view(turn.chapter_text, quote, base) {
+        for (turn, quote, speaker) in &resolved {
+            if let Some(view) = reasoned_view(turn.chapter_text, speaker, quote, base) {
                 added.push(view);
             }
             if single_speaker {
