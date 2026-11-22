@@ -598,18 +598,25 @@ fn review_chapter(
     }));
     let prompt=if core.is_empty(){CHAPTER_READER_PROMPT}else{CHAPTER_COMPLEMENT_PROMPT};
     let output=ask(prompt,input,schema,stage)?;
-    let result: ChapterPresentation = serde_json::from_str(crate::backend::minutes::strip_code_fences(&output).trim())
+    let mut result: ChapterPresentation = serde_json::from_str(crate::backend::minutes::strip_code_fences(&output).trim())
         .map_err(|_| fail())?;
-    let ids = result.main_facts.iter().map(String::as_str).collect::<HashSet<_>>();
-    if result.main_facts.len() != choice_count || ids.len() != choice_count
-        || ids.iter().any(|id| !offered.contains(id))
+    if result.main_facts.len() != choice_count
+        || result.main_facts.iter().any(|id| !offered.contains(&id.as_str()))
         || !(1..=2.min(labels.len())).contains(&result.label_ids.len())
-        || result.label_ids.iter().collect::<HashSet<_>>().len()!=result.label_ids.len()
         || result.label_ids.iter().any(|id| !labels.contains_key(id))
     {
         return Err(fail());
     }
+    // A repeated, known ID is the same evidence, not a second fact. Preserve
+    // the verified choice without adding an unrelated item to fill its slot.
+    retain_unique_ids(&mut result.main_facts);
+    retain_unique_ids(&mut result.label_ids);
     Ok(Some(result))
+}
+
+fn retain_unique_ids(ids: &mut Vec<String>) {
+    let mut seen = HashSet::new();
+    ids.retain(|id| seen.insert(id.clone()));
 }
 
 pub(super) fn review_chapters(
@@ -628,14 +635,21 @@ pub(super) fn review_chapters(
     for (index, span) in bank.chapter_spans.iter().enumerate() {
         let chapter = THEME_IDS[index];
         let rows = &topics[span.clone()];
-        let previous=compact.as_mut().map(|layout| layout.chapters.0.remove(chapter).ok_or_else(fail)).transpose()?;
-        let core=previous.as_ref().map(|presentation| {
+        let mut previous=compact.as_mut().map(|layout| layout.chapters.0.remove(chapter).ok_or_else(fail)).transpose()?;
+        let core=previous.as_mut().map(|presentation| {
             let allowed=bank.chapter_point_choices[index].iter().map(|offset| rows[*offset].id.as_str()).collect::<HashSet<_>>();
-            let ids=presentation.main_facts.iter().map(String::as_str).collect::<HashSet<_>>();
-            if ids.is_empty() || ids.len()>CHAPTER_HIGHLIGHTS || ids.len()!=presentation.main_facts.len() || !ids.is_subset(&allowed) {
+            let labels = &bank.chapter_label_choices[index];
+            if !(1..=CHAPTER_HIGHLIGHTS).contains(&presentation.main_facts.len())
+                || presentation.main_facts.iter().any(|id| !allowed.contains(id.as_str()))
+                || !(1..=2.min(labels.len())).contains(&presentation.label_ids.len())
+                || presentation.label_ids.iter().any(|id| !labels.contains_key(id))
+            {
                 return Err(fail());
             }
-            let terms=presentation.label_ids.iter().filter_map(|id| bank.chapter_label_choices[index].get(id))
+            retain_unique_ids(&mut presentation.main_facts);
+            retain_unique_ids(&mut presentation.label_ids);
+            let ids=presentation.main_facts.iter().map(String::as_str).collect::<HashSet<_>>();
+            let terms=presentation.label_ids.iter().filter_map(|id| labels.get(id))
                 .flat_map(|label| heading_terms(label)).collect::<Vec<_>>();
             let chosen=reader_selection(rows,&ids,&allowed,&terms,bank);
             Ok(chosen.into_iter().filter(|fact| !bank.review_quote(&fact.id))
@@ -713,8 +727,17 @@ pub(super) fn review_chapters(
         1|2 => THEME_IDS[..count].to_vec(),
         _ => vec![THEME_IDS[0],THEME_IDS[count/2],THEME_IDS[count-1]],
     };
-    let focus=compact.map(|layout| layout.focus_chapters)
-        .unwrap_or_else(|| fallback_focus.into_iter().map(str::to_owned).collect());
+    let mut focus=compact.map(|layout| layout.focus_chapters)
+        .unwrap_or_else(|| fallback_focus.iter().map(|id| (*id).to_owned()).collect());
+    if focus.len() > 3 || focus.iter().any(|id| !THEME_IDS[..count].contains(&id.as_str())) {
+        return Err(fail());
+    }
+    retain_unique_ids(&mut focus);
+    if focus.len() < count.min(2) {
+        let missing = fallback_focus.iter().filter(|id| !focus.iter().any(|known| known == **id))
+            .take(count.min(2) - focus.len()).map(|id| (*id).to_owned()).collect::<Vec<_>>();
+        focus.extend(missing);
+    }
     Ok(json!({"chapters":chapters,"focusChapters":focus}).to_string())
 }
 
@@ -1348,6 +1371,24 @@ mod tests{
         assert!(scoped.text.contains("五十块钱") && scoped.text.contains("一百"));
         assert_eq!(bank.reader_priority.get(&scoped.id), Some(&3));
         assert!(bank.facts.iter().all(|fact| !fact.text.contains("违规者")));
+    }
+
+    #[test]
+    fn duplicate_known_reader_choices_preserve_one_grounded_selection() {
+        let source = (0..150).map(|n| format!("检查记录{n}的材料已由业务同事进行复核。\n")).collect::<String>();
+        let facts = (0..150).map(|n| ExtractedFact::verbatim(
+            &format!("e{n:04}"), "status", &format!("检查记录{n}的材料已由业务同事进行复核。"),
+        )).collect();
+        let bank = build_bank(facts, &source).unwrap();
+        let rows = bank.topics().collect::<Vec<_>>();
+        let chapter = &rows[bank.chapter_spans[0].clone()];
+        let answer = review_chapter(&bank, 0, chapter, &[chapter[0]], &mut |_, _, schema, _| {
+            let item = &schema["properties"]["mainFacts"]["items"]["enum"][0];
+            let label = &schema["properties"]["labelIds"]["items"]["enum"][0];
+            Ok(json!({"mainFacts":[item,item],"labelIds":[label]}).to_string())
+        }, "chapter-review-test").unwrap().unwrap();
+        assert_eq!(answer.main_facts.len(), 1);
+        assert_ne!(answer.main_facts[0], chapter[0].id);
     }
 
     #[test]
