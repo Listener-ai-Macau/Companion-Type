@@ -1525,7 +1525,7 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
             labels.extend(choices.values().map(String::as_str).find(|label| fits_chapter(label)));
         }
         let title = match labels.as_slice() {
-            [] => format!("讨论议题{}", index + 1),
+            [] => format!("第{}项讨论", super::evidence_document::TOPIC_ORDINALS[index]),
             [first, second] if first.contains(*second) => (*first).to_owned(),
             [first, second] if second.contains(*first) => (*second).to_owned(),
             _ => labels.join("、"),
@@ -1711,7 +1711,9 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
                     let name = if next_fallback == 1 {
                         "补充讨论".to_owned()
                     } else {
-                        format!("补充讨论（{next_fallback}）")
+                        let ordinal = super::evidence_document::TOPIC_ORDINALS.get(next_fallback - 1)
+                            .ok_or_else(fail)?;
+                        format!("补充讨论（{ordinal}）")
                     };
                     next_fallback += 1;
                     if used_names.insert(name.clone()) {
