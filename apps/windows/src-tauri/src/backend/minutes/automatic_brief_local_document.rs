@@ -55,10 +55,10 @@ pub(in crate::backend::minutes) struct Parsed {
 }
 
 pub(in crate::backend::minutes) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<Parsed,String>{
-    parse_with_details_limit(raw,session,base,8)
+    parse_with_details_limit(raw,session,base,8,true)
 }
 
-pub(in crate::backend::minutes) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,details_limit:usize)->Result<Parsed,String>{
+pub(in crate::backend::minutes) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,details_limit:usize,include_speaker_transcript:bool)->Result<Parsed,String>{
     let doc:Document=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"本地纪要返回结构不完整，原文和已有纪要保留。")?;
     let units=source_units(&session.transcript_text);
     validate_with_details_limit(&doc,&units,details_limit)?;original_identifiers(&doc,&units)?;
@@ -84,7 +84,9 @@ pub(in crate::backend::minutes) fn parse_with_details_limit(raw:&str,session:&Co
     minutes.decisions=doc.decisions.iter().map(|p|p.text.clone()).collect();
     minutes.action_items=doc.action_items.iter().map(|a|CompanionV1ActionItem{text:a.text.clone(),owner:a.owner.clone(),due:a.due.clone()}).collect();
     minutes.questions=doc.questions.iter().map(|p|p.text.clone()).collect();minutes.keywords=doc.topics.iter().map(|t|t.title.clone()).collect();
-    let speaker=super::super::render_speaker_section_named(&session.transcript_text,&super::super::reviewed_speaker_names(session));
+    let speaker=include_speaker_transcript.then(|| {
+        super::super::render_speaker_section_named(&session.transcript_text,&super::super::reviewed_speaker_names(session))
+    }).flatten();
     minutes.markdown=render(&doc,&units,speaker.as_deref());
     if serde_json::to_vec(&doc).map_err(|_|"无法核对本地纪要。")?!=sealed{return Err("纪要内容在呈现时发生变化，已有结果保留。".into());}
     Ok(Parsed{minutes,receipt:json!({"document":doc,"facts":facts,"nextFactIndex":facts.len(),

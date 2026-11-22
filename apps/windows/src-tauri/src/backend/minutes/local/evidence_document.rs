@@ -138,7 +138,9 @@ pub(super) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,
             for(j,entry)in entries.iter_mut().enumerate(){bind(entry,format!("topics[{i}].{name}[{j}]"))?;}
         }
     }
-    let mut parsed=canonical_brief::local_document::parse_with_details_limit(&doc.to_string(),session,base,details_limit)?;
+    let mut parsed=canonical_brief::local_document::parse_with_details_limit(
+        &doc.to_string(),session,base,details_limit,reader_limit.is_none()
+    )?;
     parsed.minutes.markdown=exact_origins(&parsed.minutes.markdown,&doc,&anchors)?;
     parsed.receipt["evidenceAnchors"]=json!(anchors);
     parsed.receipt["literalEvidenceBound"]=json!(true);
@@ -170,7 +172,8 @@ mod tests{
     }
     #[test]
     fn compact_reader_does_not_print_hidden_details_or_their_quotes() {
-        let(s,b,mut d)=fixture();
+        let(mut s,b,mut d)=fixture();
+        s.transcript_text=format!("说话人1：{}\n说话人2：这句不应整段重复显示。",s.transcript_text);
         d["topics"][0]["details"]=json!([
             {"text":"测试未通过。","evidence":[{"source":"u000","quote":"测试未通过"}]},
             {"text":"原文给出当前预算。","evidence":[{"source":"u000","quote":"预算10000元"}]}
@@ -178,6 +181,7 @@ mod tests{
         let parsed=parse_with_details_limit(&d.to_string(),&s,&b,8,Some(1)).unwrap();
         assert!(parsed.minutes.markdown.contains("补充：测试未通过。"));
         assert!(!parsed.minutes.markdown.contains("原文给出当前预算"));
+        assert!(!parsed.minutes.markdown.contains("这句不应整段重复显示"));
         assert!(parsed.minutes.markdown.contains("李敏承诺周五提交测试报告"));
         assert_eq!(parsed.receipt["bankDetailsOutsideReader"],1);
         assert_eq!(parsed.receipt["evidenceAnchors"].as_array().unwrap().len(),3);

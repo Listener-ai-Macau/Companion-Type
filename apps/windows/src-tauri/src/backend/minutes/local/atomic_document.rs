@@ -85,6 +85,7 @@ pub(super) struct Bank {
     chapter_spans: Vec<Range<usize>>,
     chapter_label_choices: Vec<BTreeMap<String, String>>,
     chapter_point_choices: Vec<Vec<usize>>,
+    before_opening: HashSet<String>,
 }
 impl Bank {
     fn review_quote(&self, id: &str) -> bool {
@@ -92,7 +93,7 @@ impl Bank {
     }
 
     fn topics(&self) -> impl Iterator<Item = &Fact> {
-        self.facts.iter().filter(|fact| fact.placement == Placement::Topic)
+        self.facts.iter().filter(|fact| fact.placement == Placement::Topic && !self.before_opening.contains(&fact.id))
     }
 }
 // The bank spans the whole meeting. Its size does not set the reader's budget
@@ -244,6 +245,51 @@ fn source_verified_facts(
     Ok((verified, audit))
 }
 
+fn opening_offset(source: &str) -> Option<usize> {
+    let lines: Vec<_> = source.lines().collect();
+    let mut offset = 0;
+    for (index, line) in source.split_inclusive('\n').enumerate() {
+        let content = super::super::source_resolution::split_turn_label(line.trim())
+            .map_or(line.trim(), |(_, body)| body);
+        let explicit = content.split(['。', '！', '？', '!', '?']).any(|clause| {
+            let clause = clause.trim();
+            ["我们可以开始了", "咱们可以开始了", "会议现在开始", "会议正式开始", "现在正式开始",
+                "我们现在开始", "咱们现在开始"].iter().any(|phrase| {
+                clause.strip_suffix(phrase).is_some_and(|before| {
+                    before.chars().count() <= 8
+                        && !before.contains(['“', '”', '「', '」'])
+                        && !["说过", "如果", "上次", "比如", "是否", "能不能"].iter().any(|word| before.contains(word))
+                })
+            })
+        });
+        let agenda_nearby = ["欢迎", "嘉宾", "介绍一下", "打个招呼", "今天讨论", "本次会议",
+            "先请", "有请", "今天的主题", "今天主要"].iter().any(|cue| {
+            lines[index..(index + 3).min(lines.len())].iter().any(|row| row.contains(cue))
+        });
+        if explicit && agenda_nearby { return Some(offset); }
+        offset += line.len();
+    }
+    None
+}
+
+fn opening_background(facts: &[Fact], source: &str, sentences: &[Value]) -> HashSet<String> {
+    if facts.len() <= LARGE_LAYOUT_FACTS { return HashSet::new(); }
+    let Some(opening) = opening_offset(source).filter(|offset| *offset > 0) else { return HashSet::new(); };
+    let mut byte_end = 0;
+    let before: HashSet<_> = sentences.iter().take_while(|sentence| {
+        byte_end += sentence["text"].as_str().expect("source sentence").len();
+        byte_end <= opening
+    }).filter_map(|sentence| sentence["id"].as_str()).collect();
+    let background: HashSet<_> = facts.iter().filter(|fact| fact.placement == Placement::Topic
+        && fact.evidence.iter().all(|id| before.contains(id.as_str())))
+        .map(|fact| fact.id.clone()).collect();
+    // Do not suppress a discussion on the strength of a lone late welcome.
+    if facts.iter().filter(|fact| fact.placement == Placement::Topic && !background.contains(&fact.id)).count() < 16 {
+        return HashSet::new();
+    }
+    background
+}
+
 pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,String>{
     if extracted.is_empty(){return Err(fail());}
     let units=source_units(source);let sentences=factual_audit::evidence_sentences(&units);
@@ -274,7 +320,9 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     answer_layout::validate_facts(&facts,&units,MAX_FACTS)?;
     let seals=facts.iter().map(|f|json!({"id":f.id,"bodySha256":format!("{:x}",Sha256::digest(serde_json::to_vec(f).unwrap()))})).collect::<Vec<_>>();
     let coverage=source_coverage(&facts,&units,&sentences);
-    let topic_facts: Vec<_> = facts.iter().filter(|fact| fact.placement == Placement::Topic).collect();
+    let before_opening=opening_background(&facts,source,&sentences);
+    let topic_facts: Vec<_> = facts.iter().filter(|fact| fact.placement == Placement::Topic
+        && !before_opening.contains(&fact.id)).collect();
     let (chapter_spans, chapter_label_choices) = if facts.len() > LARGE_LAYOUT_FACTS {
         let texts: Vec<_> = topic_facts.iter().map(|fact| fact.text.as_str()).collect();
         let spans = super::chapter_spans::plan(&texts);
@@ -302,10 +350,12 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
         json!({"id":THEME_IDS[i],"firstFact":topic_facts[span.start].id,"lastFact":topic_facts[span.end-1].id,
             "facts":span.len(),"labelChoices":chapter_label_choices[i],"mainFactChoices":point_ids})
     }).collect();
+    let mut background_ids:Vec<_>=before_opening.iter().collect();
+    background_ids.sort_unstable();
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
-        "plannedChapters":chapters,"claimSourceReview":verification});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices })
+        "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids});
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -390,7 +440,7 @@ fn purpose_choices(bank: &Bank) -> Vec<&str> {
 const THEME_IDS:[&str;8]=["t1","t2","t3","t4","t5","t6","t7","t8"];
 
 pub(super) fn layout_schema(bank:&Bank)->Result<Value,String>{
-    let topic_facts:Vec<_>=bank.facts.iter().filter(|f|f.placement==Placement::Topic).collect();
+    let topic_facts:Vec<_>=bank.topics().collect();
     if topic_facts.is_empty(){return Err(fail());}
     if !bank.chapter_spans.is_empty() {
         let chapters = bank.chapter_spans.iter().enumerate().map(|(index, span)| {
@@ -669,9 +719,14 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let mut topics=layout.topics.0;
     let mut slots:[Vec<(&Fact,bool)>;8]=Default::default();
     let mut decisions=Vec::new();let mut actions=Vec::new();let mut questions=Vec::new();
+    let mut excluded=Vec::new();
     for fact in &bank.facts{
         match fact.placement{
             Placement::Topic=>{
+                if bank.before_opening.contains(&fact.id) {
+                    excluded.push(json!({"id":fact.id,"reason":"background","coveredBy":[]}));
+                    continue;
+                }
                 let slot=assignments.remove(&fact.id).ok_or_else(fail)?;
                 let (topic, main) = slot.slot().ok_or_else(fail)?;
                 slots[topic].push((fact, (main || timed_prediction(fact)) && !bank.review_quote(&fact.id)));
@@ -755,7 +810,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         arranged.push(json!({"title":title,"points":points,"details":details}));
     }
     if !topics.is_empty(){return Err(fail());}
-    let canonical=json!({"purpose":purpose,"topics":arranged,"decisions":decisions,"actionItems":actions,"questions":questions,"excluded":[]});
+    let canonical=json!({"purpose":purpose,"topics":arranged,"decisions":decisions,"actionItems":actions,"questions":questions,"excluded":excluded});
     let mut parsed = assemble(&canonical.to_string(), bank, session, base)?;
     if !fallback_topics.is_empty() {
         parsed.receipt["topicsGivenNeutralTitles"] = json!(fallback_topics);
@@ -860,6 +915,15 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn opening_offset_requires_a_host_transition_with_nearby_agenda() {
+        let setup="说话人3：正式开始跟我说一下。\n说话人2：如果我们可以开始了。大家好。\n";
+        let meeting="说话人1：好的，那我们可以开始了。先请各位嘉宾介绍。\n说话人2：跨部门汇报重要事项。";
+        assert_eq!(opening_offset(&format!("{setup}{meeting}")),Some(setup.len()));
+        assert_eq!(opening_offset(setup),None);
+        assert_eq!(opening_offset("我们可以开始了。\n接下来调一下麦克风。"),None);
+    }
     fn fixture()->(CompanionV1HostSession,CompanionV1MeetingMinutes,Value,Value){
         let s=crate::backend::minutes::tests::session_with_text("预算未批，不能采购。李敏承诺周三交报告。王强承诺周四修权限。超过七天的处理尚未确定。");
         let b=crate::backend::minutes::rules_l0_minutes(&s,"now");
