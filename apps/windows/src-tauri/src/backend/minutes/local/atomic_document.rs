@@ -132,6 +132,7 @@ fn is_covered_by_literal(fact: &ExtractedFact, literal: &str) -> bool {
 fn source_verified_facts(
     extracted: Vec<ExtractedFact>,
     sentences: &[Value],
+    timing: Option<&super::timed_evidence::Timing<'_>>,
 ) -> Result<(Vec<ExtractedFact>, Vec<Value>), String> {
     use std::collections::HashMap;
     use super::{delivery_evidence, source_authority, source_commitments, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
@@ -161,7 +162,7 @@ fn source_verified_facts(
         let id = row["id"].as_str().unwrap();
         if let Some((position, sources)) = by_anchor.get(id).and_then(|facts| {
             facts.iter().enumerate().find_map(|(position, fact)| {
-                (fact.role=="status").then(|| delivery_evidence::arrival_procedure_sources(sentences, index, &fact.text))
+                (fact.role=="status").then(|| delivery_evidence::arrival_procedure_sources(sentences, index, &fact.text, timing))
                     .flatten().map(|sources| (position, sources))
             })
         }) {
@@ -210,6 +211,20 @@ fn source_verified_facts(
             record.execution_reading = true;
             audit.push(json!({"sentenceId":id,"reason":"complete-entry-procedure","evidence":record.evidence}));
             verified.push(record);
+        }
+        if let Some((followup, proposal)) = timing.and_then(|timing| {
+            super::timed_evidence::assigned_proposal(timing, sentences, index)
+        }) {
+            let mut task = ExtractedFact::verbatim(id, "action", &followup.text);
+            extend_references(&mut task, sentences, &followup.references);
+            let mut discussion = ExtractedFact::verbatim(
+                sentences[proposal.references[0]]["id"].as_str().unwrap(), "recommendation", &proposal.text,
+            );
+            discussion.execution_reading = true;
+            extend_references(&mut discussion, sentences, &proposal.references);
+            current.retain(|item| !["再细化", "再具体一点"].iter().any(|cue| item.text.contains(cue)));
+            audit.push(json!({"sentenceId":id,"reason":"explicit-proposal-followup-with-timing","evidence":task.evidence}));
+            verified.extend([discussion,task]);
         }
         if let Some((opposite, statement)) = disputed.remove(&index) {
             let opposite = sentences[opposite]["id"].as_str().unwrap();
@@ -599,9 +614,31 @@ fn source_verified_facts(
             verified.extend(current);
         }
     }
+    if let Some(timing) = timing {
+        let indices = sentences.iter().enumerate().map(|(index,row)|(row["id"].as_str().unwrap(),index))
+            .collect::<HashMap<_,_>>();
+        for fact in verified.iter_mut().filter(|fact| fact.role=="action") {
+            let anchor = fact.evidence[0].clone();
+            if let Some(context) = super::timed_evidence::action_context(
+                timing, sentences, indices[anchor.as_str()], &fact.text, fact.owner.is_none(),
+            ) {
+                fact.text = context.text;
+                extend_references(fact, sentences, &context.references);
+                audit.push(json!({"sentenceId":anchor,"reason":"timed-action-object-and-conditions","evidence":fact.evidence}));
+            }
+        }
+    }
     Ok((verified, audit))
 }
 
+fn extend_references(fact: &mut ExtractedFact, sentences: &[Value], positions: &[usize]) {
+    for &position in positions {
+        let citation = sentences[position]["id"].as_str().unwrap();
+        if fact.evidence.len()<8 && !fact.evidence.iter().any(|id| id==citation) {
+            fact.evidence.push(citation.to_owned());
+        }
+    }
+}
 fn opening_offset(source: &str) -> Option<usize> {
     let lines: Vec<_> = source.lines().collect();
     let mut offset = 0;
@@ -647,13 +684,29 @@ fn opening_background(facts: &[Fact], source: &str, sentences: &[Value]) -> Hash
     background
 }
 
+#[cfg(test)]
 pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,String>{
+    build_bank_with_timing(extracted,source,&[])
+}
+
+pub(super) fn build_session_bank(
+    extracted: Vec<ExtractedFact>, session: &CompanionV1HostSession,
+) -> Result<Bank,String> {
+    build_bank_with_timing(extracted,&session.transcript_text,&session.utterances)
+}
+
+fn build_bank_with_timing(
+    extracted: Vec<ExtractedFact>, source: &str, utterances: &[crate::companion_v1::CompanionV1UtteranceSegment],
+) -> Result<Bank,String> {
     use super::{source_grounding, source_windows::bounded_original_quotes};
     if extracted.is_empty(){return Err(fail());}
     let units=source_units(source);let sentences=factual_audit::evidence_sentences(&units);
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s["text"].as_str().unwrap())).collect::<std::collections::HashMap<_,_>>();
-    let (extracted, mut verification) = source_verified_facts(extracted, &sentences)?;
-    let source_agenda = super::delivery_evidence::opening_agenda(&sentences, &super::source_commitments::meeting_roles(&sentences));
+    let timing = super::timed_evidence::Timing::verified(source,&sentences,utterances);
+    let (extracted, mut verification) = source_verified_facts(extracted, &sentences, timing.as_ref())?;
+    let source_agenda = super::delivery_evidence::opening_agenda(
+        &sentences, &super::source_commitments::meeting_roles(&sentences), timing.is_some(),
+    );
     let long = extracted.len() > LARGE_LAYOUT_FACTS;
     let mut facts=Vec::new();
     let mut quantity_quotes = HashSet::new();
@@ -913,7 +966,8 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     background_ids.sort_unstable();
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
-        "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids});
+        "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids,
+        "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
     Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,source_agenda })
 }
 
@@ -2058,6 +2112,19 @@ mod tests{
         let layout: ChapterOrganization=serde_json::from_str(&layout).unwrap();
         assert!(layout.chapters.0.values().all(|chapter| bank.reader_order[&chapter.main_facts[0]]==0));
         assert_eq!(bank.receipt["chapterReaderCoverage"].as_array().unwrap().len(),bank.chapter_spans.len());
+    }
+
+    #[test]
+    fn retains_a_complete_unnamed_entrance_procedure_in_the_meeting_bank() {
+        let source="入口测体温，登记个人信息，核验健康码，再用酒精消毒。";
+        let mut session=crate::backend::minutes::tests::session_with_text(source);
+        session.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment {
+            text:source.to_owned(),start_ms:0,end_ms:3000,speaker:None,approximate_timing:false,
+        }];
+        let bank=build_session_bank(vec![ExtractedFact::verbatim("e0000","status",source)],&session).unwrap();
+        let body=bank.facts.iter().find(|fact|bank.execution_reading.contains(&fact.id)).unwrap();
+        assert!(body.text.contains("酒精") && body.text.contains("健康码"));
+        assert_eq!(bank.receipt["savedUtteranceContext"]["usableTimedUtterances"],1);
     }
 
     #[test]

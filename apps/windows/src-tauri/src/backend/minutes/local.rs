@@ -13,6 +13,7 @@ mod source_authority;
 mod source_commitments;
 mod source_grounding;
 mod delivery_evidence;
+mod timed_evidence;
 mod source_checkpoint;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
@@ -181,7 +182,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
                 if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }
-            let mut bank=atomic_document::build_bank(facts,&session.transcript_text)?;
+            let mut bank=atomic_document::build_session_bank(facts,session)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
             let layout=if atomic_document::has_chapters(&bank) {
                 let core=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;

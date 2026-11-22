@@ -1,10 +1,10 @@
 //! Explicit headless candidate evidence. It reads only the named, hash-bound
 //! source, never the user's meeting library, device, microphone or service key.
-use std::{fs::{self,OpenOptions},io::Write,path::{Path,PathBuf},sync::atomic::{AtomicBool,Ordering},time::{Duration,Instant,SystemTime,UNIX_EPOCH}};
+use std::{fs::{self,OpenOptions},io::{Read,Write},path::{Path,PathBuf},sync::atomic::{AtomicBool,Ordering},time::{Duration,Instant,SystemTime,UNIX_EPOCH}};
 use serde::Deserialize;
 use serde_json::{json,Value};
 use sha2::{Digest,Sha256};
-use crate::companion_v1::CompanionV1HostSession;
+use crate::companion_v1::{CompanionV1HostSession,CompanionV1UtteranceSegment};
 #[derive(Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct Input {
@@ -14,6 +14,25 @@ struct Input {
     duration_ms: u64,
     reuse_checkpoint: Option<super::source_checkpoint::CheckpointInput>,
     vulkan_runtime_dir: Option<PathBuf>,
+    saved_utterances: Option<SavedUtterances>,
+}
+#[derive(Deserialize)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+struct SavedUtterances {
+    path: PathBuf,
+    sha256: String,
+}
+
+fn load_saved_utterances(input: &SavedUtterances) -> Result<Vec<CompanionV1UtteranceSegment>,String> {
+    const MAX_BYTES: u64 = 2 * 1024 * 1024;
+    let error = || "已保存发言片段的校验不匹配，未开始生成。".to_owned();
+    let mut bytes=Vec::new();
+    fs::File::open(&input.path).map_err(|_|error())?.take(MAX_BYTES+1)
+        .read_to_end(&mut bytes).map_err(|_|error())?;
+    if bytes.len() as u64>MAX_BYTES || format!("{:x}",Sha256::digest(&bytes))!=input.sha256 {
+        return Err(error());
+    }
+    serde_json::from_slice(&bytes).map_err(|_|error())
 }
 struct Finish<'a>(&'a AtomicBool);
 impl Drop for Finish<'_>{fn drop(&mut self){self.0.store(true,Ordering::Release);}}
@@ -56,13 +75,23 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
         super::source_checkpoint::CheckedSourcePrefix::load(checkpoint, &text, &source_hash, input.duration_ms,
             input.vulkan_runtime_dir.is_some())
     }).transpose()?.unwrap_or_default();
-    let session=session(text,&input.title,input.duration_ms)?;
+    let mut session=session(text,&input.title,input.duration_ms)?;
+    if let Some(saved) = &input.saved_utterances {
+        session.utterances=load_saved_utterances(saved)?;
+        let source=&session.transcript_text;
+        let units=super::super::canonical_brief::source_units(source);
+        let sentences=super::super::automatic_brief::factual_audit::evidence_sentences(&units);
+        if super::timed_evidence::Timing::verified(source,&sentences,&session.utterances).is_none() {
+            return Err("保存的发言片段与指定转写不一致，未开始生成。".into());
+        }
+    }
     fs::create_dir(output).map_err(|_|"工程输出目录必须是新的目录，已有证据保留。")?;
     let root=output.canonicalize().map_err(|_|"无法定位工程输出目录。")?;
     let header=json!({"state":"running-native-local-candidate","processId":std::process::id(),"sourceFile":input.source_file,
         "sourceFileSha256":file_hash,"sourceSha256":source_hash,"sourceCharacters":session.transcript_text.chars().count(),
         "sourceNormalization":"UTF-8 BOM stripped and CRLF to LF only; original file never changed","durationMs":input.duration_ms,
-        "newCloudCalls":0,"trainingUpdates":0,"normalApplicationSaveVerified":false,"contentQualified":false});
+        "newCloudCalls":0,"trainingUpdates":0,"normalApplicationSaveVerified":false,"contentQualified":false,
+        "savedUtterances":input.saved_utterances.as_ref().map(|case|json!({"path":case.path,"sha256":case.sha256,"count":session.utterances.len()}))});
     state(&root,&header)?;println!("local_minutes_candidate_started={header}");
     let trace=super::new_trace();let finished=AtomicBool::new(false);let job_id=uuid::Uuid::new_v4().to_string();
     let base=super::super::rules_l0_minutes(&session,"engineering-candidate");

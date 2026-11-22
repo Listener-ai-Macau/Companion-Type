@@ -125,24 +125,39 @@ fn speaker_at(sentences: &[Value], index: usize) -> Option<&str> {
 /// Preserve an already extracted multi-step procedure only when its individual
 /// controls can be located in the same nearby speaker's own account.
 pub(super) fn arrival_procedure_sources(
-    sentences: &[Value], index: usize, summary: &str,
+    sentences: &[Value], index: usize, summary: &str, timing: Option<&super::timed_evidence::Timing<'_>>,
 ) -> Option<Vec<usize>> {
     let steps = arrival_steps(summary);
     if steps.count_ones() < 3 || !has(summary, &["门口", "入口", "进门", "入场", "进场", "进来"]) {
         return None;
     }
-    let speaker = speaker_at(sentences, index)?;
+    let source = body(sentences[index]["text"].as_str()?);
+    let negated = |words: &str| has(words, &["不再", "不用", "已经取消", "不做", "无需", "不需要"]);
+    let entrance = |words: &str| has(words, &["门口", "入口", "进门", "入场", "进场", "进来"]);
+    if arrival_steps(source)==steps && entrance(source) && !negated(source) {
+        return Some(vec![index]);
+    }
+    let speaker = speaker_at(sentences, index);
     let mut witnessed = 0;
     let mut scope = false;
     let mut evidence = Vec::new();
     let from = index.saturating_sub(5);
     let to = (index + 3).min(sentences.len());
     for position in from..to {
-        if speaker_at(sentences, position)!=Some(speaker) { continue; }
         let words = body(sentences[position]["text"].as_str()?);
         let here = arrival_steps(words);
-        if here==0 || has(words, &["不再", "不用", "已经取消", "不做", "无需", "不需要"]) { continue; }
-        let sets_scope = has(words, &["门口", "入口", "进门", "入场", "进场", "进来"]);
+        let related = if speaker.is_some() {
+            speaker_at(sentences, position)==speaker
+        } else {
+            timing.is_some_and(|timing| {
+                timing.covered_by_one_utterance(&[index,position])
+                    || (position.abs_diff(index)<=1 && entrance(source) && entrance(words)
+                        && (arrival_steps(source) & here)!=0 && timing.neighboring_speech(index,position))
+            })
+        };
+        if !related { continue; }
+        if here==0 || negated(words) { continue; }
+        let sets_scope = entrance(words);
         if (witnessed | here)!=witnessed || (sets_scope && !scope) {
             evidence.push(position);
         }
@@ -225,11 +240,13 @@ pub(super) struct OpeningAgenda {
     pub(super) citations: Vec<String>,
 }
 
-pub(super) fn opening_agenda(sentences: &[Value], roles: &[(usize, &str, &str)]) -> Option<OpeningAgenda> {
+pub(super) fn opening_agenda(sentences: &[Value], roles: &[(usize, &str, &str)], verified_timing: bool) -> Option<OpeningAgenda> {
     let first_turn = sentences.iter().take(24).position(|sentence| {
         sentence["text"].as_str().is_some_and(|text| {
-            let Some((speaker, words)) = split_turn_label(text.trim()) else { return false; };
-            roles.iter().any(|(_, label, role)| *label==speaker && super::source_commitments::meeting_lead(role))
+            let (known_host, words) = split_turn_label(text.trim())
+                .map_or((false,text), |(speaker, words)| (roles.iter()
+                    .any(|(_, label, role)| *label==speaker && super::source_commitments::meeting_lead(role)),words));
+            (known_host || (verified_timing && has(words,&["今天","咱们","召集","叫过来"])))
                 && has(words, &["今天", "本次", "这场"])
                 && has(words, &["开会", "开一个", "开一场", "开个", "叫过来", "叫来", "主持", "会议", "商讨"])
         })
@@ -241,11 +258,13 @@ pub(super) fn opening_agenda(sentences: &[Value], roles: &[(usize, &str, &str)])
         (&["上半年度", "上半年"][..], "上半年"),
         (&["上个季度", "上季度", "上一季度"][..], "上季度"),
         (&["上一年度", "去年"][..], "上一年度"),
+        (&["上周儿", "上周"][..], "上周"),
+        (&["上个月", "上月"][..], "上个月"),
     ].into_iter().find_map(|(forms, period)| find(forms).map(|row| (row, period)));
     let review = [
         (&["销售情况", "销售儿情况"][..], "销售情况"),
         (&["经营情况", "运营情况"][..], "运营情况"),
-        (&["工作情况", "总结会议", "总结一下"][..], "工作情况"),
+        (&["工作情况", "工作汇报", "工作进行汇报", "总结会议", "总结一下"][..], "工作情况"),
     ].into_iter().find_map(|(forms, scope)| find(forms).map(|row| (row, scope)));
     let text = if let (Some((period_row, period)), Some((review_row, scope))) = (period, review) {
         cited.extend([period_row, review_row]);
