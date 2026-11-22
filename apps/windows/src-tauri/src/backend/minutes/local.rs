@@ -118,10 +118,20 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
                 if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }
-            let bank=atomic_document::build_bank(facts,&session.transcript_text)?;
+            let mut bank=atomic_document::build_bank(facts,&session.transcript_text)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
-            let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
-            record_call(&trace,"id-only-organization");
+            let layout=if atomic_document::has_chapters(&bank) {
+                atomic_document::review_chapters(&mut bank,|prompt,input,schema,stage| {
+                    let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,768)?;
+                    record_call(&trace,stage);
+                    Ok(result)
+                })?
+            } else {
+                let result=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
+                record_call(&trace,"id-only-organization");
+                result
+            };
+            if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();}
             atomic_document::organize(&layout,&bank,session,base)
         })?;
         release_confirmed=true;

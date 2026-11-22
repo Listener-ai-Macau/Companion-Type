@@ -25,6 +25,23 @@ pub(super) fn unclear_percentage(source: &str, claim: &str) -> bool {
     })
 }
 
+pub(super) fn conflicting_release_time(source: &str, claim: &str) -> bool {
+    static EARLIER: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:已经|现已|此前|当时)[^。；！？]{0,14}(?:上线|发布|推出|投入使用)|(?:上线|发布|推出|投入使用)了"
+    ).expect("observed past release"));
+    static LATER: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:这些|这批|该|这个|上述)[^。；！？]{0,18}(?:明年|下半年|下个月|下周)\s*(?:才|再|将|开始)?\s*(?:开发|研发|上线|发布|推出)"
+    ).expect("future statement about the same item"));
+    let Some(past) = EARLIER.find(source) else { return false; };
+    let Some(later) = LATER.find(&source[past.end()..]) else { return false; };
+    let scope = &source[past.end()..past.end()+later.end()];
+    if ["新版本","升级版","第二批","后续版本","二期","另一"].iter().any(|term| scope.contains(term)) {
+        return false;
+    }
+    let relevant = ["明年","下半年","下个月","下周","开发","研发","上线","发布","推出","投入使用"];
+    relevant.iter().any(|term| claim.contains(term)) && shared_han_phrase(source,claim,3)
+}
+
 pub(super) fn named_place_context(source: &str) -> Option<&str> {
     let tokens = super::chapter_labels::segmenter().tag(source, false);
     let mut candidates = tokens.iter().enumerate().filter_map(|(index, token)| {
