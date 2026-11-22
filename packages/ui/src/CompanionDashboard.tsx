@@ -1012,7 +1012,12 @@ export function CompanionDashboard({
   const minutesMarkdown = selectedMinutesVariant?.markdown || legacyMinutes?.markdown || '';
   const displayedMinutes = selectedMinutesVariant ?? legacyMinutes;
   const minutesProcessing = displayedMinutes?.processing;
-  const minutesReviewDraft = displayedMinutes?.source === 'llm_deepseek' && displayedMinutes.quality === 'draft' && !minutesProcessing;
+  const minutesReviewDraft = displayedMinutes?.quality === 'draft' && (
+    (displayedMinutes.source === 'llm_deepseek' && !minutesProcessing)
+    || (displayedMinutes.source === 'rules_l0' && (selectedMinutesVariant
+      ? selectedMinutesVariant.status === 'retryPending'
+      : legacyMinutes?.llmNote != null))
+  );
   const minutesIncomplete = minutesReviewDraft || Boolean(minutesProcessing && !companionMinutesProcessingComplete(minutesProcessing));
   const manualMinutes = (selectedMinutesVariant || legacyMinutes)?.source === 'userAuthored';
   const minutesDisplayContext = manualMinutes ? undefined : (selectedMinutesVariant || legacyMinutes)?.sourceNoteContext;

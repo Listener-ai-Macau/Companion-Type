@@ -316,10 +316,14 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
     let mut calendar_items=None;
     let content = match format {
         MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics | MeetingExportFormat::Calendar | MeetingExportFormat::CalendarReminder | MeetingExportFormat::CalendarReminder30 | MeetingExportFormat::CalendarReminder60 => {
+            let needs_review = |source: &str, quality: &str, has_processing, retry_pending| {
+                super::minutes::is_cloud_review_draft(source, quality, has_processing)
+                    || (source == "rules_l0" && quality == "draft" && retry_pending)
+            };
             let review_draft = match minutes_variant_for_mode(session, meeting_mode) {
-                Some(variant) => super::minutes::is_cloud_review_draft(&variant.source, &variant.quality, variant.processing.is_some()),
+                Some(variant) => needs_review(&variant.source, &variant.quality, variant.processing.is_some(), variant.status == "retryPending"),
                 None => session.minutes.as_ref().is_some_and(|minutes| {
-                    super::minutes::is_cloud_review_draft(&minutes.source, &minutes.quality, minutes.processing.is_some())
+                    needs_review(&minutes.source, &minutes.quality, minutes.processing.is_some(), minutes.llm_note.is_some())
                 }),
             };
             if review_draft {
@@ -1149,6 +1153,43 @@ mod tests {
         assert!(markdown.contains("草稿") && markdown.contains("按原话核对方案"));
         for format in [MeetingExportFormat::Todo, MeetingExportFormat::TodoText, MeetingExportFormat::Ics, MeetingExportFormat::Calendar] {
             assert!(prepare_meeting_export(&s, "offlineStore", format).unwrap_err().contains("仍待核对"));
+        }
+    }
+
+    #[test]
+    fn cloud_failure_excerpt_requires_review_before_action_export() {
+        let mut saved = minutes();
+        saved.source = "rules_l0".into();
+        saved.quality = "draft".into();
+        saved.llm_note = Some("服务暂时限制请求".into());
+        saved.markdown = "## 行动项\n- [ ] 核对价签 (due: 2026-10-29T09:00:00+08:00)".into();
+        for has_variant in [false, true] {
+            let mut s = session("final transcript", vec![], Some(saved.clone()));
+            if has_variant {
+                s.minutes_by_mode.offline_store = Some(super::super::minutes_variant(&saved, 0));
+            }
+            for format in [MeetingExportFormat::Todo, MeetingExportFormat::TodoText, MeetingExportFormat::Ics, MeetingExportFormat::Calendar] {
+                assert!(prepare_meeting_export(&s, "offlineStore", format).unwrap_err().contains("仍待核对"));
+            }
+            let draft = saved_minutes_markdown_for_mode(&s, "offlineStore").unwrap();
+            assert!(draft.contains("草稿") && draft.contains("核对价签"));
+
+            let mut offline = saved.clone();
+            offline.llm_note = None;
+            let mut s = session("final transcript", vec![], Some(offline.clone()));
+            if has_variant {
+                s.minutes_by_mode.offline_store = Some(super::super::minutes_variant(&offline, 0));
+            }
+            assert!(prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::TodoText).is_ok());
+
+            let mut edited = saved.clone();
+            edited.source = "userEdited".into();
+            edited.quality = "final".into();
+            let mut s = session("final transcript", vec![], Some(edited.clone()));
+            if has_variant {
+                s.minutes_by_mode.offline_store = Some(super::super::minutes_variant(&edited, 0));
+            }
+            assert!(prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::TodoText).is_ok());
         }
     }
 
