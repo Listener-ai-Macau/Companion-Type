@@ -232,6 +232,83 @@ fn chapter_relations_skips_questions_duplicate_sources_other_speakers_and_covere
 }
 
 #[test]
+fn chapter_roles_preserves_both_dimensions_from_one_speaker_in_a_mixed_summary() {
+    let first = "个人长期负责复核更稳定";
+    let second = "团队轮班可以尽快处理";
+    let source = session(&format!(
+        "说话人1：分享另一个方案。\n说话人3：从连续性来说，{first}。从速度来说，{second}，整体响应更快。"
+    ));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["比较了连续性和速度。".into()];
+    let mut evidence = [first, second, "分享另一个方案"].into_iter().map(|quote| Evidence {
+        field:"summary".into(), index:0, quote:quote.into(),
+    }).collect();
+    let range = 0..source.transcript_text.len();
+    summary_roles::restore(&source, range.clone(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0],
+        "比较了连续性和速度。补充对比原话「从连续性来说」「个人长期负责复核更稳定」。另一侧原话「从速度来说」「团队轮班可以尽快处理」「整体响应更快」。");
+    assert_eq!(evidence.len(), 6);
+    summary_roles::restore(&source, range, &mut minutes, &mut evidence);
+    assert_eq!(evidence.len(), 6);
+}
+
+#[test]
+fn chapter_roles_will_not_join_unrelated_or_already_captured_comparisons() {
+    for (source, summary) in [
+        ("说话人1：从连续性来说，个人长期负责复核更稳定。\n说话人2：从速度来说，团队轮班更快。","比较了连续性和速度。"),
+        ("说话人1：从连续性来说，个人长期负责复核更稳定。从速度来说，团队轮班更快。","个人负责的连续性更好，团队轮班的速度更快。"),
+        ("说话人1：从连续性来说，个人长期负责复核更稳定。从速度来说，团队轮班更快。从密度来看，还有其他因素。","比较了连续性和速度。"),
+        ("说话人1：从连续性来说，个人长期负责复核更稳定。从速度来说，个人临时加班更快。","比较了连续性和速度。"),
+    ] {
+        let source = session(source);
+        let (mut minutes, _) = response(&source);
+        minutes.summary = vec![summary.into()];
+        let mut evidence = ["长期负责复核", "更快"].into_iter().map(|quote| Evidence {
+            field:"summary".into(), index:0, quote:quote.into(),
+        }).collect();
+        summary_roles::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        assert_eq!(minutes.summary[0], summary);
+        assert_eq!(evidence.len(), 2);
+    }
+}
+
+#[test]
+fn chapter_roles_keeps_the_time_and_each_actor_in_a_reported_handoff() {
+    let anchor = "周会说明了工作要求";
+    let spoken = "由品控组把这批物料的抽检要求收集好，然后提前两天让运营组发给各班负责人，由负责人一次性把它转给各个车间";
+    let source = session(&format!("说话人2：{anchor}。\n说话人2：各项检测前后要注意抽样。\n说话人2：先把所有抽检要求落实到纸面。\n说话人2：所有抽检要求统一用纸面传达，{spoken}。"));
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["所有抽检要求统一用纸面传达。".into()];
+    let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:anchor.into()}];
+    summary_roles::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+    assert_eq!(minutes.summary[0], format!("所有抽检要求统一用纸面传达。补充分发原话「{spoken}」。"));
+    assert_eq!(evidence[1].quote, spoken);
+    assert!(minutes.action_items.is_empty() && minutes.decisions.is_empty());
+}
+
+#[test]
+fn chapter_roles_skips_inferred_handoffs_and_other_speakers() {
+    let anchor = "周会说明了工作要求";
+    let handoff = "所有抽检要求统一用纸面传达，由品控组把这批物料的抽检要求收集好，然后提前两天让运营组发给各班负责人，由负责人一次性把它转给各个车间。";
+    let variants = [
+        format!("说话人2：{anchor}。\n说话人3：{handoff}"),
+        format!("说话人2：{anchor}。\n说话人2：{}", handoff.replace("提前两天", "")),
+        format!("说话人2：{anchor}。\n说话人2：{}", handoff.replace("由负责人", "由行政经理")),
+        format!("说话人2：{anchor}。\n说话人2：假设一些零件返工，{handoff}"),
+    ];
+    for text in variants {
+        let source = session(&text);
+        let (mut minutes, _) = response(&source);
+        let body = "所有抽检要求统一用纸面传达。";
+        minutes.summary = vec![body.into()];
+        let mut evidence = vec![Evidence {field:"summary".into(),index:0,quote:anchor.into()}];
+        summary_roles::restore(&source, 0..source.transcript_text.len(), &mut minutes, &mut evidence);
+        assert_eq!(minutes.summary[0], body, "{text}");
+        assert_eq!(evidence.len(), 1);
+    }
+}
+
+#[test]
 fn context_merge_retains_unverified_drafts_and_source_evidence() {
     let original="# 旧分段汇总\n\n## 未核对的参考草稿\n\n可能需要寄样品\n\n## 分段原文依据\n\n样品待确认";
     let retained=reference_sections(original);

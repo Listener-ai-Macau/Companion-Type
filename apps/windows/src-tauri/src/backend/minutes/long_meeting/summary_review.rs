@@ -62,17 +62,37 @@ pub(super) fn same_speaker_lines<'a>(
     turn: &CitedTurn<'a>,
     names: &[String],
 ) -> Option<Vec<&'a str>> {
+    same_speaker_context(source, chapter, turn, names, 2, usize::MAX)
+}
+
+pub(super) fn same_speaker_context<'a>(
+    source: &'a str,
+    chapter: &Range<usize>,
+    turn: &CitedTurn<'a>,
+    names: &[String],
+    adjacent_limit: usize,
+    byte_limit: usize,
+) -> Option<Vec<&'a str>> {
     let speaker =
         super::super::speaker_line(turn.full_line, names).filter(|line| !line.unresolved)?;
     let end = (turn.offset + turn.full_line.len()).min(chapter.end);
     let later = source[end..chapter.end].strip_prefix('\n').unwrap_or("");
     // A new or unlabelled speaker stops the scan. A chapter cannot borrow
     // evidence after its source boundary.
-    let adjacent = later.split('\n').take(2).take_while(|next| {
+    let adjacent = later.split('\n').take(adjacent_limit).take_while(|next| {
         super::super::speaker_line(next, names)
             .is_some_and(|tag| !tag.unresolved && tag.label == speaker.label)
     });
-    Some(std::iter::once(turn.chapter_text).chain(adjacent).collect())
+    let mut consumed = 0usize;
+    Some(
+        std::iter::once(turn.chapter_text)
+            .chain(adjacent)
+            .take_while(|line| {
+                consumed = consumed.saturating_add(line.len());
+                consumed <= byte_limit
+            })
+            .collect(),
+    )
 }
 
 fn period_label(value: &str) -> &str {
