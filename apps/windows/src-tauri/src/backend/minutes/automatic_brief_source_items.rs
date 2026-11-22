@@ -336,6 +336,34 @@ fn opening_report_round(evidence: &[Value]) -> &[Value] {
     &evidence[start..start+1+end]
 }
 
+fn entirely_in_opening(cited: &[&Value], opening: &[Value]) -> bool {
+    !cited.is_empty() && cited.iter().all(|row| opening.iter().any(|turn| turn["id"] == row["id"]))
+}
+
+fn asks_for_live_opinions(fact: &Fact, cited: &[&Value], opening: &[Value]) -> bool {
+    if fact.placement != Placement::Question || cited.len() != fact.evidence.len()
+        || !entirely_in_opening(cited, opening)
+    {
+        return false;
+    }
+    const DEFERRED: &[&str] = &["会后", "后续反馈", "下次答复", "待回复", "待确定", "待确认",
+        "待决定", "待核", "还没确定", "尚未确定", "未定", "最终定案", "提交", "到时候"];
+    let source = cited.iter().filter_map(|row| row["text"].as_str()).map(|text| {
+        normalized(text).replace(['呃', '嗯', '啊'], "")
+    }).collect::<Vec<_>>().join("。");
+    let summary = normalized(&fact.text);
+    if DEFERRED.iter().any(|cue| source.contains(cue) || summary.contains(cue)) {
+        return false;
+    }
+    let suggestions = ["有没有建议", "有什么建议", "各位的建议", "请大家提建议", "有什么意见", "有没有意见"]
+        .iter().any(|cue| source.contains(cue))
+        && ["建议", "意见"].iter().any(|cue| summary.contains(cue));
+    let shared_discussion = ["大家", "大伙", "各位", "一块", "一起"].iter().any(|cue| source.contains(cue))
+        && ["能不能", "可不可以", "咱们先"].iter().any(|cue| source.contains(cue))
+        && ["商量", "讨论"].iter().any(|cue| source.contains(cue) && summary.contains(cue));
+    suggestions || shared_discussion
+}
+
 fn in_meeting_report(fact: &Fact, cited: &[&Value], opening: &[Value]) -> bool {
     if fact.placement != Placement::Action || fact.owner.is_some() || fact.due.is_some()
         || cited.is_empty() || cited.len() != fact.evidence.len()
@@ -361,8 +389,7 @@ fn in_meeting_report(fact: &Fact, cited: &[&Value], opening: &[Value]) -> bool {
         ["在会上", "会上先", "今天会上", "当场", "现场"]
             .iter().any(|cue| part.contains(cue)) && REQUEST.iter().any(|cue| part.contains(cue))
     });
-    let inside_round = !opening.is_empty()
-        && cited.iter().all(|row| opening.iter().any(|turn| turn["id"] == row["id"]))
+    let inside_round = entirely_in_opening(cited, opening)
         && words.iter().any(|part| REQUEST.iter().any(|cue| part.contains(cue)));
     if !directly_here && !inside_round { return false; }
     use super::source_coverage::shared_literal;
@@ -388,7 +415,8 @@ fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String>
             Placement::Action => live_request_topic(fact, evidence).map(|text| (Kind::Opinion, Some(text))),
             Placement::Decision if contingent_closing(&fact.text, &quotes) =>
                 Some((Kind::Recommendation, None)),
-            Placement::Question if answered_question(&fact.text, &rows) => Some((Kind::Opinion, None)),
+            Placement::Question if answered_question(&fact.text, &rows)
+                || asks_for_live_opinions(fact, &rows, opening) => Some((Kind::Opinion, None)),
             Placement::Topic if matches!(fact.kind, Kind::Status | Kind::Opinion) =>
                 reported_context(&fact.text, &rows).map(|text| (Kind::Opinion, Some(text))),
             _ => None,
@@ -449,6 +477,30 @@ fn opening_reports_are_kept_in_the_discussion_and_future_reports_stay_tasks() {
     let without_handoff = &evidence[..5];
     assert!(opening_report_round(without_handoff).is_empty());
     assert!(!in_meeting_report(&prior[3], &[&evidence[4]], &[]));
+}
+
+#[cfg(test)]
+#[test]
+fn an_opening_invitation_for_comments_does_not_close_an_explicit_pending_question() {
+    let evidence = [
+        json!({"id":"e0000","text":"今天把大家叫过来讨论经营情况。"}),
+        json!({"id":"e0006","text":"然后咱就是看看嗯你们各位有没有需要呃讲一下这个，说一下这个。"}),
+        json!({"id":"e0007","text":"人流量比较少的情况下，呃，有没有建议？"}),
+        json!({"id":"e0008","text":"呃，看看你们在这个季度不是说是太好销售，能不能大伙咱一块儿商量商量把你们这个销售部再提一提？"}),
+        json!({"id":"e0009","text":"关于库存，请大家有什么建议，下次会议待确认。"}),
+        json!({"id":"e0010","text":"谁先说？"}),
+    ];
+    let mut facts = [
+        ("询问各位在人流量较少情况下有无销售建议。", vec!["e0006", "e0007"]),
+        ("提出本季度销售不佳，需商量提升业绩。", vec!["e0008"]),
+        ("关于库存方案，仍待确认。", vec!["e0009"]),
+    ].into_iter().enumerate().map(|(i, (text, ids))| Fact {
+        id: format!("a{i:03}"), kind:Kind::Status, placement:Placement::Question, text:text.into(),
+        owner:None, due:None, evidence:ids.into_iter().map(str::to_owned).collect(),
+    }).collect::<Vec<_>>();
+    assert_eq!(reconcile_spoken_scope(&mut facts, &evidence), ["a000", "a001"]);
+    assert!(facts[..2].iter().all(|fact| fact.placement == Placement::Topic));
+    assert_eq!(facts[2].placement, Placement::Question);
 }
 
 #[derive(Deserialize)]
@@ -1493,7 +1545,7 @@ fn append_missing_with_sources(
             }
         } else if fact.placement == Placement::Question {
             let rows: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]).collect();
-            if answered_question(&fact.text, &rows) {
+            if answered_question(&fact.text, &rows) || asks_for_live_opinions(&fact, &rows, opening) {
                 fact.kind = Kind::Opinion;
                 fact.placement = Placement::Topic;
             }
