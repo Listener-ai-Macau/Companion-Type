@@ -332,7 +332,7 @@ pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<Di
     ).expect("literal work product"));
     let (_, words) = split(&sentences[index]);
     if words.contains(['?', '？']) || contains(words, CONTEXT) || contains(words, NEGATION)
-        || contains(words, &["我建议", "建议由", "可以考虑", "最好", "之前", "当时", "听说", "比如", "例如", "举例", "演示", "暂定", "尚未决定", "没有决定", "没有确认"])
+        || contains(words, &["我建议", "建议由", "可以考虑", "最好", "之前", "当时", "上次", "已经由", "曾由", "听说", "比如", "例如", "举例", "演示", "暂定", "尚未决定", "没有决定", "没有确认"])
         || index.checked_sub(1).is_some_and(|previous| {
             let (_, context) = split(&sentences[previous]);
             contains(context, &["举个例子", "举一个例子", "模拟一下", "比如有一个", "假设一个", "作为演示"])
@@ -354,7 +354,9 @@ pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<Di
             let owner = m.name("owner").unwrap().as_str();
             let clause = m.get(0).unwrap();
             if contains(&words[..clause.start()], &["要不要", "是否由", "能不能", "可不可以"])
-                || contains(clause.as_str(), &["要不要", "能不能", "可不可以"]) { continue; }
+                || contains(clause.as_str(), &["要不要", "能不能", "可不可以", "完成了", "提交了", "做过", "做完了", "已交付", "已经交给"]) {
+                continue;
+            }
             let mut text = m.name("work").map(|work| work.as_str().trim_end_matches(['吧', '。', ' ']).to_owned())
                 .unwrap_or_else(|| format!("制作{}", &m["deliverable"]));
             if text.contains('？') || !complete_piece(&text) || !canonical_brief::line(&text, 90) { continue; }
@@ -366,7 +368,8 @@ pub(super) fn explicitly_named_work(sentences: &[Value], index: usize) -> Vec<Di
                     let (_, response) = split(&sentences[next]);
                     !response.contains(['?', '？']) && !contains(response, CONTEXT)
                         && !contains(response, NEGATION)
-                        && (contains(response, &["让他做", "让她做", "你做", "你来做", "由你", "我来做", "发给你"])
+                        && !contains(response, &["改由", "改让", "换个人", "换成别人", "收回"])
+                        && (contains(response, &["让他做", "让她做", "你做", "你来做", "由你", "发给你"])
                             && canonical_brief::normalized(response).to_ascii_lowercase().contains(product))
                 })
             });
@@ -853,9 +856,12 @@ mod tests {
         assert!(action(6).text.contains("再看看要不要搞外联"));
 
         for text in ["那由C同学做一个预算表吧。", "如果由C同学做一个预算表，这项暂时不定。",
-            "这是举例，由C同学做一个预算表。", "要不要由C同学准备预算表。"] {
+            "这是举例，由C同学做一个预算表。", "要不要由C同学准备预算表。",
+            "已经由C同学准备了预算表。", "由项目组提交了验收报告。"] {
             assert!(explicitly_named_work(&sentences(&[text]),0).is_empty(),"{text}");
         }
+        let changed = sentences(&["C同学有这些资料，她可以做一个Excel。", "行，我来做Excel。"]);
+        assert!(explicitly_named_work(&changed,0).is_empty());
     }
 
     #[test]

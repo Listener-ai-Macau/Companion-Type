@@ -298,7 +298,7 @@ pub(super) fn settled_choice(sentences: &[Value], index: usize) -> Option<Revise
     ).expect("a named final choice"));
     let words = body(sentences[index]["text"].as_str()?);
     let choice = SELECTED.captures(words)?.name("choice")?.as_str();
-    if words.contains(['?', '？']) || has(words, &["我觉得可以", "我建议", "假设", "要不要", "能不能", "还不确定", "先暂定", "可能要", "如果要", "听说"]) {
+    if words.contains(['?', '？']) || has(words, &["我觉得可以", "我建议", "假设", "要不要", "能不能", "还不确定", "先暂定", "可能要", "如果要", "听说", "上次", "当时", "之前就定"]) {
         return None;
     }
     let scope = if has(choice, &["馆", "场", "厅", "楼", "室", "校", "公园"]) {
@@ -356,7 +356,7 @@ pub(super) fn dated_arrival(sentences: &[Value], index: usize) -> Option<(String
     let mut evening = None;
     for position in index.saturating_sub(12)..index {
         let earlier = body(sentences[position]["text"].as_str()?);
-        if earlier.contains(['?', '？']) || has(earlier, &["如果", "暂定", "可能", "大概", "假设", "没定", "别"]) { continue; }
+        if earlier.contains(['?', '？']) || has(earlier, &["如果", "暂定", "可能", "大概", "假设", "没定", "别", "上次", "当时", "去年", "之前确定"]) { continue; }
         if earlier.contains("晚上开") { evening = Some(position); }
         if has(earlier, &["肯定是", "确认是", "确定在", "就定在", "确定为", "时间为", "日期是"]) {
             for day in DATE.find_iter(earlier) {
