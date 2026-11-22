@@ -59,6 +59,23 @@ pub(crate) fn reconcile_session_recovery(session: &mut CompanionV1HostSession) {
     if session.recovery.max_attempts == 0 {
         session.recovery.max_attempts = 3;
     }
+    // Older checkpoints could erase a sibling's error when the other mode
+    // succeeded. A retryable-looking variant without its old failure decision
+    // cannot authorize another cloud request on restart.
+    if session.recovery.stage == "complete" && super::session_has_pending_dual_minutes(session)
+        && [&session.minutes_by_mode.offline_store, &session.minutes_by_mode.online_live]
+            .into_iter().flatten().any(|variant| variant.status == "retryPending")
+    {
+        session.status = "transcribed".into();
+        session.recovery.stage = "paused".into();
+        session.recovery.retry_stage = "minutes".into();
+        session.recovery.next_retry_at_unix_ms = None;
+        if session.recovery.last_error.is_none() {
+            session.recovery.last_error = Some("有一份纪要尚未完成。已有纪要和原始转写已保留，请检查服务后重试。".into());
+        }
+        session.pending_reason = Some("recovery_paused".into());
+        return;
+    }
     let requested_minutes = if session.recovery.requested_meeting_mode == "onlineLive" {
         session.minutes_by_mode.online_live.as_ref()
     } else {

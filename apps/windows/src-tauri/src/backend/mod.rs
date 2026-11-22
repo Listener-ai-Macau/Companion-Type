@@ -369,14 +369,40 @@ fn minutes_variant(
     }
 }
 
+pub(crate) const BOARD_INITIAL_MINUTES_PROMPT_ID: &str = "__companion_board_initial_minutes__";
+
+fn minutes_variant_for_mode<'a>(session: &'a CompanionV1HostSession, mode: &str) -> Option<&'a CompanionV1MinutesVariant> {
+    if mode == "onlineLive" { session.minutes_by_mode.online_live.as_ref() }
+    else { session.minutes_by_mode.offline_store.as_ref() }
+}
+
+fn expects_paired_minutes(session: &CompanionV1HostSession) -> bool {
+    (session.minutes_by_mode.offline_store.is_some() && session.minutes_by_mode.online_live.is_some())
+        || (session.meeting_mode == "onlineLive" && matches!(session.source.as_str(), "boardDevice" | "deviceFlash")
+            && session.audio_stored && transcript_review::final_transcript_available(session)
+            && session.recovery.intent == "processMeeting" && session.recovery.requested_meeting_mode == "onlineLive"
+            && session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Automatic)
+}
+
+fn minutes_variant_pending(session: &CompanionV1HostSession, mode: &str) -> bool {
+    minutes_variant_for_mode(session, mode).is_none_or(|variant| {
+        variant.status == "retryPending" || variant.markdown.trim().is_empty()
+            || !transcript_review::minutes_current(session, variant.source_review_revision)
+            || variant.processing.as_ref().is_some_and(|p| !p.is_complete())
+    })
+}
+
 fn session_has_pending_dual_minutes(session: &CompanionV1HostSession) -> bool {
-    match (&session.minutes_by_mode.offline_store, &session.minutes_by_mode.online_live) {
-        (Some(offline), Some(online)) => [offline, online].into_iter().any(|variant| {
-            variant.status == "retryPending" || !transcript_review::minutes_current(session, variant.source_review_revision)
-                || variant.processing.as_ref().is_some_and(|p| !p.is_complete())
-        }),
-        _ => false,
-    }
+    expects_paired_minutes(session) && ["offlineStore", "onlineLive"].into_iter()
+        .any(|mode| minutes_variant_pending(session, mode))
+}
+
+fn preserves_peer_minutes_retry(session: &CompanionV1HostSession, selected_mode: Option<&str>) -> bool {
+    let Some(mode) = selected_mode else { return false; };
+    let peer = if mode == "offlineStore" { "onlineLive" } else { "offlineStore" };
+    expects_paired_minutes(session) && session.recovery.retry_stage == "minutes"
+        && matches!(session.recovery.stage.as_str(), "paused" | "retryBackoff")
+        && minutes_variant_for_mode(session, peer).is_some_and(|variant| variant.status == "retryPending")
 }
 
 // A sealed online meeting owns two independent products. Retry only failed
@@ -398,13 +424,8 @@ where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1Meeti
 {
     let modes: Vec<String> = if let Some(mode) = selected_mode { vec![mode.to_string()] }
     else if session_has_pending_dual_minutes(session) {
-        ["offlineStore", "onlineLive"].into_iter().filter(|mode| {
-            let variant = if *mode == "onlineLive" { &session.minutes_by_mode.online_live }
-                          else { &session.minutes_by_mode.offline_store };
-            variant.as_ref().is_some_and(|variant| variant.status == "retryPending"
-                || variant.processing.as_ref().is_some_and(|p| !p.is_complete())
-                || !transcript_review::minutes_current(session, variant.source_review_revision))
-        }).map(str::to_string).collect()
+        ["offlineStore", "onlineLive"].into_iter().filter(|mode| minutes_variant_pending(session, mode))
+            .map(str::to_string).collect()
     } else {
         vec![session.meeting_mode.clone()]
     };
@@ -465,12 +486,18 @@ where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1Meeti
     session.retention.minutes_cached = true;
     let has_old_variant = [&session.minutes_by_mode.offline_store, &session.minutes_by_mode.online_live]
         .into_iter().flatten().any(|variant| !transcript_review::minutes_current(session, variant.source_review_revision));
-    session.status = if failure.is_some() || has_old_variant { "transcribed" } else { "minutesReady" }.to_string();
+    let paired_pending = session_has_pending_dual_minutes(session);
+    session.status = if failure.is_some() || has_old_variant || paired_pending { "transcribed" } else { "minutesReady" }.to_string();
+    if preserves_peer_minutes_retry(session, selected_mode) {
+        return failure;
+    }
     if let Some(error) = failure.as_deref() {
         schedule_recovery_failure(session, error);
     } else if has_old_variant {
         session.pending_reason = Some("minutes_source_changed".into());
         session.recovery = Default::default();
+    } else if paired_pending {
+        mark_recovery_transcribed(session);
     } else {
         session.pending_reason = None;
         mark_recovery_complete(session);
@@ -2038,6 +2065,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         }
         const AUTO_RECOVERY_PROMPT_ID: &str = "__companion_auto_recovery__";
         let automatic_recovery = request.prompt_id.as_deref() == Some(AUTO_RECOVERY_PROMPT_ID);
+        let board_initial_minutes = request.prompt_id.as_deref() == Some(BOARD_INITIAL_MINUTES_PROMPT_ID);
         let shutdown_save_only = request.prompt_id.as_deref() == Some("__companion_shutdown_save_only__");
 
         // Default meeting mode from product settings / env when UI omits it.
@@ -2338,9 +2366,10 @@ impl CompanionBackend for FixtureCompanionBackend {
             }
             if target.is_some_and(|session| {
                 let mode = request.meeting_mode.as_deref().unwrap_or(&session.meeting_mode);
-                let variant = if mode == "onlineLive" {
-                    session.minutes_by_mode.online_live.as_ref()
-                } else { session.minutes_by_mode.offline_store.as_ref() };
+                let variant = minutes_variant_for_mode(session, mode);
+                // The second capture worker request can arrive after background
+                // recovery has already attempted this exact product.
+                if board_initial_minutes && variant.is_some() { return true; }
                 let manually_edited = variant.is_some_and(|v| matches!(v.source.as_str(), "userEdited" | "userAuthored"))
                     || session.minutes.as_ref().is_some_and(|m| matches!(m.source.as_str(), "userEdited" | "userAuthored"));
                 let requested_ready = if request.meeting_mode.is_some() {
@@ -2465,7 +2494,9 @@ impl CompanionBackend for FixtureCompanionBackend {
                             return Ok(snapshot.clone());
                         }
                     }
-                    if !already_done {
+                    let peer_retry = action == CompanionV1ControlAction::MeetingGenerateMinutes
+                        && preserves_peer_minutes_retry(session, request.meeting_mode.as_deref());
+                    if !already_done && !peer_retry {
                         if !automatic_recovery && session.recovery.stage == "paused" {
                             // A user-visible manual Retry explicitly resumes a
                             // paused job with a fresh bounded budget.
@@ -6279,6 +6310,47 @@ mod tests {
         session.recovery.last_error = Some("录音不完整".into());
         mark_recovery_complete(session);
         assert_eq!(session.recovery.last_error.as_deref(), Some("录音不完整"));
+    }
+
+    #[test]
+    fn paired_minutes_keeps_missing_products_pending_and_legacy_failures_paused() {
+        let mut snapshot = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "paired-checkpoint", false)).unwrap();
+        let session = &mut snapshot.host.sessions[0];
+        let mut final_minutes = session.minutes.take().unwrap();
+        final_minutes.quality = "final".into();
+        final_minutes.llm_note = None;
+        session.minutes_by_mode = Default::default();
+        session.source = "boardDevice".into();
+        session.meeting_mode = "onlineLive".into();
+        session.audio_stored = true;
+        session.transcript_final = true;
+        session.processing_policy = crate::companion_v1::CompanionV1ProcessingPolicy::Automatic;
+        session.recovery = CompanionV1MeetingRecovery::armed("onlineLive");
+        mark_recovery_transcribed(session);
+
+        let mut microphone = session.clone();
+        microphone.source = "hostMic".into();
+        assert!(!session_has_pending_dual_minutes(&microphone));
+        assert!(session_has_pending_dual_minutes(session));
+        assert!(refresh_minutes_products_for_mode(session, "offline", Some("offlineStore"),
+            |_| final_minutes.clone()).is_none());
+        assert_eq!(session.status, "transcribed");
+        assert_eq!(session.recovery.stage, "pendingMinutes");
+        assert!(!session_has_final_minutes_product(session));
+        let mut requested = Vec::new();
+        assert!(refresh_minutes_products(session, "recovered", |input| {
+            requested.push(input.meeting_mode.clone()); final_minutes.clone()
+        }).is_none());
+        assert_eq!(requested, ["onlineLive"]);
+        assert!(session_has_final_minutes_product(session));
+
+        session.minutes_by_mode.offline_store.as_mut().unwrap().status = "retryPending".into();
+        persistence::reconcile_session_recovery(session);
+        assert_eq!(session.recovery.stage, "paused");
+        assert_eq!(session.recovery.retry_stage, "minutes");
+        assert_eq!(session.status, "transcribed");
+        assert_eq!(session.minutes_by_mode.online_live.as_ref().unwrap().status, "minutesReady");
     }
 
     #[test]

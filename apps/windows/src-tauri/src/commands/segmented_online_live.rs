@@ -269,6 +269,7 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
     }
     for mode in ["offlineStore","onlineLive"] {
         let mut r=request(A::MeetingGenerateMinutes,session,None,title,0);r.meeting_mode=Some(mode.into());
+        r.prompt_id=Some(crate::backend::BOARD_INITIAL_MINUTES_PROMPT_ID.into());
         coordinator.apply_control(r)?;
     }
     Ok(())
