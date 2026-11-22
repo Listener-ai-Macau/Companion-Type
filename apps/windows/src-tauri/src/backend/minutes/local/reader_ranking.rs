@@ -137,6 +137,10 @@ pub(super) enum OperationalEvidence {
     InProgressMilestone,
     EntryProcedure,
     LimitedAccess,
+    VerificationRequirement,
+    ReportingCadence,
+    FundingPrerequisite,
+    OperatingStandard,
     ApprovalPrerequisite,
     CorrectiveRequirement,
 }
@@ -167,14 +171,49 @@ pub(super) fn binding_requirement(text: &str) -> Option<OperationalEvidence> {
 /// Select a self-contained stretch of the original speech. These clauses
 /// describe a reported stage or an operating rule, never a new assignment.
 pub(super) fn documented_clause(text: &str) -> Option<(OperationalEvidence, &str)> {
-    let text = text.trim().trim_end_matches(['，', ',', '。', '；']);
-    if text.contains(['？', '?']) || ["听说", "据说", "可能", "估计", "假如", "比如", "如果改成",
+    let raw = super::super::source_resolution::split_turn_label(text.trim()).map_or(text.trim(), |(_, words)| words.trim());
+    let text = raw.trim_end_matches(['，', ',', '。', '；']);
+    if ["听说", "据说", "可能", "估计", "假如", "比如", "如果改成",
         "没开始", "尚未开始", "还没开始", "还没有开始", "没有开始", "准备开始", "还不确定"]
         .iter().any(|word| text.contains(word))
     {
         return None;
     }
+    // An explanation or a tag question can follow a complete verification
+    // requirement. The excerpt ends at the named thing to check.
+    static CHECK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?:[嗯啊呃对那就都也你s]|一定|首先|进门店时|开工前|付款前){0,14}(?:要看|须看|要核对|须核对|先核验|必须查验|一定查|要检查|必须确认|要查)[^。；！？]{0,18}?(?:预售证|许可证|经营证|营业执照|资质证|备案凭证|备案记录|检测结果|验收报告|签字记录|授权书)(?:书|儿)?"
+    ).expect("specified item to verify"));
+    if let Some(clause)=CHECK.find(text).map(|m| m.as_str()).filter(|clause| {
+        !super::source_context::question_only(text)
+            || text.strip_prefix(clause).is_some_and(|tail| ["就是说", "，因为", "因为"].iter().any(|why|tail.starts_with(why)))
+    }) {
+        return Some((OperationalEvidence::VerificationRequirement, clause));
+    }
+    if text.contains(['？','?']) || super::source_context::question_only(text) { return None; }
     let has = |words: &[&str]| words.iter().any(|word| text.contains(word));
+    if text.chars().count() <= 90 && has(&["需要", "必须", "要求", "得先", "都要"])
+        && has(&["提前", "每天", "每日", "每周", "当天", "当班", "截止", "定期"])
+        && has(&["报备", "打卡", "上报", "汇报", "提报", "日报", "交接", "提交"])
+    {
+        return Some((OperationalEvidence::ReportingCadence, text));
+    }
+    if text.chars().count() <= 90 && has(&["需要", "必须", "得先", "还得", "前提"])
+        && has(&["向财务", "提交财务", "给财务", "经财务", "财务先"])
+        && has(&["报表", "申请", "审批", "批准", "签字"])
+        && has(&["拨款", "下款", "走款", "采购", "支付", "报销", "预算", "放款"])
+    {
+        return Some((OperationalEvidence::FundingPrerequisite, text));
+    }
+    if has(&["着装", "穿正装", "着正装", "穿工作服", "穿工装", "佩戴防护", "戴安全帽"])
+        && has(&["都要", "都是要", "必须", "要求", "须穿", "统一", "应该", "不得"])
+    {
+        let end = ["，嗯", "，呃", "，然后"].into_iter().filter_map(|cue| text.find(cue)).min().unwrap_or(text.len());
+        let clause = &text[..end];
+        if clause.chars().count() <= 90 && ["正装", "工装", "工作服", "安全帽", "防护"].iter().any(|term|clause.contains(term)) {
+            return Some((OperationalEvidence::OperatingStandard, clause));
+        }
+    }
     static STARTED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:已经|业已|现已)[^。；！？]{0,10}开始[^。；！？]{0,8}(?:采购|生产|安装|收货|实施|上线|交付|使用|办理|试运行|施工|维修)了?"
     ).expect("started milestone"));
@@ -189,14 +228,14 @@ pub(super) fn documented_clause(text: &str) -> Option<(OperationalEvidence, &str
             return Some((OperationalEvidence::InProgressMilestone, clause));
         }
     }
-    if text.chars().count() <= 96
+    if text.chars().count() <= 90
         && has(&["进学校", "进校", "返校", "入场", "进入", "进场", "上岗"])
         && has(&["只要", "必须", "全都要", "均需", "需要先", "都要", "须先"])
         && has(&["测定", "检测", "隔离", "复检", "消毒", "登记", "出示", "签字", "体检", "培训", "核验"])
     {
         return Some((OperationalEvidence::EntryProcedure, text));
     }
-    if text.chars().count() <= 140
+    if text.chars().count() <= 90
         && has(&["地区", "人员", "名单", "访客", "学生", "没有凭证", "未登记"])
         && has(&["不允许返校", "不能返校", "不得入场", "不能入场", "不允许入场", "不得上岗"])
         && has(&["邮寄", "另行", "线上", "由", "补办", "不得"])
@@ -204,6 +243,39 @@ pub(super) fn documented_clause(text: &str) -> Option<(OperationalEvidence, &str
         return Some((OperationalEvidence::LimitedAccess, text));
     }
     None
+}
+
+/// A nearby alternative can complete a restriction split by transcription.
+/// Both halves must refer to the same barred activity, with no inferred actor.
+pub(super) fn linked_restriction<'a>(previous: &'a str, next: &'a str) -> Option<(&'a str, &'a str)> {
+    let previous = super::super::source_resolution::split_turn_label(previous.trim())
+        .map_or(previous.trim(), |(_, words)| words.trim());
+    let next = super::super::source_resolution::split_turn_label(next.trim())
+        .map_or(next.trim(), |(_, words)| words.trim());
+    if [previous,next].iter().any(|text| {
+        super::source_context::question_only(text) || text.contains(['？','?'])
+            || ["提议", "比如", "要不要", "据说", "听说", "暂定", "换个话题"].iter().any(|cue|text.contains(cue))
+    }) {
+        return None;
+    }
+    let (activity, (scope, prohibition)) = ["返校", "入场", "进场", "进校", "上岗", "登机", "取件", "提交"].into_iter()
+        .find_map(|activity| {
+            ["不允许", "不得", "不能", "禁止"].into_iter()
+                .find_map(|ban| previous.split_once(&format!("{ban}{activity}")).map(|(scope,rest)|(activity,(scope,rest))))
+        })?;
+    let scope_start = scope.rfind("关于").map_or(0, |offset| offset + "关于".len());
+    let scope_end = previous.len() - prohibition.len();
+    let scope = &previous[scope_start..scope_end];
+    if scope.chars().count() < activity.chars().count() + 4 { return None; }
+    let alternative = ["不", "未", "无法", "不能"].into_iter()
+        .find_map(|denial| next.find(&format!("{denial}{activity}")).map(|offset| &next[offset..]))?;
+    let alternative = alternative.split(['。','；']).next()?;
+    if !["邮寄", "转办", "改为", "补办", "线上", "另行", "线下", "登记", "安排"]
+        .iter().any(|term| alternative.contains(term)) {
+        return None;
+    }
+    let scope = scope.trim_start_matches(['嗯', '啊', ' ']);
+    (scope.chars().count() + alternative.chars().count() < 90).then_some((scope,alternative))
 }
 
 pub(super) fn concrete_execution(text: &str) -> Option<OperationalEvidence> {

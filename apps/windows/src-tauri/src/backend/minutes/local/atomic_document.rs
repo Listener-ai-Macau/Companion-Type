@@ -105,6 +105,21 @@ impl Bank {
     fn topics(&self) -> impl Iterator<Item = &Fact> {
         self.facts.iter().filter(|fact| fact.placement == Placement::Topic && !self.before_opening.contains(&fact.id))
     }
+
+    fn required_topic(&self, id: &str) -> bool {
+        !self.before_opening.contains(id) && (self.execution_reading.contains(id) || self.priority_review.contains(id))
+    }
+
+    fn required_role(&self, fact: &Fact) -> Option<&'static str> {
+        match fact.placement {
+            Placement::Action => Some("follow-up"),
+            Placement::Decision => Some("decision"),
+            Placement::Topic if self.required_topic(&fact.id) => {
+                Some(if self.review_quote(&fact.id) { "source-review" } else { "operating-condition" })
+            }
+            _ => None,
+        }
+    }
 }
 // The bank spans the whole meeting. Its size does not set the reader's budget
 // or the number of facts sent to the organizer.
@@ -348,13 +363,13 @@ fn source_verified_facts(
             current.push(fact);
             work_tails.insert(last);
         }
-        if let Some(record) = source_commitments::unlabelled_plan_for_next_meeting(sentences,index,timing)
+        if let Some(record) = source_commitments::unlabelled_closing_work(sentences,index,timing)
             .filter(|record| record.support.iter().all(|next| frames_at[*next].is_none() && !hypothetical.contains(next))) {
             let body = record.item.text.clone();
             let mut fact = ExtractedFact::original_action(id,&body,record.item);
             extend_references(&mut fact,sentences,&record.support);
             current.retain(|item| !matches!(item.role.as_str(),"status" | "action"));
-            audit.push(json!({"sentenceId":id,"reason":"collective-plan-and-next-meeting","evidence":fact.evidence}));
+            audit.push(json!({"sentenceId":id,"reason":"collective-plan-confirmed-at-close","evidence":fact.evidence}));
             current.push(fact);
         }
         for record in source_commitments::explicitly_named_work(sentences,index) {
@@ -837,6 +852,32 @@ fn source_verified_facts(
         audit.push(json!({"sentenceId":ids[0],"reason":"opposed-scope-in-source","evidence":review.evidence}));
         let next=verified.iter().position(|fact|fact.evidence[0].as_str() > ids[0]).unwrap_or(verified.len());
         verified.insert(next,review);
+    }
+    if let Some(timing) = timing {
+        for (earlier, rows) in sentences.windows(2).enumerate() {
+            let later = earlier + 1;
+            if frames_at[earlier].is_some() || frames_at[later].is_some()
+                || hypothetical.contains(&earlier) || hypothetical.contains(&later)
+                || !timing.covered_by_one_utterance(&[earlier,later]) {
+                continue;
+            }
+            let ids = [rows[0]["id"].as_str().unwrap(),rows[1]["id"].as_str().unwrap()];
+            let Some((scope, alternative)) = super::reader_ranking::linked_restriction(known[ids[0]],known[ids[1]]) else {
+                continue;
+            };
+            if verified.iter().any(|fact| fact.source_needs_review && fact.evidence.iter().any(|id|ids.contains(&id.as_str()))) {
+                continue;
+            }
+            let reading = format!("{scope}。{alternative}");
+            let literal = canonical_brief::normalized(&reading);
+            verified.retain(|fact| !ids.contains(&fact.evidence[0].as_str()) || !is_covered_by_literal(fact,&literal));
+            let mut fact = ExtractedFact::verbatim(ids[0],"status",&reading);
+            extend_references(&mut fact,sentences,&[later]);
+            fact.execution_reading = true;
+            audit.push(json!({"sentenceId":ids[0],"reason":"linked-scope-and-alternative","evidence":fact.evidence}));
+            let next = verified.iter().position(|item|item.evidence[0].as_str() > ids[0]).unwrap_or(verified.len());
+            verified.insert(next,fact);
+        }
     }
     if let Some(timing) = timing {
         let indices = sentences.iter().enumerate().map(|(index,row)|(row["id"].as_str().unwrap(),index))
@@ -1967,7 +2008,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             let size=reader_fact_length(bank,fact);
             if index==0 || reserved.contains(fact.id.as_str()){
                 points.push([&fact.id]);
-            }else if bank.execution_reading.contains(&fact.id) || bank.priority_review.contains(&fact.id){
+            }else if bank.required_topic(&fact.id){
                 required.push([&fact.id]);
             }else if main&&points.len()<3&&size<=optional_chars{
                 optional_chars-=size;points.push([&fact.id]);
@@ -2119,14 +2160,11 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
-        if bank.execution_reading.contains(id) || bank.priority_review.contains(id) {
-            let path: Vec<_> = pointer.split('/').skip(1).collect();
-            if let ["topics", topic, section, row] = path.as_slice() {
+        if bank.required_topic(id) {
+            if let ["topics", topic, section, row] = pointer.split('/').skip(1).collect::<Vec<_>>().as_slice() {
                 let topic: usize = topic.parse().map_err(|_|fail())?;
                 let row: usize = row.parse().map_err(|_|fail())?;
-                if *section == "details" {
-                    reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1);
-                }
+                if *section == "details" { reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1); }
                 required_visible.push((id, format!("topics[{topic}].{section}[{row}]")));
             }
         }
@@ -2169,7 +2207,22 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str())) {
         return Err(fail());
     }
+    let bindings: HashMap<_,_> = result.bindings.iter().map(|(pointer,id)|(id.as_str(),pointer.as_str())).collect();
+    let requirements = bank.facts.iter().filter_map(|fact| bank.required_role(fact).map(|role|(fact,role)));
+    let visible_requirements = requirements.map(|(fact, role)| {
+        let pointer = bindings.get(fact.id.as_str()).ok_or_else(fail)?;
+        let shown = match fact.placement {
+            Placement::Topic => required_visible.iter().any(|(id,_)| id.as_str() == fact.id.as_str()),
+            _ => pointer.trim_start_matches('/').split_once('/')
+                .is_some_and(|(section,row)|visible_paths.contains(format!("{section}[{row}]").as_str())),
+        };
+        if !shown {
+            return Err(fail());
+        }
+        Ok(json!({"factId":fact.id,"role":role,"sourceIds":fact.evidence,"path":pointer}))
+    }).collect::<Result<Vec<_>,String>>()?;
     parsed.receipt["requiredReaderFactIds"] = json!(required_visible.iter().map(|(id, _)| id).collect::<Vec<_>>());
+    parsed.receipt["visibleSourceRequirements"] = json!(visible_requirements);
     if serde_json::to_vec(&bank.facts).map_err(|_|fail())?!=sealed{return Err(fail());}
     // The shared document parser assigns presentation entries its own aNNN
     // sequence. Never expose those aliases as identities for the frozen bank.
@@ -2591,6 +2644,22 @@ mod tests{
             assert!(bank.reader_priority.contains_key(&fact.id));
         }
         assert!(!bank.facts.iter().any(|fact| fact.text.contains("新项目") && bank.execution_reading.contains(&fact.id)));
+    }
+
+    #[test]
+    fn a_rule_split_by_punctuation_remains_one_visible_source_requirement() {
+        use crate::companion_v1::CompanionV1UtteranceSegment;
+        let report = "这次讨论两种办理安排。";
+        let procedure = "调查显示，部分地区的学生暂时不能返校。然后不能返校的学生毕业证邮寄到家。";
+        let source = format!("{report}\n{procedure}");
+        let timed = [report,procedure].into_iter().enumerate().map(|(i,text)| CompanionV1UtteranceSegment {
+            text:text.to_owned(),start_ms:i as u64*2000,end_ms:(i+1) as u64*2000,speaker:None,approximate_timing:false,
+        }).collect::<Vec<_>>();
+        let bank=build_bank_with_timing(vec![ExtractedFact::verbatim("e0000","status",report)],&source,&timed).unwrap();
+        let condition=bank.facts.iter().find(|fact|fact.text.contains("不能返校的学生毕业证邮寄到家")).unwrap();
+        assert_eq!(condition.evidence.len(),2);
+        assert!(condition.text.contains("部分地区"));
+        assert_eq!(bank.required_role(condition),Some("operating-condition"));
     }
 
     #[test]

@@ -535,25 +535,40 @@ fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
     Some(CompanionV1ActionItem { text, owner: Some(owner.to_owned()), due: None })
 }
 
-/// Keep an explicit written handoff from a closing exchange without
-/// guessing who gave it. The linked next-meeting review confirms its scope.
-pub(super) fn unlabelled_plan_for_next_meeting(
+fn closing_confirmation(words: &str) -> bool {
+    let words = spread_trim(words);
+    ["会议就开到", "会议到这里", "会议到这儿", "本次会议结束", "现在散会", "今天就先到这",
+        "今天就开到", "大家散会", "就到这里", "好的，散会", "好，散会"]
+        .iter().any(|cue| words.contains(cue))
+        || words.trim_end_matches(['。', '！', ' ', '，']) == "散会"
+}
+
+/// A named group and a concrete deliverable survive without speaker labels.
+/// In unlabelled speech an adjacent closing or review confirms the request.
+pub(super) fn unlabelled_closing_work(
     rows: &[Value], index: usize, timing: Option<&super::timed_evidence::Timing<'_>>,
 ) -> Option<DirectedWork> {
     let (speaker, words) = split(&rows[index]);
     if speaker.is_some() || contains(words, CONTEXT) || contains(words, NEGATION)
-        || contains(words, &["也可以", "建议", "比如", "比方", "要不要", "能不能", "是不是", "曾经"])
+        || contains(words, SOFT) || contains(words, &["是不是", "曾经"])
         || words.contains(['?', '？']) { return None; }
     let mut item = collective_written_plan(words)?;
     let timing = timing?;
+    if closing_confirmation(words) {
+        return Some(DirectedWork { item, support: Vec::new() });
+    }
     let next = (index+1..(index+4).min(rows.len())).find(|&i| !backchannel(split(&rows[i]).1))?;
     let (speaker, reply) = split(&rows[next]);
-    let some_review = ["下次会议", "下一场会", "下回开会", "下次开会"].into_iter().find(|cue| reply.contains(cue))?;
-    let verb = ["讨论", "评审", "审阅", "核对"].into_iter().find(|cue| reply.contains(cue))?;
     if speaker.is_some() || super::source_context::question_only(reply)
         || contains(reply, CONTEXT) || contains(reply, NEGATION)
         || !timing.neighboring_speech(index,next) { return None; }
-    item.text.push_str(&format!("，{some_review}再{verb}"));
+    let review = ["下次会议", "下一场会", "下回开会", "下次开会"].into_iter().find(|cue| reply.contains(cue));
+    let verb = ["讨论", "评审", "审阅", "核对"].into_iter().find(|cue| reply.contains(cue));
+    if let Some((meeting, verb)) = review.zip(verb) {
+        item.text.push_str(&format!("，{meeting}再{verb}"));
+    } else if !closing_confirmation(reply) {
+        return None;
+    }
     Some(DirectedWork { item, support: vec![next] })
 }
 
@@ -991,15 +1006,41 @@ mod tests {
             speaker:None,approximate_timing:false,
         }).collect();
         let timing=Timing::verified(&text,&rows,&turns).unwrap();
-        let record=unlabelled_plan_for_next_meeting(&rows,0,Some(&timing)).unwrap();
+        let record=unlabelled_closing_work(&rows,0,Some(&timing)).unwrap();
         assert_eq!(record.item.owner.as_deref(),Some("各部门"));
         assert_eq!(record.item.text,"会后完成活动方案，下一场会再讨论");
         assert_eq!(record.item.due,None);
         assert_eq!(record.support,[2]);
-        assert!(unlabelled_plan_for_next_meeting(&rows,0,None).is_none());
+        assert!(unlabelled_closing_work(&rows,0,None).is_none());
         let mut question=rows.clone();
         question[2]["text"]=serde_json::json!("咱们下一场会讨论这个事情吗，");
-        assert!(unlabelled_plan_for_next_meeting(&question,0,Some(&timing)).is_none());
+        assert!(unlabelled_closing_work(&question,0,Some(&timing)).is_none());
+    }
+
+    #[test]
+    fn a_direct_closing_instruction_does_not_need_an_invented_next_meeting() {
+        use super::super::timed_evidence::Timing;
+        use crate::backend::minutes::{automatic_brief::factual_audit::evidence_sentences, canonical_brief::source_units};
+        use crate::companion_v1::CompanionV1UtteranceSegment;
+        let words = [
+            "嗯下去以后各部门儿做个具体这个方案好的行。",
+            "那这样本次会议就开到这儿",
+        ];
+        let text=words.join("\n");
+        let rows=evidence_sentences(&source_units(&text));
+        let turns=words.into_iter().enumerate().map(|(i,text)|CompanionV1UtteranceSegment {
+            text:text.to_owned(),start_ms:i as u64*1000,end_ms:(i+1) as u64*1000,
+            speaker:None,approximate_timing:false,
+        }).collect::<Vec<_>>();
+        let timing=Timing::verified(&text,&rows,&turns).unwrap();
+        let record=unlabelled_closing_work(&rows,0,Some(&timing)).unwrap();
+        assert_eq!(record.item.text,"会后完成方案");
+        assert_eq!(record.item.owner.as_deref(),Some("各部门"));
+        assert!(record.item.due.is_none());
+        assert_eq!(record.support,[1]);
+        let mut suggestion=rows.clone();
+        suggestion[0]["text"]=serde_json::json!("我建议会后各部门做个方案。");
+        assert!(unlabelled_closing_work(&suggestion,0,Some(&timing)).is_none());
     }
 
     #[test]
