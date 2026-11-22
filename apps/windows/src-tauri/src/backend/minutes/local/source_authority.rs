@@ -3,6 +3,7 @@
 use std::sync::LazyLock;
 
 use super::super::canonical_brief;
+use crate::companion_v1::CompanionV1ActionItem;
 
 const DECISION: &[&str] = &[
     "会议决定", "一致决定", "一致同意", "共同决定", "我们决定", "大家同意",
@@ -56,6 +57,7 @@ fn has(source: &str, markers: &[&str]) -> bool {
 #[derive(Clone)]
 pub(super) struct Authority {
     pub(super) allowed: Vec<&'static str>,
+    pub(super) confirmed_deadline_action: Option<CompanionV1ActionItem>,
     pub(super) verbatim: Option<&'static str>,
     pub(super) context_only: bool,
 }
@@ -83,6 +85,7 @@ impl Authority {
             && has(source, OPEN_AGENDA) && !has(source, CLOSED_AGENDA);
         let mut policy = Self {
             allowed,
+            confirmed_deadline_action: confirmed_deadline_action(source),
             verbatim: None,
             context_only: super::source_grounding::context_only_fragment(source),
         };
@@ -140,8 +143,33 @@ impl Authority {
     }
 }
 
-pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::CompanionV1ActionItem> {
-    use crate::companion_v1::CompanionV1ActionItem;
+// A confirmed deadline can carry a concrete deliverable without naming its owner.
+fn confirmed_deadline_action(source: &str) -> Option<CompanionV1ActionItem> {
+    static TASK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
+        r"^(?:(?:对|好|行|就这么定)[，,]\s*|(?:请|务必|一定要|必须)\s*)(?:在)?",
+        r"(?P<due>(?:(?:本|这|下)?(?:周|星期)[一二三四五六日天]|今天|明天|后天|[0-9]{1,2}月[0-9]{1,2}[日号])(?:上午|中午|下午|晚上)?(?:之前|前))",
+        r"\s*(?:务必|一定要|必须)?(?:(?:完成|提交|交付|确认|发出)[^，,。！？；;\r\n]{2,40}|把[^，,。！？；;\r\n]{2,36}(?:做完|定完|定下来|定过来|交上来|发过来|交付|提交|完成))$",
+    )).expect("valid confirmed deadline pattern"));
+    let original = source.trim();
+    let body = super::super::source_resolution::split_turn_label(original)
+        .map_or(original, |(_, body)| body.trim());
+    if !canonical_brief::line(body, 90)
+        || has(body, NON_BINDING) || has(body, OPINION) || has(body, OPEN)
+        || has(body, &["不知道", "比如", "例如", "举例", "示例", "暂定", "打算", "考虑", "争取",
+            "尽量", "听说", "据说", "转述", "说过", "曾说", "已经", "不用", "不再", "不必",
+            "不要", "不需要", "取消", "不一定", "能不能", "是否", "不可能"])
+    {
+        return None;
+    }
+    let task = TASK.captures(body.trim_end_matches(['。', '！', '.']))?;
+    Some(CompanionV1ActionItem {
+        text: body.to_owned(),
+        owner: None,
+        due: Some(task.name("due")?.as_str().to_owned()),
+    })
+}
+
+pub(super) fn spoken_assignment(source: &str) -> Option<CompanionV1ActionItem> {
     static DEPARTMENT_TASK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?P<owner>各部门|各小组|各单位|各分部|各团队|每个部门|每个小组)(?:儿)?\s*(?P<task>(?:会后|回去|下去以后|散会后)?\s*(?:就|要|务必|需要|请)?\s*(?:写|调查|核实|汇报|提交|整理|准备|检查|汇总|完成|联系|交付)[^，,。！？；;\r\n]{2,65})"
     ).unwrap());

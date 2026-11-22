@@ -129,7 +129,8 @@ impl SourceWindows {
 
     fn pending(&self, i: usize, encoding: SourceEncoding) -> bool {
         let policy = &self.authority[i];
-        policy.verbatim.is_none() && !policy.context_only && self.direct_role(i, encoding).is_none()
+        policy.verbatim.is_none() && policy.confirmed_deadline_action.is_none()
+            && !policy.context_only && self.direct_role(i, encoding).is_none()
     }
 
     fn direct_role(&self, i: usize, encoding: SourceEncoding) -> Option<&'static str> {
@@ -227,6 +228,11 @@ impl SourceWindows {
             let policy=&self.authority[i];
             if policy.context_only{
                 reviewed.push(json!({"sentenceId":anchor,"factCount":0,"origin":"context-fragment"}));
+                continue;
+            }
+            if let Some(assignment) = &policy.confirmed_deadline_action {
+                facts.push(ExtractedFact::original_action(anchor, &assignment.text, assignment.clone()));
+                reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"confirmed-deadline-action"}));
                 continue;
             }
             if let Some(role)=policy.verbatim {
@@ -697,6 +703,34 @@ mod tests {
         assert_eq!(coverage["sentences"][3]["origin"], "quantity-source-quote");
         let bank = super::super::atomic_document::build_bank(facts, source).unwrap();
         assert!(bank.facts.iter().all(|fact| fact.owner.is_none() && fact.due.is_none()));
+    }
+
+    #[test]
+    fn confirmed_deadline_survives_into_actions_without_an_invented_owner() {
+        use super::super::atomic_document::{build_bank, organize};
+        let source = "交付范围已经核对。\n对，下周二之前把方案定过来。\n如果要变更，建议下周三前提交备选方案。\n请在明天前提交测试计划。";
+        let window = SourceWindows::new(source).unwrap();
+        let encoding = SourceEncoding::DirectSingleRole;
+        let (input, schema) = window.contract(0, encoding);
+        assert_eq!(input["sourceSentences"][1]["anchor"], false);
+        assert!(schema["properties"].get("e0001").is_none());
+        let checked = window.check_encoded(0, r#"{"e0002":"recommendation"}"#, encoding).unwrap();
+        assert_eq!(checked.reviewed[1]["origin"], "confirmed-deadline-action");
+        let bank = build_bank(checked.facts, source).unwrap();
+        let session = crate::backend::minutes::tests::session_with_text(source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session,"now");
+        let layout = json!({
+            "purposeFact":"a000",
+            "topics":{"t1":"交付范围","t2":null,"t3":null,"t4":null,"t5":null,"t6":null,"t7":null,"t8":null},
+            "assignments":{"a000":{"topic":"t1","main":true},"a002":{"topic":"t1","main":false}}
+        });
+        let parsed = organize(&layout.to_string(), &bank, &session, &base).unwrap();
+        let [first, second] = parsed.minutes.action_items.as_slice() else { panic!("two confirmed actions expected"); };
+        assert_eq!(first.due.as_deref(), Some("下周二之前"));
+        assert_eq!(second.due.as_deref(), Some("明天前"));
+        assert!(first.owner.is_none() && second.owner.is_none());
+        assert!(parsed.minutes.markdown.contains("把方案定过来"));
+        assert!(!parsed.minutes.action_items.iter().any(|item| item.text.contains("备选")));
     }
 
     #[test]
