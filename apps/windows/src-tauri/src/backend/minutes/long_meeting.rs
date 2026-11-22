@@ -487,7 +487,10 @@ fn run_with_boundary(endpoint: &str, model: &str, key: &str, session: &Companion
             prompt=format!("{source} 请区分来源，不能把补充归给某个说话人；只按原内容保留条件和未确定事项。\n{prompt}");
         }
         if retry { prompt.push_str(EVIDENCE_RETRY_PROMPT); }
-        let system = format!("{}{EVIDENCE_PROMPT}{}{}", super::DEEPSEEK_SYSTEM_PROMPT,
+        // Native assembly renders structured chapter fields and quotes. Old
+        // validated checkpoints remain compatible with this response-only change.
+        let markdown_contract = "\n分段返回中的 markdown 只写一个章节标题。本机根据结构化字段和引用生成正文，不在 markdown 中重复写正文。";
+        let system = format!("{}{EVIDENCE_PROMPT}{markdown_contract}{}{}", super::DEEPSEEK_SYSTEM_PROMPT,
             if retry { EVIDENCE_RETRY_PROMPT } else { "" }, template.map_or_else(String::new, |t|t.prompt()));
         let (minutes, object) = super::run_deepseek_prompt(endpoint, model, key, part, &l0,
             &prompt, &system, client)?;
