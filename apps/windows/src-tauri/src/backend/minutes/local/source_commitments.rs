@@ -290,15 +290,22 @@ fn role_of<'a>(sentences: &'a [Value], speaker: &str) -> Option<&'a str> {
     })
 }
 
-fn meeting_lead(role: &str) -> bool {
-    ["主持人", "负责人", "总经理", "总裁", "董事长", "主管", "组长", "主任", "校长", "副校长"]
-        .contains(&role)
+pub(super) fn meeting_lead(role: &str) -> bool {
+    ["主持人", "负责人", "经理", "总裁", "董事长", "主管", "组长", "主任", "校长"]
+        .iter().any(|title| role.ends_with(title))
 }
 
 pub(super) fn meeting_roles(sentences: &[Value]) -> Vec<(usize, &str, &str)> {
+    static ROLL_CALL: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^[零〇一二三四五六七八九十幺0-9]{2,6}[ 、，,\s]*(?P<role>[\p{Han}]{0,12}(?:部门|部儿?|组|处|地区|主管|经理|总裁|董事长|主任|校长))$"
+    ).expect("role named during the meeting roll call"));
     sentences.iter().take(80).enumerate().filter_map(|(index, sentence)| {
         let (speaker, text) = split(sentence);
-        Some((index, speaker?, self_introduced_identity(text)?))
+        let role = self_introduced_identity(text).or_else(|| {
+            if index >= 12 { return None; }
+            ROLL_CALL.captures(spread_trim(text))?.name("role").map(|role| role.as_str())
+        })?;
+        Some((index, speaker?, role))
     }).collect()
 }
 
@@ -322,6 +329,67 @@ fn explicit_agreement(words: &str) -> bool {
 
 fn spread_trim(text: &str) -> &str {
     text.trim_matches([' ', '，', ',', '。', '！', '嗯', '呃', '啊'])
+}
+
+pub(super) fn current_procedure_reply(sentences: &[Value], index: usize) -> Option<usize> {
+    let (respondent, answer) = split(&sentences[index]);
+    let respondent = respondent?;
+    let previous = index.checked_sub(1)?;
+    let (asker, question) = split(&sentences[previous]);
+    if asker.is_none() || asker == Some(respondent)
+        || !contains(question, &["怎么处理", "怎么做", "怎么安排", "如何处理", "怎么操作", "如何操作"])
+        || !contains(question, &["平时", "目前", "通常", "现行", "遇到", "对外来", "对顾客", "对客户", "日常"])
+        || contains(question, &["这次", "本次", "新出现", "临时", "以后改", "发生了"])
+        || contains(answer, &["会后", "下次", "明天", "下周", "接下来改", "改为", "新安排"])
+    {
+        return None;
+    }
+    contains(answer, &["我们会", "我们先", "咱们会", "向来", "一般", "通常", "一直"])
+        .then_some(previous)
+}
+
+fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
+    static REQUEST: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<group>大家|各部门|各单位|各项目组|各团队)(?:儿)?\s*(?:下去以后|散会后|会后|回去以后)(?P<body>[^。！？；]{4,220})"
+    ).expect("collective follow-up with an explicit deliverable"));
+    static DOCUMENT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:写|制订|制定|编制|形成|整理|做|提交|完成)[^，。！？；]{0,18}?(?P<name>计划书|方案|报告|清单|时间表|预算表)"
+    ).expect("requested document"));
+    static SEND: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:发给|交给|提交给|报给)(?:咱们这个|我们这个|咱们|我们|这个)?\s*(?P<to>[\p{Han}]{2,14}?)(?:这边|那边|然后|[，。！？；,\s]|$)"
+    ).expect("recipient explicitly named"));
+    static DAYS: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:[0-9一二两三四五六七八九十]{1,4}天(?:半个月)?|半个月)"
+    ).expect("plan duration, not a due date"));
+    let request = REQUEST.captures(words)?;
+    let body = request.name("body")?.as_str();
+    if contains(body, &["要不要", "如果要做", "不用", "先别", "还没决定"]) {
+        return None;
+    }
+    let document = DOCUMENT.captures_iter(body).last()?.name("name")?.as_str();
+    let group = request.name("group")?.as_str();
+    let owner = if group == "大家" {
+        ["各部门", "各单位", "各项目组", "各团队"].into_iter()
+            .find(|role| body.contains(role)).unwrap_or(group)
+    } else {
+        group
+    };
+    let duration = DAYS.find(body).filter(|m| contains(&body[m.end()..], &["路途", "行程", "路线", "安排"]));
+    let payload = duration.map_or_else(|| document.to_owned(), |span| {
+        let duration = span.as_str().trim_end_matches("半个月");
+        let duration = if duration.is_empty() { span.as_str() } else { duration };
+        let scope = ["行程", "路线", "路途"].into_iter().find(|word| body.contains(word)).unwrap_or("安排");
+        format!("{duration}{scope}{document}")
+    });
+    let recipient = SEND.captures(body).and_then(|m| m.name("to")).map(|m| {
+        let name = m.as_str();
+        name.char_indices().find_map(|(i, _)| {
+            let (first, second) = name.split_at(i);
+            (first == second).then_some(first)
+        }).unwrap_or(name)
+    });
+    let text = recipient.map_or_else(|| format!("会后完成{payload}"), |owner| format!("会后完成{payload}并发给{owner}"));
+    Some(CompanionV1ActionItem { text, owner: Some(owner.to_owned()), due: None })
 }
 
 /// Keep the named recipients and each distinct deliverable when assignments
@@ -412,6 +480,34 @@ pub(super) fn directed_work(
                 item: CompanionV1ActionItem { text,owner:Some(owner.to_owned()),due:None },
                 support: inherited.map(|(position, _)| position).into_iter().collect(),
             });
+        }
+    }
+    if work.is_empty() {
+        if let Some(item) = collective_written_plan(words) {
+            work.push(DirectedWork { item, support: inherited.map(|(position, _)| position).into_iter().collect() });
+        } else if future && contains(words, &["再细化", "再具体一点"]) && words.contains("你刚才") {
+            if let Some((label, answer)) = sentences.get(index+1).map(split) {
+                if label != Some(speaker) && explicit_agreement(answer) {
+                    if let Some((intro, _, role)) = roles.iter().find(|(_, person, _)| Some(*person)==label) {
+                        // An earlier proposal and the assignee's acceptance both
+                        // belong to this action. A bare "you" is insufficient.
+                        if let Some(proposal) = (index.saturating_sub(12)..index).rev().find(|&position| {
+                            let (person, body) = split(&sentences[position]);
+                            person==label && contains(body, &["我觉得", "我们可以", "建议", "的话", "想法"])
+                        }) {
+                            let (_, body) = split(&sentences[proposal]);
+                            let object = ["授课", "培训", "方案", "计划", "安排"].into_iter().find(|word| body.contains(word))
+                                .unwrap_or("刚才的提案");
+                            work.push(DirectedWork {
+                                item: CompanionV1ActionItem {
+                                    text: format!("会后细化{object}"), owner: Some((*role).to_owned()), due: None,
+                                },
+                                support: vec![*intro, proposal, index+1],
+                            });
+                        }
+                    }
+                }
+            }
         }
     }
     if work.is_empty() && future && words.contains("你来主持") {

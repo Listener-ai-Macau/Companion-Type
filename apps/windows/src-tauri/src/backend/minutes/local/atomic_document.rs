@@ -49,6 +49,8 @@ pub(super) struct ExtractedFact {
     quantity_needs_review: bool,
     #[serde(skip)]
     source_needs_review: bool,
+    #[serde(skip)]
+    execution_reading: bool,
 }
 impl ExtractedFact{
     pub(super) fn clear_non_action_metadata(&mut self) {
@@ -62,6 +64,7 @@ impl ExtractedFact{
         Self {
             evidence: vec![id.to_owned()], role: role.to_owned(), owner: None, due: None,
             text: text.trim().to_owned(), quantity_needs_review: false, source_needs_review: false,
+            execution_reading: false,
         }
     }
 
@@ -90,6 +93,8 @@ pub(super) struct Bank {
     priority_review: HashSet<String>,
     reader_priority: HashMap<String, u8>,
     reader_order: HashMap<String, usize>,
+    execution_reading: HashSet<String>,
+    source_agenda: Option<super::delivery_evidence::OpeningAgenda>,
 }
 impl Bank {
     fn review_quote(&self, id: &str) -> bool {
@@ -118,7 +123,9 @@ fn is_covered_by_literal(fact: &ExtractedFact, literal: &str) -> bool {
     if matches!(fact.role.as_str(), "action" | "decision" | "question") {
         return false;
     }
-    let text = canonical_brief::normalized(&fact.text);
+    let body = super::super::source_resolution::split_turn_label(&fact.text)
+        .map_or(fact.text.as_str(), |(_, words)| words);
+    let text = canonical_brief::normalized(body.trim_end_matches(['。', ' ', '，', ',']));
     !text.is_empty() && literal.contains(&text)
 }
 
@@ -164,6 +171,44 @@ fn source_verified_facts(
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
+        if let Some(previous) = source_commitments::current_procedure_reply(sentences, index) {
+            let question = sentences[previous]["id"].as_str().unwrap();
+            for item in &mut current {
+                if matches!(item.role.as_str(), "action" | "decision") {
+                    item.role = "status".into();
+                    item.clear_non_action_metadata();
+                }
+                if !item.evidence.iter().any(|id| id == question) {
+                    item.evidence.push(question.to_owned());
+                }
+            }
+            audit.push(json!({"sentenceId":id,"reason":"current-procedure-reply","question":question}));
+            verified.extend(current);
+            continue;
+        }
+        for item in &mut current {
+            if item.role == "status" && super::delivery_evidence::presents_bid(sentences, &item.evidence) {
+                item.role = "recommendation".into();
+                audit.push(json!({"sentenceId":id,"reason":"proposal-during-a-comparison"}));
+            }
+        }
+        let mut copied_execution = false;
+        if !current.iter().any(|item| matches!(item.role.as_str(), "action" | "decision")) {
+            if let Some(execution) = super::delivery_evidence::execution_passage(original) {
+                let chunks = bounded_original_quotes_with_width(execution, 90);
+                if chunks.iter().all(|text| !text.ends_with('…')) {
+                    let literal = canonical_brief::normalized(execution);
+                    current.retain(|item| !is_covered_by_literal(item, &literal));
+                    for text in chunks {
+                        let mut fact = ExtractedFact::verbatim(id, "status", &text);
+                        fact.execution_reading = true;
+                        verified.push(fact);
+                    }
+                    audit.push(json!({"sentenceId":id,"reason":"literal-execution-requirement"}));
+                    copied_execution = true;
+                }
+            }
+        }
         if let Some(passage) = mitigation_continuations.remove(&index) {
             current.retain(|item| !is_covered_by_literal(item, &passage));
         }
@@ -347,7 +392,7 @@ fn source_verified_facts(
                 continue;
             }
         }
-        if let Some(condition) = source_grounding::material_condition(original) {
+        if let Some(condition) = source_grounding::material_condition(original).filter(|_| !copied_execution) {
             if !original.contains(['？','?']) && !current.iter().any(|item| {
                 item.text.contains(condition) || matches!(item.role.as_str(), "action" | "decision" | "question")
             }) {
@@ -541,6 +586,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let units=source_units(source);let sentences=factual_audit::evidence_sentences(&units);
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s["text"].as_str().unwrap())).collect::<std::collections::HashMap<_,_>>();
     let (extracted, mut verification) = source_verified_facts(extracted, &sentences)?;
+    let source_agenda = super::delivery_evidence::opening_agenda(&sentences, &super::source_commitments::meeting_roles(&sentences));
     let long = extracted.len() > LARGE_LAYOUT_FACTS;
     let mut facts=Vec::new();
     let mut quantity_quotes = HashSet::new();
@@ -549,6 +595,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let mut unclear_anchors = HashSet::new();
     let mut priority_review = HashSet::new();
     let mut reader_priority = HashMap::new();
+    let mut execution_reading = HashSet::new();
     let original_positions = sentences.iter().enumerate().map(|(index, row)| {
         (row["id"].as_str().unwrap(), index)
     }).collect::<HashMap<_,_>>();
@@ -715,7 +762,9 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
             let position = original_positions[anchor.as_str()];
             let preceding: Vec<_> = sentences[position.saturating_sub(30)..position].iter()
                 .map(|source| source["text"].as_str().unwrap()).collect();
-            let priority = if f.evidence.iter().any(|reference| {
+            let priority = if f.execution_reading {
+                5
+            } else if f.evidence.iter().any(|reference| {
                 let source = known[reference.as_str()];
                 super::reader_ranking::concrete_execution(&f.text).is_some_and(|category| {
                     super::reader_ranking::concrete_execution(source) == Some(category)
@@ -743,6 +792,9 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
             if priority > 0 {
                 reader_priority.insert(id.clone(), priority);
             }
+        }
+        if f.execution_reading && placement == Placement::Topic {
+            execution_reading.insert(id.clone());
         }
         facts.push(Fact { id, kind, placement, text:f.text, owner:f.owner, due:f.due, evidence:f.evidence });
         if facts.len()>MAX_FACTS{return Err(fail());}
@@ -795,7 +847,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new() })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,source_agenda })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -1401,7 +1453,10 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
         else { format!("{}和{last}", rest.join("、")) };
     let (overview, agenda_fact) = match stated_meeting_agenda(bank) {
         Some((topic, id)) => (format!("这场会议的主题是{topic}，讨论了{subject_list}。"), Some(id.to_owned())),
-        None => (format!("这场会议讨论了{subject_list}。"), None),
+        None => match &bank.source_agenda {
+            Some(agenda) => (agenda.text.clone(), None),
+            None => (format!("这场会议讨论了{subject_list}。"), None),
+        },
     };
     let overview = ChapterFocus { overview, primary_facts, agenda_fact };
     Ok((Organization {
@@ -1534,6 +1589,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             }
         };
         let mut points=Vec::new();
+        let mut required=Vec::new();
         let mut highlights=Vec::new();
         let mut review=Vec::new();
         let mut remainder=Vec::new();
@@ -1541,6 +1597,8 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             let size=reader_fact_length(bank,fact);
             if index==0 || reserved.contains(fact.id.as_str()){
                 points.push([&fact.id]);
+            }else if bank.execution_reading.contains(&fact.id) || bank.priority_review.contains(&fact.id){
+                required.push([&fact.id]);
             }else if main&&points.len()<3&&size<=optional_chars{
                 optional_chars-=size;points.push([&fact.id]);
             }else if main{
@@ -1555,7 +1613,8 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         // more interesting highlights than the reading layer can display.
         review.sort_by_key(|[id]| !bank.priority_review.contains(*id));
         let mut review=review.into_iter();
-        let mut details:Vec<_>=review.by_ref().take(1).collect();
+        let mut details=required;
+        details.extend(review.by_ref().take(1));
         details.extend(highlights.into_iter().chain(review).chain(remainder));
         arranged.push(json!({"title":title,"points":points,"details":details}));
     }
@@ -1573,6 +1632,8 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         parsed.receipt["openingTopicFactIds"] = json!(overview.primary_facts);
         if let Some(id) = overview.agenda_fact {
             parsed.receipt["openingAgendaFactId"] = json!(id);
+        } else if let Some(agenda) = &bank.source_agenda {
+            parsed.receipt["openingAgendaSentenceIds"] = json!(agenda.citations);
         }
     }
     Ok(parsed)
@@ -1640,6 +1701,8 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s)).collect::<std::collections::HashMap<_,_>>();
     let mut document=serde_json::to_value(&result.document).map_err(|_|fail())?;
     let mut reader_recommendations = Vec::new();
+    let mut reader_detail_limits=vec![READER_DETAILS; result.document.topics.len()];
+    let mut required_visible = Vec::new();
     for(pointer,id)in &result.bindings{
         let fact=bank.facts.iter().find(|f|&f.id==id).ok_or_else(fail)?;
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
@@ -1663,12 +1726,29 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
+        if bank.execution_reading.contains(id) || bank.priority_review.contains(id) {
+            let path: Vec<_> = pointer.split('/').skip(1).collect();
+            if let ["topics", topic, section, row] = path.as_slice() {
+                let topic: usize = topic.parse().map_err(|_|fail())?;
+                let row: usize = row.parse().map_err(|_|fail())?;
+                if *section == "details" {
+                    reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1);
+                }
+                required_visible.push((id, format!("topics[{topic}].{section}[{row}]")));
+            }
+        }
         entry.remove("sources");entry.insert("evidence".into(),json!(evidence_ids.iter().map(|id|{
             let s=known[*id];json!({"source":s["source"],"quote":s["text"]})
         }).collect::<Vec<_>>()));
     }
-    let reader_limit=(!bank.chapter_spans.is_empty()).then_some(READER_DETAILS);
+    let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
     let mut parsed=super::evidence_document::parse_with_details_limit(&document.to_string(),session,base,MAX_FACTS,reader_limit)?;
+    let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?
+        .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
+    if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str())) {
+        return Err(fail());
+    }
+    parsed.receipt["requiredReaderFactIds"] = json!(required_visible.iter().map(|(id, _)| id).collect::<Vec<_>>());
     if serde_json::to_vec(&bank.facts).map_err(|_|fail())?!=sealed{return Err(fail());}
     // The shared document parser assigns presentation entries its own aNNN
     // sequence. Never expose those aliases as identities for the frozen bank.
@@ -1911,6 +1991,76 @@ mod tests{
         let layout: ChapterOrganization=serde_json::from_str(&layout).unwrap();
         assert!(layout.chapters.0.values().all(|chapter| bank.reader_order[&chapter.main_facts[0]]==0));
         assert_eq!(bank.receipt["chapterReaderCoverage"].as_array().unwrap().len(),bank.chapter_spans.len());
+    }
+
+    #[test]
+    fn reader_keeps_execution_requirements_beyond_the_ordinary_detail_limit() {
+        let mut lines=(0..150).map(|index| format!("项目进度记录{index}已完成。")).collect::<Vec<_>>();
+        let opening = [
+            "说话人1: 零零二我是总经理。",
+            "说话人1: 今天把大家叫过来开会，总结上半年工作情况，讨论下半年工作计划。",
+        ];
+        for (index, line) in opening.iter().enumerate() { lines[index]=line.to_string(); }
+        let required = [
+            "外来车辆超过一天必须核查。",
+            "各部门要做好防汛，并检查灭火器。",
+            "设备如果发现故障，及时上报并安排维修。",
+            "夜班开门要知道来找谁。",
+            "浴池水温分冬夏，温度必须控制好。",
+            "灭火器损坏须更换，库区需要登记。",
+        ];
+        for (index, line) in required.iter().enumerate() { lines[index+6]=line.to_string(); }
+        let source=lines.join("\n");
+        let facts=lines.iter().enumerate().map(|(index,line)| ExtractedFact::verbatim(
+            &format!("e{index:04}"),"status",line,
+        )).collect();
+        let mut bank=build_bank(facts,&source).unwrap();
+        let required_ids=bank.execution_reading.clone();
+        assert_eq!(required_ids.len(),required.len());
+        let layout=review_chapters(&mut bank,None,&source,|_,_,schema,_| {
+            let fields=&schema["properties"];
+            let label=&fields["labelIds"]["items"]["enum"][0];
+            let choices=fields["mainFacts"]["items"]["enum"].as_array().unwrap().iter()
+                .filter(|row| !row.as_str().is_some_and(|id| required_ids.contains(id)))
+                .take(CHAPTER_READER_HIGHLIGHTS).collect::<Vec<_>>();
+            Ok(json!({"labelIds":[label],"mainFacts":choices,"executionDetails":[]}).to_string())
+        }).unwrap();
+        let session=crate::backend::minutes::tests::session_with_text(&source);
+        let base=crate::backend::minutes::rules_l0_minutes(&session,"now");
+        let organized=organize(&layout,&bank,&session,&base).unwrap();
+        assert_eq!(organized.receipt["document"]["purpose"],"回顾上半年工作情况，讨论下半年工作安排");
+        assert!(!organized.receipt["openingAgendaSentenceIds"].as_array().unwrap().is_empty());
+        let visible=organized.minutes.markdown.split("## 主题原话").next().unwrap();
+        for line in required {
+            assert!(visible.contains(line.trim_end_matches('。')), "missing {line}");
+        }
+        assert!(organized.receipt["readerDetailLimits"].as_array().unwrap().iter()
+            .any(|limit|limit.as_u64().unwrap()>READER_DETAILS as u64));
+    }
+
+    #[test]
+    fn answers_about_current_procedure_and_bids_do_not_replace_written_assignments() {
+        let source=concat!(
+            "说话人1: 零零二我是董事长。\n",
+            "说话人2: 零二六我是保安部。\n",
+            "说话人3: 零二二河北部。\n",
+            "说话人1: 今天叫大家开会，谁的方案好就交给哪个部门承接。\n",
+            "说话人1: 对外来人员的停车问题你们怎么处理呢？\n",
+            "说话人2: 我们会进行先进行登记。\n",
+            "说话人3: 我们会安排石家庄酒店，也会让他们体验水世界。\n",
+            "说话人1: 大家下去以后把这个做一个这方面的计划，十五天半个月的路途安排，然后做一个具体计划书，然后发给咱们这个总经理这边，然后根据各部门的计划再决定。"
+        );
+        let facts=factual_audit::evidence_sentences(&source_units(source)).iter().map(|row|
+            ExtractedFact::verbatim(row["id"].as_str().unwrap(),"status",row["text"].as_str().unwrap().trim()))
+            .collect();
+        let bank=build_bank(facts,source).unwrap();
+        let action=bank.facts.iter().filter(|fact|fact.placement==Placement::Action).collect::<Vec<_>>();
+        assert_eq!(action.len(),1);
+        assert_eq!(action[0].owner.as_deref(),Some("各部门"));
+        assert!(action[0].text.contains("十五天") && action[0].text.contains("总经理"));
+        assert!(action[0].due.is_none());
+        assert!(bank.facts.iter().any(|fact| matches!(fact.kind,Kind::Recommendation)
+            && fact.text.contains("石家庄酒店")));
     }
 
     #[test]

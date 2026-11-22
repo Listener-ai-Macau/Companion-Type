@@ -12,6 +12,7 @@ mod source_windows;
 mod source_authority;
 mod source_commitments;
 mod source_grounding;
+mod delivery_evidence;
 mod source_checkpoint;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
