@@ -318,15 +318,71 @@ fn live_agenda(fact: &Fact, quotes: &[&str]) -> bool {
     }
 }
 
+fn opening_report_round(evidence: &[Value]) -> &[Value] {
+    static OPEN: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:这次|今天|本次)[^。！？]{0,20}(?:叫过来|召集到一起|叫到一起|把大家聚到一起)"
+    ).unwrap());
+    const HANDOFF: &[&str] = &["谁先说", "谁先发言", "哪位先说", "我先汇报", "我来汇报"];
+    let Some(start) = evidence.iter().take(18).position(|row| {
+        let spoken = row["text"].as_str().unwrap_or_default();
+        OPEN.is_match(&normalized(spoken)) && ["讨论", "商讨", "开会", "开一个", "汇报"]
+            .iter().any(|cue| spoken.contains(cue))
+    }) else { return &[]; };
+    // Without a spoken handoff, opening language alone is insufficient to set
+    // the scope of a later request.
+    let Some(end) = evidence[start + 1..].iter().take(18).position(|row| {
+        row["text"].as_str().is_some_and(|spoken| HANDOFF.iter().any(|cue| spoken.contains(cue)))
+    }) else { return &[]; };
+    &evidence[start..start+1+end]
+}
+
+fn in_meeting_report(fact: &Fact, cited: &[&Value], opening: &[Value]) -> bool {
+    if fact.placement != Placement::Action || fact.owner.is_some() || fact.due.is_some()
+        || cited.is_empty() || cited.len() != fact.evidence.len()
+    {
+        return false;
+    }
+    const REPORT: &[&str] = &["汇报", "介绍", "说明", "讲解", "发言", "说一说", "讨论"];
+    const REQUEST: &[&str] = &["汇报一下", "说一下", "说一说", "说说", "讲一下", "看看有什么",
+        "看看咱原因", "听听", "介绍一下", "请大家介绍", "请大家发言"];
+    const LATER_OR_DELIVERY: &[&str] = &["会后", "散会", "下次", "下周", "明天", "回去后", "回头",
+        "随后安排", "需要提交", "提交", "发给", "发送", "交付", "交给", "整理", "编制", "录入", "提报材料",
+        "截止", "之前交", "最迟", "指定", "正式决定", "会上通过", "达成一致", "决定由"];
+    let summary = normalized(&fact.text);
+    if !REPORT.iter().any(|cue| summary.contains(cue)) || LATER_OR_DELIVERY.iter().any(|cue| summary.contains(cue)) {
+        return false;
+    }
+    let words: Vec<_> = cited.iter().filter_map(|row| row["text"].as_str())
+        .map(|text| normalized(text).replace(['呃', '嗯', '啊', '的'], "")).collect();
+    if words.iter().any(|part| LATER_OR_DELIVERY.iter().any(|cue| part.contains(cue))) {
+        return false;
+    }
+    let directly_here = words.iter().any(|part| {
+        ["在会上", "会上先", "今天会上", "当场", "现场"]
+            .iter().any(|cue| part.contains(cue)) && REQUEST.iter().any(|cue| part.contains(cue))
+    });
+    let inside_round = !opening.is_empty()
+        && cited.iter().all(|row| opening.iter().any(|turn| turn["id"] == row["id"]))
+        && words.iter().any(|part| REQUEST.iter().any(|cue| part.contains(cue)));
+    if !directly_here && !inside_round { return false; }
+    use super::source_coverage::shared_literal;
+    words.iter().any(|part| shared_literal(&summary, part, 3))
+        || summary.split(['，', ',', '；', '。'])
+            .filter(|clause| words.iter().any(|part| shared_literal(clause, part, 2)))
+            .take(2).count() == 2
+}
+
 fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
     let by_id: HashMap<_, _> = evidence.iter().filter_map(|row|
         Some((row["id"].as_str()?, row))).collect();
+    let opening = opening_report_round(evidence);
     let mut changed = Vec::new();
     for fact in facts {
         let rows: Vec<_> = fact.evidence.iter().filter_map(|id| by_id.get(id.as_str()).copied()).collect();
         let quotes: Vec<_> = rows.iter().filter_map(|row| row["text"].as_str()).collect();
         let result = match fact.placement {
             Placement::Decision | Placement::Action if live_agenda(fact, &quotes) => Some((Kind::Status, None)),
+            Placement::Action if in_meeting_report(fact, &rows, opening) => Some((Kind::Status, None)),
             Placement::Action if fact.due.is_none() && completed_report(&fact.text, &quotes) =>
                 Some((Kind::Status, None)),
             Placement::Action => live_request_topic(fact, evidence).map(|text| (Kind::Opinion, Some(text))),
@@ -346,6 +402,53 @@ fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String>
         changed.push(fact.id.clone());
     }
     changed
+}
+
+#[cfg(test)]
+#[test]
+fn opening_reports_are_kept_in_the_discussion_and_future_reports_stay_tasks() {
+    let evidence = [
+        json!({"id":"e0000","text":"这次啊把大家伙儿叫过来，咱简单进一次讨论，把各个部门儿出现的问题，你们也进行汇报一下，我这边儿也了解你们大体的一些基本情况。"}),
+        json!({"id":"e0001","text":"呃，然后呢咱们商场这块儿也看看有什么呃大的好的这个这个活动"}),
+        json!({"id":"e0002","text":"一些促销的手手段，能留住的人的呃挽留单客流量。"}),
+        json!({"id":"e0005","text":"包括各部门儿一些新新品啊，包括呃一些新样式啦，呃还有一些功能啊，包括家电里面儿有些什么功能啊，咱这边儿都要进行一些详细的一些说一下。"}),
+        json!({"id":"e0012","text":"大家也说一说，看看咱原因在哪儿，再说你们部门儿也说一说你们目前做的那些工作。"}),
+        json!({"id":"e0013","text":"嗨，谁先说？"}),
+        json!({"id":"e0014","text":"说话人2：各部门会后整理新品说明，周五把材料发给业务组。"}),
+        json!({"id":"e0015","text":"说话人3：请负责项目的设计部向六名待考核助理说明考核情况。"}),
+        json!({"id":"e0016","text":"说话人4：会上先给大家介绍一下地区介绍和服务安排。"}),
+    ];
+    let make = |text: &str, ids: &[&str]| Fact {
+        id:"a000".into(), kind:Kind::Decision, placement:Placement::Action, text:text.into(),
+        owner:None, due:None, evidence:ids.iter().map(|id| (*id).to_owned()).collect(),
+    };
+    let mut facts = [
+        make("各部门在会上汇报出现的问题和基本情况。", &["e0000"]),
+        make("汇报商场可开展的大型活动、促销手段，以挽留客流。", &["e0001","e0002"]),
+        make("详细说明各部门新上新品、新样式及家电功能。", &["e0005"]),
+        make("各部门说明当前所做的工作，并分析客流少的原因。", &["e0012"]),
+        make("会后整理新品说明，周五把材料发给业务组。", &["e0014"]),
+        make("设计部向六名待考核助理说明考核情况。", &["e0015"]),
+        make("介绍一下地区服务安排。", &["e0016"]),
+    ];
+    facts[4].owner = Some("各部门".into());
+    facts[4].due = Some("周五".into());
+    let prior = facts.clone();
+    assert_eq!(reconcile_spoken_scope(&mut facts, &evidence).len(), 5);
+    for (idx, fact) in facts.iter().enumerate() {
+        assert_eq!(fact.text, prior[idx].text);
+        assert_eq!(fact.evidence, prior[idx].evidence);
+    }
+    assert!(facts[..4].iter().all(|fact| fact.placement == Placement::Topic));
+    assert_eq!(facts[6].placement, Placement::Topic);
+    assert_eq!(facts[4].owner, prior[4].owner);
+    assert_eq!(facts[4].due, prior[4].due);
+    assert_eq!(facts[4].placement, Placement::Action);
+    assert_eq!(facts[5].placement, Placement::Action);
+
+    let without_handoff = &evidence[..5];
+    assert!(opening_report_round(without_handoff).is_empty());
+    assert!(!in_meeting_report(&prior[3], &[&evidence[4]], &[]));
 }
 
 #[derive(Deserialize)]
@@ -1376,12 +1479,13 @@ fn append_missing_with_sources(
             .chain(topic.details.iter().map(|entry| normalized(&entry.text)))
     }).chain(doc.decisions.iter().map(|entry| normalized(&entry.text)))
         .chain(doc.questions.iter().map(|entry| normalized(&entry.text))).collect();
+    let opening = opening_report_round(evidence);
     for addition in additions {
         let mut fact = addition.item.bind(&known, &known_ids)?;
         if matches!(fact.placement, Placement::Decision | Placement::Action) {
-            let quotes: Vec<_> = fact.evidence.iter()
-                .filter_map(|id| known[id.as_str()]["text"].as_str()).collect();
-            if live_agenda(&fact, &quotes) {
+            let rows: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]).collect();
+            let quotes: Vec<_> = rows.iter().filter_map(|row| row["text"].as_str()).collect();
+            if live_agenda(&fact, &quotes) || in_meeting_report(&fact, &rows, opening) {
                 fact.kind = Kind::Status;
                 fact.placement = Placement::Topic;
                 fact.owner = None;
