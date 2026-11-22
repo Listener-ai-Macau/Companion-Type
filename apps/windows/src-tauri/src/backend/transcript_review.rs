@@ -95,15 +95,17 @@ pub fn effective_unrecognized(session: &CompanionV1HostSession) -> &[crate::comp
 
 pub fn speaker_label(session: &CompanionV1HostSession, index: usize) -> Option<String> {
     let utterance = session.utterances.get(index)?;
-    let review = active_review(session);
-    if let Some(name) = review.and_then(|r| r.utterance_edits.iter().find(|e| e.index == index))
-        .and_then(|edit| edit.speaker_name.as_ref()) {
-        return Some(name.clone());
-    }
-    if let Some(name) = review.and_then(|r| r.speaker_names.iter().find(|n| Some(n.speaker) == utterance.speaker)) {
-        return Some(name.name.clone());
-    }
-    utterance.speaker.map(|speaker| format!("说话人{}", speaker + 1))
+    active_review(session)
+        .and_then(|review| confirmed_speaker_name(review, index, utterance.speaker))
+        .map(str::to_owned)
+        .or_else(|| utterance.speaker.map(|speaker| format!("说话人{}", speaker + 1)))
+}
+
+fn confirmed_speaker_name(review: &TranscriptReview, index: usize, speaker: Option<usize>) -> Option<&str> {
+    review.utterance_edits.iter().find(|edit| edit.index == index)
+        .and_then(|edit| edit.speaker_name.as_deref())
+        .or_else(|| review.speaker_names.iter().find(|name| Some(name.speaker) == speaker)
+            .map(|name| name.name.as_str()))
 }
 
 pub fn effective_utterances(session: &CompanionV1HostSession) -> Vec<CompanionV1UtteranceSegment> {
@@ -128,14 +130,45 @@ pub fn effective_text(session: &CompanionV1HostSession) -> String {
     }).collect::<Vec<_>>().join("\n")
 }
 
+fn without_automatic_speaker_labels(text: &str) -> String {
+    text.split_inclusive('\n').map(|line| {
+        let Some((label, speech)) = line.split_once([':', '：']) else { return line; };
+        let Some(id) = label.strip_prefix("说话人") else { return line; };
+        if matches!(id, "?" | "？") || (!id.is_empty() && id.bytes().all(|c| c.is_ascii_digit())) {
+            speech.strip_prefix(' ').unwrap_or(speech)
+        } else {
+            line
+        }
+    }).collect()
+}
+
 pub fn minutes_input(session: &CompanionV1HostSession) -> CompanionV1HostSession {
     let mut input = session.clone();
     // User context is retained locally/exported explicitly, never silently
     // sent as ASR evidence to native or external minutes providers.
     input.meeting_notes.clear();
-    input.transcript_text = effective_text(session);
     input.utterances = effective_utterances(session);
-    if active_revision(session).is_none() { input.transcript_review = None; }
+    let review = active_review(session);
+    if review.is_none() { input.transcript_review = None; }
+    // The ASR cluster is useful for playback, but cannot identify a person in
+    // a claim or task. Only an active human attribution travels with timed speech.
+    input.transcript_text = if let Some(review) = review.filter(|review| review.text.is_none()) {
+        input.utterances.iter().enumerate().map(|(index, row)| {
+            match confirmed_speaker_name(review, index, row.speaker) {
+                Some(name) => format!("{name}: {}", row.text),
+                None => row.text.clone(),
+            }
+        }).collect::<Vec<_>>().join("\n")
+    } else {
+        let text = review.and_then(|review| review.text.as_deref()).unwrap_or(&session.transcript_text);
+        // A legacy recording or whole-text re-transcription may carry these
+        // reserved labels without carrying the ASR timing alongside them.
+        let from_recording = !session.utterances.is_empty() || session.audio_stored
+            || session.audio_path.is_some()
+            || matches!(session.source.as_str(), "boardDevice" | "deviceFlash" | "hostMicrophone"
+                | "hostMeeting" | "importedAudio" | "derivedAudio");
+        if from_recording { without_automatic_speaker_labels(text) } else { text.to_owned() }
+    };
     input
 }
 
@@ -364,6 +397,58 @@ mod tests {
         session.transcript_text.push_str("重新识别。");
         assert!(!review_is_stale(&session), "a cleared review has no old correction to apply");
         assert_eq!(effective_text(&session),session.transcript_text);
+    }
+
+    #[test]
+    fn minutes_do_not_promote_asr_speaker_labels_to_identity() {
+        let mut session = sample();
+        session.source = "importedAudio".into();
+        session.transcript_text = "说话人1: 周四王交录音。 周五陈校对。\r\n说话人？：我会上报。\n【电脑声音】保留来源。".into();
+        let raw = session.transcript_text.clone();
+        let original_rows = session.utterances.clone();
+        let before = minutes_input(&session);
+        assert_eq!(before.transcript_text, "周四王交录音。 周五陈校对。\r\n我会上报。\n【电脑声音】保留来源。");
+        assert_eq!(before.utterances, original_rows);
+        assert_eq!(effective_text(&session), raw);
+
+        let mut edit = request(&session);
+        edit.speaker_names.clear();
+        session.transcript_review = Some(prepare_review(&session, &edit, "now").unwrap());
+        let input = minutes_input(&session);
+        assert_eq!(input.transcript_text, "周四王交录音。\n小陈: 周四陈校对。");
+        assert_eq!(input.utterances[1].start_ms, original_rows[1].start_ms);
+        assert_eq!(input.utterances[1].end_ms, original_rows[1].end_ms);
+        assert_eq!(speaker_label(&session, 0).as_deref(), Some("说话人1"));
+        assert_eq!(effective_text(&session), "说话人1: 周四王交录音。\n小陈: 周四陈校对。");
+
+        let mut named = request(&session);
+        named.speaker_names[0].name = "说话人1".into();
+        session.transcript_review = Some(prepare_review(&session, &named, "later").unwrap());
+        assert_eq!(minutes_input(&session).transcript_text, "说话人1: 周四王交录音。\n小陈: 周四陈校对。");
+        session.utterances[0].end_ms -= 1;
+        assert!(minutes_input(&session).transcript_review.is_none());
+        assert_eq!(minutes_input(&session).transcript_text, before.transcript_text);
+    }
+
+    #[test]
+    fn minutes_distinguish_audio_text_replacement_from_authored_transcript_labels() {
+        let mut session = sample();
+        let written = "说话人12：王负责核单。\n主持人: 现阶段不交货。\n事项：只核对 12 元。";
+        session.utterances.clear();
+        session.source = "importedTranscript".into();
+        session.audio_stored = false;
+        session.audio_path = None;
+        session.transcript_text = written.into();
+        assert_eq!(minutes_input(&session).transcript_text, written);
+
+        session.source = "hostMeeting".into();
+        let mut edit = request(&session);
+        edit.speaker_names.clear();
+        edit.utterance_edits.clear();
+        edit.text = Some(written.into());
+        session.transcript_review = Some(prepare_review(&session, &edit, "now").unwrap());
+        assert_eq!(minutes_input(&session).transcript_text, "王负责核单。\n主持人: 现阶段不交货。\n事项：只核对 12 元。");
+        assert_eq!(effective_text(&session), written);
     }
 
     #[test]
