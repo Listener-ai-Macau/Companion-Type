@@ -100,10 +100,8 @@ def main():
   # Fresh checkouts do not contain ignored SDK binaries. Reject missing, stale
   # or altered dependencies/licenses before reserving a target or compiling.
   # Staging remains an explicit developer step, never a build-time download.
-  run('local-minutes-runtime-preflight',[sys.executable,'-B',ROOT/'tools/prepare_local_minutes_runtime.py','--verify'])
+  run('local-minutes-runtime-preflight',[sys.executable,'-B',ROOT/'tools/prepare_local_minutes_runtime.py','--verify','--require-vulkan'])
   record['localMinutesRuntime']=json.loads((out/'local-minutes-runtime-preflight.log').read_text(encoding='utf-8'))
-  runtime_manifest=json.loads((ROOT/'apps/windows/src-tauri/src/backend/minutes/local/local-runtime-manifest.json').read_bytes())
-  record['localMinutesRuntime']['expectedPayloadFiles']=[{'path':'local-minutes/'+row['name'],'bytes':row['bytes'],'sha256':row['sha256']}for row in runtime_manifest['files']]+[{'path':'local-minutes/'+row['path'],'bytes':row['bytes'],'sha256':row['sha256']}for row in runtime_manifest['licenses']]
   save()
   limits=NativeBuildLimits();record.update(cpuHardCapPercent=10,jobPrivateCommitLimitBytes=6*1024**3,resourceLimits=limits.query())
   with exclusive_build(cache/'.shared-windows-build.lock'):

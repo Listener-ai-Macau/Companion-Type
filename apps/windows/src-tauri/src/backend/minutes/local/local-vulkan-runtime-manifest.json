@@ -1,5 +1,11 @@
 {
+  "source": "https://github.com/ggml-org/llama.cpp/releases/tag/b11804",
   "sourceArchiveSha256": "db9ab31997e93bf713d3dfec6eb1cf1b5a6a5f2940a3d4d111ad0ffab54c87d5",
+  "openmpLicense": {
+    "name": "LICENSE-LLVM-OpenMP",
+    "bytes": 19741,
+    "sha256": "fdad1758a9e1f9d5a81e18879b3406772115edc92c24bfa36b70c654f325e8e4"
+  },
   "files": [
     {
       "name": "ggml-base.dll",
