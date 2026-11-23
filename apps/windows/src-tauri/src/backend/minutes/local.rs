@@ -21,7 +21,7 @@ mod source_checkpoint;
 mod source_review;
 pub(crate) use probe::candidate as verify_candidate;
 pub(super) use source_commitments::stated_group_deliverable;
-use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
+use std::{collections::HashMap,net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
 use crate::companion_v1::{CompanionV1HostSession,CompanionV1MeetingMinutes};
 
@@ -144,7 +144,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         let key=uuid::Uuid::new_v4().simple().to_string();let alias=format!("companion-local-{}",uuid::Uuid::new_v4().simple());
         let program=runtime.to_str().ok_or("本地纪要引擎路径无效。")?;
         let cancellation=super::super::meeting_processing_job::current();
-        let run = |context, earlier: &std::collections::HashMap<usize,Value>| {
+        let run = |context, earlier: &ContextRetry| {
             let args=arguments(&model,port,&key,&alias,accelerator.as_ref().map(|(_,device)|device.as_str()),context)?;
             if let Ok(mut trace)=trace.lock() {
                 trace["stage"]=json!("loading-engine");
@@ -161,7 +161,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 if let Ok(mut trace)=trace.lock(){trace["sourceWindow"]=json!({"current":index+1,"total":windows.len()});}
                 let (encoding, saved) = reused.window(index)
                     .unwrap_or((source_windows::SourceEncoding::DirectSingleRole, None));
-                let raw = if let Some(call) = saved.or_else(|| earlier.get(&index)) {
+                let raw = if let Some(call) = saved.or_else(|| earlier.windows.get(&index)) {
                     let mut replay = call.clone();
                     replay["reused"] = json!(true);
                     let raw = replay["output"].as_str().expect("validated reusable response").to_owned();
@@ -211,19 +211,30 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 }
                 review
             } else {
-                let mut saved_batches = reused.independent_source_review_prefix(context).iter();
+                let archived = reused.independent_source_review_prefix(context);
+                let from_retry = archived.is_empty() && !earlier.reviews.is_empty();
+                let mut saved_batches = if from_retry { earlier.reviews.as_slice() } else { archived }.iter();
+                let retry_profile = from_retry.then(transport::profile).transpose()?;
                 let result=source_review::review(&session.transcript_text,|prompt,input,schema,stage| {
                     if let Some(call) = saved_batches.next() {
-                        if call["stage"] != stage {
-                            return Err(atomic_document::fail());
+                        let compatible = if let Some(profile) = retry_profile.as_ref() {
+                            matches_review_request(call, stage, prompt, &input, &schema, profile)?
+                        } else {
+                            if call["stage"] != stage { return Err(atomic_document::fail()); }
+                            true
+                        };
+                        if compatible {
+                            let raw = call["output"].as_str().ok_or_else(atomic_document::fail)?;
+                            if let Ok(mut trace) = trace.lock() {
+                                if !trace["calls"].is_array() { trace["calls"] = json!([]); }
+                                let mut replay = call.clone();
+                                replay["reused"] = json!(true);
+                                trace["calls"].as_array_mut().unwrap().push(replay);
+                                let count = trace["reusedIndependentSourceReviewBatches"].as_u64().unwrap_or(0);
+                                trace["reusedIndependentSourceReviewBatches"] = json!(count + 1);
+                            }
+                            return Ok(raw.to_owned());
                         }
-                        if let Ok(mut trace) = trace.lock() {
-                            if !trace["calls"].is_array() { trace["calls"] = json!([]); }
-                            trace["calls"].as_array_mut().unwrap().push(call.clone());
-                            let count = trace["reusedIndependentSourceReviewBatches"].as_u64().unwrap_or(0);
-                            trace["reusedIndependentSourceReviewBatches"] = json!(count + 1);
-                        }
-                        return call["output"].as_str().map(str::to_owned).ok_or_else(atomic_document::fail);
                     }
                     let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,640)?;
                     record_call(&trace,stage);
@@ -271,9 +282,9 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             })
         };
         let preferred = if accelerator.is_some() { transport::Context::Full } else { transport::Context::ReducedCpu };
-        let parsed = match run(preferred,&std::collections::HashMap::new()) {
+        let parsed = match run(preferred,&ContextRetry::default()) {
             Err(reason) if preferred.retry_full(&reason) => {
-                let earlier = retained_windows_for_context_retry(&trace);
+                let earlier = retained_for_context_retry(&trace);
                 run(transport::Context::Full,&earlier)
             }
             result => result,
@@ -289,21 +300,43 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
     (outcome,receipt)
 }
 
-fn retained_windows_for_context_retry(trace: &transport::Trace) -> std::collections::HashMap<usize,Value> {
-    let Ok(mut trace) = trace.lock() else { return std::collections::HashMap::new(); };
-    let calls=trace["calls"].take();
-    let retained=match calls {
-        Value::Array(calls)=>calls.into_iter().filter_map(|call| {
-            if call["finishReason"]!="stop" || call["reused"]==true { return None; }
-            let index=call["stage"].as_str()?.strip_prefix("source-window-")?
-                .parse::<usize>().ok()?.checked_sub(1)?;
-            Some((index,call))
-        }).collect(),
-        _=>std::collections::HashMap::new(),
-    };
+#[derive(Default)]
+struct ContextRetry {
+    windows: HashMap<usize,Value>,
+    reviews: Vec<Value>,
+}
+
+fn matches_review_request(
+    call: &Value, stage: &str, prompt: &str, input: &Value, schema: &Value, profile: &Value,
+) -> Result<bool,String> {
+    let Some(alias) = call["request"]["model"].as_str() else { return Ok(false) };
+    let expected = transport::request_body(alias,prompt,input.clone(),schema.clone(),640,profile)?;
+    Ok(call["stage"] == stage && call["finishReason"] == "stop" && call["request"] == expected)
+}
+
+fn retained_for_context_retry(trace: &transport::Trace) -> ContextRetry {
+    let Ok(mut trace) = trace.lock() else { return ContextRetry::default(); };
+    let mut retained = ContextRetry::default();
+    let review_usable = trace["independentSourceReviewFailure"].is_null();
+    if let Value::Array(calls) = trace["calls"].take() {
+        for call in calls {
+            if call["finishReason"] != "stop" || call["reused"] == true { continue; }
+            let Some(stage) = call["stage"].as_str() else { continue };
+            let index = stage.strip_prefix("source-window-")
+                .and_then(|index| index.parse::<usize>().ok()).and_then(|index| index.checked_sub(1));
+            if let Some(index) = index {
+                retained.windows.insert(index,call);
+            } else if review_usable && stage.starts_with("independent-source-review-")
+                && call["output"].as_str().is_some()
+            {
+                retained.reviews.push(call);
+            }
+        }
+    }
     trace["contextFallback"]=json!({
         "initialContextTokens":transport::Context::ReducedCpu.tokens(),
-        "reusedCompletedSourceWindows":retained.len(),
+        "reusedCompletedSourceWindows":retained.windows.len(),
+        "reviewRepliesAvailableForVerification":retained.reviews.len(),
         "firstAttemptRequests":trace["inferenceRequestAttempts"],
         "limit":trace["contextLimit"],
         "lastFinishReason":trace["finishReason"],
@@ -342,7 +375,24 @@ mod tests{
     }
 
     #[test]
-    fn the_full_context_retry_reuses_only_finished_fresh_source_requests() {
+    fn context_retry_requires_the_original_review_prompt_scope_and_completed_reply() {
+        let profile = transport::profile().unwrap();
+        let stage = "independent-source-review-1";
+        let prompt = "Check only this source batch";
+        let input = json!({"turns":[["e0014","约定下周继续核对",true]]});
+        let schema = json!({"type":"object"});
+        let request = transport::request_body("original-alias",prompt,input.clone(),schema.clone(),640,&profile).unwrap();
+        let mut call = json!({"stage":stage,"request":request,"finishReason":"stop","output":"{}"});
+        assert!(matches_review_request(&call,stage,prompt,&input,&schema,&profile).unwrap());
+        let changed = json!({"turns":[["e0014","建议下周继续核对",true]]});
+        assert!(!matches_review_request(&call,stage,prompt,&changed,&schema,&profile).unwrap());
+        assert!(!matches_review_request(&call,"independent-source-review-2",prompt,&input,&schema,&profile).unwrap());
+        call["finishReason"] = json!("length");
+        assert!(!matches_review_request(&call,stage,prompt,&input,&schema,&profile).unwrap());
+    }
+
+    #[test]
+    fn the_full_context_retry_retains_finished_fresh_sources_and_review_replies() {
         let trace = new_trace();
         {
             let mut row = trace.lock().unwrap();
@@ -355,9 +405,11 @@ mod tests{
                 {"stage":"independent-source-review-1","finishReason":"stop","output":"{}"},
             ]);
         }
-        let kept=retained_windows_for_context_retry(&trace);
-        assert_eq!(kept.len(),1);
-        assert_eq!(kept[&0]["output"],"{}");
+        let kept=retained_for_context_retry(&trace);
+        assert_eq!(kept.windows.len(),1);
+        assert_eq!(kept.windows[&0]["output"],"{}");
+        assert_eq!(kept.reviews.len(),1);
+        assert_eq!(kept.reviews[0]["stage"],"independent-source-review-1");
         let row=trace.lock().unwrap();
         assert_eq!(row["contextFallback"]["reusedCompletedSourceWindows"],1);
         assert_eq!(row["contextFallback"]["limit"]["inputTokens"],7000);
