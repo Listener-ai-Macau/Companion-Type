@@ -542,10 +542,10 @@ pub(in crate::backend::minutes) fn stated_group_deliverable(source: &str) -> Opt
         r"(?P<owner>各(?:个)?(?:部门|小组|单位|项目组|团队|班组|科室|学段))(?:儿)?"
     ).expect("group and bounded instruction"));
     static DELIVERABLE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
-        r"(?:做|出|写|拟定|拟|准备|提交|交|整理|形成|编制|提供|补交|完成)[^，,。！？；]{0,14}?(?:方案|计划|报表|清单|报告|台账|材料|结果|记录)"
+        r"(?:做|出|写|拟定|拟|准备|提交|交|整理|形成|编制|提供|补交|完成)(?P<object>[^，,。！？；]{0,14}?(?P<document>方案|计划|报表|清单|报告|台账|材料|结果|记录))"
     ).expect("document or transmittal"));
     static DEADLINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
-        r"(?:(?:下|这|本)?(?:周|星期)[一二三四五六日天]|今天|明天|后天|\d{1,2}月\d{1,2}[日号]|下班|开工|开学|散会)(?:上午|中午|下午|晚上)?(?:之前|前)"
+        r"(?:(?:下|这|本)?(?:周|星期)[一二三四五六日天]|今天|明天|后天|\d{1,2}月\d{1,2}[日号]|下班|开工|开学|散会)(?:上午|中午|下午|晚上|下班)?(?:之前|前)"
     ).expect("literal time limit"));
     static DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
         Regex::new(r"都要|务必|必须|需具体|分别负责").expect("group imperative")
@@ -578,9 +578,12 @@ pub(in crate::backend::minutes) fn stated_group_deliverable(source: &str) -> Opt
         let instruction=CLAUSE_START.split(&words[addressed.end()..end]).next()?.trim();
         if instruction.chars().count()>82 { continue; }
         let imperative = ADDRESSED_DIRECTIVE.find(instruction).or_else(|| DIRECTIVE.find(instruction));
-        let deliverable = imperative.and_then(|marker| DELIVERABLE.find_at(instruction, marker.end()))
-            .or_else(|| DELIVERABLE.find(instruction));
+        let deliverable = imperative.and_then(|marker| DELIVERABLE.captures_at(instruction, marker.end()))
+            .or_else(|| DELIVERABLE.captures(instruction));
         let Some(deliverable) = deliverable else { continue; };
+        let object = deliverable.name("object")?.as_str();
+        let document = deliverable.name("document")?.as_str();
+        let deliverable = deliverable.get(0)?;
         let bound = &instruction[..deliverable.end()];
         let head = CLAUSE_START.split(&words[..addressed.start()]).last().unwrap_or("");
         if contains(head, SOFT) || contains(instruction, SOFT)
@@ -597,7 +600,30 @@ pub(in crate::backend::minutes) fn stated_group_deliverable(source: &str) -> Opt
         let context = head.rsplit(['，',',','。','；','嗯','呃']).next().unwrap_or("").trim();
         let scope = if context.ends_with("方面") && context.chars().count()<=12 { context } else { "" };
         let owner=request.name("owner")?.as_str();
-        let due = DEADLINE.find(instruction).map(|date|date.as_str());
+        // A date on another clause does not become the group's deadline.
+        // Accept a time attached to the deliverable, or a short dictated tail.
+        let before = instruction[..deliverable.start()].rsplit(['，', ',', '、']).next().unwrap_or("");
+        let attached = DEADLINE.find_iter(before).last().filter(|date| {
+            let bridge = before[date.end()..].trim();
+            bridge.starts_with('把') || ["", "先", "再", "就", "请", "务必", "必须", "都要", "需要",
+                "要", "统一", "分别", "分别负责"]
+                .contains(&bridge)
+        });
+        let tail = instruction[deliverable.end()..].trim_start_matches(['，', ',', ' ', '\t', '嗯', '呃']);
+        let tail = tail.strip_prefix(object).or_else(|| tail.strip_prefix(document)).unwrap_or(tail).trim_start();
+        let tail = ["最晚在", "最迟在", "最晚", "最迟", "要在", "须在", "截止到", "截止", "在"]
+            .into_iter().find_map(|prefix| tail.strip_prefix(prefix)).unwrap_or(tail).trim_start();
+        let dictated = DEADLINE.find(tail).filter(|date| {
+            if date.start() != 0 { return false; }
+            let rest = tail[date.end()..].trim().trim_end_matches(['。', '！', '啊', '吧', '哈', ' ', '\t']);
+            rest.is_empty() || ["提交", "交", "交上来", "发", "上报"].iter().any(|verb| {
+                rest.strip_prefix(verb).is_some_and(|target| {
+                    let target = target.trim();
+                    target.is_empty() || target == object || target.strip_prefix("这个") == Some(document)
+                })
+            })
+        });
+        let due = attached.or(dictated).map(|date|date.as_str());
         let ending = due.filter(|date| !bound.contains(date)).map_or_else(String::new,|date|format!("，{date}"));
         let action=format!("{scope}{owner}{}{ending}",bound.trim());
         if !canonical_brief::line(&action,90) { continue; }

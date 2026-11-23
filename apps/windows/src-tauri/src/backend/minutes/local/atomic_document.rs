@@ -2861,6 +2861,41 @@ mod tests{
     }
 
     #[test]
+    fn group_work_keeps_its_own_deadline_through_local_organization() {
+        let opening = "这次会议讨论项目验收的安排。";
+        for (instruction, deliverable, due) in [
+            ("各小组都要提交验收方案，设备周四前到货。", "验收方案", None),
+            ("各小组都要提交验收方案，周四前设备会到。", "验收方案", None),
+            ("各小组都要在周三前开会，提交验收方案。", "验收方案", None),
+            ("各小组都要在周五前提交验收方案。", "验收方案", Some("周五前")),
+            ("各小组都要在本周五下班前提交验收方案。", "验收方案", Some("本周五下班前")),
+            ("各小组都要提交验收方案，周五前。", "验收方案", Some("周五前")),
+            ("各小组都要提交验收方案，验收方案周五前交。", "验收方案", Some("周五前")),
+            ("各小组都要提交验收方案，周四前提交财务资料。", "验收方案", None),
+            ("你们各部门儿也要根据你各部门儿情况做一个这个具体的方案。咱就下个月的十五号儿。", "具体的方案", None),
+        ] {
+            let source = format!("{opening}\n{instruction}");
+            let session = crate::backend::minutes::tests::session_with_text(&source);
+            let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
+            let bank = build_bank(vec![ExtractedFact::verbatim("e0000", "status", opening)], &source).unwrap();
+            let topic_ids = bank.topics().map(|fact| fact.id.as_str()).collect::<Vec<_>>();
+            let assignments = topic_ids.iter().map(|id| ((*id).to_owned(), json!("m1"))).collect::<serde_json::Map<_, _>>();
+            let layout = json!({
+                "purposeFact": topic_ids[0], "topics":{"t1":"项目验收", "t2":null, "t3":null,
+                    "t4":null, "t5":null, "t6":null, "t7":null, "t8":null},
+                "assignments":assignments,
+            });
+            let output = organize(&layout.to_string(), &bank, &session, &base).unwrap();
+            let task = output.minutes.action_items.iter().find(|item| item.text.contains(deliverable)).unwrap();
+            assert_eq!(task.due.as_deref(), due, "{instruction}");
+            if due.is_none() {
+                assert!(!task.text.contains("周四前"), "{instruction}: {}", task.text);
+                assert!(!task.text.contains("十五号"), "{instruction}: {}", task.text);
+            }
+        }
+    }
+
+    #[test]
     fn conflicting_frequencies_across_filler_use_the_saved_turn_boundary() {
         use crate::companion_v1::CompanionV1UtteranceSegment;
         let first = "保洁每天都会打扫两遍。";
