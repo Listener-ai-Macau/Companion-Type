@@ -308,8 +308,72 @@ pub(super) fn completed_collaboration(
     Some(exact.to_owned())
 }
 
+/// Keep the actual time qualifier of a negative conclusion.
+pub(super) fn short_horizon_limit(text: &str) -> bool {
+    has(text,&["短期内","短时间内","现阶段","短期不会"])
+        && has(text,&["不会","无法","不能"])
+        && has(text,&["取代","替代","完全替换"])
+}
+
+pub(super) fn first_short_horizon_clause(text: &str) -> Option<&str> {
+    text.match_indices(['，', '；'])
+        .map(|(end, _)| &text[..end])
+        .find(|clause| short_horizon_limit(clause))
+}
+
+pub(super) fn visible_limit_context<'a>(
+    facts: &[ComparisonFact<'a>], visible: &HashSet<&str>,
+) -> Option<&'a str> {
+    let shown_limit=facts.iter().any(|fact| visible.contains(fact.id)
+        && has(fact.text,&["无法取代","不能取代","不会取代","无法替代","不能替代","不会替代"]));
+    if !shown_limit { return None; }
+    facts.iter().find(|fact| !visible.contains(fact.id) && short_horizon_limit(fact.text)).map(|fact|fact.id)
+}
+
+/// A possible turning point is readable as an explicit assumption, never as a
+/// new work item. Both displayed clauses must still be literal in the source.
+pub(super) fn future_conditions(source: &str) -> Option<[String;2]> {
+    let text=source_review::bare(source).trim();
+    if !has(text,&["拐点应该","拐点可能","转折点应该","未来可能"])
+        || !has(text,&["替代","取代","完全替换"])
+        || !has(text,&["只有当","只有在"])
+        || !has(text,&["才可以","才能","才可能"])
+        || !has(text,&["成熟之后","完善之后","具备之后","达到成熟后","满足前提后"])
+    {
+        return None;
+    }
+    let (first,second)=text.split_once("，一旦").or_else(||text.split_once("，只有"))?;
+    let second=second.split_once("但是").map_or(second,|(condition,_)|condition);
+    // Use the matched separator bytes to preserve the condition introducer.
+    let offset=first.len()+"，".len();
+    let condition=&text[offset..];
+    let tail_len=condition.find(second)? + second.len();
+    let lines=[format!("远期设想：{}",first.trim()),format!("远期设想：{}",condition[..tail_len].trim())];
+    lines.iter().all(|line|canonical_brief::line(line,120)).then_some(lines)
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn makes_scope_explicit_without_adding_a_commitment() {
+        assert_eq!(
+            super::first_short_horizon_clause("短时间内不会替代人工服务，后面再讨论"),
+            Some("短时间内不会替代人工服务")
+        );
+        assert_eq!(
+            super::first_short_horizon_clause("第二点，短时间内不会替代人工服务，后面再讨论"),
+            Some("第二点，短时间内不会替代人工服务")
+        );
+        assert_eq!(
+            super::first_short_horizon_clause("目前的情况，短期不会替代人工服务"),
+            None
+        );
+        let source = "技术的拐点可能要等到工具成熟之后，一旦只有当工具可以独立判断时才能替代人工操作但是目前还没有。";
+        let lines = super::future_conditions(source).unwrap();
+        assert_eq!(lines[0], "远期设想：技术的拐点可能要等到工具成熟之后");
+        assert_eq!(lines[1], "远期设想：一旦只有当工具可以独立判断时才能替代人工操作");
+    }
+
     use super::*;
     use serde_json::json;
 

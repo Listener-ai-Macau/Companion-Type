@@ -2416,6 +2416,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             let mut supplements = super::reader_context::contrast_risk_context(&context,&proposed,&visible);
             supplements.extend(super::reader_context::contrasting_reading_details(&context,&proposed,&visible,&heading_terms(&title)));
             supplements.extend(super::reader_context::reported_method_continuation(&context,&visible));
+            supplements.extend(super::reader_context::visible_limit_context(&context,&visible));
             for id in supplements {
                 if let Some(index) = details.iter().position(|[fact]| fact.as_str() == id).filter(|index| *index >= limit) {
                     let detail = details.remove(index);
@@ -2594,6 +2595,7 @@ fn assemble_with_context(
     let mut layout_bindings = result.bindings.clone();
     let mut reader_examples = Vec::new();
     let mut reader_outcomes = Vec::new();
+    let mut reader_future = Vec::new();
     if !bank.chapter_spans.is_empty() {
         let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
         for (topic,limit) in reader_detail_limits.iter_mut().enumerate() {
@@ -2620,9 +2622,36 @@ fn assemble_with_context(
                 )?;
                 Some((id,source,text))
             });
+            let limit_scope = result.bindings.iter().find_map(|(path,id)| {
+                let shown = path.starts_with(&point_prefix)
+                    || path.strip_prefix(&prefix).and_then(|row|row.parse::<usize>().ok()).is_some_and(|i|i<*limit);
+                let fact = by_id.get(id.as_str()).filter(|fact| shown && super::reader_context::short_horizon_limit(&fact.text))?;
+                let source = fact.evidence.first()?.strip_prefix('e')?.parse::<usize>().ok()?;
+                Some((path, source))
+            });
+            let future = limit_scope.as_ref().and_then(|(_, origin)| {
+                result.bindings.iter().filter(|(path,_)| path.starts_with(&prefix) || path.starts_with(&point_prefix))
+                    .find_map(|(_,id)| {
+                        let source = by_id.get(id.as_str())?.evidence.first()?.as_str();
+                        let index = source.strip_prefix('e')?.parse::<usize>().ok()?;
+                        if !(*origin + 1..=*origin + 36).contains(&index) { return None; }
+                        let lines = super::reader_context::future_conditions(known.get(source)?["text"].as_str()?)?;
+                        Some((source,lines))
+                    })
+            });
+            if future.is_some() {
+                if let Some((path, _)) = limit_scope {
+                    let text = &mut document.pointer_mut(path).ok_or_else(fail)?["text"];
+                    if let Some(clause) = text.as_str().and_then(super::reader_context::first_short_horizon_clause) {
+                        *text = json!(clause);
+                    }
+                }
+            }
             let details = document["topics"][topic]["details"].as_array_mut().ok_or_else(fail)?;
             let offset = (*limit).min(details.len());
-            let count = example.as_ref().map_or(0, |(_,passages)| passages.len()) + usize::from(outcome.is_some());
+            let example_count = example.as_ref().map_or(0, |(_,passages)| passages.len());
+            let outcome_count = usize::from(outcome.is_some());
+            let count = example_count + outcome_count + future.as_ref().map_or(0, |(_,lines)| lines.len());
             if count==0 { continue; }
             for (path,_) in &mut layout_bindings {
                 if let Some(row) = path.strip_prefix(&prefix).and_then(|row| row.parse::<usize>().ok()) {
@@ -2640,10 +2669,19 @@ fn assemble_with_context(
             }
             if let Some((context,source,text))=outcome {
                 let original=known[source];
-                let row=offset+count-1;
+                let row=offset+example_count;
                 details.insert(row,json!({"text":text,"evidence":[{"source":original["source"],"quote":original["text"]}]}));
                 detail_kinds[topic].insert(row,Some(Kind::Status));
                 reader_outcomes.push(json!({"contextFactId":context,"sourceId":source,"path":format!("topics[{topic}].details[{row}]")}));
+            }
+            if let Some((source,lines))=future {
+                let original=known[source];
+                for (index,text) in lines.into_iter().enumerate() {
+                    let row=offset+example_count+outcome_count+index;
+                    details.insert(row,json!({"text":text,"evidence":[{"source":original["source"],"quote":original["text"]}]}));
+                    detail_kinds[topic].insert(row,Some(Kind::Forecast));
+                    reader_future.push(json!({"sourceId":source,"path":format!("topics[{topic}].details[{row}]")}));
+                }
             }
             *limit=offset+count;
         }
@@ -2683,7 +2721,7 @@ fn assemble_with_context(
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?
         .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
     if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str()))
-        || reader_examples.iter().chain(&reader_outcomes).any(|example| {
+        || reader_examples.iter().chain(&reader_outcomes).chain(&reader_future).any(|example| {
             example["path"].as_str().is_none_or(|path| !visible_paths.contains(path))
         })
     {
@@ -2711,6 +2749,9 @@ fn assemble_with_context(
     }
     if !reader_outcomes.is_empty() {
         parsed.receipt["readerReportedOutcomeExcerpts"] = json!(reader_outcomes);
+    }
+    if !reader_future.is_empty() {
+        parsed.receipt["readerFutureConditionExcerpts"] = json!(reader_future);
     }
     parsed.receipt["requiredReaderFactIds"] = json!(required_visible.iter().map(|(id, _)| id).collect::<Vec<_>>());
     parsed.receipt["visibleSourceRequirements"] = json!(visible_requirements);

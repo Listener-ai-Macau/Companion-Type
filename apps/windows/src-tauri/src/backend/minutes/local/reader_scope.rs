@@ -120,6 +120,57 @@ pub(super) fn grounded_reported_scopes(
             continue;
         }
         let mark = audit.by_source.get(row.source);
+
+        // The speaker gave both horizons of the same comparison, and a specific
+        // way to improve the longer-term outcome. Keep the qualifications together.
+        if has(text, &["现阶段", "短期", "一定时期内", "目前"])
+            && has(text, &["加大", "扩大", "加剧"])
+        {
+            let outcome = ["两极分化", "资源差距", "区域差距", "收入差距", "教育差距"]
+                .into_iter().find(|key| text.contains(key));
+            if let Some(outcome) = outcome {
+                let long = (i.saturating_sub(3)..i).rev().find(|&j| {
+                    let p=&rows[j];
+                    p.speaker==row.speaker && stated(p.text) && p.text.contains(outcome)
+                        && has(p.text,&["未来","最终","长远","长期"])
+                        && has(p.text,&["缩小","减少","缓解","缩减"])
+                });
+                if let Some(long) = long {
+                    let means = (long.saturating_sub(8)..long).rev().take_while(|&j| {
+                        rows[j].speaker==row.speaker && !boundary(rows[j].text)
+                            && timing.is_none_or(|time| time.speech_gap_within(j,j+1,3_000))
+                    }).find(|&j| {
+                        let prior=rows[j].text;
+                        stated(prior) && has(prior,&["优质资源","公共资源","教育资源","公共服务"])
+                            && has(prior,&["共享","共用"])
+                            && has(prior,&["缩小","消除","减少","缓解"])
+                            && has(prior,&["差距","不均衡","分化"])
+                    });
+                    if let Some(means)=means { groups.push(vec![means,long,i]); }
+                }
+            }
+        }
+
+        if has(text,&["我们的做法一个是","我们的安排一个是","我们的做法第一"])
+            && has(text,&["作息","日常计划","课表","班次","时间表"])
+        {
+            let support = following(i,4).find(|&j| {
+                let p=rows[j].text;
+                stated(p) && has(p,&["第三","第四","另外"])
+                    && has(p,&["老师","辅导员","主管","值班员","服务人员"])
+                    && has(p,&["鼓励","跟进","提醒","监督","沟通","协助","核查"])
+            });
+            let recipient = support.and_then(|support| following(support,2).find(|&j| {
+                let p=rows[j].text;
+                stated(p) && has(p,&["第四","第五","另外"])
+                    && has(p,&["家长","监护人","同伴","客户","相关方","外部团队"])
+                    && has(p,&["沟通","联络","协作","配合","同步"])
+            }));
+            if let (Some(support),Some(recipient))=(support,recipient) {
+                groups.push(vec![i,support,recipient]);
+            }
+        }
+
         if mark == Some(&Role::Condition)
             && has(text, &["实施", "实行", "采用", "安排", "执行", "开展"])
             && has(text, &["我们", "本组", "本部门", "本单位"])
