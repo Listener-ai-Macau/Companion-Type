@@ -1,6 +1,9 @@
 //! Grounded context for a visible topic. These supplements cannot become tasks.
 use std::collections::{HashMap, HashSet};
 
+use std::sync::LazyLock;
+
+use regex::Regex;
 use serde_json::Value;
 
 use super::super::canonical_brief;
@@ -235,6 +238,76 @@ pub(super) fn contrasting_reading_details<'a>(
     added
 }
 
+/// Complete the recorded method when the same source turn is already visible.
+pub(super) fn reported_method_continuation<'a>(
+    facts: &[ComparisonFact<'a>],
+    visible: &HashSet<&str>,
+) -> Option<&'a str> {
+    static ACRONYM: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"\b[A-Z]{2,8}\b").expect("named communication tool abbreviation")
+    });
+    facts
+        .iter()
+        .find(|p| {
+            !visible.contains(p.id)
+                && has(p.text, &["用", "采用", "利用", "通过"])
+                && has(p.text, &["语音", "在线", "平台", "工具", "联络", "协作"])
+                && !has(
+                    p.text,
+                    &["建议", "打算", "假设", "准备", "举例讨论", "不再用"],
+                )
+                && facts.iter().any(|shown| {
+                    visible.contains(shown.id)
+                        && shown.source == p.source
+                        && has(
+                            shown.text,
+                            &[
+                                "招人", "培训", "组织", "招募", "团队", "志愿", "沟通", "协作",
+                            ],
+                        )
+                        && ACRONYM
+                            .find_iter(p.text)
+                            .any(|tool| !shown.text.contains(tool.as_str()))
+                })
+        })
+        .map(|fact| fact.id)
+}
+
+/// Show the reported outcome if the selected statement only retained its cause.
+pub(super) fn completed_collaboration(
+    original: &str,
+    printed_cause: &str,
+    visible: &[String],
+) -> Option<String> {
+    static OUTCOME: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(
+        r"(?:和|跟|与)[\p{Han}A-Za-z0-9]{2,16}?(?:一起合作|共同合作|合作|一起|联合|共同)(?:上线|发布|交付|完成|推出|投入运行)[^，。；！？,]{2,24}"
+    ).expect("a collaboration and the object actually delivered")
+    });
+    let words = source_review::bare(original);
+    let delivered = OUTCOME.find(words)?;
+    let lead = &words[..delivered.start()];
+    let exact = words[..delivered.end()].trim();
+    if !canonical_brief::line(exact, 120)
+        || !has(
+            lead,
+            &["今年", "去年", "当时", "那时", "后来", "期间", "已经"],
+        )
+        || !has(printed_cause, &["因为", "原因", "积累", "所以", "得以"])
+        || has(
+            lead,
+            &[
+                "准备", "计划", "打算", "假设", "预计", "希望", "建议", "可能", "还没", "是否",
+                "举例",
+            ],
+        )
+        || visible.iter().any(|text| text.contains(delivered.as_str()))
+    {
+        return None;
+    }
+    Some(exact.to_owned())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -286,6 +359,33 @@ mod tests {
             contrasting_reading_details(&facts[..2], &HashSet::new(), &HashSet::new(), &terms)
                 .is_empty()
         );
+    }
+
+    #[test]
+    fn a_reported_result_requires_a_real_handoff_in_the_original_scope() {
+        let source = "然后当时我就跟质检组一起合作上线了核验页面，其实是因为前期试点积累了经验。";
+        let old = "是因为前期试点积累了经验。";
+        let literal = completed_collaboration(source, old, &[old.to_owned()]).unwrap();
+        assert!(literal.ends_with("跟质检组一起合作上线了核验页面"));
+        assert!(completed_collaboration(&source.replace("我就", "我们准备"), old, &[]).is_none());
+        assert!(completed_collaboration(source, old, &[literal]).is_none());
+        let records = [
+            ComparisonFact {
+                id: "a1",
+                source: 4,
+                text: "我们在论坛上发帖招人，随后培训了这些志愿人员。",
+            },
+            ComparisonFact {
+                id: "a2",
+                source: 4,
+                text: "团队后来用 QW 平台做线上语音联络。",
+            },
+        ];
+        assert_eq!(
+            reported_method_continuation(&records, &HashSet::from(["a1"])),
+            Some("a2")
+        );
+        assert!(reported_method_continuation(&records, &HashSet::new()).is_none());
     }
 
     #[test]

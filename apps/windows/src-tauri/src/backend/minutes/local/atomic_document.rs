@@ -2415,6 +2415,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             context.sort_by_key(|fact| fact.source);
             let mut supplements = super::reader_context::contrast_risk_context(&context,&proposed,&visible);
             supplements.extend(super::reader_context::contrasting_reading_details(&context,&proposed,&visible,&heading_terms(&title)));
+            supplements.extend(super::reader_context::reported_method_continuation(&context,&visible));
             for id in supplements {
                 if let Some(index) = details.iter().position(|[fact]| fact.as_str() == id).filter(|index| *index >= limit) {
                     let detail = details.remove(index);
@@ -2592,6 +2593,7 @@ fn assemble_with_context(
     }
     let mut layout_bindings = result.bindings.clone();
     let mut reader_examples = Vec::new();
+    let mut reader_outcomes = Vec::new();
     if !bank.chapter_spans.is_empty() {
         let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
         for (topic,limit) in reader_detail_limits.iter_mut().enumerate() {
@@ -2604,21 +2606,44 @@ fn assemble_with_context(
                 super::reader_context::fictional_example(&fact.text,&fact.evidence,&known)
                     .map(|passages| (id,passages))
             });
-            let Some((intro, passages)) = example else { continue; };
+            let visible = document["topics"][topic]["points"].as_array().into_iter().flatten()
+                .chain(document["topics"][topic]["details"].as_array().into_iter().flatten().take(*limit))
+                .filter_map(|entry| entry["text"].as_str().map(str::to_owned)).collect::<Vec<_>>();
+            let outcome = result.bindings.iter().find_map(|(path,id)| {
+                let in_reader = path.starts_with(&point_prefix)
+                    || path.strip_prefix(&prefix).and_then(|x| x.parse::<usize>().ok()).is_some_and(|i| i < *limit);
+                let fact=by_id.get(id.as_str()).filter(|_| in_reader)?;
+                if bank.review_quote(id) { return None; }
+                let source = fact.evidence.first()?.as_str();
+                let text = super::reader_context::completed_collaboration(
+                    known.get(source)?["text"].as_str()?, &fact.text,&visible,
+                )?;
+                Some((id,source,text))
+            });
             let details = document["topics"][topic]["details"].as_array_mut().ok_or_else(fail)?;
             let offset = (*limit).min(details.len());
-            let count = passages.len();
+            let count = example.as_ref().map_or(0, |(_,passages)| passages.len()) + usize::from(outcome.is_some());
+            if count==0 { continue; }
             for (path,_) in &mut layout_bindings {
                 if let Some(row) = path.strip_prefix(&prefix).and_then(|row| row.parse::<usize>().ok()) {
                     if row >= offset { *path = format!("{prefix}{}",row+count); }
                 }
             }
-            for (index,passage) in passages.into_iter().enumerate() {
-                let original=known[passage.source];
-                let row=offset+index;
-                details.insert(row,json!({"text":passage.text,"evidence":[{"source":original["source"],"quote":original["text"]}]}));
-                detail_kinds[topic].insert(row,Some(Kind::Opinion));
-                reader_examples.push(json!({"introFactId":intro,"sourceId":passage.source,"path":format!("topics[{topic}].details[{row}]")}));
+            if let Some((intro,passages)) = example {
+                for (index,passage) in passages.into_iter().enumerate() {
+                    let original=known[passage.source];
+                    let row=offset+index;
+                    details.insert(row,json!({"text":passage.text,"evidence":[{"source":original["source"],"quote":original["text"]}]}));
+                    detail_kinds[topic].insert(row,Some(Kind::Opinion));
+                    reader_examples.push(json!({"introFactId":intro,"sourceId":passage.source,"path":format!("topics[{topic}].details[{row}]")}));
+                }
+            }
+            if let Some((context,source,text))=outcome {
+                let original=known[source];
+                let row=offset+count-1;
+                details.insert(row,json!({"text":text,"evidence":[{"source":original["source"],"quote":original["text"]}]}));
+                detail_kinds[topic].insert(row,Some(Kind::Status));
+                reader_outcomes.push(json!({"contextFactId":context,"sourceId":source,"path":format!("topics[{topic}].details[{row}]")}));
             }
             *limit=offset+count;
         }
@@ -2658,7 +2683,7 @@ fn assemble_with_context(
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?
         .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
     if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str()))
-        || reader_examples.iter().any(|example| {
+        || reader_examples.iter().chain(&reader_outcomes).any(|example| {
             example["path"].as_str().is_none_or(|path| !visible_paths.contains(path))
         })
     {
@@ -2683,6 +2708,9 @@ fn assemble_with_context(
     }).collect::<Result<Vec<_>,String>>()?;
     if !reader_examples.is_empty() {
         parsed.receipt["readerExampleExcerpts"] = json!(reader_examples);
+    }
+    if !reader_outcomes.is_empty() {
+        parsed.receipt["readerReportedOutcomeExcerpts"] = json!(reader_outcomes);
     }
     parsed.receipt["requiredReaderFactIds"] = json!(required_visible.iter().map(|(id, _)| id).collect::<Vec<_>>());
     parsed.receipt["visibleSourceRequirements"] = json!(visible_requirements);
