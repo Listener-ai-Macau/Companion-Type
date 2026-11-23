@@ -439,6 +439,114 @@ fn the_preparation_cutoff_requires_scoped_delivery_and_continuing_explanation() 
     assert!(advance_delivery_groups(&rows, None).is_empty());
 }
 
+/// Preserve a narrated problem and response, a linked transformation, or a
+/// reported change of approach as whole original statements in the reader.
+pub(super) fn reported_reasoning_groups(
+    sentences: &[Value], timing: Option<&super::timed_evidence::Timing<'_>>,
+) -> Vec<Vec<usize>> {
+    static EVENT_YEAR: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?:[0-9]{2}|[0-9]{4})\s*年")
+        .expect("reported year"));
+    static TRANSFORM: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"把(?P<input>[\p{Han}]{1,12}?)(?:变成|转成|转化为|变为)(?P<output>[\p{Han}]{1,18})"
+    ).expect("two named sides of a transformation"));
+    let mut speaker = None;
+    let turns: Vec<_> = sentences.iter().map(|row| {
+        let text = row["text"].as_str().expect("source sentence").trim();
+        let words = match split_turn_label(text) {
+            Some((named, words)) => {
+                speaker = Some(named);
+                words.trim()
+            }
+            None => text,
+        };
+        (speaker, words)
+    }).collect();
+    let stated = |words: &str| !super::source_context::question_only(words)
+        && !has(words, &["假设", "假如", "举例", "建议", "打算", "尚未", "传闻", "取消",
+            "换个话题", "下一个问题", "另一个问题", "接下来讨论"]);
+    let turns = turns.as_slice();
+    let following = |index: usize, distance: usize| {
+        (index + 1..(index + 1 + distance).min(turns.len())).take_while(move |&next| {
+            let (who, words) = turns[next];
+            who.is_some() && who == turns[index].0 && stated(words)
+                && timing.is_none_or(|time| time.speech_gap_within(next - 1, next, 3_000))
+        })
+    };
+    let mut groups = Vec::new();
+    for (index, (speaker, words)) in turns.iter().copied().enumerate() {
+        if speaker.is_none() || !stated(words) { continue; }
+        if EVENT_YEAR.is_match(words)
+            && has(words, &["灾难", "灾害", "事故", "故障", "停电", "火灾", "水灾", "地震"])
+            && has(words, &["踏入", "参与", "开始", "投入", "组织", "去了", "到场", "响应"])
+        {
+            let problem = following(index, 5).find(|&i| {
+                has(turns[i].1, &["最大的问题", "最主要的问题", "主要问题", "最大困难"])
+            });
+            if let Some(problem) = problem {
+                let method = following(index, 7).filter(|&i| i > problem).find(|&i| {
+                    let reply = turns[i].1;
+                    has(reply, &["利用", "通过", "借助", "用上"]) && has(reply, &["联合", "对接", "调配", "协调", "匹配", "联络"])
+                        && !has(reply, &["可能", "试试看", "没有用", "不再用", "不用"])
+                });
+                if let Some(method) = method { groups.push(vec![index, problem, method]); }
+            }
+        }
+
+        if let Some(first) = TRANSFORM.captures(words) {
+            if let Some(prior) = index.checked_sub(1).filter(|&i| {
+                let (prior_speaker, prior) = turns[i];
+                prior_speaker == speaker && stated(prior) && has(prior, &["收集", "采集", "整理", "汇总", "接收"])
+                    && prior.contains(&first["input"])
+                    && timing.is_none_or(|time| time.speech_gap_within(i, index, 3_000))
+            }) {
+                let successor = following(index, 1).find(|&i| {
+                    TRANSFORM.captures(turns[i].1).is_some_and(|second| {
+                        second["input"] == first["output"]
+                            && has(&second["output"], &["决策", "判定", "核查", "指派", "选型", "排班", "分配", "告警"])
+                    })
+                });
+                if let Some(successor) = successor { groups.push(vec![prior, index, successor]); }
+            }
+        }
+
+        let changed = ["变成", "转向", "转为", "改为", "切换到"].iter().find_map(|verb| words.split_once(verb));
+        if let Some((before, after)) = changed {
+            if !has(before, &["我们把", "把我们的", "我们将", "已调整", "已将", "已经把"])
+                || !has(before, &["项目", "工作", "业务", "运营", "研发", "重点"])
+                || !before.contains('从') || has(before, &["考虑", "计划", "可以", "如果"])
+            {
+                continue;
+            }
+            let current = following(index, 4).find(|&i| {
+                let reply = turns[i].1;
+                has(reply, &["在做", "已经开始", "已启动", "正在", "开始提供"])
+                    && super::source_grounding::shared_han_phrase(after, reply, 4)
+            });
+            if let Some(current) = current { groups.push(vec![index, current]); }
+        }
+    }
+    groups
+}
+
+#[cfg(test)]
+#[test]
+fn the_reader_preserves_linked_explanations_but_does_not_extend_them_to_other_speakers() {
+    let mut rows = [
+        "说话人1: 2024年厂房停电后我们开始参与抢修。",
+        "最大的问题是备件存放点彼此都不清楚。",
+        "后来就通过工务台联系各库，把人手协调起来。",
+        "说话人2: 我们收集住户的报修记录。",
+        "然后把报修记录转化为工单。",
+        "然后把工单变成排班依据。",
+        "说话人3: 我们把项目从做仓储咨询转向提供冷链物流。",
+        "已经开始提供冷链物流支持。",
+    ].into_iter().map(|text| serde_json::json!({"text":text})).collect::<Vec<_>>();
+    assert_eq!(reported_reasoning_groups(&rows, None), [vec![0, 1, 2], vec![3, 4, 5], vec![6, 7]]);
+    rows[5]["text"] = serde_json::json!("说话人4: 然后把工单变成排班依据。");
+    rows[7]["text"] = serde_json::json!("如果可以，我们建议以后提供冷链物流支持。");
+    assert_eq!(reported_reasoning_groups(&rows, None), [vec![0, 1, 2]]);
+}
+
 pub(super) fn execution_passage(original: &str) -> Option<&str> {
     static THRESHOLD: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:[0-9零一二两三四五六七八九十]{1,4}月|(?:超过|不超过|不少于|不低于|至少)[0-9零一二两三四五六七八九十]{1,5}(?:天|日|小时|班|分钟)|百分之)"
