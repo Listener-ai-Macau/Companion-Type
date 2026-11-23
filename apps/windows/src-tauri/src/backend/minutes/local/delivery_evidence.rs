@@ -290,6 +290,83 @@ fn reported_operations_keep_their_conditions_and_current_status() {
     assert!(reported_operation_groups(&rows,None).is_empty());
 }
 
+/// Keep a stated access barrier, its replacement channel, and any explicit
+/// limit on that channel together in the reading. These remain original
+/// descriptions rather than assignments.
+pub(super) fn delivery_access_groups(
+    sentences: &[Value], timing: Option<&super::timed_evidence::Timing<'_>>,
+) -> Vec<Vec<usize>> {
+    let source: Vec<_> = sentences.iter().map(|row| row["text"].as_str().expect("source sentence")).collect();
+    let formats = ["表格", "附件", "图片", "视频", "网页", "文件", "链接", "文档", "看板", "表单"];
+    let channels = ["文字", "短信", "语音", "电话", "纸质", "纸面", "口头", "纯文本"];
+    let unconfirmed = |words: &str| has(words, &["假设", "假如", "举例", "建议", "不确定", "听说", "据说", "已经解决"])
+        || super::source_context::question_only(words);
+    let mut groups = Vec::new();
+    let mut previous_alternative = None;
+    for (index, text) in source.iter().enumerate() {
+        let obstacle = body(text);
+        if previous_alternative.is_some_and(|end| index <= end) || unconfirmed(obstacle)
+            || !has(obstacle, &formats)
+            || !has(obstacle, &["手机", "移动端", "终端", "浏览器", "网络", "信号", "设备"])
+            || !has(obstacle, &["没法看", "看不了", "打不开", "无法打开", "无法查看", "无法加载", "无法读取", "不能查看", "不能打开"])
+        {
+            continue;
+        }
+        let anchor_speaker = speaker_at(sentences, index);
+        if anchor_speaker.is_none() && timing.is_none() {
+            continue;
+        }
+        let same_statement = |i: usize| {
+            let other = split_turn_label(source[i].trim()).map(|(speaker, _)| speaker);
+            let words = body(source[i]);
+            other.is_none_or(|speaker| anchor_speaker == Some(speaker))
+                && timing.is_none_or(|time| time.speech_gap_within(i - 1, i, 2_500))
+                && !has(words, &["换个话题", "另一个问题", "另外一个", "接下来讨论", "下一项", "下一个问题"])
+                && !super::source_context::question_only(words)
+        };
+        let alternative = (index + 1..(index + 9).min(source.len())).take_while(|&i| same_statement(i))
+            .find_map(|i| {
+                let words = body(source[i]);
+                let channel = channels.iter().find(|channel| words.contains(**channel) && !obstacle.contains(**channel))?;
+                (!unconfirmed(words)
+                    && !has(words, &["不要", "不用", "不再", "取消", "不需要"])
+                    && has(words, &["所以", "因此", "那就", "改发", "改成", "改用", "改为"])
+                    && has(words, &["发", "给", "提供", "通知", "改用", "改成", "改为", "送"]))
+                    .then_some((i, *channel))
+            });
+        let Some((alternative, channel)) = alternative else { continue; };
+        previous_alternative = Some(alternative);
+        let limit = (alternative + 1 < source.len() && same_statement(alternative + 1))
+            .then_some(alternative + 1).filter(|&i| {
+                let words = body(source[i]);
+                words.contains(channel) && !unconfirmed(words)
+                    && has(words, &["这段", "这条", "这份", "这种"])
+                    && has(words, &["不能太", "尽量短", "不超过", "最多", "不宜", "简短", "不要太"])
+            });
+        groups.push([index, alternative].into_iter().chain(limit).collect());
+    }
+    groups
+}
+
+#[cfg(test)]
+#[test]
+fn delivery_access_is_linked_only_to_a_usable_channel_from_the_same_account() {
+    let mut rows = [
+        "说话人1: 现场设备无法打开视频文件。",
+        "而且工位紧张，使用人员无法等候。",
+        "所以改用电话通知。",
+        "这类工作接下来由值班台处理。",
+    ].into_iter().map(|text| serde_json::json!({"text":text})).collect::<Vec<_>>();
+    assert_eq!(delivery_access_groups(&rows, None), [vec![0, 2]]);
+    rows[2]["text"] = serde_json::json!("说话人2: 所以改用电话通知。");
+    assert!(delivery_access_groups(&rows, None).is_empty());
+    rows[2]["text"] = serde_json::json!("所以目前不再改用电话通知。");
+    assert!(delivery_access_groups(&rows, None).is_empty());
+    rows[2]["text"] = serde_json::json!("所以改用电话通知。");
+    rows[1]["text"] = serde_json::json!("下一个问题大家看一下。");
+    assert!(delivery_access_groups(&rows, None).is_empty());
+}
+
 pub(super) fn execution_passage(original: &str) -> Option<&str> {
     static THRESHOLD: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:[0-9零一二两三四五六七八九十]{1,4}月|(?:超过|不超过|不少于|不低于|至少)[0-9零一二两三四五六七八九十]{1,5}(?:天|日|小时|班|分钟)|百分之)"
