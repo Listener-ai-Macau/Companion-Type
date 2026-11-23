@@ -91,10 +91,13 @@ fn exact_origins(markdown:&str,document:&Value,anchors:&[Value])->Result<String,
 }
 
 pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
-    parse_with_details_limit(raw,session,base,8,None)
+    parse_with_details_limit(raw,session,base,8,None,&[])
 }
 
-pub(super) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,details_limit:usize,reader_limits:Option<&[usize]>)->Result<canonical_brief::local_document::Parsed,String>{
+pub(super) fn parse_with_details_limit(
+    raw: &str, session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
+    details_limit: usize, reader_limits: Option<&[usize]>, detail_kinds: &[Vec<Option<canonical_brief::Kind>>],
+) -> Result<canonical_brief::local_document::Parsed, String> {
     let mut doc:Value=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|"本地纪要返回结构不完整，原文和已有纪要保留。")?;
     let units=source_units(&session.transcript_text);
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<std::collections::HashMap<_,_>>();
@@ -127,19 +130,26 @@ pub(super) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,
         }
     }
     let topics=doc.get_mut("topics").and_then(Value::as_array_mut).ok_or("本地纪要返回结构不完整。")?;
-    if reader_limits.is_some_and(|limits| limits.len()!=topics.len()) {
+    if reader_limits.is_some_and(|limits| limits.len()!=topics.len())
+        || (!detail_kinds.is_empty() && detail_kinds.len() != topics.len()) {
         return Err("本地纪要主题数量与正文范围不一致。".into());
     }
     let mut hidden_details=0;
     let mut adjusted_titles = Vec::new();
+    let mut visible_detail_kinds = Vec::with_capacity(topics.len());
     for(i,topic)in topics.iter_mut().enumerate(){
         for name in ["points","details"]{
             let entries=topic.get_mut(name).and_then(Value::as_array_mut).ok_or("本地纪要返回结构不完整。")?;
             if name=="details" {
+                let kinds = detail_kinds.get(i);
+                if kinds.is_some_and(|kinds| kinds.len() != entries.len()) {
+                    return Err("本地纪要补充条目类型与内容不一致，已有内容保留。".into());
+                }
                 if let Some(limit)=reader_limits.map(|limits| limits[i]) {
                     hidden_details+=entries.len().saturating_sub(limit);
                     entries.truncate(limit);
                 }
+                visible_detail_kinds.push(kinds.map_or_else(Vec::new, |kinds| kinds[..entries.len()].to_vec()));
             }
             for(j,entry)in entries.iter_mut().enumerate(){bind(entry,format!("topics[{i}].{name}[{j}]"))?;}
         }
@@ -162,11 +172,14 @@ pub(super) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,
         }
     }
     let mut parsed=canonical_brief::local_document::parse_with_details_limit(
-        &doc.to_string(),session,base,details_limit,reader_limits.is_none()
+        &doc.to_string(),session,base,details_limit,reader_limits.is_none(),&visible_detail_kinds
     )?;
     parsed.minutes.markdown=exact_origins(&parsed.minutes.markdown,&doc,&anchors)?;
     parsed.receipt["evidenceAnchors"]=json!(anchors);
     parsed.receipt["literalEvidenceBound"]=json!(true);
+    if visible_detail_kinds.iter().flatten().any(Option::is_some) {
+        parsed.receipt["renderedDetailKinds"]=json!(visible_detail_kinds);
+    }
     if let Some(limits)=reader_limits {
         parsed.receipt["readerDetailLimits"]=json!(limits);
         parsed.receipt["bankDetailsOutsideReader"]=json!(hidden_details);
@@ -201,13 +214,13 @@ mod tests{
     fn compact_topic_can_use_a_neutral_heading_without_weakening_number_checks() {
         let (s, b, mut d) = fixture();
         d["topics"][0]["title"] = json!("预算30000元");
-        let parsed = parse_with_details_limit(&d.to_string(), &s, &b, 8, Some(&[0])).unwrap();
+        let parsed = parse_with_details_limit(&d.to_string(), &s, &b, 8, Some(&[0]), &[]).unwrap();
         assert_eq!(parsed.receipt["topicTitlesReplacedAfterSourceCheck"], json!([0]));
         assert!(parsed.minutes.markdown.contains("第一项讨论"));
         assert!(parsed.minutes.markdown.contains("预算10000元未批准"));
         assert!(!parsed.minutes.markdown.contains("30000元"));
         d["topics"][0]["points"][0]["text"] = json!("预算30000元未批准。");
-        assert!(parse_with_details_limit(&d.to_string(), &s, &b, 8, Some(&[0])).is_err());
+        assert!(parse_with_details_limit(&d.to_string(), &s, &b, 8, Some(&[0]), &[]).is_err());
     }
     #[test]
     fn compact_reader_does_not_print_hidden_details_or_their_quotes() {
@@ -217,7 +230,7 @@ mod tests{
             {"text":"测试未通过。","evidence":[{"source":"u000","quote":"测试未通过"}]},
             {"text":"原文给出当前预算。","evidence":[{"source":"u000","quote":"预算10000元"}]}
         ]);
-        let parsed=parse_with_details_limit(&d.to_string(),&s,&b,8,Some(&[1])).unwrap();
+        let parsed=parse_with_details_limit(&d.to_string(),&s,&b,8,Some(&[1]),&[]).unwrap();
         assert!(parsed.minutes.markdown.contains("补充：测试未通过。"));
         assert!(!parsed.minutes.markdown.contains("原文给出当前预算"));
         assert!(!parsed.minutes.markdown.contains("这句不应整段重复显示"));

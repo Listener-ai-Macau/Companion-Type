@@ -55,10 +55,13 @@ pub(in crate::backend::minutes) struct Parsed {
 }
 
 pub(in crate::backend::minutes) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<Parsed,String>{
-    parse_with_details_limit(raw,session,base,8,true)
+    parse_with_details_limit(raw,session,base,8,true,&[])
 }
 
-pub(in crate::backend::minutes) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,details_limit:usize,include_speaker_transcript:bool)->Result<Parsed,String>{
+pub(in crate::backend::minutes) fn parse_with_details_limit(
+    raw: &str, session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
+    details_limit: usize, include_speaker_transcript: bool, detail_kinds: &[Vec<Option<Kind>>],
+) -> Result<Parsed, String> {
     let doc:Document=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"本地纪要返回结构不完整，原文和已有纪要保留。")?;
     let units=source_units(&session.transcript_text);
     validate_with_details_limit(&doc,&units,details_limit)?;original_identifiers(&doc,&units)?;
@@ -87,7 +90,7 @@ pub(in crate::backend::minutes) fn parse_with_details_limit(raw:&str,session:&Co
     let speaker=include_speaker_transcript.then(|| {
         super::super::render_speaker_section_named(&session.transcript_text,&super::super::reviewed_speaker_names(session))
     }).flatten();
-    minutes.markdown=render(&doc,&units,speaker.as_deref());
+    minutes.markdown=render_with_detail_kinds(&doc,&units,speaker.as_deref(),detail_kinds);
     if serde_json::to_vec(&doc).map_err(|_|"无法核对本地纪要。")?!=sealed{return Err("纪要内容在呈现时发生变化，已有结果保留。".into());}
     Ok(Parsed{minutes,receipt:json!({"document":doc,"facts":facts,"nextFactIndex":facts.len(),
         "documentSha256":format!("{:x}",Sha256::digest(&sealed)),"sourceSha256":format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),

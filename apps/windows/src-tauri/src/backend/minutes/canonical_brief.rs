@@ -186,9 +186,18 @@ pub(in crate::backend::minutes) fn validate_with_details_limit(doc:&Document,uni
     if issues.is_empty(){Ok(())}else{Err(issues.join("；"))}
 }
 pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Option<&str>)->String {
+    render_with_detail_kinds(doc, units, speaker, &[])
+}
+
+fn render_with_detail_kinds(
+    doc: &Document,
+    units: &[Unit],
+    speaker: Option<&str>,
+    detail_kinds: &[Vec<Option<Kind>>],
+) -> String {
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<HashMap<_,_>>();
     let mut md=format!("## 会议主线\n\n- {}\n\n## 主题脉络\n\n",doc.purpose.trim());
-    for topic in &doc.topics {
+    for (topic_index, topic) in doc.topics.iter().enumerate() {
         md.push_str(&format!("### {}\n\n",topic.title.trim()));
         for p in &topic.points {
             if p.text.starts_with(DRAFT_CONFLICT_PREFIX) {
@@ -200,11 +209,14 @@ pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Op
             { "发言" } else { p.kind.label() };
             md.push_str(&format!("- {caption}：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
         }
-        for p in &topic.details {
+        for (detail_index, p) in topic.details.iter().enumerate() {
             if p.text.starts_with(DRAFT_CONFLICT_PREFIX) {
                 md.push_str(&format!("- {}\n", p.text.trim()));
             } else {
-                md.push_str(&format!("- 补充：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
+                let caption = detail_kinds.get(topic_index).and_then(|row| row.get(detail_index))
+                    .and_then(Option::as_ref).filter(|kind| !matches!(kind, Kind::Status))
+                    .map_or("补充", Kind::label);
+                md.push_str(&format!("- {caption}：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
             }
         }
         md.push('\n');

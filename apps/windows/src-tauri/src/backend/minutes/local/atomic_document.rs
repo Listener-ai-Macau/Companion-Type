@@ -2245,11 +2245,18 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let mut document=serde_json::to_value(&result.document).map_err(|_|fail())?;
     let mut reader_recommendations = Vec::new();
     let mut reader_detail_limits=vec![READER_DETAILS; result.document.topics.len()];
+    let mut detail_kinds = result.document.topics.iter()
+        .map(|topic| vec![None; topic.details.len()]).collect::<Vec<_>>();
     let mut required_visible = Vec::new();
     for(pointer,id)in &result.bindings{
         let fact=bank.facts.iter().find(|f|&f.id==id).ok_or_else(fail)?;
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
         let mut evidence_ids=fact.evidence.iter().map(String::as_str).collect::<Vec<_>>();
+        if let ["topics", topic, "details", row] = pointer.split('/').skip(1).collect::<Vec<_>>().as_slice() {
+            let topic: usize = topic.parse().map_err(|_| fail())?;
+            let row: usize = row.parse().map_err(|_| fail())?;
+            detail_kinds[topic][row] = Some(fact.kind.clone());
+        }
         if entry.contains_key("kind") {
             if let Some((framed,intro))=reader_story_framing(bank,fact) {
                 entry.insert("kind".into(),json!(Kind::Opinion));
@@ -2282,7 +2289,9 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         }).collect::<Vec<_>>()));
     }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
-    let mut parsed=super::evidence_document::parse_with_details_limit(&document.to_string(),session,base,MAX_FACTS,reader_limit)?;
+    let mut parsed = super::evidence_document::parse_with_details_limit(
+        &document.to_string(),session,base,MAX_FACTS,reader_limit,&detail_kinds,
+    )?;
     if let Some(timing) = super::timed_evidence::Timing::verified(&session.transcript_text,&sentences,&session.utterances) {
         use crate::companion_v1::{CompanionV1ActionCitation, CompanionV1MinutesActionEvidence};
         let indices = sentences.iter().enumerate().map(|(i,s)|(s["id"].as_str().unwrap(),i))
@@ -2402,6 +2411,28 @@ mod tests{
         assert!(scoped.text.contains("五十块钱") && scoped.text.contains("一百"));
         assert_eq!(bank.reader_priority.get(&scoped.id), Some(&3));
         assert!(bank.facts.iter().all(|fact| !fact.text.contains("违规者")));
+    }
+
+    #[test]
+    fn an_opinion_keeps_its_role_when_selected_as_a_detail() {
+        let source = "运营负责记录退货原因。\n客服认为供应商可能与这个批次的异常有关。";
+        let bank = build_bank(vec![
+            ExtractedFact::verbatim("e0000", "status", "运营负责记录退货原因。"),
+            ExtractedFact::verbatim("e0001", "opinion", "客服认为供应商可能与这个批次的异常有关。"),
+        ], source).unwrap();
+        let status = bank.facts.iter().find(|fact| matches!(fact.kind, Kind::Status)).unwrap();
+        let opinion = bank.facts.iter().find(|fact| matches!(fact.kind, Kind::Opinion)).unwrap();
+        let layout = json!({
+            "purpose":"复核退货原因",
+            "topics":[{"title":"退货复核","points":[[status.id]],"details":[[opinion.id]]}],
+            "decisions":[], "actionItems":[], "questions":[], "excluded":[]
+        });
+        let session = crate::backend::minutes::tests::session_with_text(source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
+        let result = assemble(&layout.to_string(), &bank, &session, &base).unwrap();
+        let body = result.minutes.markdown.split("## 主题原话").next().unwrap();
+        assert!(body.contains("- 观点：客服认为供应商可能与这个批次的异常有关。"));
+        assert_eq!(result.receipt["renderedDetailKinds"], json!([["opinion"]]));
     }
 
     #[test]
