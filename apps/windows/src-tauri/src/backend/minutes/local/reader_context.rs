@@ -425,6 +425,48 @@ fn rule_under_discussion(text: &str) -> Option<&'static str> {
         .find(|party| proposal.contains(party))
 }
 
+fn reported_transfer(text: &str) -> bool {
+    let Some((before, after)) = ["然后现在是", "现在归", "后来改由", "此后转由", "后来由", "现在由"]
+        .into_iter().find_map(|marker| text.split_once(marker)) else { return false; };
+    !text.contains(['?', '？'])
+        && !has(text, &["比如", "例如", "打算", "计划", "如果", "假如", "建议", "可能", "是否", "能不能"])
+        && has(before, &["收回", "收归", "撤回", "移交", "交回", "转让", "退出"])
+        && has(before, &["因为", "由于", "已经", "当时", "办理了", "改制"])
+        && has(after, &["持股", "持有", "所有", "管理", "负责", "接手", "接管", "统一办理"])
+}
+
+fn contrasted_contact_route(text: &str) -> bool {
+    static CONTACT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:通过|由|和|跟|与|找|向)([\p{Han}]{2,12}?)(?:直接|当面)?(沟通|对接|联系|交接|汇报|报送|提交)"
+    ).expect("marked communication routes"));
+    if text.contains(['?', '？']) || has(text, &["例如", "比如", "假设", "能不能", "是否", "打算", "可能"]) {
+        return false;
+    }
+    let compact = text.replace(char::is_whitespace, "");
+    let mut positive = None;
+    for clause in compact.split(['，', ',', '。', '；', ';']) {
+        let Some(path) = CONTACT.captures(clause) else { continue; };
+        let prefix = &clause[..path.get(0).expect("matched route").start()];
+        let target = path.get(1).expect("named route participant").as_str();
+        let action = path.get(2).expect("named route action").as_str();
+        if has(prefix, &["不会", "不能", "不得", "不直接", "不用", "不必", "无需", "禁止"]) {
+            if positive.is_some_and(|(recipient, verb)| recipient != target && verb == action) {
+                return true;
+            }
+        } else if has(prefix, &["都是", "统一", "只能", "必须", "先", "一律"]) {
+            positive = Some((target, action));
+        }
+    }
+    false
+}
+
+fn scoped_recommendation(text: &str) -> bool {
+    has(text, &["客人", "客户", "顾客", "用户", "对方", "来访者"])
+        && has(text, &["不能", "不适用", "过敏", "忌口", "受限", "不接受"])
+        && has(text, &["的话", "如果", "遇到", "有要求"])
+        && has(text, &["不建议", "不要推荐", "不能推荐", "就避开"])
+}
+
 /// Retain source qualifications within a topic that already shows the related
 /// discussion. Excerpts have their own citations and never nominate work.
 pub(super) fn reported_context<'a>(
@@ -493,6 +535,47 @@ pub(super) fn reported_context<'a>(
         }
         result.push(ExamplePassage {source:id,text});
         retained_roles.insert(role);
+    }
+    for (qualifies, label, radius) in [
+        (reported_transfer as fn(&str) -> bool, "发言者说明的变更", 16),
+        (contrasted_contact_route, "发言者说明的联系范围", 48),
+    ] {
+        let passage = topic.iter().copied().filter(|index| !visible.contains(index)).find_map(|index| {
+            let (id, raw) = source(index)?;
+            let body = source_review::bare(raw);
+            if !qualifies(body) || !visible.iter().any(|shown| shown.abs_diff(index) <= radius && same_speaker(*shown,index)) {
+                return None;
+            }
+            let text = format!("{label}：{body}");
+            canonical_brief::line(&text,120).then_some(ExamplePassage {source:id,text})
+        });
+        result.extend(passage);
+    }
+    for &anchor in topic.iter().filter(|index| nominated.contains(index)) {
+        let Some((id, raw)) = source(anchor) else { continue; };
+        let body = source_review::bare(raw);
+        if !scoped_recommendation(body) { continue; }
+        let question = (anchor+1..=anchor+10).find_map(|next| {
+            if !topic.contains(&next) || visible.contains(&next) || !same_speaker(next-1, next) {
+                return None;
+            }
+            let (_, preceding) = source(next-1)?;
+            let (id, raw) = source(next)?;
+            let followup = source_review::bare(raw);
+            (has(preceding, &["避讳", "回避", "避开", "照顾", "尊重"]) &&
+                has(preceding, &["说出来", "说清楚", "说明了", "提出来"]) &&
+                has(followup, &["如果", "要是", "的话"]) &&
+                has(followup, &["没有说", "没说", "没说明", "没提"]) &&
+                has(followup, &["多问", "主动问", "先问", "问清"])).then_some((id, followup))
+        });
+        let Some((question_id, question)) = question else { continue; };
+        let restriction = format!("发言举例的适用条件：{body}");
+        let question = format!("未说明时的询问方式：{question}");
+        if canonical_brief::line(&restriction,120) && canonical_brief::line(&question,120) {
+            if !visible.contains(&anchor) { result.push(ExamplePassage {source:id,text:restriction}); }
+            result.push(ExamplePassage {source:question_id,text:question});
+            break;
+        }
     }
     for &anchor in topic.iter().filter(|index| visible.contains(index)) {
         if !source(anchor).is_some_and(|(_, text)| {
@@ -687,6 +770,15 @@ pub(super) fn reported_context<'a>(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn identifies_actual_transfers_and_two_sides_of_the_same_contact_route() {
+        assert!(super::reported_transfer("因为重新分工，档案已经移交，后来由综合办公室统一管理。"));
+        assert!(!super::reported_transfer("如果重新分工后移交，后来由综合办公室统一管理。"));
+        assert!(super::contrasted_contact_route("有事统一跟服务台对接，不得和配送团队直接对接。"));
+        assert!(!super::contrasted_contact_route("统一跟服务台对接，不会向配送团队报送。"));
+        assert!(!super::contrasted_contact_route("跟服务台对接怎么样，能不能不和配送团队对接？"));
+    }
+
     #[test]
     fn retains_an_unbound_request_as_source_context_after_another_speaker_acknowledges() {
         use std::collections::{HashMap, HashSet};
