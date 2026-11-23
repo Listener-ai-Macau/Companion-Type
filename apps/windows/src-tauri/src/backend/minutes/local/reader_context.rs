@@ -352,8 +352,114 @@ pub(super) fn future_conditions(source: &str) -> Option<[String;2]> {
     lines.iter().all(|line|canonical_brief::line(line,120)).then_some(lines)
 }
 
+/// Retain source qualifications within a topic that already shows the related
+/// discussion. Excerpts have their own citations and never nominate work.
+pub(super) fn reported_context<'a>(
+    topic: &[usize],
+    visible: &HashSet<usize>,
+    known: &HashMap<&'a str, &Value>,
+) -> Vec<ExamplePassage<'a>> {
+    use super::super::source_resolution::split_turn_label;
+
+    let source = |index| {
+        let (id, row) = known.get_key_value(format!("e{index:04}").as_str())?;
+        Some((*id, row["text"].as_str()?))
+    };
+    let speaker = |index: usize| {
+        (index.saturating_sub(36)..=index).rev().find_map(|i| {
+            split_turn_label(source(i)?.1.trim()).map(|(label, _)| label)
+        })
+    };
+    let same_speaker = |first, second| {
+        speaker(first).is_some_and(|label| speaker(second) == Some(label))
+    };
+    let mut result = Vec::new();
+    for &index in topic {
+        if visible.contains(&index) {
+            continue;
+        }
+        let Some((id, raw)) = source(index) else { continue };
+        let body = source_review::bare(raw);
+        let prior = index.saturating_sub(1);
+        let next = index + 1;
+        if visible.contains(&prior)
+            && visible.contains(&next)
+            && source(prior).is_some_and(|(_, text)| {
+                has(text, &["重点从", "重心从", "战略从"])
+                    && has(text, &["变成", "转为", "转向"])
+            })
+            && source(next).is_some_and(|(_, text)| {
+                has(text, &["同时我们也在", "与此同时", "目前也在"])
+            })
+            && has(body, &["长期愿景", "长期的愿景", "长远目标"])
+            && has(body, &["工作量很大", "工作量大", "资源有限"])
+            && has(body, &["进展也不是很快", "进展不快", "进展缓慢", "仍在试点"])
+            && same_speaker(prior, index) && same_speaker(index, next)
+        {
+            if let Some((_, span)) = body.trim_end_matches('。').rsplit_once("当然") {
+                let text = format!("长期愿景进度：{}", span.trim());
+                if canonical_brief::line(&text, 100) {
+                    result.push(ExamplePassage { source: id, text });
+                }
+            }
+            continue;
+        }
+        if !body.starts_with("所以")
+            || !has(body, &["让我们", "使我们"])
+            || !has(body, &["了解", "学到"])
+            || !has(body, &["国际", "国外", "其他地区"])
+            || !has(body, &["怎么响应", "如何响应", "处置流程"])
+            || !visible.iter().any(|prior| prior.abs_diff(index) <= 8 && same_speaker(*prior,index))
+        {
+            continue;
+        }
+        let experience = (index.saturating_sub(4)..index).rev().find_map(|prior| {
+            let (id, raw) = source(prior)?;
+            let body = source_review::bare(raw);
+            (same_speaker(prior,index) && has(body, &["参与", "参加", "亲历"])
+                && has(body, &["的响应", "救援", "灾害处置"])).then_some((id, body))
+        });
+        let adaptation = (index + 1..=index + 5).find_map(|later| {
+            let (id, raw) = source(later)?;
+            let body = source_review::bare(raw);
+            let span = body.find("就想把").map(|start| &body[start..])?;
+            (same_speaker(index,later) && has(span, &["本地化", "本土化"])
+                && has(span, &["工具", "流程", "方法"])).then_some((id, span))
+        });
+        let (Some(experience), Some(adaptation)) = (experience, adaptation) else { continue };
+        let context = body.split_once("，这是").map_or(body, |(before, _)| before);
+        let lines = [
+            (experience.0, format!("参与经历：{}",experience.1)),
+            (id, format!("从中学习：{context}")),
+            (adaptation.0, format!("当时的设想：{}",adaptation.1)),
+        ];
+        if lines.iter().all(|(_, text)| canonical_brief::line(text,120)) {
+            result.extend(lines.into_iter().map(|(source,text)| ExamplePassage { source, text }));
+            break;
+        }
+    }
+    result
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn progress_qualifier_stays_with_its_original_speaker_and_visible_topic() {
+        let mut rows = [
+            ("e0001", serde_json::json!({"text":"说话人3：工作重心从单点巡检转向流程改进。"})),
+            ("e0002", serde_json::json!({"text":"长期愿景是缩短处理周期，当然工作量大，进展不快。"})),
+            ("e0003", serde_json::json!({"text":"同时我们也在完善交接方式。"})),
+        ];
+        let display = |rows: &[(&str, serde_json::Value)]| {
+            let known = rows.iter().map(|(id,row)| (*id,row)).collect();
+            let visible = std::collections::HashSet::from([1,3]);
+            super::reported_context(&[1,2,3], &visible, &known)
+                .into_iter().map(|passage| passage.text).collect::<Vec<_>>()
+        };
+        assert_eq!(display(&rows), ["长期愿景进度：工作量大，进展不快"]);
+        rows[2].1 = serde_json::json!({"text":"说话人4：同时我们也在完善交接方式。"});
+        assert!(display(&rows).is_empty());
+    }
     #[test]
     fn makes_scope_explicit_without_adding_a_commitment() {
         assert_eq!(
