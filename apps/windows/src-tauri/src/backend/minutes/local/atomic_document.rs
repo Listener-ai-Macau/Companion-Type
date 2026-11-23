@@ -2413,7 +2413,9 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
                 })
             }).collect::<Vec<_>>();
             context.sort_by_key(|fact| fact.source);
-            for id in super::reader_context::contrast_risk_context(&context,&proposed,&visible) {
+            let mut supplements = super::reader_context::contrast_risk_context(&context,&proposed,&visible);
+            supplements.extend(super::reader_context::contrasting_reading_details(&context,&proposed,&visible,&heading_terms(&title)));
+            for id in supplements {
                 if let Some(index) = details.iter().position(|[fact]| fact.as_str() == id).filter(|index| *index >= limit) {
                     let detail = details.remove(index);
                     details.insert(limit,detail);

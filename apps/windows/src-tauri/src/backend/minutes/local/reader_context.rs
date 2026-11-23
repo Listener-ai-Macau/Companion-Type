@@ -152,6 +152,89 @@ pub(super) fn contrast_risk_context<'a>(
         .collect()
 }
 
+/// Keep a selected distinction, and preserve the exception or consequence
+/// of a point already in the reading. Only existing, verified facts qualify.
+pub(super) fn contrasting_reading_details<'a>(
+    facts: &[ComparisonFact<'a>],
+    selected: &HashSet<&str>,
+    visible: &HashSet<&str>,
+    terms: &[String],
+) -> Vec<&'a str> {
+    let topic_term = |text: &str| {
+        terms.iter().any(|term| {
+            term.chars().count() >= 2 && !has(term, &["讨论", "补充"]) && text.contains(term)
+        })
+    };
+    let hidden = |fact: &ComparisonFact<'_>| !visible.contains(fact.id);
+    let mut added = Vec::new();
+
+    if let Some(point) = facts.iter().find(|p| {
+        hidden(p)
+            && selected.contains(p.id)
+            && has(p.text, &["两个角色", "两类角色", "两种角色", "两种方式"])
+            && p.text.matches("一个是").count() >= 2
+            && !has(p.text, &["举例讨论", "尚未确定"])
+    }) {
+        added.push(point.id);
+    }
+
+    if let Some(point) = facts.iter().find(|p| {
+        hidden(p)
+            && topic_term(p.text)
+            && has(
+                p.text,
+                &["可能不会成为", "未必会成为", "未必是", "不一定会成为"],
+            )
+            && has(
+                p.text,
+                &["最终的选择", "最终选择", "最终的方案", "最终方案"],
+            )
+            && has(p.text, &["但是", "不过"])
+            && has(p.text, &["一种附属", "一部分", "一种补充", "局部采用"])
+            && facts.iter().any(|lead| {
+                visible.contains(lead.id)
+                    && topic_term(lead.text)
+                    && (p.source.saturating_sub(6)..p.source).contains(&lead.source)
+            })
+    }) {
+        added.push(point.id);
+    }
+
+    if let Some(point) = facts.iter().find(|p| {
+        hidden(p)
+            && topic_term(p.text)
+            && has(p.text, &["未来", "将来", "以后"])
+            && has(p.text, &["可能有这样", "有可能会有这种"])
+            && has(p.text, &["组合起来", "组装成", "拼接成"])
+            && facts.iter().any(|lead| {
+                visible.contains(lead.id)
+                    && (p.source.saturating_sub(4)..p.source).contains(&lead.source)
+                    && has(lead.text, &["拼起来", "组合起来", "组装起来", "拼接起来"])
+            })
+    }) {
+        added.push(point.id);
+    }
+
+    let caution = facts.iter().find(|p| {
+        hidden(p)
+            && has(p.text, &["小说", "电影", "创作", "作品"])
+            && has(p.text, &["预警", "警示"])
+            && has(p.text, &["可能性", "可能", "预想", "设想"])
+    });
+    if let Some(caution) = caution {
+        if let Some(misreading) = facts.iter().find(|p| {
+            hidden(p)
+                && (caution.source + 1..=caution.source + 4).contains(&p.source)
+                && has(p.text, &["但是", "不过"])
+                && has(p.text, &["当成", "误以为", "误解为", "当作"])
+                && has(p.text, &["真实", "现实", "实际发生"])
+        }) {
+            added.extend([caution.id, misreading.id]);
+        }
+    }
+    added
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -173,6 +256,36 @@ mod tests {
         );
         assert!(got[0].text.starts_with("作品情节："));
         assert!(fictional_example("举例讨论：今天我们讨论应急演练。", &ids, &known).is_none());
+    }
+
+    #[test]
+    fn explicit_roles_and_a_warning_stay_with_their_limitations() {
+        let facts = [
+            ComparisonFact {
+                id: "a01",
+                source: 6,
+                text: "两个角色一个是协调客户，一个是保障交付。",
+            },
+            ComparisonFact {
+                id: "a02",
+                source: 8,
+                text: "这部小说写可能出现的后果，用作预警。",
+            },
+            ComparisonFact {
+                id: "a03",
+                source: 10,
+                text: "但是有人误以为是现实。",
+            },
+        ];
+        let terms = ["协调".to_owned()];
+        assert_eq!(
+            contrasting_reading_details(&facts, &HashSet::from(["a01"]), &HashSet::new(), &terms),
+            ["a01", "a02", "a03"]
+        );
+        assert!(
+            contrasting_reading_details(&facts[..2], &HashSet::new(), &HashSet::new(), &terms)
+                .is_empty()
+        );
     }
 
     #[test]
