@@ -525,6 +525,54 @@ fn contains_access_ban(words: &str, subject: &str, operations: &[&str]) -> bool 
     })
 }
 
+pub(super) fn parallel_start(words: &str) -> bool {
+    static START: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?:同时|同步|并行)(?:同时|同步|并行)?(?:开始|启动|上线|开展|推进|开工|发布|做)",
+        r"|(?:开始|启动|上线|开展|推进|开工|发布)(?:同时|同步|并行)"
+    )).expect("the same schedule discussed as a parallel start"));
+    START.is_match(words)
+}
+
+/// Two incompatible views about an explicitly offered sequence are evidence of
+/// an open schedule. A conditional warning alone is not an opposing decision.
+pub(super) fn unresolved_start_order(sentences: &[Value], index: usize) -> Option<[usize; 3]> {
+    let opening = body(sentences.get(index)?["text"].as_str()?);
+    if !parallel_start(opening) || !has(opening, &["先", "分批", "分开", "错开"])
+        || !has(opening, &["还是", "或者", "哪种", "要不要"])
+        || has(opening, &["假设", "举例", "比如说", "之前是", "上次是"])
+    {
+        return None;
+    }
+    let debate = (index + 1..(index + 11).min(sentences.len())).map_while(|position| {
+        let words = body(sentences[position]["text"].as_str()?);
+        (!has(words, &["下一个议题", "下一项议程", "换个话题"])).then_some((position, words))
+    });
+    let mut opposed = None;
+    let mut supported = None;
+    for (position, words) in debate {
+        if has(words, &["就这么定", "最终确定", "最终决定", "最后决定", "以此为准", "已经确认", "刚才说错", "统一改为"])
+            && (parallel_start(words) || has(words, &["先", "分批", "分开", "错开"]))
+            && !has(words, &["几时", "什么时候", "是否", "尚未", "还没", "还要", "待确认", "待核", "之前", "上次"])
+        {
+            return None;
+        }
+        if position > index + 6 || !parallel_start(words) || super::source_context::question_only(words)
+            || has(words, &["假设", "举例", "比如说", "过去", "上次", "是否", "要不要"])
+        {
+            continue;
+        }
+        if has(words, &["不太行", "不行", "不适合", "不建议", "不太建议", "不能同步",
+            "不能同时", "不可以同时", "不宜", "不赞成", "不太赞成", "不支持"]) {
+            opposed.get_or_insert(position);
+        } else if has(words, &["比较好", "更合适", "比较合适", "建议同时", "建议同步", "同意同步",
+            "同意同时", "我赞成", "我们赞成"]) {
+            supported.get_or_insert(position);
+        }
+    }
+    let (first, second) = (opposed?, supported?);
+    Some([index, first.min(second), first.max(second)])
+}
+
 /// A malformed quantity must not turn a real inspection requirement into a
 /// definitive numerical instruction. The original fragment remains linked.
 pub(super) fn inspection_time_review(source: &str) -> Option<String> {
@@ -834,6 +882,21 @@ mod public_condition_tests {
         assert!(scope_conflict(&exception,0).is_none());
         let clarified=rows(&["不允许访客进场。","以前的做法作废，以此为准，访客进场须登记。"]);
         assert!(scope_conflict(&clarified,0).is_none());
+    }
+
+    #[test]
+    fn an_open_start_order_requires_opposing_views_and_survives_fillers() {
+        let proposal = "这些场馆是先做试点，还是同时启动？";
+        let warning = "同时启动不适合，物资不足。";
+        let support = "我建议同时启动，场馆需要同一天开门。";
+        let debate = rows(&[proposal, "嗯。", warning, support]);
+        assert_eq!(unresolved_start_order(&debate, 0), Some([0, 2, 3]));
+        let settled = rows(&[proposal, warning, support, "最终确定分批启动。"]);
+        assert_eq!(unresolved_start_order(&settled, 0), None);
+        let same_side = rows(&[proposal, warning, "是的，我不太赞成同时启动。"]);
+        assert_eq!(unresolved_start_order(&same_side, 0), None);
+        let other_topic = rows(&[proposal, warning, "下一项议程。", support]);
+        assert_eq!(unresolved_start_order(&other_topic, 0), None);
     }
 
     #[test]

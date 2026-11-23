@@ -368,6 +368,7 @@ impl SourceWindows {
             let mut source_quote_origin = None;
             let mut overlong = false;
             let mut overlong_commitment = false;
+            let mut retained_completed_report = false;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
@@ -389,10 +390,14 @@ impl SourceWindows {
                     !source_grounding::context_only_fragment(offered[reference.as_str()])
                 });
                 fact.evidence.insert(0, anchor.to_owned());
-                if !canonical_brief::line(&fact.text, 90) {
+                let bounded_report = !canonical_brief::line(&fact.text, 90);
+                if bounded_report {
                     overlong = true;
                     overlong_commitment |= matches!(fact.role.as_str(), "action" | "decision" | "question");
-                    continue;
+                    let prefix = (fact.role == "status")
+                        .then(|| completed_report_prefix(&fact.text)).flatten();
+                    let Some(prefix) = prefix else { continue; };
+                    fact.text = prefix.to_owned();
                 }
                 let sources:Vec<_>=fact.evidence.iter().map(|id|offered[id.as_str()]).collect();
                 let mut disputed_quantities = source_grounding::unsupported_quantities(&fact.text, &sources);
@@ -471,6 +476,7 @@ impl SourceWindows {
                     source_quote_origin = Some("open-question-source-quote");
                     continue;
                 }
+                retained_completed_report |= bounded_report;
                 accepted.push(fact);
             }
             if overlong {
@@ -506,6 +512,8 @@ impl SourceWindows {
                     }
                 } else if overlong_commitment {
                     "overlong-commitment-source-review"
+                } else if retained_completed_report {
+                    "bounded-completed-report"
                 } else if overlong {
                     "bounded-original-quotes"
                 } else {
@@ -540,6 +548,33 @@ impl SourceWindows {
         if !answers.is_empty() { return Err(fail()); }
         Ok(CheckedWindow { facts, reviewed, deferred })
     }
+}
+
+// A lengthy descriptive reply can contain a completed first sentence and a
+// separate background sentence. Run the first through the normal grounding
+// checks and keep the full source fallback. Never cut through a qualification.
+fn completed_report_prefix(reply: &str) -> Option<&str> {
+    let (first, rest) = reply.split_once('。')?;
+    let first = first.trim();
+    let rest = rest.trim();
+    if !(20..90).contains(&first.chars().count()) || !canonical_brief::line(first, 89)
+        || first.contains(['？', '?', '！', '!'])
+        || !["当时", "当年", "此前", "曾经", "曾在", "过去", "原先", "起初", "已完成", "已经"]
+            .iter().any(|word| first.contains(word))
+        || ["但是", "需要", "要有", "需招聘", "应由", "应该", "必须", "务必", "尚未", "待定", "取决", "如果", "计划"]
+            .iter().any(|word| first.contains(word))
+        || !rest.ends_with('。')
+        || ["但", "不过", "然而", "前提", "条件", "否则", "除非", "只有", "如果", "不能",
+            "不可", "未", "不再", "没有", "待核", "待确认", "取决", "以此为准", "例外",
+            "取消", "更正", "改为", "相反", "而不是", "实际是", "不一定", "可能", "须",
+            "才", "例子", "假设", "只是", "并非", "改口", "不对"]
+            .iter().any(|word| rest.contains(word))
+    {
+        return None;
+    }
+    // Keep punctuation only when it belongs to the whole first sentence.
+    let end = reply.find('。')? + '。'.len_utf8();
+    Some(reply[..end].trim())
 }
 
 #[cfg(test)]
@@ -679,6 +714,105 @@ mod tests {
         let result = window.check(0, &task.to_string()).unwrap();
         assert_eq!(result.reviewed[0]["origin"], "overlong-commitment-source-review");
         assert!(result.facts.iter().all(|f| f.role == "status" && f.text.starts_with("原话待核：")));
+    }
+
+    #[test]
+    fn a_completed_report_from_an_overlong_reply_still_has_to_match_its_source() {
+        let original = "然后就在玉树地震的时候就拉起了我们团队，是当时在北大的 BBS 上发了一个帖子去招人，然后就来了很多北大的同学，然后我就把他们拉到家里来培训，然后这就是这个最早的一批革命骨干的来源，所以我们就在线上开始正式的，当时YY ，用 YY YY 对 YY 语音，然后还有贴，还有这个微信群，然后也包括一些 BDS 什么的这个工具，把卓明的出行的这个卓明最早的团队就是纯志愿的团队，就跟现在的这在线志愿的团队一样。";
+        let after = "经过专业化过程后，于 2011 年参加公益行业灾害管理高级研修班，与国内成熟机构负责人访学并学习专业救灾知识，提升了专业门槛。";
+        let first = "我们团队的起源是在玉树地震期间，当时在北大的 BBS 上发帖招人，招募了北大同学组成纯志愿团队，通过 YY、微信群、BDS 等工具建立。";
+        let window = SourceWindows::new(original).unwrap();
+        let reply = json!({"e0000":[{"r":"status","t":format!("{first}{after}")}]});
+        let checked = window.check(0, &reply.to_string()).unwrap();
+        assert!(checked.facts.iter().any(|fact| fact.text == first));
+        assert!(checked.facts.iter().all(|fact| !fact.text.contains("2011")));
+        let missing_limit = format!("{first}但当时平台仅允许完成培训的志愿者入群，未通过培训的人员不得使用这些工具。");
+        assert!(completed_report_prefix(&missing_limit).is_none());
+        assert!(completed_report_prefix(&format!("厨房当时有专人负责，但是灭火器也要有专人负责。{after}")).is_none());
+        assert!(completed_report_prefix(&format!("宣传需要人员去大学或社区进行，需招聘网站制作人员和专业摄像师。{after}")).is_none());
+        let unsupported = json!({"e0000":[{"r":"status","t":format!("{}{after}",first.replace("YY","Microsoft Teams"))}]});
+        let checked = window.check(0, &unsupported.to_string()).unwrap();
+        assert!(checked.facts.iter().all(|fact| !fact.text.contains("Microsoft Teams")));
+    }
+
+    #[test]
+    fn preserves_the_reported_coordination_from_the_saved_roundtable_reply() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_OVERLONG_TOPIC_RECEIPT") else { return; };
+        let receipt: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source = std::fs::read_to_string(receipt["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let trace = &receipt["receipt"];
+        assert_eq!(trace["newCloudCalls"], 0);
+        let (index, row) = trace["reviewedSourceWindows"].as_array().unwrap().iter().enumerate()
+            .find(|(_, window)| window["sentences"].as_array().unwrap().iter().any(|s| s["sentenceId"] == "e0263"))
+            .unwrap();
+        let mode = SourceEncoding::for_name(row["sourceEncoding"].as_str().unwrap()).unwrap();
+        let stage = format!("source-window-{}", index + 1);
+        let call = trace["calls"].as_array().unwrap().iter().find(|r| r["stage"] == stage).unwrap();
+        let windows = SourceWindows::new(&source).unwrap();
+        let (input, schema) = windows.contract(index, mode);
+        let expected = super::super::transport::request_body(
+            call["request"]["model"].as_str().unwrap(), mode.prompt(), input, schema,
+            super::super::SOURCE_OUTPUT_TOKENS, &super::super::transport::profile().unwrap(),
+        ).unwrap();
+        assert_eq!(call["request"], expected);
+        let checked = windows.check_encoded(index, call["output"].as_str().unwrap(), mode).unwrap();
+        let facts: Vec<_> = checked.facts.iter().filter(|f| f.evidence[0] == "e0263")
+            .map(|f| f.text.as_str()).collect();
+        assert!(facts.iter().any(|text| text.contains("BBS") && text.contains("YY") && text.contains("微信群")));
+        assert!(!facts.iter().any(|text| text.contains("2011")));
+        println!("retained same-anchor public-source facts: {}", serde_json::to_string(&facts).unwrap());
+    }
+
+    #[test]
+    fn replay_bounded_reports_across_archived_meetings() {
+        use super::super::source_checkpoint::{CheckedSourcePrefix, CheckpointInput};
+        use sha2::{Digest, Sha256};
+        let Some(directory) = std::env::var_os("COMPANION_TEST_BOUNDED_REPORT_ARCHIVE") else { return; };
+        let root = std::path::PathBuf::from(directory);
+        let manifest: Value = serde_json::from_slice(&std::fs::read(root.join("results.json")).unwrap()).unwrap();
+        let cases = manifest.get("cases").unwrap_or(&manifest["results"]).as_object().unwrap();
+        let mut verified = 0;
+        for (name, run) in cases {
+            if run.get("exit").is_some_and(|value| value != 0) { continue; }
+            let path = root.join(name).join("completed.json");
+            let raw = std::fs::read(&path).unwrap();
+            let record: Value = serde_json::from_slice(&raw).unwrap();
+            let source = std::fs::read_to_string(record["sourceFile"].as_str().unwrap()).unwrap();
+            let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+            let digest = format!("{:x}", Sha256::digest(source.as_bytes()));
+            let saved: CheckpointInput = serde_json::from_value(json!({
+                "path": path, "sha256": format!("{:x}", Sha256::digest(&raw))
+            })).unwrap();
+            let prefix = CheckedSourcePrefix::load(
+                &saved, &source, &digest, record["durationMs"].as_u64().unwrap(), run["backend"] == "vulkan",
+            ).unwrap();
+            let windows = SourceWindows::new(&source).unwrap();
+            assert_eq!(prefix.len(), windows.len(), "{name}");
+            let mut recovered = Vec::new();
+            for index in 0..windows.len() {
+                let (mode, call) = prefix.window(index).unwrap();
+                let answer = call.map(|c| c["output"].as_str().unwrap()).unwrap_or("{}");
+                let checked = windows.check_encoded(index, answer, mode).unwrap();
+                for marker in checked.reviewed.iter().filter(|r| r["origin"] == "bounded-completed-report") {
+                    let anchor = marker["sentenceId"].as_str().unwrap();
+                    let original = call.unwrap()["output"].as_str().unwrap();
+                    let output: Value = serde_json::from_str(crate::backend::minutes::strip_code_fences(original).trim()).unwrap();
+                    let recovered_parts = output[anchor].as_array().unwrap().iter().filter(|fact| fact["r"] == "status")
+                        .filter_map(|fact| fact["t"].as_str()).filter(|text| !canonical_brief::line(text, 90))
+                        .filter_map(completed_report_prefix);
+                    for chosen in recovered_parts {
+                        if let Some(fact) = checked.facts.iter().find(|f| f.evidence[0] == anchor && f.text == chosen) {
+                            assert_eq!(fact.role, "status");
+                            recovered.push(json!({"sourceId":anchor,"text":chosen}));
+                        }
+                    }
+                }
+            }
+            println!("ARCHIVED_SOURCE_OUTCOME {}", json!({"case":name,"recovered":recovered}));
+            verified += 1;
+        }
+        assert!(verified >= 3);
     }
 
     #[test]

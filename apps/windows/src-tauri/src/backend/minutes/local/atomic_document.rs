@@ -862,6 +862,32 @@ fn source_verified_facts(
         let next=verified.iter().position(|fact|fact.evidence[0].as_str() > ids[0]).unwrap_or(verified.len());
         verified.insert(next,review);
     }
+    for index in 0..sentences.len() {
+        let Some([opening, first, second]) = delivery_evidence::unresolved_start_order(sentences, index) else {
+            continue;
+        };
+        let positions = [opening, first, second];
+        if positions.iter().any(|i| frames_at[*i].is_some() || hypothetical.contains(i)) {
+            continue;
+        }
+        let ids = positions.map(|i| sentences[i]["id"].as_str().unwrap());
+        if verified.iter().any(|fact| fact.source_needs_review
+            && fact.text.starts_with("原话待核：执行顺序")
+            && fact.evidence.iter().any(|id| ids.contains(&id.as_str())))
+        {
+            continue;
+        }
+        verified.retain(|fact| !matches!(fact.role.as_str(), "action" | "decision")
+            || !fact.evidence.iter().any(|id| ids.contains(&id.as_str()))
+            || !delivery_evidence::parallel_start(&fact.text));
+        let mut fact = ExtractedFact::review_quote(ids[0], "status",
+            "原话待核：执行顺序。会上对同时推进和按先后推进有不同意见，需确认安排。");
+        extend_references(&mut fact, sentences, &[first, second]);
+        fact.execution_reading = true;
+        audit.push(json!({"sentenceId":ids[0],"reason":"opposed-start-order-in-source","evidence":fact.evidence}));
+        let next = verified.iter().position(|row| row.evidence[0].as_str() > ids[0]).unwrap_or(verified.len());
+        verified.insert(next, fact);
+    }
     if let Some(timing) = timing {
         for (earlier, rows) in sentences.windows(2).enumerate() {
             let later = earlier + 1;
@@ -1290,13 +1316,22 @@ fn build_bank_with_timing(
         let grounded_handoff = placement == Placement::Topic && matches!(kind, Kind::Status)
             && !f.source_needs_review && !f.quantity_needs_review
             && super::delivery_evidence::grounded_handoff_condition(anchor_text, &f.text);
-        if placement == Placement::Topic && (f.execution_reading || binding.is_some() || grounded_handoff) {
+        let grounded_reported_arrangement = placement == Placement::Topic && matches!(kind, Kind::Status)
+            && !f.source_needs_review && !f.quantity_needs_review
+            && super::source_review::bare(anchor_text) == super::source_review::bare(&f.text)
+            && reported_premise_with_confirmation(super::source_review::bare(&f.text));
+        if placement == Placement::Topic
+            && (f.execution_reading || binding.is_some() || grounded_handoff || grounded_reported_arrangement)
+        {
             execution_reading.insert(id.clone());
             if binding.is_some() {
                 verification.push(json!({"sentenceId":anchor,"reason":"verified-material-condition-in-reader","factId":id}));
             }
             if grounded_handoff {
                 verification.push(json!({"sentenceId":anchor,"reason":"grounded-handoff-condition-in-reader","factId":id}));
+            }
+            if grounded_reported_arrangement {
+                verification.push(json!({"sentenceId":anchor,"reason":"reported-arrangement-with-verbal-confirmation-tag","factId":id}));
             }
         }
         facts.push(Fact { id, kind, placement, text:f.text, owner:f.owner, due:f.due, evidence:f.evidence });
@@ -1848,6 +1883,28 @@ fn heading_terms(title: &str) -> Vec<String> {
     terms.sort();
     terms.dedup();
     terms
+}
+
+fn reported_premise_with_confirmation(text: &str) -> bool {
+    let Some(statement) = text.strip_suffix(['？', '?']).and_then(|body| {
+        let body = body.trim_end();
+        body.strip_suffix("对吧").or_else(|| body.strip_suffix("是吧"))
+    }) else {
+        return false;
+    };
+    let Some((premise, result)) = statement.split_once("所以").or_else(|| statement.split_once("因此")) else {
+        return false;
+    };
+    !super::source_context::question_only(text)
+        && !statement.contains(['？', '?'])
+        && !["据说", "传闻", "我猜", "假设", "举例", "如果", "是不是", "可能", "是否"]
+            .iter().any(|cue| statement.contains(cue))
+        && ["是由", "主要由", "来自", "由这些", "已经", "通过", "负责"]
+            .iter().any(|cue| premise.contains(cue))
+        && ["协作", "配合", "整理", "交给", "负责", "登记", "处理"]
+            .iter().any(|cue| premise.contains(cue))
+        && premise.chars().count() >= 15
+        && result.trim_matches([' ', '，', ',', '。']).chars().count() >= 6
 }
 
 fn useful_reader_point(fact: &Fact) -> bool {
@@ -2430,6 +2487,83 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn competing_start_orders_keep_three_citations_and_the_separate_deadline() {
+        let source = concat!(
+            "下次我们要制定一套完整的方案。\n",
+            "对，下周二之前把方案定过来。\n",
+            "那咱们先做那个商场的，然后还是先做那个电商的，还是先做直播的，同时同时开始。\n",
+            "肯定要先，同时同时开始，但是如果同时开始的话，同时开始的还是不太行，还是会有点儿乱。\n",
+            "我感觉可以同时同时做比较好，方案可能会比较乱一些，对。\n",
+            "不会的，你你你线上，呃线上和线下同时开始，还是很很关注的。"
+        );
+        let rows = factual_audit::evidence_sentences(&source_units(source));
+        let options = rows.iter().position(|row| row["text"].as_str().unwrap().contains("商场")).unwrap();
+        let facts = rows.iter().map(|row| {
+            let anchor = row["id"].as_str().unwrap();
+            let text = row["text"].as_str().unwrap();
+            if let Some(action) = super::super::source_authority::Authority::from_source(text).confirmed_deadline_action {
+                let wording = action.text.clone();
+                return ExtractedFact::original_action(anchor, &wording, action);
+            }
+            ExtractedFact::verbatim(anchor, "status", text)
+        }).collect();
+        let bank = build_bank(facts, source).unwrap();
+        let pending = bank.facts.iter().find(|fact| fact.text.starts_with("原话待核：执行顺序")).unwrap();
+        assert_eq!(pending.evidence, rows[options..options + 3].iter()
+            .map(|row| row["id"].as_str().unwrap()).collect::<Vec<_>>());
+        assert!(bank.required_topic(&pending.id));
+        assert!(!bank.facts.iter().any(|fact| fact.placement == Placement::Decision && fact.text.contains("同时")));
+        assert!(bank.facts.iter().any(|fact| fact.placement == Placement::Action
+            && fact.due.as_deref().is_some_and(|date| date.contains("下周二"))));
+        let session = crate::backend::minutes::tests::session_with_text(source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
+        let by_placement = |placement| bank.facts.iter()
+            .filter(|fact| fact.placement == placement && fact.id != pending.id)
+            .map(|fact| [&fact.id]).collect::<Vec<_>>();
+        let layout = json!({
+            "purpose":"渠道推广安排",
+            "topics":[{"title":"推广安排","points":[[pending.id]],"details":by_placement(Placement::Topic)}],
+            "decisions":by_placement(Placement::Decision),"actionItems":by_placement(Placement::Action),
+            "questions":by_placement(Placement::Question),"excluded":[]
+        });
+        let document = assemble(&layout.to_string(), &bank, &session, &base).unwrap();
+        assert!(document.minutes.markdown.contains("原话待核：执行顺序"));
+        assert!(document.minutes.markdown.contains("下周二"));
+    }
+
+    #[test]
+    fn a_reported_premise_can_survive_a_trailing_confirmation_tag() {
+        let report = "而公益组织往往是由这种几个少数的全职，加上很多很多远程的志愿者来协作，所以大家更需要工具对吧？";
+        assert!(reported_premise_with_confirmation(report));
+        assert!(reported_premise_with_confirmation("社区会议的资料主要由值班成员统一整理，所以居民能直接核对登记记录是吧？"));
+        assert!(!reported_premise_with_confirmation("这件事是不是由志愿者负责，所以有关人员需要核对是吧？"));
+        assert!(!reported_premise_with_confirmation("我猜是由几名志愿者来负责，所以还是要工具对吧？"));
+        assert!(!reported_premise_with_confirmation("因为前台没有准备好，所以要延期对吧？"));
+        let overview = "目前行业里的信息工具种类仍然有限，沟通需要投入时间。";
+        let source = format!("{overview}\n{report}");
+        let bank = build_bank(vec![
+            ExtractedFact::verbatim("e0000", "status", overview),
+            ExtractedFact::verbatim("e0001", "status", report),
+        ], &source).unwrap();
+        let fact = bank.facts.iter().find(|f| f.text == report).unwrap();
+        assert!(!useful_reader_point(fact));
+        assert!(bank.required_topic(&fact.id));
+        assert_eq!(fact.placement, Placement::Topic);
+        assert_eq!(fact.evidence, ["e0001"]);
+        let main = bank.facts.iter().find(|f| f.id != fact.id).unwrap();
+        let session = crate::backend::minutes::tests::session_with_text(&source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session,"replay");
+        let layout = json!({
+            "purpose": "讨论公益组织的协作工具",
+            "topics":[{"title":"协作方式","points":[[main.id]],"details":[[fact.id]]}],
+            "decisions":[], "actionItems":[], "questions":[], "excluded":[]
+        });
+        let rendered = assemble(&layout.to_string(), &bank, &session, &base).unwrap();
+        assert!(rendered.minutes.markdown.contains("远程的志愿者来协作"));
+        assert!(rendered.minutes.action_items.is_empty() && rendered.minutes.decisions.is_empty());
+    }
 
     #[test]
     fn explicit_followups_and_corrections_are_fixed_before_layout() {
