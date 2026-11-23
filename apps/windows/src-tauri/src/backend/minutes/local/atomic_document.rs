@@ -2715,6 +2715,8 @@ fn assemble_with_context(
     let mut reader_reported_context = Vec::new();
     if !bank.chapter_spans.is_empty() {
         let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
+        let proposed: HashSet<_> = bank.receipt["coreProposedReaderFactIds"].as_array().into_iter()
+            .flatten().filter_map(Value::as_str).collect();
         for (topic,limit) in reader_detail_limits.iter_mut().enumerate() {
             let prefix = format!("/topics/{topic}/details/");
             let point_prefix = format!("/topics/{topic}/points/");
@@ -2766,6 +2768,7 @@ fn assemble_with_context(
             }
             let mut topic_sources = Vec::new();
             let mut visible_sources = HashSet::new();
+            let mut nominated_sources = HashSet::new();
             for (path,id) in result.bindings.iter() {
                 let detail = path.strip_prefix(&prefix).and_then(|row| row.parse::<usize>().ok());
                 let point = path.starts_with(&point_prefix);
@@ -2775,10 +2778,17 @@ fn assemble_with_context(
                 else { continue };
                 topic_sources.push(source);
                 if point || detail.is_some_and(|row| row < *limit) { visible_sources.insert(source); }
+                if !bank.review_quote(id.as_str()) &&
+                    (proposed.contains(id.as_str()) || bank.reader_order.contains_key(id.as_str()))
+                {
+                    nominated_sources.insert(source);
+                }
             }
             topic_sources.sort_unstable();
             topic_sources.dedup();
-            let reported = super::reader_context::reported_context(&topic_sources, &visible_sources, &known);
+            let reported = super::reader_context::reported_context(
+                &topic_sources, &visible_sources, &nominated_sources, &known,
+            );
             let details = document["topics"][topic]["details"].as_array_mut().ok_or_else(fail)?;
             let offset = (*limit).min(details.len());
             let example_count = example.as_ref().map_or(0, |(_,passages)| passages.len());

@@ -352,11 +352,64 @@ pub(super) fn future_conditions(source: &str) -> Option<[String;2]> {
     lines.iter().all(|line|canonical_brief::line(line,120)).then_some(lines)
 }
 
+const ALTERNATIVE_SCOPES: &[(&[&str], &[&str])] = &[
+    (&["新机型", "新款"], &["老机型", "旧机型", "老款", "旧款", "去年的机型"]),
+    (&["新系统", "新版本", "新版"], &["旧系统", "旧版本", "旧版", "老版本"]),
+    (&["新用户", "新客户"], &["老用户", "老客户", "现有用户", "现有客户"]),
+    (&["新设备", "新增设备"], &["原有设备", "旧设备", "存量设备"]),
+    (&["新员工", "新同事"], &["老员工", "现有员工", "在岗员工"]),
+];
+
+fn treatment_words(text: &str) -> String {
+    text.chars().filter(|ch| ch.is_alphanumeric() && !matches!(ch, '的' | '嗯' | '呃')).collect()
+}
+
+/// The first class and its restriction already appear in the reader.
+/// Keep the other class with its own treatment when the same speaker
+/// explicitly contrasts the same operation in nearby source sentences.
+fn alternate_treatment(
+    rows: &[(usize, &str, &str)],
+    visible: &HashSet<usize>,
+) -> Option<(usize, usize)> {
+    let (_, _, subject) = *rows.first()?;
+    let (first, other) = ALTERNATIVE_SCOPES.iter().find(|(first, other)| {
+        has(subject, first) && !has(subject, other)
+    })?;
+    let uncertain = |text: &str| {
+        text.contains(['?', '？']) || has(text, &["是否", "要不要", "不确定", "听说", "举例讨论"])
+    };
+    let (restriction, operation) = rows.iter().take(2).enumerate().find_map(|(pos, &(index, _, text))| {
+        if !visible.contains(&index) || uncertain(text) { return None; }
+        let operation = ["不打算", "不准备", "不允许", "不能", "不可以"].into_iter()
+            .find_map(|marker| text.split_once(marker).map(|(_, after)| after))?
+            .split(['，', ',', '。', '；', ';']).next()?;
+        let words = treatment_words(operation);
+        (4..=18).contains(&words.chars().count()).then_some((pos, words))
+    })?;
+    let counterpart = (restriction + 1..rows.len()).find(|&pos| {
+        let text = rows[pos].2;
+        has(text, other) && !has(text, first) && !uncertain(text)
+    })?;
+    let treatment = (counterpart..rows.len().min(counterpart + 2)).find(|&pos| {
+        let text = rows[pos].2;
+        if uncertain(text) || has(text, first) { return false; }
+        text.split(['，', ',', '。', '；', ';']).any(|clause| {
+            let words = treatment_words(clause);
+            words.split_once(operation.as_str()).is_some_and(|(lead, _)| {
+                !has(lead, &["不", "禁止", "停止", "取消", "未"])
+                    && has(lead, &["可以", "进行", "继续", "安排", "保留", "打算", "允许", "改为"])
+            })
+        })
+    })?;
+    Some((counterpart, treatment))
+}
+
 /// Retain source qualifications within a topic that already shows the related
 /// discussion. Excerpts have their own citations and never nominate work.
 pub(super) fn reported_context<'a>(
     topic: &[usize],
     visible: &HashSet<usize>,
+    nominated: &HashSet<usize>,
     known: &HashMap<&'a str, &Value>,
 ) -> Vec<ExamplePassage<'a>> {
     use super::super::source_resolution::split_turn_label;
@@ -374,6 +427,37 @@ pub(super) fn reported_context<'a>(
         speaker(first).is_some_and(|label| speaker(second) == Some(label))
     };
     let mut result = Vec::new();
+    for &anchor in topic.iter().filter(|index| visible.contains(index)) {
+        if !source(anchor).is_some_and(|(_, text)| {
+            ALTERNATIVE_SCOPES.iter().any(|(first, _)| has(text, first))
+        }) {
+            continue;
+        }
+        let rows = (anchor..=anchor + 7).map_while(|index| {
+            let (id, raw) = source(index)?;
+            let text = source_review::bare(raw);
+            if same_speaker(anchor, index) {
+                Some(Some((index, id, text)))
+            } else if matches!(text.trim_end_matches(['。', '，', '！', ' ']), "嗯" | "对" | "好" | "是" | "可以") {
+                Some(None)
+            } else {
+                None
+            }
+        }).flatten().collect::<Vec<_>>();
+        let Some((class, treatment)) = alternate_treatment(&rows, visible) else { continue; };
+        if !topic.contains(&rows[class].0) || !topic.contains(&rows[treatment].0) {
+            continue;
+        }
+        let passages = [class, treatment].into_iter().enumerate().filter_map(|(order, pos)| {
+            if order == 0 && class == treatment { return None; }
+            let (index, id, text) = rows[pos];
+            (!visible.contains(&index)).then(|| ExamplePassage { source: id, text: text.to_owned() })
+        }).collect::<Vec<_>>();
+        if !passages.is_empty() && passages.iter().all(|line| canonical_brief::line(&line.text, 120)) {
+            result.extend(passages);
+            break;
+        }
+    }
     for &anchor in topic.iter().filter(|index| visible.contains(index)) {
         let Some((_, raw)) = source(anchor) else { continue };
         let head = source_review::bare(raw);
@@ -423,10 +507,14 @@ pub(super) fn reported_context<'a>(
                 result.push(passage);
             }
         }
-        if !has(head, &["流程", "环节", "运营", "精益", "作业规范"]) {
+    }
+    for &anchor in topic.iter().filter(|index| visible.contains(index) || nominated.contains(index)) {
+        let Some((_, raw)) = source(anchor) else { continue };
+        if !has(source_review::bare(raw), &["SOP", "流程", "环节", "运营", "精益", "作业规范"]) {
             continue;
         }
-        let separated = (anchor+1..=anchor+5).take_while(|&index|same_speaker(anchor,index))
+        let first = if visible.contains(&anchor) { anchor + 1 } else { anchor };
+        let separated = (first..=anchor+5).take_while(|&index|same_speaker(anchor,index))
             .find(|&index|source(index).is_some_and(|(_,text)| {
                 has(text, &["每个部门", "各个部门", "每个岗位", "各个岗位"])
                     && has(text, &["相对独立", "单独看", "各自独立", "分别制定"])
@@ -440,6 +528,12 @@ pub(super) fn reported_context<'a>(
                     && has(text, &["SOP", "流程", "作业规范", "服务规范"])
             }));
         let Some(linked)=linked else { continue };
+        // A source-grounded comparison may have been nominated in both
+        // model passes, with neither half surviving the reader's budget.
+        // Restore the whole passage only when both sides were nominated.
+        if !visible.contains(&anchor) && !(nominated.contains(&separated) && nominated.contains(&linked)) {
+            continue;
+        }
         let affected = (separated+1..linked).find(|&index|source(index).is_some_and(|(_,text)| {
             has(text, &["客人", "客户", "顾客", "来访者", "使用者"])
                 && has(text, &["不爽", "感受", "不舒服", "体验", "卡住", "找不到"])
@@ -527,6 +621,67 @@ pub(super) fn reported_context<'a>(
 #[cfg(test)]
 mod tests {
     #[test]
+    fn a_visible_restriction_keeps_the_other_classes_actual_treatment() {
+        use std::collections::HashSet;
+
+        let mut rows = [
+            ("e0001", serde_json::json!({"text":"说话人2：今年刚出的新机型。"})),
+            ("e0002", serde_json::json!({"text":"说话人2：新机型不打算线下打折，可以线上发券。"})),
+            ("e0003", serde_json::json!({"text":"说话人4：嗯。"})),
+            ("e0004", serde_json::json!({"text":"说话人2：去年的机型。"})),
+            ("e0005", serde_json::json!({"text":"说话人2：然后进行一些线下的打折。"})),
+        ];
+        let display = |rows: &[(&str, serde_json::Value)], visible: &[usize]| {
+            let known = rows.iter().map(|(id, row)| (*id, row)).collect();
+            super::reported_context(&[1, 2, 4, 5], &visible.iter().copied().collect::<HashSet<_>>(), &HashSet::new(), &known)
+                .into_iter().map(|passage| passage.source.to_owned()).collect::<Vec<_>>()
+        };
+        assert_eq!(display(&rows, &[1, 2]), ["e0004", "e0005"]);
+        assert!(display(&rows, &[1, 2, 4, 5]).is_empty());
+        assert!(display(&rows, &[1]).is_empty());
+        rows[2].1 = serde_json::json!({"text":"说话人4：再问一下别的地区。"});
+        assert!(display(&rows, &[1, 2]).is_empty());
+    }
+
+    #[test]
+    fn keeps_legacy_processing_without_borrowing_a_different_operation() {
+        use std::collections::HashSet;
+
+        let visible = HashSet::from([1, 2]);
+        let mut rows = [
+            (1, "e0001", "新系统的表单这次分开处理。"),
+            (2, "e0002", "不允许邮寄提交，使用网页。"),
+            (3, "e0003", "旧系统的表单。"),
+            (4, "e0004", "可以继续邮寄提交。"),
+        ];
+        assert_eq!(super::alternate_treatment(&rows, &visible), Some((2, 3)));
+        rows[3].2 = "可以继续邮寄补办。";
+        assert_eq!(super::alternate_treatment(&rows, &visible), None);
+        rows[3].2 = "不能继续邮寄提交。";
+        assert_eq!(super::alternate_treatment(&rows, &visible), None);
+    }
+
+    #[test]
+    fn restores_a_nominated_workflow_comparison_only_with_both_halves() {
+        use std::collections::HashSet;
+
+        let rows = [
+            ("e0001", serde_json::json!({"text":"说话人3：每个岗位的作业规范相对独立。"})),
+            ("e0002", serde_json::json!({"text":"说话人3：有的来访者在交接时找不到负责的人。"})),
+            ("e0003", serde_json::json!({"text":"说话人3：建议把各岗位的作业规范衔接起来。"})),
+        ];
+        let known = rows.iter().map(|(id, row)| (*id, row)).collect();
+        let visible = HashSet::new();
+        let recover = |nominated: HashSet<usize>| {
+            super::reported_context(&[1, 2, 3], &visible, &nominated, &known)
+                .into_iter().map(|passage| passage.source).collect::<Vec<_>>()
+        };
+        assert!(recover(HashSet::from([1])).is_empty());
+        assert!(recover(HashSet::from([3])).is_empty());
+        assert_eq!(recover(HashSet::from([1, 3])), ["e0001", "e0002", "e0003"]);
+    }
+
+    #[test]
     fn progress_qualifier_stays_with_its_original_speaker_and_visible_topic() {
         let mut rows = [
             ("e0001", serde_json::json!({"text":"说话人3：工作重心从单点巡检转向流程改进。"})),
@@ -536,7 +691,7 @@ mod tests {
         let display = |rows: &[(&str, serde_json::Value)]| {
             let known = rows.iter().map(|(id,row)| (*id,row)).collect();
             let visible = std::collections::HashSet::from([1,3]);
-            super::reported_context(&[1,2,3], &visible, &known)
+            super::reported_context(&[1,2,3], &visible, &std::collections::HashSet::new(), &known)
                 .into_iter().map(|passage| passage.text).collect::<Vec<_>>()
         };
         assert_eq!(display(&rows), ["长期愿景进度：工作量大，进展不快"]);
