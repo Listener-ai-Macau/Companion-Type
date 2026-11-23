@@ -1009,6 +1009,81 @@ fn long_exact_quote_is_retained_and_fabricated_quote_is_dropped() {
 }
 
 #[test]
+fn long_source_check_recovers_omitted_group_work_in_fresh_and_cached_chapters() {
+    let spoken = "说话人1: 然后线上教学呢呃考试方面各部门儿 嗯呃具体 做计划怎么考试都要做个这个计划呃 考试方面刚才说了";
+    let source = session(&format!("说话人1: 开始讨论期末考试。\n{spoken}\n"));
+    let root = root();
+    let result = run_with(&root, "https://fixture.invalid", "model", "key", &source, "same-time",
+        |_, _, part, _| Ok(response(part))).unwrap();
+    assert!(result.processing.as_ref().unwrap().is_complete());
+    assert!(result.action_items.is_empty());
+    assert_eq!(result.questions.len(), 1);
+    assert!(result.questions[0].contains("考试方面各部门"));
+    assert!(result.markdown.contains(spoken));
+
+    let checkpoint_path = root.join(Identity::new("https://fixture.invalid", "model", "key", &source).filename());
+    let mut checkpoint = read_checkpoint(&checkpoint_path).unwrap();
+    let chapter = checkpoint.chapters[0].as_mut().unwrap();
+    assert!(chapter.evidence.iter().any(|row| row.field == "questions" && row.quote == spoken));
+    // Simulate the stored valid response from before source-side checks.
+    chapter.minutes.questions.clear();
+    chapter.evidence.retain(|row| row.field != "questions");
+    chapter.result_hash = chapter_digest(&chapter.minutes, &chapter.evidence, chapter.omitted_items);
+    save_checkpoint(&checkpoint_path, &checkpoint).unwrap();
+
+    for _ in 0..2 {
+        let cached = run_with(&root, "https://fixture.invalid", "model", "key", &source, "same-time",
+            |_, _, _, _| panic!("the valid stored response needs no provider request")).unwrap();
+        assert_eq!(cached.questions, result.questions);
+        assert!(cached.action_items.is_empty());
+        assert_eq!(cached.markdown, result.markdown);
+    }
+    cleanup(root);
+}
+
+#[test]
+fn long_source_check_ignores_covered_work_proposals_examples_and_repeated_quotes() {
+    let confirmed = "各部门都要提交验收方案。";
+    let source = session(&format!(
+        "召开验收会议。\n{confirmed}\n建议各部门都要提交值班计划。\n假设各小组都要提交费用报告。\n各部门都要写接待方案吗？\n{confirmed}"
+    ));
+    let (mut minute, mut evidence) = response(&source);
+    source_coverage::recover_group_work(&source.transcript_text, &mut minute, &mut evidence);
+    assert!(minute.questions.is_empty());
+    assert!(minute.action_items.is_empty());
+
+    let source = session(&format!("召开验收会议。\n{confirmed}"));
+    let (mut minute, mut evidence) = response(&source);
+    minute.action_items.push(crate::companion_v1::CompanionV1ActionItem {
+        text: "上交验收方案".into(), owner: Some("各部门".into()), due: None,
+    });
+    evidence.push(Evidence { field: "actionItems".into(), index: 0, quote: confirmed.into() });
+    source_coverage::recover_group_work(&source.transcript_text, &mut minute, &mut evidence);
+    assert!(minute.questions.is_empty());
+    assert_eq!(minute.action_items.len(), 1);
+}
+
+#[test]
+fn long_source_check_keeps_archived_roundtable_chapters_free_of_group_reviews() {
+    let Some(dir) = std::env::var_os("COMPANION_TEST_LONG_SOURCE_ARCHIVE") else { return };
+    let mut count = 0;
+    for entry in fs::read_dir(dir).unwrap() {
+        let path = entry.unwrap().path();
+        let Some(name) = path.file_name().and_then(|name| name.to_str()) else { continue };
+        if !name.contains("-long-chapter-") || !name.ends_with(".json") { continue; }
+        let request: Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        let source = session(request["transcript"].as_str().unwrap());
+        let (mut minute, mut evidence) = response(&source);
+        source_coverage::recover_group_work(&source.transcript_text, &mut minute, &mut evidence);
+        assert!(minute.questions.is_empty(), "{name} {:?}", minute.questions);
+        assert!(minute.action_items.is_empty(), "{name}");
+        count += 1;
+    }
+    assert_eq!(count, 20);
+    println!("20 archived DeepSeek chapter inputs checked without outgoing calls");
+}
+
+#[test]
 fn long_conditional_quote_never_becomes_unconditional_deadline() {
     let quote=format!("{}周五发报价", "会议讨论".repeat(150));assert!(quote.len()>1024);
     let text=format!("如果客户同意，{quote}");let source=session(&text);let (mut m,_)=response(&source);

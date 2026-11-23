@@ -13,6 +13,7 @@ mod summary_coverage;
 mod summary_relations;
 mod summary_roles;
 mod summary_stance;
+mod source_coverage;
 
 pub(super) use summary_coverage::reported_period_for_summary;
 
@@ -882,14 +883,24 @@ fn repair_cached_chapter(chapter: &mut Chapter, session: &CompanionV1HostSession
     append_conditional_source_actions(&mut updated.minutes,&mut updated.evidence,source);
     preserve_conditional_actions(&mut updated.minutes,&mut updated.evidence,source);
     mark_uncertain_items(&mut updated.minutes,&updated.evidence);
-    summary_review::review(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
-    summary_coverage::restore(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
-    summary_relations::restore(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
-    summary_roles::restore(session, range.clone(), &mut updated.minutes, &mut updated.evidence);
-    summary_stance::restore(session, range, &mut updated.minutes, &mut updated.evidence);
+    restore_source_details(session, range, &mut updated.minutes, &mut updated.evidence);
     if validate_chapter(&updated.minutes,&updated.evidence,source).is_ok() {
         updated.result_hash=chapter_digest(&updated.minutes,&updated.evidence,updated.omitted_items);
         *chapter=updated;
+    }
+}
+
+fn restore_source_details(
+    session: &CompanionV1HostSession, range: std::ops::Range<usize>,
+    minutes: &mut CompanionV1MeetingMinutes, evidence: &mut Vec<Evidence>,
+) {
+    summary_review::review(session, range.clone(), minutes, evidence);
+    summary_coverage::restore(session, range.clone(), minutes, evidence);
+    summary_relations::restore(session, range.clone(), minutes, evidence);
+    summary_roles::restore(session, range.clone(), minutes, evidence);
+    summary_stance::restore(session, range.clone(), minutes, evidence);
+    if session.meeting_notes.is_empty() {
+        source_coverage::recover_group_work(&session.transcript_text[range], minutes, evidence);
     }
 }
 
@@ -1517,11 +1528,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
                 preserve_conditional_actions(&mut minutes, &mut evidence, &part.transcript_text);
                 let omitted_items=retain_source_backed(&mut minutes,&mut evidence,&part.transcript_text);
                 mark_uncertain_items(&mut minutes, &evidence);
-                summary_review::review(session, start..end, &mut minutes, &mut evidence);
-                summary_coverage::restore(session, start..end, &mut minutes, &mut evidence);
-                summary_relations::restore(session, start..end, &mut minutes, &mut evidence);
-                summary_roles::restore(session, start..end, &mut minutes, &mut evidence);
-                summary_stance::restore(session, start..end, &mut minutes, &mut evidence);
+                restore_source_details(session, start..end, &mut minutes, &mut evidence);
                 if omitted_items > 0 && minutes.summary.is_empty() && minutes.decisions.is_empty()
                     && minutes.action_items.is_empty() && minutes.questions.is_empty() {
                     return Err(MISSING_EVIDENCE.to_string());

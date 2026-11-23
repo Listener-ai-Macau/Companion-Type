@@ -537,7 +537,7 @@ fn collective_written_plan(words: &str) -> Option<CompanionV1ActionItem> {
 
 /// A formal group instruction can occur mid-meeting. Require the group,
 /// imperative and deliverable in the same source clause before assigning it.
-pub(super) fn stated_group_deliverable(source: &str) -> Option<CompanionV1ActionItem> {
+pub(in crate::backend::minutes) fn stated_group_deliverable(source: &str) -> Option<CompanionV1ActionItem> {
     static REQUEST: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?P<owner>各(?:个)?(?:部门|小组|单位|项目组|团队|班组|科室|学段))(?:儿)?"
     ).expect("group and bounded instruction"));

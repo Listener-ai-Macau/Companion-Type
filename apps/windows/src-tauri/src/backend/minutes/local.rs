@@ -18,6 +18,7 @@ mod timed_evidence;
 mod source_checkpoint;
 mod source_review;
 pub(crate) use probe::candidate as verify_candidate;
+pub(super) use source_commitments::stated_group_deliverable;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
 use crate::companion_v1::{CompanionV1HostSession,CompanionV1MeetingMinutes};
