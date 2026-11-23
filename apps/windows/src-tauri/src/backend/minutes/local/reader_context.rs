@@ -467,6 +467,79 @@ fn scoped_recommendation(text: &str) -> bool {
         && has(text, &["不建议", "不要推荐", "不能推荐", "就避开"])
 }
 
+struct TimedPlan<'a> {
+    context: Option<&'a str>,
+    clause: &'a str,
+    activity: &'a str,
+}
+
+fn planned_work(original: &str) -> Option<TimedPlan<'_>> {
+    static PERIOD: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:今明两天|明天|后天|本周末|下周末|本周|下周|下星期|本月|下个月|下月|月底|本季度|下个季度|下季度|下半年|明年)"
+    ).expect("an explicit relative planning period"));
+    static INTENT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:准备|打算|计划|拟于|拟定|拟|想要)"
+    ).expect("a proposed action rather than a directive"));
+    let body = source_review::bare(original);
+    if body.contains(['？', '?']) || has(body, &["如果", "假如", "假设", "举例", "比方说", "例如",
+        "当时", "之前说", "上次说", "当初", "去年", "原本", "不准备", "不打算", "不计划", "取消", "搁置", "改到",
+        "是否", "能不能", "有什么计划", "什么安排", "还没定", "尚未确定"])
+    {
+        return None;
+    }
+    let clauses = body.split(['，', ',', '。', '；', ';', '！', '!']).map(str::trim)
+        .filter(|clause| !clause.is_empty()).collect::<Vec<_>>();
+    for (index, &clause) in clauses.iter().enumerate() {
+        let Some(period) = PERIOD.find(clause) else { continue };
+        let prefix = &clause[..period.start()];
+        let tail = &clause[period.end()..];
+        let previous = index.checked_sub(1).map(|n| clauses[n]);
+        if let Some(verb) = INTENT.find(tail).filter(|verb| verb.start() <= "就还是".len()) {
+            let words = tail[verb.end()..].trim_matches(['啊', '呃', '嗯', ' ']);
+            let activity = words.strip_prefix("就是").or_else(|| words.strip_prefix('是'))
+                .unwrap_or(words).trim_matches(['啊', '呃', '嗯', ' ']);
+            if activity.chars().count() < 3 || has(activity, &["吗", "什么", "怎么", "的计划"])
+                || ["那个", "这个", "一下", "准备", "就是", "好不好", "的话"]
+                    .iter().any(|ending| activity.ends_with(ending))
+            {
+                continue;
+            }
+            // A condition at the start of the clause can refer back to the
+            // work already described in the same turn.
+            let context = has(prefix, &["以后", "之后", "后再", "完了后"]).then(|| {
+                clauses[..index].iter().copied().rev().find(|prior| {
+                    super::source_grounding::shared_han_phrase(prefix, prior, 2)
+                })
+            }).flatten();
+            if has(prefix, &["以后", "之后", "后再", "完了后"]) && context.is_none() {
+                continue;
+            }
+            return Some(TimedPlan { context, clause, activity });
+        }
+        if let Some(previous) = previous {
+            // Keep the object next to a stated goal when the goal uses a
+            // demonstrative such as “这是”.
+            if matches!(tail, "的主要目标" | "主要目标" | "的重点工作" | "重点工作")
+                && has(prefix, &["这是", "这个是", "这就是"])
+                && previous.chars().count() >= 12
+                && !has(previous, &["问题是", "有什么", "想一想", "待定"])
+            {
+                return Some(TimedPlan { context: Some(previous), clause, activity: previous });
+            }
+            // Oral proposals often state the idea and repeat it with the
+            // timing in the next clause. Require the shared activity.
+            let activity = tail.trim_start_matches(['就', '要', '会', '先', ' ', '啊', '呃', '嗯']);
+            if has(previous, &["我们是想", "我们想", "我想的是", "我打算", "我准备", "我们准备", "我们计划"])
+                && activity.chars().count() >= 5
+                && super::source_grounding::shared_han_phrase(activity, previous, 5)
+            {
+                return Some(TimedPlan { context: Some(previous), clause, activity });
+            }
+        }
+    }
+    None
+}
+
 /// Retain source qualifications within a topic that already shows the related
 /// discussion. Excerpts have their own citations and never nominate work.
 pub(super) fn reported_context<'a>(
@@ -763,6 +836,27 @@ pub(super) fn reported_context<'a>(
             break;
         }
     }
+    for &index in topic.iter().filter(|index| !visible.contains(index)) {
+        let Some((id, raw)) = source(index) else { continue };
+        let Some(plan) = planned_work(raw) else { continue };
+        if result.iter().any(|passage| passage.source == id || passage.text.contains(plan.clause)) {
+            continue;
+        }
+        let superseded = topic.iter().copied().filter(|&later| later > index).any(|later| {
+            source(later).is_some_and(|(_, text)| {
+                has(text, &["取消", "撤销", "改到", "改成", "不准备", "不打算", "暂缓", "往后推"])
+                    && super::source_grounding::shared_han_phrase(plan.activity, source_review::bare(text), 2)
+            })
+        });
+        if superseded { continue; }
+        let presentation = match plan.context {
+            Some(context) => format!("会上拟议：{context}，{}", plan.clause),
+            None => format!("会上拟议：{}", plan.clause),
+        };
+        if canonical_brief::line(&presentation, 100) {
+            result.push(ExamplePassage { source: id, text: presentation });
+        }
+    }
     let mut added = HashSet::new();
     result.retain(|passage| added.insert(passage.source));
     result
@@ -770,6 +864,40 @@ pub(super) fn reported_context<'a>(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn a_timed_proposal_keeps_its_activity_and_original_stance() {
+        let followup = super::planned_work("同事：会员档案已经整理完，嗯可以做点准备，整理完以后下个月准备安排回访。").unwrap();
+        assert_eq!(followup.context, Some("会员档案已经整理完"));
+        assert_eq!(followup.clause, "整理完以后下个月准备安排回访");
+        let goal = super::planned_work("同事：新员工业务方面需要带教和岗位轮训，我感觉这是我们下个月主要目标。").unwrap();
+        assert_eq!(goal.context, Some("新员工业务方面需要带教和岗位轮训"));
+        let repeated = super::planned_work("同事：我们想办一次公开体验活动，下个月就办一次公开体验活动，观众可以在线报名。").unwrap();
+        assert_eq!(repeated.clause, "下个月就办一次公开体验活动");
+        for text in [
+            "同事：下个月有什么计划？",
+            "同事：下个月的计划就是嗯。",
+            "同事：不准备下个月安排回访。",
+            "同事：如果下个月安排回访，我们再确认名单。",
+            "同事：演示视频还没开始剪，完成以后下个月准备公开预览。",
+        ] {
+            assert!(super::planned_work(text).is_none(), "{text}");
+        }
+    }
+
+    #[test]
+    fn an_earlier_plan_does_not_return_after_it_is_cancelled() {
+        let idea = serde_json::json!({"text":"同事：下个月准备发布新版手册。"});
+        let change = serde_json::json!({"text":"同事：新版手册的发布先取消，内容要重新评估。"});
+        let known = std::collections::HashMap::from([("e0001", &idea), ("e0002", &change)]);
+        let none_visible = std::collections::HashSet::new();
+        let nominated = std::collections::HashSet::new();
+        let unbound = std::collections::HashMap::new();
+        let passages = super::reported_context(&[1], &none_visible, &nominated, &unbound, &known);
+        assert_eq!(passages.len(), 1);
+        assert!(passages[0].text.contains("会上拟议"));
+        assert!(super::reported_context(&[1, 2], &none_visible, &nominated, &unbound, &known).is_empty());
+    }
+
     #[test]
     fn identifies_actual_transfers_and_two_sides_of_the_same_contact_route() {
         assert!(super::reported_transfer("因为重新分工，档案已经移交，后来由综合办公室统一管理。"));
