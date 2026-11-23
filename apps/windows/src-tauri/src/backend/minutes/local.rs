@@ -268,12 +268,16 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                         }
                         return Ok(raw);
                     }
-                    let raw = transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,tokens)?;
+                    let raw = if stage == transport::COMPACT_CORE_STAGE {
+                        transport::generate_compact_core(port,&key,&alias,prompt,input,schema,stop,&trace,context)?
+                    } else {
+                        transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,tokens)?
+                    };
                     record_call(&trace,stage);
                     Ok(raw)
                 };
                 let core = ask(atomic_document::layout_prompt(&bank), atomic_document::layout_input(&bank),
-                    atomic_document::layout_schema(&bank)?, "compact-core-organization", context.layout_output())?;
+                    atomic_document::layout_schema(&bank)?, transport::COMPACT_CORE_STAGE, context.layout_output())?;
                 atomic_document::review_chapters(&mut bank,Some(&core),&session.transcript_text,
                     |prompt,input,schema,stage| ask(prompt,input,schema,stage,768))?
             } else {

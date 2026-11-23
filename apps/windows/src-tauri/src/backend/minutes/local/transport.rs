@@ -8,6 +8,11 @@ use serde_json::{json,Value};
 // The CPU normally starts with a smaller KV cache. The full profile stays
 // available for requests whose exact token counts exceed that allocation.
 pub(super) const MAX_NEW_TOKENS:usize=6144;
+pub(super) const COMPACT_CORE_STAGE: &str = "compact-core-organization";
+
+// A complete eight-chapter layout from the pinned model used 547 tokens. The
+// compact request returns IDs and labels only, with no reasoning or prose.
+const COMPACT_CORE_MIN_OUTPUT: usize = 1024;
 pub(super) const CONTEXT_LIMIT: &str = "本场文字超出本地模型容量，未截断转写，已有内容保留。";
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -20,6 +25,15 @@ impl Context {
 
     pub(super) fn layout_output(self) -> usize {
         match self { Self::ReducedCpu => 1536, Self::Full => 3072 }
+    }
+
+    pub(super) fn compact_core_output(self, input: usize, thinking: bool) -> usize {
+        let preferred = self.layout_output();
+        if self == Self::ReducedCpu && !thinking {
+            self.tokens().saturating_sub(input).clamp(COMPACT_CORE_MIN_OUTPUT, preferred)
+        } else {
+            preferred
+        }
     }
 
     fn fits(self, input: usize, output: usize) -> bool {
@@ -84,6 +98,21 @@ pub(super) fn use_vulkan_schema(body: &mut Value) {
 }
 
 pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,schema:Value,stop:&AtomicBool,trace:&Trace,context:Context,max_output_tokens:usize)->Result<String,String>{
+    generate_with_budget(port, key, alias, prompt, input, schema, stop, trace, context, max_output_tokens, false)
+}
+
+pub(super) fn generate_compact_core(
+    port: u16, key: &str, alias: &str, prompt: &str, input: Value, schema: Value,
+    stop: &AtomicBool, trace: &Trace, context: Context,
+) -> Result<String, String> {
+    generate_with_budget(port, key, alias, prompt, input, schema, stop, trace, context, context.layout_output(), true)
+}
+
+fn generate_with_budget(
+    port: u16, key: &str, alias: &str, prompt: &str, input: Value, schema: Value,
+    stop: &AtomicBool, trace: &Trace, context: Context, preferred_output: usize,
+    compact_core: bool,
+) -> Result<String, String> {
     let address=format!("http://127.0.0.1:{port}");
     let client=Client::builder().no_proxy().redirect(reqwest::redirect::Policy::none()).connect_timeout(Duration::from_secs(2))
         .timeout(Duration::from_secs(900)).build().map_err(|_|error())?;
@@ -99,7 +128,7 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     }
     if !ready{return Err("本地纪要引擎未就绪，已有内容保留。".into());}
     let profile=profile()?;
-    let mut body = request_body(alias, prompt, input, schema, max_output_tokens, &profile)?;
+    let mut body = request_body(alias, prompt, input, schema, preferred_output, &profile)?;
     if trace.lock().map_err(|_| error())?["backend"] == "vulkan" {
         use_vulkan_schema(&mut body);
     }
@@ -107,13 +136,27 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     let rendered=rendered["prompt"].as_str().ok_or_else(error)?;
     let tokenized=post(&client,&address,key,"/tokenize",&json!({"content":rendered,"add_special":false,"parse_special":true}),stop)?;
     let tokens=tokenized["tokens"].as_array().ok_or_else(error)?.len();
+    let max_output_tokens = if compact_core {
+        context.compact_core_output(tokens, profile["enableThinking"].as_bool().unwrap_or(true))
+    } else {
+        preferred_output
+    };
     if !context.fits(tokens, max_output_tokens) {
         if let Ok(mut trace) = trace.lock() {
             trace["contextLimit"] = json!({"inputTokens":tokens,"outputLimit":max_output_tokens,"contextTokens":context.tokens()});
         }
         return Err(CONTEXT_LIMIT.into());
     }
-    if let Ok(mut trace)=trace.lock(){trace["generationProfile"]=profile;}
+    body["max_tokens"] = json!(max_output_tokens);
+    if let Ok(mut trace)=trace.lock(){
+        trace["generationProfile"]=profile;
+        if max_output_tokens < preferred_output {
+            trace["compactCoreBudget"] = json!({
+                "inputTokens":tokens,"preferredOutput":preferred_output,
+                "actualOutput":max_output_tokens,"contextTokens":context.tokens(),
+            });
+        }
+    }
     let wire=super::evidence_document::wire(&body);
     if let Ok(mut trace)=trace.lock(){
         for key in ["output","reasoningCharacters","usage","finishReason","generationSeconds"]{trace[key]=Value::Null;}
@@ -148,7 +191,7 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     }
     if let Ok(mut trace)=trace.lock(){trace["output"]=json!(text);trace["reasoningCharacters"]=json!(reasoning_characters);trace["finishReason"]=json!(finish);trace["usage"]=json!(usage);trace["generationSeconds"]=json!(generated.elapsed().as_secs_f64());}
     if done && finish.as_deref()==Some("length")
-        && context == Context::ReducedCpu && max_output_tokens == context.layout_output() {
+        && context == Context::ReducedCpu && preferred_output == context.layout_output() {
         return Err(CONTEXT_LIMIT.into());
     }
     if !done||finish.as_deref()!=Some("stop")||text.trim().is_empty(){return Err("本地纪要返回不完整，未发布为完成结果。".into());}
@@ -172,4 +215,20 @@ fn cpu_context_saves_layout_capacity_without_accepting_an_oversize_request() {
     assert!(cpu.retry_full(CONTEXT_LIMIT));
     assert!(!Context::Full.retry_full(CONTEXT_LIMIT));
     assert!(!cpu.retry_full("可用内存不足"));
+}
+
+#[cfg(test)]
+#[test]
+fn compact_core_fits_the_archived_eight_chapter_request_without_reducing_other_budgets() {
+    let cpu = Context::ReducedCpu;
+    assert_eq!(cpu.compact_core_output(6586, false), cpu.layout_output());
+    assert_eq!(cpu.compact_core_output(6859, false), 1333);
+    let output = cpu.compact_core_output(7005, false);
+    assert_eq!(output, 1187);
+    assert!(cpu.fits(7005, output));
+    assert_eq!(cpu.compact_core_output(7168, false), COMPACT_CORE_MIN_OUTPUT);
+    assert!(!cpu.fits(7169, cpu.compact_core_output(7169, false)));
+    assert_eq!(cpu.compact_core_output(7005, true), cpu.layout_output());
+    let full = Context::Full;
+    assert_eq!(full.compact_core_output(7005, false), full.layout_output());
 }

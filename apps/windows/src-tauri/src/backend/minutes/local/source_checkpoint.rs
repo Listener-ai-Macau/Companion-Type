@@ -35,6 +35,7 @@ struct CheckedSourceReview {
 
 pub(super) struct OrganizationPrefix<'a> {
     calls: std::slice::Iter<'a, Value>,
+    context: transport::Context,
 }
 
 impl OrganizationPrefix<'_> {
@@ -48,6 +49,13 @@ impl OrganizationPrefix<'_> {
             let request = &call["request"];
             let alias = request["model"].as_str()?;
             let profile = transport::profile().ok()?;
+            let tokens = if stage == transport::COMPACT_CORE_STAGE && tokens == self.context.layout_output() {
+                call["inputTokens"].as_u64().map_or(tokens, |input| {
+                    self.context.compact_core_output(input as usize, profile["enableThinking"].as_bool().unwrap_or(true))
+                })
+            } else {
+                tokens
+            };
             let expected = transport::request_body(alias, prompt, input.clone(), schema.clone(), tokens, &profile).ok()?;
             if *request != expected {
                 return None;
@@ -282,7 +290,7 @@ impl CheckedSourcePrefix {
 
     pub(super) fn organization(&self, context: transport::Context) -> OrganizationPrefix<'_> {
         let calls = if self.independent_source_review(context).is_some() { &self.organization[..] } else { &[] };
-        OrganizationPrefix { calls: calls.iter() }
+        OrganizationPrefix { calls: calls.iter(), context }
     }
 
     #[cfg(test)]

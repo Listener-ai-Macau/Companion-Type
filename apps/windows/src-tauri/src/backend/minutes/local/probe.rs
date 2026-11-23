@@ -264,8 +264,13 @@ mod tests{
                 if original_seals.is_array() {
                     assert_eq!(&bank.receipt["seals"], original_seals, "{key} replay changed extracted facts");
                 }
-                let core = reply("compact-core-organization", atomic_document::layout_prompt(&bank),
-                    atomic_document::layout_input(&bank), atomic_document::layout_schema(&bank).unwrap(), context.layout_output()).unwrap();
+                let core_input_tokens = calls.iter().find(|call| call["stage"] == transport::COMPACT_CORE_STAGE)
+                    .and_then(|call| call["inputTokens"].as_u64());
+                let core_output = core_input_tokens.map_or(context.layout_output(), |tokens| {
+                    context.compact_core_output(tokens as usize, profile["enableThinking"].as_bool().unwrap_or(true))
+                });
+                let core = reply(transport::COMPACT_CORE_STAGE, atomic_document::layout_prompt(&bank),
+                    atomic_document::layout_input(&bank), atomic_document::layout_schema(&bank).unwrap(), core_output).unwrap();
                 let mut chapter_requests = 0;
                 let raw=atomic_document::review_chapters(&mut bank,Some(&core),&text,|prompt,input,schema,stage| {
                     chapter_requests += 1;
