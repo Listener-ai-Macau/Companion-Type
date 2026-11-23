@@ -374,6 +374,87 @@ pub(super) fn reported_context<'a>(
         speaker(first).is_some_and(|label| speaker(second) == Some(label))
     };
     let mut result = Vec::new();
+    for &anchor in topic.iter().filter(|index| visible.contains(index)) {
+        let Some((_, raw)) = source(anchor) else { continue };
+        let head = source_review::bare(raw);
+        if head.contains("第一个") && has(head, &["层面", "方面", "维度", "方向"])
+            && (anchor.saturating_sub(4)..anchor).any(|prior| {
+                same_speaker(prior, anchor) && source(prior).is_some_and(|(_,text)| {
+                    has(text, &["三个层面", "三个方面", "三个维度", "三个方向"])
+                })
+            })
+        {
+            let others = [("第二个", "第二点"), ("第三个", "第三点")].into_iter()
+                .map(|ordinal| (anchor+1..=anchor+8).take_while(|&index| same_speaker(anchor,index))
+                    .find_map(|index| {
+                        let (id,text)=source(index)?;
+                        let body=source_review::bare(text);
+                        if !has(body, &[ordinal.0,ordinal.1])
+                            || !has(body, &["层面", "方面", "维度", "方向"])
+                        { return None; }
+                        let text=format!("同一发言的另一点：{body}");
+                        canonical_brief::line(&text, 120).then_some((index,ExamplePassage {source:id,text}))
+                    })).collect::<Option<Vec<_>>>();
+            if let Some(others)=others {
+                if others[0].0 < others[1].0 {
+                    result.extend(others.into_iter()
+                        .filter(|(index,_)| !visible.contains(index))
+                        .map(|(_,passage)| passage));
+                }
+            }
+        }
+        if has(head, &["我们观念的一个创新", "经营理念的一个创新", "观念的创新", "思路上的创新"]) {
+            if let Some(passage) = (anchor+1..=anchor+3)
+                .take_while(|&index|same_speaker(anchor,index))
+                .filter(|index| !visible.contains(index))
+                .find_map(|index| {
+                    let (id,text)=source(index)?;
+                    let text=source_review::bare(text);
+                    let start=["我们拥有","我们有很多","我们具备"].into_iter()
+                        .find_map(|lead|text.find(lead))?;
+                    let tail=&text[start..];
+                    let idea=tail.split_once("，如果").map_or(tail, |(idea,_)|idea);
+                    if !has(idea, &["线下场景", "现实场景", "线下空间", "门店空间", "实体场景"])
+                        || !has(idea, &["体验设计", "体验服务", "新服务体验"])
+                    { return None; }
+                    let text=format!("同一发言的设想：{idea}");
+                    canonical_brief::line(&text,120).then_some(ExamplePassage{source:id,text})
+                }) {
+                result.push(passage);
+            }
+        }
+        if !has(head, &["流程", "环节", "运营", "精益", "作业规范"]) {
+            continue;
+        }
+        let separated = (anchor+1..=anchor+5).take_while(|&index|same_speaker(anchor,index))
+            .find(|&index|source(index).is_some_and(|(_,text)| {
+                has(text, &["每个部门", "各个部门", "每个岗位", "各个岗位"])
+                    && has(text, &["相对独立", "单独看", "各自独立", "分别制定"])
+                    && has(text, &["SOP", "流程", "作业规范", "服务规范"])
+            }));
+        let Some(separated)=separated else { continue };
+        let linked = (separated+1..=separated+6).take_while(|&index|same_speaker(anchor,index))
+            .find(|&index|source(index).is_some_and(|(_,text)| {
+                has(text, &["是不是要", "应该", "建议", "可以考虑"])
+                    && has(text, &["串联起来", "衔接起来", "连起来一起", "交接串起来"])
+                    && has(text, &["SOP", "流程", "作业规范", "服务规范"])
+            }));
+        let Some(linked)=linked else { continue };
+        let affected = (separated+1..linked).find(|&index|source(index).is_some_and(|(_,text)| {
+            has(text, &["客人", "客户", "顾客", "来访者", "使用者"])
+                && has(text, &["不爽", "感受", "不舒服", "体验", "卡住", "找不到"])
+        }));
+        for (index, prefix) in [
+            (Some(separated),"发言者观察"), (affected,"发言者举例"), (Some(linked),"发言者建议"),
+        ] {
+            let Some(index) = index.filter(|index| !visible.contains(index)) else { continue };
+            let Some((id,text)) = source(index) else { continue };
+            let text = format!("{prefix}：{}",source_review::bare(text));
+            if canonical_brief::line(&text,120) {
+                result.push(ExamplePassage {source:id,text});
+            }
+        }
+    }
     for &index in topic {
         if visible.contains(&index) {
             continue;
@@ -438,6 +519,8 @@ pub(super) fn reported_context<'a>(
             break;
         }
     }
+    let mut added = HashSet::new();
+    result.retain(|passage| added.insert(passage.source));
     result
 }
 

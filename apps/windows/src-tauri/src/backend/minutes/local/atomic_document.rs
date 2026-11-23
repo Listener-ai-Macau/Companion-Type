@@ -93,7 +93,7 @@ pub(super) struct Bank {
     chapter_spans: Vec<Range<usize>>,
     chapter_label_choices: Vec<BTreeMap<String, String>>,
     chapter_point_choices: Vec<Vec<usize>>,
-    before_opening: HashSet<String>,
+    reader_background: HashSet<String>,
     reader_places: HashMap<String, String>,
     priority_review: HashSet<String>,
     reader_priority: HashMap<String, u8>,
@@ -113,11 +113,11 @@ impl Bank {
     }
 
     fn topics(&self) -> impl Iterator<Item = &Fact> {
-        self.facts.iter().filter(|fact| fact.placement == Placement::Topic && !self.before_opening.contains(&fact.id))
+        self.facts.iter().filter(|fact| fact.placement == Placement::Topic && !self.reader_background.contains(&fact.id))
     }
 
     fn required_topic(&self, id: &str) -> bool {
-        !self.before_opening.contains(id) && (self.execution_reading.contains(id) || self.priority_review.contains(id)
+        !self.reader_background.contains(id) && (self.execution_reading.contains(id) || self.priority_review.contains(id)
             || self.reported_counts.contains(id))
     }
 
@@ -1362,8 +1362,17 @@ fn build_bank_with_timing(
     let seals=facts.iter().map(|f|json!({"id":f.id,"bodySha256":format!("{:x}",Sha256::digest(serde_json::to_vec(f).unwrap()))})).collect::<Vec<_>>();
     let coverage=source_coverage(&facts,&units,&sentences);
     let before_opening=opening_background(&facts,source,&sentences);
+    let intro_anchors = if long { super::participant_background::credential_anchors(&sentences) } else { HashSet::new() };
+    let mut intro_ids = facts.iter().filter(|fact| {
+        fact.placement==Placement::Topic && !execution_reading.contains(&fact.id)
+            && !priority_review.contains(&fact.id)
+            && fact.evidence.iter().all(|id| intro_anchors.contains(id.as_str()))
+            && super::participant_background::credential(&fact.text)
+    }).map(|fact| fact.id.clone()).collect::<Vec<_>>();
+    intro_ids.sort_unstable();
+    let reader_background = before_opening.iter().chain(&intro_ids).cloned().collect::<HashSet<_>>();
     let topic_facts: Vec<_> = facts.iter().filter(|fact| fact.placement == Placement::Topic
-        && !before_opening.contains(&fact.id)).collect();
+        && !reader_background.contains(&fact.id)).collect();
     let (chapter_spans, chapter_label_choices) = if facts.len() > LARGE_LAYOUT_FACTS {
         let texts: Vec<_> = topic_facts.iter().map(|fact| fact.text.as_str()).collect();
         let spans = super::chapter_spans::plan(&texts);
@@ -1470,11 +1479,12 @@ fn build_bank_with_timing(
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids,
+        "participantIntroductionFacts":intro_ids,
         "linkedReaderReportGroups":reader_groups,"linkedReaderProcedureGroups":linked_procedures,
         "reportedCountGroups":reported_count_groups,
         "independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,linked_proposals,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda,reader_recap_estimates:HashSet::new() })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,reader_background,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,linked_proposals,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda,reader_recap_estimates:HashSet::new() })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -1844,7 +1854,7 @@ fn example_for_reader(fact: &Fact) -> bool {
 
 fn supports_overview(bank: &Bank, fact: &Fact) -> bool {
     !bank.review_quote(&fact.id) && !example_for_reader(fact)
-        && !conversational_prompt(fact) && !bank.before_opening.contains(&fact.id)
+        && !conversational_prompt(fact) && !bank.reader_background.contains(&fact.id)
 }
 
 fn purpose_choices(bank: &Bank) -> Vec<&str> {
@@ -2279,7 +2289,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     for fact in &bank.facts{
         match fact.placement{
             Placement::Topic=>{
-                if bank.before_opening.contains(&fact.id) {
+                if bank.reader_background.contains(&fact.id) {
                     excluded.push(json!({"id":fact.id,"reason":"background","coveredBy":[]}));
                     continue;
                 }
