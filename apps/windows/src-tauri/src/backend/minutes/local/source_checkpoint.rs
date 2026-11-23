@@ -1,22 +1,31 @@
-//! Reuse completed extraction windows in engineering runs with an exact request match.
+//! Reuse completed original-source calls in engineering runs with an exact request match.
 use std::{fs::File, io::Read, path::PathBuf};
 
 use serde::Deserialize;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 
-use super::{assets, source_windows::{SourceEncoding, SourceWindows}, transport};
+use super::{assets, source_review, source_windows::{SourceEncoding, SourceWindows}, transport};
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub(super) struct CheckpointInput {
     path: PathBuf,
     sha256: String,
+    #[serde(default)]
+    reuse_independent_source_review: bool,
+}
+
+struct CheckedSourceReview {
+    context_tokens: usize,
+    result: source_review::Review,
+    calls: Vec<Value>,
 }
 
 #[derive(Default)]
 pub(super) struct CheckedSourcePrefix {
     windows: Vec<(SourceEncoding, Option<Value>)>,
+    independent_source_review: Option<CheckedSourceReview>,
 }
 
 fn failure() -> String {
@@ -33,15 +42,20 @@ impl CheckedSourcePrefix {
             return Err(failure());
         }
         let report: Value = serde_json::from_slice(&bytes).map_err(|_| failure())?;
-        Self::from_runtime_report(&report, source, source_sha256, duration_ms, vulkan)
+        Self::from_runtime_report(
+            &report, source, source_sha256, duration_ms, vulkan, input.reuse_independent_source_review,
+        )
     }
 
     #[cfg(test)]
     fn from_report(report: &Value, source: &str, source_sha256: &str, duration_ms: u64) -> Result<Self, String> {
-        Self::from_runtime_report(report, source, source_sha256, duration_ms, false)
+        Self::from_runtime_report(report, source, source_sha256, duration_ms, false, false)
     }
 
-    fn from_runtime_report(report: &Value, source: &str, source_sha256: &str, duration_ms: u64, vulkan: bool) -> Result<Self, String> {
+    fn from_runtime_report(
+        report: &Value, source: &str, source_sha256: &str, duration_ms: u64, vulkan: bool,
+        reuse_independent_source_review: bool,
+    ) -> Result<Self, String> {
         let trace = &report["receipt"];
         let runtime_sha = if vulkan { assets::VULKAN_SERVER_SHA } else { assets::SERVER_SHA };
         if !matches!(report["state"].as_str(), Some("native-candidate-failed-retained" | "native-candidate-engineer-review-required"))
@@ -58,7 +72,8 @@ impl CheckedSourcePrefix {
         let reviewed = trace["reviewedSourceWindows"].as_array().ok_or_else(failure)?;
         // The exact primary response is reusable. An excerpt is a local
         // recovery decision and is checked again against the current source.
-        let mut calls = trace["calls"].as_array().ok_or_else(failure)?.iter()
+        let saved_calls = trace["calls"].as_array().ok_or_else(failure)?;
+        let mut calls = saved_calls.iter()
             .filter(|call| !call["stage"].as_str().is_some_and(|stage| stage.starts_with("source-excerpt-")))
             .peekable();
         let windows = SourceWindows::new(source)?;
@@ -108,13 +123,56 @@ impl CheckedSourcePrefix {
             windows.check_encoded(index, raw, encoding)?;
             prefix.push((encoding, saved));
         }
-        Ok(Self { windows: prefix })
+        let independent_source_review = if reuse_independent_source_review {
+            if trace.get("independentSourceReviewFailure").is_some_and(|value| !value.is_null())
+                || prefix.len() != windows.len()
+            {
+                return Err(failure());
+            }
+            let context_tokens = match trace["contextTokens"].as_u64() {
+                Some(8192) if !vulkan => 8192,
+                Some(16384) => 16384,
+                _ => return Err(failure()),
+            };
+            let mut archived = saved_calls.iter().filter(|call| {
+                call["stage"].as_str().is_some_and(|stage| stage.starts_with("independent-source-review-"))
+            });
+            let mut calls = Vec::new();
+            let result = source_review::review(source, |prompt, input, schema, stage| {
+                let call = archived.next().ok_or_else(failure)?;
+                let request = &call["request"];
+                let alias = request["model"].as_str().ok_or_else(failure)?;
+                let mut expected = transport::request_body(alias, prompt, input, schema, 640, &profile)?;
+                if vulkan {
+                    transport::use_vulkan_schema(&mut expected);
+                }
+                if call["stage"] != stage || *request != expected || call["finishReason"] != "stop" {
+                    return Err(failure());
+                }
+                let mut replay = call.clone();
+                replay["reused"] = Value::Bool(true);
+                calls.push(replay);
+                call["output"].as_str().map(str::to_owned).ok_or_else(failure)
+            })?;
+            if archived.next().is_some() || calls.is_empty() {
+                return Err(failure());
+            }
+            Some(CheckedSourceReview { context_tokens, result, calls })
+        } else {
+            None
+        };
+        Ok(Self { windows: prefix, independent_source_review })
     }
 
     pub(super) fn len(&self) -> usize { self.windows.len() }
 
     pub(super) fn window(&self, index: usize) -> Option<(SourceEncoding, Option<&Value>)> {
         self.windows.get(index).map(|(encoding, call)| (*encoding, call.as_ref()))
+    }
+
+    pub(super) fn independent_source_review(&self, context: transport::Context) -> Option<(&source_review::Review, &[Value])> {
+        let checked = self.independent_source_review.as_ref()?;
+        (checked.context_tokens == context.tokens()).then_some((&checked.result, checked.calls.as_slice()))
     }
 
     #[cfg(test)]
@@ -126,6 +184,35 @@ impl CheckedSourcePrefix {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_completed_independent_review_can_replay_exact_cpu_requests_only() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_SAVED_CPU_INDEPENDENT_REVIEW") else { return; };
+        let bytes = std::fs::read(&path).unwrap();
+        let mut report: Value = serde_json::from_slice(&bytes).unwrap();
+        let source = std::fs::read_to_string(report["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let hash = format!("{:x}", Sha256::digest(source.as_bytes()));
+        let duration = report["durationMs"].as_u64().unwrap();
+        let input: CheckpointInput = serde_json::from_value(serde_json::json!({
+            "path": PathBuf::from(path), "sha256": format!("{:x}", Sha256::digest(&bytes)),
+            "reuseIndependentSourceReview": true
+        })).unwrap();
+        let checkpoint = CheckedSourcePrefix::load(&input, &source, &hash, duration, false).unwrap();
+        let (review, calls) = checkpoint.independent_source_review(transport::Context::ReducedCpu).unwrap();
+        assert_eq!(review.batches.len(), 4);
+        assert_eq!(calls.len(), 4);
+        assert!(calls.iter().all(|call| call["reused"] == true));
+        assert_eq!(serde_json::to_value(&review.batches).unwrap(),
+            report["receipt"]["atomicFactBank"]["independentSourceReview"]);
+        assert!(checkpoint.independent_source_review(transport::Context::Full).is_none());
+        let unrequested = CheckedSourcePrefix::from_runtime_report(&report, &source, &hash, duration, false, false).unwrap();
+        assert!(unrequested.independent_source_review(transport::Context::ReducedCpu).is_none());
+        let changed = report["receipt"]["calls"].as_array_mut().unwrap().iter_mut()
+            .find(|row| row["stage"] == "independent-source-review-1").unwrap();
+        changed["request"]["messages"][0]["content"] = Value::String("changed prompt".to_owned());
+        assert!(CheckedSourcePrefix::from_runtime_report(&report, &source, &hash, duration, false, true).is_err());
+    }
 
     #[test]
     fn direct_whole_card_replay_plans_every_record_without_a_model_assignment() {

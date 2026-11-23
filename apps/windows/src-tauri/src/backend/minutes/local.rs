@@ -145,6 +145,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 trace["stage"]=json!("loading-engine");
                 trace["contextTokens"]=json!(context.tokens());
                 trace["contextLimit"]=Value::Null;
+                trace["reusedIndependentSourceReviewBatches"]=json!(0);
             }
             super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),accelerator.is_some(),|stop|{
             let mut facts=Vec::new();
@@ -195,20 +196,31 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
                 if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }
-            let review=source_review::review(&session.transcript_text,|prompt,input,schema,stage| {
-                let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,640)?;
-                record_call(&trace,stage);
-                Ok(result)
-            });
-            let review=match review {
-                Ok(review)=>review,
-                Err(reason) if !context.retry_full(&reason) && !stop.load(std::sync::atomic::Ordering::Acquire)=>{
-                    if let Ok(mut trace)=trace.lock(){trace["independentSourceReviewFailure"]=json!(reason);}
-                    source_review::Review::default()
-                },
-                Err(reason)=>return Err(reason),
+            let generated_review;
+            let review = if let Some((review, calls)) = reused.independent_source_review(context) {
+                if let Ok(mut trace) = trace.lock() {
+                    trace["reusedIndependentSourceReviewBatches"] = json!(calls.len());
+                    if !trace["calls"].is_array() { trace["calls"] = json!([]); }
+                    trace["calls"].as_array_mut().unwrap().extend_from_slice(calls);
+                }
+                review
+            } else {
+                let result=source_review::review(&session.transcript_text,|prompt,input,schema,stage| {
+                    let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,640)?;
+                    record_call(&trace,stage);
+                    Ok(result)
+                });
+                generated_review=match result {
+                    Ok(review)=>review,
+                    Err(reason) if !context.retry_full(&reason) && !stop.load(std::sync::atomic::Ordering::Acquire)=>{
+                        if let Ok(mut trace)=trace.lock(){trace["independentSourceReviewFailure"]=json!(reason);}
+                        source_review::Review::default()
+                    },
+                    Err(reason)=>return Err(reason),
+                };
+                &generated_review
             };
-            let mut bank=atomic_document::build_session_bank(facts,session,&review)?;
+            let mut bank=atomic_document::build_session_bank(facts,session,review)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
             let layout=if atomic_document::has_chapters(&bank) {
                 let core=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,context,context.layout_output())?;
