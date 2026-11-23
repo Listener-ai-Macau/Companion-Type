@@ -148,18 +148,41 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
 mod tests{
     use super::*;
 
+    fn replay_reply(
+        calls: &[Value], stage: &str, prompt: &str, input: Value, schema: Value,
+        tokens: usize, profile: &Value,
+    ) -> Result<String, String> {
+        use super::super::transport;
+        let Some(call) = calls.iter().find(|call| call["stage"] == stage) else {
+            return Err(format!("no saved response for {stage}"));
+        };
+        let alias = call["request"]["model"].as_str().unwrap();
+        let mut expected = transport::request_body(alias, prompt, input, schema, tokens, profile)?;
+        transport::use_vulkan_schema(&mut expected);
+        assert_eq!(call["request"], expected, "saved request changed at {stage}");
+        call["output"].as_str().filter(|_| call["finishReason"] == "stop").map(str::to_owned)
+            .ok_or_else(|| format!("no complete saved response for {stage}"))
+    }
+
     #[test]
     fn local_minutes_replay_saved_chapter_selection() {
-        use super::super::{atomic_document, source_checkpoint::{CheckedSourcePrefix, CheckpointInput}, source_windows::SourceWindows};
-        use super::super::super::canonical_brief::source_first_input;
+        use super::super::{atomic_document, source_checkpoint::{CheckedSourcePrefix, CheckpointInput}, source_review, source_windows, transport};
         let Some(directory)=std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_ROOT") else { return; };
         let directory=PathBuf::from(directory);
         let output=PathBuf::from(std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_OUTPUT").unwrap());
         fs::create_dir(&output).unwrap();
-        for label in ["comparison","market"] {
-            let from=directory.join(label);
+        let choices = std::env::var("COMPANION_TEST_CHAPTER_REPLAY_CASES").unwrap_or_default();
+        let selected: Vec<_> = choices.split(',').filter(|name| !name.is_empty()).collect();
+        let roots = if directory.join("results.json").is_file() { vec![directory] }
+            else { vec![directory.join("comparison"), directory.join("market")] };
+        let profile = transport::profile().unwrap();
+        let mut replayed = 0;
+        for from in roots {
             let manifest:Value=serde_json::from_slice(&fs::read(from.join("results.json")).unwrap()).unwrap();
-            for (key,run) in manifest["results"].as_object().unwrap() {
+            let runs = manifest.get("cases").unwrap_or(&manifest["results"]).as_object().unwrap();
+            for (key,run) in runs {
+                if !selected.is_empty() && !selected.contains(&key.as_str()) { continue; }
+                if run.get("exit").is_some_and(|exit| exit != 0) { continue; }
                 assert!(run["backend"]=="vulkan" && run["engineReleased"]==true);
                 let input:Input=serde_json::from_slice(&fs::read(from.join(format!("{key}-input.json"))).unwrap()).unwrap();
                 let bytes=fs::read(input.source_file).unwrap();
@@ -170,34 +193,53 @@ mod tests{
                 let path=from.join(key).join("completed.json");
                 let raw=fs::read(&path).unwrap();
                 let original:Value=serde_json::from_slice(&raw).unwrap();
+                let calls=original["receipt"]["calls"].as_array().unwrap();
                 let original_sha=format!("{:x}",Sha256::digest(&raw));
                 let checkpoint:CheckpointInput=serde_json::from_value(json!({"path":path,"sha256":original_sha})).unwrap();
                 let prefix=CheckedSourcePrefix::load(&checkpoint,&text,&sha,input.duration_ms,true).unwrap();
-                let windows=SourceWindows::new(&text).unwrap();
+                let windows=source_windows::SourceWindows::new(&text).unwrap();
                 assert_eq!(prefix.len(),windows.len());
                 let mut facts=Vec::new();
+                let mut excerpts = 0;
                 for index in 0..windows.len() {
                     let (encoding,call)=prefix.window(index).unwrap();
                     let raw=call.map(|call| call["output"].as_str().unwrap()).unwrap_or("{}");
-                    facts.extend(windows.check_encoded(index,raw,encoding).unwrap().facts);
+                    let mut checked = windows.check_encoded(index,raw,encoding).unwrap();
+                    if let Some((input, schema)) = windows.excerpt_request(&checked) {
+                        let reply = if excerpts < 4 {
+                            excerpts += 1;
+                            let stage = format!("source-excerpt-{}", index + 1);
+                            assert!(calls.iter().any(|call| call["stage"] == stage), "{key} missing {stage}");
+                            replay_reply(calls, &stage, source_windows::EXCERPT_PROMPT, input, schema, 768, &profile).ok()
+                        } else { None };
+                        windows.finish_deferred(&mut checked, reply.as_deref());
+                    }
+                    facts.extend(checked.facts);
                 }
-                let mut bank=atomic_document::build_bank(facts,&text).unwrap();
-                let calls=original["receipt"]["calls"].as_array().unwrap();
-                let core=calls.iter().find(|call| call["stage"]=="compact-core-organization").unwrap();
-                assert_eq!(core["request"]["messages"][0]["content"],atomic_document::layout_prompt(&bank));
-                assert_eq!(core["request"]["messages"][1]["content"],source_first_input(&atomic_document::layout_input(&bank)));
-                assert_eq!(core["request"]["response_format"]["json_schema"]["schema"],atomic_document::layout_schema(&bank).unwrap());
-                let mut review=calls.iter().filter(|call| call["stage"].as_str().unwrap_or("").starts_with("chapter-review-"));
-                let raw=atomic_document::review_chapters(&mut bank,core["output"].as_str(),&text,|prompt,input,schema,stage| {
-                    let call=review.next().expect("every current chapter request must have a matching GPU reply");
-                    assert_eq!(call["stage"],stage);
-                    assert_eq!(call["request"]["messages"][0]["content"],prompt);
-                    assert_eq!(call["request"]["messages"][1]["content"],source_first_input(&input));
-                    assert_eq!(call["request"]["response_format"]["json_schema"]["schema"],schema);
-                    Ok(call["output"].as_str().unwrap().to_owned())
+                let review = if calls.iter().any(|call| call["stage"].as_str().unwrap_or("").starts_with("independent-source-review-")) {
+                    source_review::review(&text, |prompt, input, schema, stage| {
+                        replay_reply(calls, stage, prompt, input, schema, 640, &profile)
+                    }).unwrap()
+                } else { source_review::Review::default() };
+                let mut session=session(text.clone(),&input.title,input.duration_ms).unwrap();
+                if let Some(saved) = &input.saved_utterances {
+                    session.utterances = load_saved_utterances(saved).unwrap();
+                }
+                let mut bank = atomic_document::build_session_bank(facts, &session, &review).unwrap();
+                let original_seals = &original["receipt"]["atomicFactBank"]["seals"];
+                if original_seals.is_array() {
+                    assert_eq!(&bank.receipt["seals"], original_seals, "{key} replay changed extracted facts");
+                }
+                let core = replay_reply(calls, "compact-core-organization", atomic_document::layout_prompt(&bank),
+                    atomic_document::layout_input(&bank), atomic_document::layout_schema(&bank).unwrap(), 3072, &profile).unwrap();
+                let mut chapter_requests = 0;
+                let raw=atomic_document::review_chapters(&mut bank,Some(&core),&text,|prompt,input,schema,stage| {
+                    chapter_requests += 1;
+                    replay_reply(calls, stage, prompt, input, schema, 768, &profile)
                 }).unwrap();
-                assert!(review.next().is_none());
-                let session=session(text,&input.title,input.duration_ms).unwrap();
+                assert_eq!(chapter_requests, calls.iter().filter(|call| {
+                    call["stage"].as_str().unwrap_or("").starts_with("chapter-review-")
+                }).count());
                 let base=super::super::super::rules_l0_minutes(&session,"engineering-candidate");
                 let rendered=atomic_document::organize(&raw,&bank,&session,&base).unwrap();
                 let result=output.join(key);
@@ -209,8 +251,11 @@ mod tests{
                     "sourceFileSha256":input.expected_file_sha256,"exactChapterRequestsVerified":true,
                     "newModelCalls":0,"documentReceipt":rendered.receipt
                 })).unwrap();
+                replayed += 1;
             }
         }
+        assert!(replayed > 0, "no completed case matched the supplied replay input");
+        assert!(selected.is_empty() || replayed == selected.len(), "selected replay cases were not all verified");
     }
 
     #[test]

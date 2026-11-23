@@ -15,6 +15,82 @@ fn body(text: &str) -> &str {
     split_turn_label(text.trim()).map_or(text.trim(), |(_, words)| words.trim())
 }
 
+/// A prerequisite or a later diagnostic step can be a separate fact without
+/// being a separate topic. Link only consecutive original speech with a shared
+/// operation, or an explicit ordered check and follow-up on the same result.
+pub(super) fn linked_procedures(
+    sentences: &[Value], timing: Option<&super::timed_evidence::Timing<'_>>,
+) -> Vec<Vec<usize>> {
+    static REPEATED_OPERATION: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:定做|印制|发放|采购|发布|上线|交付|发货|印刷|启用|开工|办理|报送)[\p{Han}]{2}"
+    ).expect("repeated verb and object fragment"));
+    static CHECK_OBJECT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:查|核对|看|核查|检查|确认)(?:它的|这个|本批|该批|是否有|有没有|一下|看){0,3}(?P<object>[\p{Han}]{2,8}?)问题"
+    ).expect("named issue to verify"));
+    let source: Vec<_> = sentences.iter().map(|row| row["text"].as_str().expect("source sentence")).collect();
+    let raw = |i: usize| body(source[i]);
+    let uncertain = |text| has(text, &["建议", "可能", "我觉得", "考虑一下", "听说", "举例", "假设", "假如", "之前是"])
+        || text.contains(['？', '?']);
+    let linked = |left: usize, right: usize| {
+        match (split_turn_label(source[left].trim()), split_turn_label(source[right].trim())) {
+            (Some((one, _)), Some((two, _))) => one == two
+                && timing.is_none_or(|time| time.speech_gap_within(left, right, 12_000)),
+            (None, None) => timing.is_some_and(|time| time.speech_gap_within(left, right, 12_000)),
+            _ => false,
+        }
+    };
+    let next_content = |i: usize| (i + 1..(i + 6).min(source.len())).find(|&j| {
+        let reply = canonical_brief::normalized(raw(j));
+        let words = ["是这个吗", "这个吗", "是那个吗", "那个吗"].iter()
+            .find_map(|prefix| reply.strip_prefix(*prefix)).unwrap_or(&reply);
+        words.chars().any(|c| !matches!(c, '嗯'|'呃'|'啊'|'对'|'好'|'行'|'，'|','|'。'|'！'|'？'|'?'))
+    });
+    let mut groups = Vec::new();
+    for first in 0..source.len() {
+        let start = raw(first);
+        if uncertain(start) { continue; }
+        let Some(second) = next_content(first).filter(|&i| linked(first, i)) else { continue; };
+        let continuation = raw(second);
+        if uncertain(continuation) { continue; }
+        if start.contains("首先") && has(start, &["如果", "一旦", "的话"])
+            && continuation.contains("其次") && continuation.contains("如果")
+        {
+            let Some(issue) = CHECK_OBJECT.captures_iter(continuation).last()
+                .and_then(|m| m.name("object")).map(|m| m.as_str()) else { continue; };
+            let Some(third) = next_content(second).filter(|&i| linked(second, i)) else { continue; };
+            let last = raw(third);
+            if !uncertain(last) && last.starts_with("如果")
+                && last.contains(issue) && has(last, &["有问题", "不合格", "有异常"])
+                && has(last, &["对接", "通知", "交由", "报给", "联系", "上报", "移交"])
+            {
+                groups.push(vec![first, second, third]);
+            }
+        } else if has(start, &["要", "务必", "必须", "安排"])
+            && continuation.starts_with("如果")
+            && !has(start, &["取消", "不要", "不能", "不用"])
+            && !has(continuation, &["取消", "不要", "不能", "不用"])
+            && REPEATED_OPERATION.find_iter(start).any(|operation| continuation.contains(operation.as_str()))
+        {
+            groups.push(vec![first, second]);
+        }
+    }
+    groups
+}
+
+#[cfg(test)]
+#[test]
+fn procedure_links_require_ordered_conditions_and_continuing_source() {
+    let mut rows = vec![
+        serde_json::json!({"text":"说话人1: 如果这批差评多，首先咱们是"}),
+        serde_json::json!({"text":"说话人1: 要看是不是同类问题，其次如果确认属实，我们要把产品下架去检查它的质量问题"}),
+        serde_json::json!({"text":"说话人2: 这个吗，嗯行"}),
+        serde_json::json!({"text":"说话人1: 如果质量有问题，咱们和厂家对接，看看是生产还是运输造成的"}),
+    ];
+    assert_eq!(linked_procedures(&rows, None), [vec![0, 1, 3]]);
+    rows[3]["text"] = serde_json::json!("说话人3: 如果质量有问题，咱们和厂家对接，看看是生产还是运输造成的");
+    assert!(linked_procedures(&rows, None).is_empty());
+}
+
 pub(super) fn execution_passage(original: &str) -> Option<&str> {
     static THRESHOLD: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:[0-9零一二两三四五六七八九十]{1,4}月|(?:超过|不超过|不少于|不低于|至少)[0-9零一二两三四五六七八九十]{1,5}(?:天|日|小时|班|分钟)|百分之)"

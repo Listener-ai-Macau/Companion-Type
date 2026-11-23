@@ -95,6 +95,7 @@ pub(super) struct Bank {
     reader_order: HashMap<String, usize>,
     execution_reading: HashSet<String>,
     reader_groups: Vec<Vec<String>>,
+    linked_procedures: Vec<Vec<String>>,
     source_agenda: Option<super::delivery_evidence::OpeningAgenda>,
 }
 impl Bank {
@@ -1325,6 +1326,26 @@ fn build_bank_with_timing(
             }).collect::<Option<Vec<_>>>()
         }).collect::<Vec<_>>();
     execution_reading.extend(reader_groups.iter().flatten().cloned());
+    let literal = |text: &str| canonical_brief::normalized(
+        super::source_review::bare(text).trim_end_matches(['。', '，', '！', '；', '.', ' ']),
+    );
+    let mut linked_ids = HashSet::new();
+    let linked_procedures = super::delivery_evidence::linked_procedures(&sentences, timing.as_ref()).into_iter()
+        .filter_map(|sources| {
+            let ids = sources.into_iter().map(|index| {
+                let anchor = sentences[index]["id"].as_str().unwrap();
+                let text = literal(original_sentences[index]);
+                topic_facts.iter().find(|fact| {
+                    fact.evidence[0] == anchor && matches!(fact.kind, Kind::Status)
+                        && !source_quotes.contains(&fact.id) && !quantity_quotes.contains(&fact.id)
+                        && literal(&fact.text) == text
+                }).map(|fact| fact.id.clone())
+            }).collect::<Option<Vec<_>>>()?;
+            if ids.iter().any(|id| linked_ids.contains(id)) { return None; }
+            linked_ids.extend(ids.iter().cloned());
+            Some(ids)
+        }).collect::<Vec<_>>();
+    execution_reading.extend(linked_ids);
     let chapter_point_choices: Vec<_> = chapter_spans.iter().map(|span| {
         use super::reader_ranking::{shortlist, ReadingInput};
         let content: Vec<_> = topic_facts[span.clone()].iter().map(|f| ReadingInput {
@@ -1356,9 +1377,10 @@ fn build_bank_with_timing(
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids,
-        "linkedReaderReportGroups":reader_groups,"independentSourceReview":review.batches,
+        "linkedReaderReportGroups":reader_groups,"linkedReaderProcedureGroups":linked_procedures,
+        "independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,reader_groups,source_agenda })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,reader_groups,linked_procedures,source_agenda })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -2032,6 +2054,10 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     if !assignments.is_empty(){return Err(fail());}
     merge_linked_singletons(&mut slots, purpose_id);
     keep_reader_groups_together(&mut slots, &bank.reader_groups, purpose_id);
+    keep_reader_groups_together(&mut slots, &bank.linked_procedures, purpose_id);
+    let procedure_order = bank.linked_procedures.iter().enumerate().flat_map(|(group, ids)| {
+        ids.iter().enumerate().map(move |(step, id)| (id.as_str(), (group, step)))
+    }).collect::<HashMap<_, _>>();
     let mut required_chars=0;
     let important = |fact: &Fact, main: bool| main && !bank.review_quote(&fact.id)
         && (timed_prediction(fact) || (focus.is_some()
@@ -2054,10 +2080,10 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             *main |= priority(fact) != usize::MAX;
         }
         if focus.is_some() {
-            items.sort_by_key(|(fact, main)| (conversational_prompt(fact), bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main),
+            items.sort_by_key(|(fact, main)| (procedure_order.get(fact.id.as_str()), conversational_prompt(fact), bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main),
                 !useful_reader_point(fact), bank.reader_order.get(&fact.id).copied().unwrap_or(usize::MAX)));
         } else {
-            items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main)));
+            items.sort_by_key(|(fact, main)| (procedure_order.get(fact.id.as_str()), bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main)));
         }
         placed_critical.append(&mut protected);
         required_chars += items.iter().enumerate()
@@ -2070,7 +2096,8 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         for (fact, main) in items.iter().skip(1).take(2) {
             let size=reader_fact_length(bank,fact);
             let charged = if bank.required_topic(&fact.id) { 0 } else { size };
-            if (placed_critical.contains(&fact.id.as_str()) || important(fact, *main)) && charged <= optional_chars {
+            if !procedure_order.contains_key(fact.id.as_str())
+                && (placed_critical.contains(&fact.id.as_str()) || important(fact, *main)) && charged <= optional_chars {
                 optional_chars -= charged;
                 reserved.insert(fact.id.as_str());
             }
@@ -2135,6 +2162,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         // more interesting highlights than the reading layer can display.
         review.sort_by_key(|[id]| !bank.priority_review.contains(*id));
         let mut review=review.into_iter();
+        required.sort_by_key(|[id]| procedure_order.get(id.as_str()));
         let mut details=required;
         details.extend(review.by_ref().take(1));
         details.extend(highlights.into_iter().chain(review).chain(remainder).chain(prompts));

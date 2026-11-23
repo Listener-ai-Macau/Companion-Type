@@ -112,6 +112,10 @@ impl<'a> Timing<'a> {
     }
 
     pub(super) fn neighboring_speech(&self, first: usize, second: usize) -> bool {
+        self.speech_gap_within(first, second, 2_500)
+    }
+
+    pub(super) fn speech_gap_within(&self, first: usize, second: usize, max_gap_ms: u64) -> bool {
         let (earlier,later) = if first<second {(first,second)} else {(second,first)};
         let Some(end) = self.utterances_by_sentence[earlier].clone().last()
             .and_then(|i|self.utterances.get(i)) else { return false; };
@@ -120,7 +124,7 @@ impl<'a> Timing<'a> {
             return false;
         };
         !end.approximate_timing && !start.approximate_timing
-            && start.start_ms.saturating_sub(end.end_ms)<=2_500
+            && start.start_ms.saturating_sub(end.end_ms)<=max_gap_ms
     }
 
     fn neighborhood(&self, index: usize, before_ms: u64, after_ms: u64) -> Vec<usize> {
