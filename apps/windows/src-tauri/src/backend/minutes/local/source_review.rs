@@ -49,6 +49,14 @@ pub(super) fn review(
     source: &str,
     mut ask: impl FnMut(&str, Value, Value, &str) -> Result<String,String>,
 ) -> Result<Review,String> {
+    review_prefix(source, |prompt, input, schema, stage| ask(prompt, input, schema, stage).map(Some))
+        .map(|(review, _)| review)
+}
+
+pub(super) fn review_prefix(
+    source: &str,
+    mut ask: impl FnMut(&str, Value, Value, &str) -> Result<Option<String>, String>,
+) -> Result<(Review, bool), String> {
     let rows = evidence_sentences(&source_units(source));
     let mut result = Review::default();
     let mut start = 0;
@@ -72,7 +80,9 @@ pub(super) fn review(
         })),0,MAX_MARKS)}));
         let input=json!({"fields":["原话编号","原话","可选择"],"turns":offered});
         let stage=format!("independent-source-review-{}",result.batches.len()+1);
-        let raw=ask(PROMPT,input,schema,&stage)?;
+        let Some(raw) = ask(PROMPT, input, schema, &stage)? else {
+            return Ok((result, false));
+        };
         let value:Answer=serde_json::from_str(crate::backend::minutes::strip_code_fences(&raw).trim()).map_err(|_|fail())?;
         if value.marks.len()>MAX_MARKS || value.marks.iter().any(|mark| !allowed.contains(mark.id.as_str())) {
             return Err(fail());
@@ -90,7 +100,7 @@ pub(super) fn review(
         }));
         start=end;
     }
-    Ok(result)
+    Ok((result, true))
 }
 
 fn any(text: &str, terms: &[&str]) -> bool {

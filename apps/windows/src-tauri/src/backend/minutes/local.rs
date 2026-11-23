@@ -208,7 +208,20 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 }
                 review
             } else {
+                let mut saved_batches = reused.independent_source_review_prefix(context).iter();
                 let result=source_review::review(&session.transcript_text,|prompt,input,schema,stage| {
+                    if let Some(call) = saved_batches.next() {
+                        if call["stage"] != stage {
+                            return Err(atomic_document::fail());
+                        }
+                        if let Ok(mut trace) = trace.lock() {
+                            if !trace["calls"].is_array() { trace["calls"] = json!([]); }
+                            trace["calls"].as_array_mut().unwrap().push(call.clone());
+                            let count = trace["reusedIndependentSourceReviewBatches"].as_u64().unwrap_or(0);
+                            trace["reusedIndependentSourceReviewBatches"] = json!(count + 1);
+                        }
+                        return call["output"].as_str().map(str::to_owned).ok_or_else(atomic_document::fail);
+                    }
                     let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,640)?;
                     record_call(&trace,stage);
                     Ok(result)

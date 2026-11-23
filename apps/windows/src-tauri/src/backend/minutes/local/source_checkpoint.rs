@@ -18,9 +18,16 @@ pub(super) struct CheckpointInput {
     use_vulkan_source_windows_on_cpu: bool,
 }
 
+#[derive(Clone, Copy)]
+enum ArchiveRuntime {
+    Cpu,
+    Vulkan,
+    CpuWithVulkanSource,
+}
+
 struct CheckedSourceReview {
     context_tokens: usize,
-    result: source_review::Review,
+    complete: Option<source_review::Review>,
     calls: Vec<Value>,
 }
 
@@ -46,17 +53,32 @@ impl CheckedSourcePrefix {
         }
         let report: Value = serde_json::from_slice(&bytes).map_err(|_| failure())?;
         let cross_backend = input.use_vulkan_source_windows_on_cpu;
-        if cross_backend && (vulkan || input.reuse_independent_source_review
-            || report["state"] != "native-candidate-engineer-review-required"
-            || report["receipt"]["backend"] != "vulkan"
-            || report["receipt"]["serviceReleaseConfirmed"] != true)
-        {
-            return Err(failure());
-        }
-        // Validate the donor against its own archive format and pinned
-        // runtime. Only complete primary-source replies can cross backends.
+        let trace = &report["receipt"];
+        let runtime = if cross_backend {
+            if vulkan {
+                return Err(failure());
+            }
+            let completed = report["state"] == "native-candidate-engineer-review-required"
+                && trace["serviceReleaseConfirmed"] == true;
+            let interrupted = report["state"] == "native-candidate-failed-retained"
+                && trace["ownedJobKillOnCloseEnabled"] == true
+                && input.reuse_independent_source_review;
+            match trace["backend"].as_str() {
+                Some("vulkan") if completed && !input.reuse_independent_source_review => ArchiveRuntime::Vulkan,
+                Some("cpu") if (completed || interrupted) && trace["reusedSourceBackend"] == "vulkan" => {
+                    ArchiveRuntime::CpuWithVulkanSource
+                }
+                _ => return Err(failure()),
+            }
+        } else if vulkan {
+            ArchiveRuntime::Vulkan
+        } else {
+            ArchiveRuntime::Cpu
+        };
+        // Validate source requests in their archived format. Independent
+        // review requests must match the runtime that actually issued them.
         let mut checked = Self::from_runtime_report(
-            &report, source, source_sha256, duration_ms, vulkan || cross_backend, input.reuse_independent_source_review,
+            &report, source, source_sha256, duration_ms, runtime, input.reuse_independent_source_review,
         )?;
         if cross_backend && checked.len() != SourceWindows::new(source)?.len() {
             return Err(failure());
@@ -67,14 +89,16 @@ impl CheckedSourcePrefix {
 
     #[cfg(test)]
     fn from_report(report: &Value, source: &str, source_sha256: &str, duration_ms: u64) -> Result<Self, String> {
-        Self::from_runtime_report(report, source, source_sha256, duration_ms, false, false)
+        Self::from_runtime_report(report, source, source_sha256, duration_ms, ArchiveRuntime::Cpu, false)
     }
 
     fn from_runtime_report(
-        report: &Value, source: &str, source_sha256: &str, duration_ms: u64, vulkan: bool,
+        report: &Value, source: &str, source_sha256: &str, duration_ms: u64, runtime: ArchiveRuntime,
         reuse_independent_source_review: bool,
     ) -> Result<Self, String> {
         let trace = &report["receipt"];
+        let vulkan = matches!(runtime, ArchiveRuntime::Vulkan);
+        let mixed_sources = matches!(runtime, ArchiveRuntime::CpuWithVulkanSource);
         let runtime_sha = if vulkan { assets::VULKAN_SERVER_SHA } else { assets::SERVER_SHA };
         if !matches!(report["state"].as_str(), Some("native-candidate-failed-retained" | "native-candidate-engineer-review-required"))
             || report["sourceSha256"] != source_sha256
@@ -126,10 +150,11 @@ impl CheckedSourcePrefix {
                 let alias = request["model"].as_str().ok_or_else(failure)?;
                 let (input, schema) = windows.contract(index, encoding);
                 let mut expected = transport::request_body(alias, encoding.prompt(), input, schema, super::SOURCE_OUTPUT_TOKENS, &profile)?;
-                if vulkan {
+                if vulkan || mixed_sources {
                     transport::use_vulkan_schema(&mut expected);
                 }
-                if *request != expected || call["finishReason"] != "stop" {
+                if *request != expected || call["finishReason"] != "stop"
+                    || (mixed_sources && call["reused"] != true) {
                     return Err(failure());
                 }
                 Some(call.clone())
@@ -156,8 +181,8 @@ impl CheckedSourcePrefix {
                 call["stage"].as_str().is_some_and(|stage| stage.starts_with("independent-source-review-"))
             });
             let mut calls = Vec::new();
-            let result = source_review::review(source, |prompt, input, schema, stage| {
-                let call = archived.next().ok_or_else(failure)?;
+            let (result, complete) = source_review::review_prefix(source, |prompt, input, schema, stage| {
+                let Some(call) = archived.next() else { return Ok(None); };
                 let request = &call["request"];
                 let alias = request["model"].as_str().ok_or_else(failure)?;
                 let mut expected = transport::request_body(alias, prompt, input, schema, 640, &profile)?;
@@ -170,12 +195,13 @@ impl CheckedSourcePrefix {
                 let mut replay = call.clone();
                 replay["reused"] = Value::Bool(true);
                 calls.push(replay);
-                call["output"].as_str().map(str::to_owned).ok_or_else(failure)
+                call["output"].as_str().map(|raw| Some(raw.to_owned())).ok_or_else(failure)
             })?;
-            if archived.next().is_some() || calls.is_empty() {
+            if archived.next().is_some() || calls.is_empty()
+                || (!complete && report["state"] != "native-candidate-failed-retained") {
                 return Err(failure());
             }
-            Some(CheckedSourceReview { context_tokens, result, calls })
+            Some(CheckedSourceReview { context_tokens, complete: complete.then_some(result), calls })
         } else {
             None
         };
@@ -192,7 +218,16 @@ impl CheckedSourcePrefix {
 
     pub(super) fn independent_source_review(&self, context: transport::Context) -> Option<(&source_review::Review, &[Value])> {
         let checked = self.independent_source_review.as_ref()?;
-        (checked.context_tokens == context.tokens()).then_some((&checked.result, checked.calls.as_slice()))
+        if checked.context_tokens != context.tokens() {
+            return None;
+        }
+        Some((checked.complete.as_ref()?, &checked.calls))
+    }
+
+    pub(super) fn independent_source_review_prefix(&self, context: transport::Context) -> &[Value] {
+        self.independent_source_review.as_ref()
+            .filter(|checked| checked.context_tokens == context.tokens())
+            .map_or(&[], |checked| checked.calls.as_slice())
     }
 
     #[cfg(test)]
@@ -229,6 +264,53 @@ mod tests {
     }
 
     #[test]
+    fn a_cpu_review_can_be_reused_after_checking_both_runtime_formats() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_MIXED_CPU_MINUTES_RECEIPT") else { return; };
+        let bytes = std::fs::read(&path).unwrap();
+        let mut report: Value = serde_json::from_slice(&bytes).unwrap();
+        let source = std::fs::read_to_string(report["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let hash = format!("{:x}", Sha256::digest(source.as_bytes()));
+        let duration = report["durationMs"].as_u64().unwrap();
+        let input: CheckpointInput = serde_json::from_value(serde_json::json!({
+            "path": PathBuf::from(&path), "sha256": format!("{:x}", Sha256::digest(&bytes)),
+            "useVulkanSourceWindowsOnCpu": true, "reuseIndependentSourceReview": true
+        })).unwrap();
+        let prefix = CheckedSourcePrefix::load(&input, &source, &hash, duration, false).unwrap();
+        assert!(prefix.reuses_vulkan_on_cpu());
+        assert_eq!(prefix.len(), SourceWindows::new(&source).unwrap().len());
+        let calls = prefix.independent_source_review_prefix(transport::Context::ReducedCpu);
+        assert!(!calls.is_empty());
+        assert!(prefix.independent_source_review_prefix(transport::Context::Full).is_empty());
+        if report["state"] == "native-candidate-failed-retained" {
+            assert!(prefix.independent_source_review(transport::Context::ReducedCpu).is_none());
+            assert_eq!(calls.len(), 4);
+            assert_eq!(calls.last().unwrap()["stage"], "independent-source-review-4");
+            let mut archived = calls.iter();
+            let (_, complete) = source_review::review_prefix(&source, |_, _, _, stage| {
+                if let Some(call) = archived.next() {
+                    assert_eq!(call["stage"], stage);
+                    Ok(Some(call["output"].as_str().unwrap().to_owned()))
+                } else {
+                    assert_eq!(stage, "independent-source-review-5");
+                    Ok(None)
+                }
+            }).unwrap();
+            assert!(!complete);
+        } else {
+            let (review, _) = prefix.independent_source_review(transport::Context::ReducedCpu).unwrap();
+            assert_eq!(serde_json::to_value(&review.batches).unwrap(),
+                report["receipt"]["atomicFactBank"]["independentSourceReview"]);
+        }
+        let saved = report["receipt"]["calls"].as_array_mut().unwrap().iter_mut()
+            .find(|call| call["stage"].as_str().is_some_and(|s| s.starts_with("source-window-"))).unwrap();
+        saved["reused"] = Value::Bool(false);
+        assert!(CheckedSourcePrefix::from_runtime_report(
+            &report, &source, &hash, duration, ArchiveRuntime::CpuWithVulkanSource, true,
+        ).is_err());
+    }
+
+    #[test]
     fn a_completed_independent_review_can_replay_exact_cpu_requests_only() {
         let Some(path) = std::env::var_os("COMPANION_TEST_SAVED_CPU_INDEPENDENT_REVIEW") else { return; };
         let bytes = std::fs::read(&path).unwrap();
@@ -249,12 +331,12 @@ mod tests {
         assert_eq!(serde_json::to_value(&review.batches).unwrap(),
             report["receipt"]["atomicFactBank"]["independentSourceReview"]);
         assert!(checkpoint.independent_source_review(transport::Context::Full).is_none());
-        let unrequested = CheckedSourcePrefix::from_runtime_report(&report, &source, &hash, duration, false, false).unwrap();
+        let unrequested = CheckedSourcePrefix::from_runtime_report(&report, &source, &hash, duration, ArchiveRuntime::Cpu, false).unwrap();
         assert!(unrequested.independent_source_review(transport::Context::ReducedCpu).is_none());
         let changed = report["receipt"]["calls"].as_array_mut().unwrap().iter_mut()
             .find(|row| row["stage"] == "independent-source-review-1").unwrap();
         changed["request"]["messages"][0]["content"] = Value::String("changed prompt".to_owned());
-        assert!(CheckedSourcePrefix::from_runtime_report(&report, &source, &hash, duration, false, true).is_err());
+        assert!(CheckedSourcePrefix::from_runtime_report(&report, &source, &hash, duration, ArchiveRuntime::Cpu, true).is_err());
     }
 
     #[test]
