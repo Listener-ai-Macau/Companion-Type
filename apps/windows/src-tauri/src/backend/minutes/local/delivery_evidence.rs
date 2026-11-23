@@ -15,6 +15,52 @@ fn body(text: &str) -> &str {
     split_turn_label(text.trim()).map_or(text.trim(), |(_, words)| words.trim())
 }
 
+/// A reading-layer handoff must still contain the original trigger or
+/// permission, the material being sent, and the stated destination. The
+/// reading layer keeps the original wording and leaves ownership to the task verifier.
+pub(super) fn grounded_handoff_condition(original: &str, candidate: &str) -> bool {
+    static EVENT_HANDOFF: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"[^，,。！？；]{2,26}(?:之前|前)[，,、]{0,3}",
+        r"(?:要提早|要提前|需要提前|必须提前|务必提前|请提前|务必|必须)把",
+        r"[^，,。！？；]{2,34}?(?:信息|资料|名单|报告|清单|记录|文件|物料|样品)",
+        r"(?:，|,|然后|先|统一){0,5}(?:发给|交给|提交给|转给|送给|提供给)",
+        r"(?P<destination>[\p{Han}]{2,16}?)(?:然后|再由|以便|[，,。！？；]|$)"
+    )).expect("a time-bound handoff with material and destination"));
+    static AUTHORIZED_HANDOFF: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?:在法律允许的基础上|在法律允许的范围内|在合法合规的前提下|",
+        r"(?:经|取得|获得)(?:客户|用户|本人|当事人)(?:同意|授权)(?:后|以后))",
+        r"(?:，|,|然后|才|才会|再){0,5}(?:收集|保存|处理|共享)",
+        r"[^。！？；]{2,65}?(?:交给|交由|发给|提供给)(?P<destination>[\p{Han}]{2,18}?)(?:然后|再由|以便|[，,。！？；]|$)"
+    )).expect("an explicit permission limits handling and handoff"));
+    let original = canonical_brief::normalized(body(original));
+    let candidate = canonical_brief::normalized(body(candidate));
+    let unresolved = ["举例", "假设", "听说", "不确定", "讨论是否", "我建议", "取消", "不用", "无需"];
+    if has(&original, &unresolved) || has(&candidate, &unresolved) {
+        return false;
+    }
+    [&*EVENT_HANDOFF, &*AUTHORIZED_HANDOFF].into_iter().any(|pattern| {
+        pattern.captures_iter(&original).any(|witness| {
+            let start = witness.get(0).expect("matched handoff").start();
+            let end = witness.name("destination").expect("matched destination").end();
+            candidate.contains(&original[start..end])
+        })
+    })
+}
+
+#[cfg(test)]
+#[test]
+fn a_grounded_handoff_keeps_event_and_permission_with_the_transfer() {
+    let event = "直播活动之前，要提早把这个产品的信息 然后发给我们，我们便于培训。";
+    assert!(grounded_handoff_condition(event, "直播活动之前，要提早把这个产品的信息然后发给我们。"));
+    assert!(!grounded_handoff_condition(event, "要提早把这个产品的信息然后发给我们。"));
+    assert!(!grounded_handoff_condition(event, "直播活动之前，要提早把这个产品的信息然后发给运营。"));
+    assert!(!grounded_handoff_condition(&format!("我建议{event}"), event));
+
+    let permission = "在 法律允许的基础上，然后收集客户的兴趣，然后做成汇表儿，然后会交给客服然后进行后续联系";
+    assert!(grounded_handoff_condition(permission, permission));
+    assert!(!grounded_handoff_condition(permission, "收集客户的兴趣，然后做成汇表儿，然后会交给客服"));
+}
+
 /// A prerequisite or a later diagnostic step can be a separate fact without
 /// being a separate topic. Link only consecutive original speech with a shared
 /// operation, or an explicit ordered check and follow-up on the same result.

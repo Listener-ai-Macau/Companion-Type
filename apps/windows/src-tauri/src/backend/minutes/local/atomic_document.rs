@@ -1286,10 +1286,16 @@ fn build_bank_with_timing(
                 reader_priority.insert(id.clone(), priority);
             }
         }
-        if placement == Placement::Topic && (f.execution_reading || binding.is_some()) {
+        let grounded_handoff = placement == Placement::Topic && matches!(kind, Kind::Status)
+            && !f.source_needs_review && !f.quantity_needs_review
+            && super::delivery_evidence::grounded_handoff_condition(anchor_text, &f.text);
+        if placement == Placement::Topic && (f.execution_reading || binding.is_some() || grounded_handoff) {
             execution_reading.insert(id.clone());
             if binding.is_some() {
                 verification.push(json!({"sentenceId":anchor,"reason":"verified-material-condition-in-reader","factId":id}));
+            }
+            if grounded_handoff {
+                verification.push(json!({"sentenceId":anchor,"reason":"grounded-handoff-condition-in-reader","factId":id}));
             }
         }
         facts.push(Fact { id, kind, placement, text:f.text, owner:f.owner, due:f.due, evidence:f.evidence });
