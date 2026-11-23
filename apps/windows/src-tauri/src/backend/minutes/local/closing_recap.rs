@@ -326,7 +326,7 @@ pub(super) fn direct_assignments(sentences: &[Value]) -> Vec<RecapHandoff> {
         if matches!(operation, "主抓" | "主抓一下" | "主抓一下儿") {
             // A terse assignment can refer to the same speaker's immediately
             // preceding instruction. Keep the literal scope if it is present.
-            let unit = owner.trim_end_matches("部门").trim_end_matches('部');
+            let unit = owner.trim_end_matches("的部门").trim_end_matches("部门").trim_end_matches('部');
             if let Some((scope, detail)) = (pos.saturating_sub(5)..pos).rev().find_map(|at| {
                 let (actor, raw) = turn(at)?;
                 let detail = raw.trim_end_matches(['，', '。', '！', ' ']);
@@ -385,7 +385,7 @@ fn direct_closing_instruction(words: &str, after_announce: bool) -> Option<(Stri
     let role = found.name("owner")?.as_str();
     let unit = found.name("unit")?.as_str();
     let owner = match unit {
-        "的部门" | "的部门儿" | "部门" | "部门儿" => format!("{role}部门"),
+        "的部门" | "的部门儿" | "部门" | "部门儿" => format!("{role}{}", unit.trim_end_matches('儿')),
         "这边" | "这边儿" | "那边" | "那边儿" => {
             if !["销售", "采购", "运营", "设计", "财务", "市场", "售后", "人事", "物业",
                 "后勤", "编辑", "开发", "工程", "生产", "质检"].contains(&role)
@@ -429,7 +429,7 @@ mod tests {
         ]);
         let tasks = direct_assignments(&rows);
         assert_eq!(tasks.len(), 2);
-        assert_eq!(tasks[0].item.owner.as_deref(), Some("设计部门"));
+        assert_eq!(tasks[0].item.owner.as_deref(), Some("设计的部门"));
         assert!(tasks[0].item.text.contains("设计风格"));
         assert_eq!(tasks[0].citations, [0, 2]);
         assert_eq!(tasks[1].item.owner.as_deref(), Some("销售"));
@@ -447,13 +447,46 @@ mod tests {
         let expected = std::env::var("COMPANION_TEST_CLOSING_TRANSCRIPT_SHA").expect("supply the frozen digest");
         let source = std::fs::read_to_string(path).expect("read the frozen transcript");
         assert_eq!(format!("{:x}", Sha256::digest(source.as_bytes())), expected);
-        let assignments = direct_assignments(&evidence_sentences(&source_units(&source)));
+        let sentences = evidence_sentences(&source_units(&source));
+        let assignments = direct_assignments(&sentences);
         assert_eq!(assignments.len(), 2);
-        assert_eq!(assignments[0].item.owner.as_deref(), Some("设计部门"));
+        assert_eq!(assignments[0].item.owner.as_deref(), Some("设计的部门"));
         assert!(assignments[0].item.text.contains("设计") && assignments[0].item.text.contains("主抓"));
         assert_eq!(assignments[1].item.owner.as_deref(), Some("销售"));
         assert!(assignments[1].item.text.contains("跟学校联系"));
         assert!(assignments.iter().all(|item| item.item.due.is_none()));
+
+        use crate::backend::minutes::{rules_l0_minutes, tests::session_with_text};
+        let session = session_with_text(&source);
+        let base = rules_l0_minutes(&session, "now");
+        let topic_quote = "明年咱们厂子接到一个大单";
+        let topic = sentences.iter().find(|row| {
+            row["text"].as_str().is_some_and(|text| text.contains(topic_quote))
+        }).expect("fixed source topic");
+        let actions = assignments.iter().map(|entry| {
+            let evidence = entry.citations.iter().map(|&index| {
+                let row = &sentences[index];
+                serde_json::json!({"source":row["source"],"quote":row["text"]})
+            }).collect::<Vec<_>>();
+            serde_json::json!({"text":entry.item.text,"owner":entry.item.owner,
+                               "due":null,"evidence":evidence})
+        }).collect::<Vec<_>>();
+        let document = serde_json::json!({
+            "purpose":"讨论校服设计安排",
+            "topics":[{"title":"校服设计","points":[{"kind":"status","text":topic_quote,
+                "evidence":[{"source":topic["source"],"quote":topic_quote}]}],"details":[]}],
+            "decisions":[],"actionItems":actions,"questions":[]
+        });
+        let mut edited_owner = document.clone();
+        edited_owner["actionItems"][0]["owner"] = serde_json::json!("设计部门");
+        let error = super::super::evidence_document::parse(&edited_owner.to_string(),&session,&base)
+            .err().expect("normalized owner is not a literal citation");
+        assert!(error.contains("owner只能为原话明确出现的字面值"),"{error}");
+        let checked = super::super::evidence_document::parse(&document.to_string(),&session,&base)
+            .expect("render the real-source assignments with the current document validator");
+        assert_eq!(checked.minutes.action_items.len(),2);
+        assert!(checked.minutes.markdown.contains("owner: 设计的部门"));
+        assert!(checked.minutes.markdown.contains("owner: 销售"));
     }
 
     #[test]
