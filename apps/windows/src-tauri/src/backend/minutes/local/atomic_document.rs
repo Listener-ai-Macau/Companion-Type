@@ -2771,7 +2771,21 @@ fn assemble_with_context(
     let mut reader_future = Vec::new();
     let mut reader_reported_context = Vec::new();
     let mut reader_complete_requirements = Vec::new();
+    let mut reader_connected_answers = Vec::new();
     if !bank.chapter_spans.is_empty() {
+        let conversation = super::reader_turns::Conversation::new(&sentences);
+        let source_index = |source: &str| source.strip_prefix('e')?.parse::<usize>().ok();
+        let action_sources: HashSet<_> = result.bindings.iter()
+            .filter(|(path, _)| path.starts_with("/actionItems/"))
+            .filter_map(|(_, id)| {
+                let fact = bank.facts.iter().find(|fact| &fact.id == id)?;
+                source_index(fact.evidence.first()?)
+            }).collect();
+        let primary_chars = document["topics"].as_array().into_iter().flatten()
+            .flat_map(|topic| topic["points"].as_array().into_iter().flatten())
+            .filter_map(|point| point["text"].as_str())
+            .map(|text| text.chars().count()).sum::<usize>();
+        let mut primary_room = 1000_usize.saturating_sub(primary_chars);
         let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
         let proposed: HashSet<_> = bank.receipt["coreProposedReaderFactIds"].as_array().into_iter()
             .flatten().filter_map(Value::as_str).collect();
@@ -2876,9 +2890,44 @@ fn assemble_with_context(
             }
             topic_sources.sort_unstable();
             topic_sources.dedup();
-            let reported = super::reader_context::reported_context(
+            let mut reported = super::reader_context::reported_context(
                 &topic_sources, &visible_sources, &nominated_sources, &unbound_review, &known,
             );
+            let followup = topic_sources.iter().copied().filter(|index| {
+                unbound_review.get(index).is_some_and(|role| matches!(*role, "work" | "decision"))
+                    && !visible_sources.contains(index)
+            }).find_map(|index| conversation.closing_followup(index, &action_sources));
+            if let Some(followup) = followup.filter(|item| !reported.iter().any(|row| row.source == item.source)) {
+                reported.push(followup);
+            }
+
+            let connected_answer = result.bindings.iter().filter(|(path, id)| {
+                reader_path(path) && !bank.required_topic(id) && !bank.review_quote(id)
+                    && !bank.execution_reading.contains(id)
+            }).find_map(|(path, id)| {
+                let fact = by_id.get(id.as_str())?;
+                let index = source_index(fact.evidence.first()?)?;
+                let shown = document.pointer(path)?["text"].as_str()?;
+                let points = path.starts_with(&point_prefix);
+                let old_len = shown.chars().count();
+                let limit = if points { 90.min(old_len + primary_room) } else { 120 };
+                let answer = conversation.answer(index, shown, &visible_sources, limit)?;
+                if answer.sources.iter().any(|source| !known.contains_key(*source)) { return None; }
+                Some((path, points, old_len, answer))
+            });
+            if let Some((path, points, old_len, answer)) = connected_answer {
+                if points {
+                    primary_room = primary_room.saturating_sub(answer.text.chars().count().saturating_sub(old_len));
+                }
+                let entry = document.pointer_mut(path).ok_or_else(fail)?;
+                entry["text"] = json!(answer.text);
+                entry["evidence"] = json!(answer.sources.iter().map(|source| {
+                    let row = known[*source];
+                    json!({"source":row["source"],"quote":row["text"]})
+                }).collect::<Vec<_>>());
+                reader_connected_answers.push(json!({"path":path,"sourceIds":answer.sources}));
+            }
+
             let details = document["topics"][topic]["details"].as_array_mut().ok_or_else(fail)?;
             let offset = (*limit).min(details.len());
             let example_count = example.as_ref().map_or(0, |(_,passages)| passages.len());
@@ -3030,6 +3079,9 @@ fn assemble_with_context(
     }
     if !reader_complete_requirements.is_empty() {
         parsed.receipt["readerRequirementCompletions"] = json!(reader_complete_requirements);
+    }
+    if !reader_connected_answers.is_empty() {
+        parsed.receipt["readerConnectedAnswers"] = json!(reader_connected_answers);
     }
     if !closing_actions.is_empty() {
         parsed.receipt["readerRecapAcceptedWork"] = json!(closing_actions.iter().map(|(path,handoff)| {
