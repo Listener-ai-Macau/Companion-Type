@@ -2717,6 +2717,12 @@ fn assemble_with_context(
         let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
         let proposed: HashSet<_> = bank.receipt["coreProposedReaderFactIds"].as_array().into_iter()
             .flatten().filter_map(Value::as_str).collect();
+        let unbound_review = bank.receipt["claimSourceReview"].as_array().into_iter().flatten()
+            .filter(|row| row["reason"] == "source-review-nomination-unbound")
+            .filter_map(|row| {
+                let source = row["sentenceId"].as_str()?.strip_prefix('e')?.parse::<usize>().ok()?;
+                Some((source, row["role"].as_str()?))
+            }).collect::<HashMap<_,_>>();
         for (topic,limit) in reader_detail_limits.iter_mut().enumerate() {
             let prefix = format!("/topics/{topic}/details/");
             let point_prefix = format!("/topics/{topic}/points/");
@@ -2787,7 +2793,7 @@ fn assemble_with_context(
             topic_sources.sort_unstable();
             topic_sources.dedup();
             let reported = super::reader_context::reported_context(
-                &topic_sources, &visible_sources, &nominated_sources, &known,
+                &topic_sources, &visible_sources, &nominated_sources, &unbound_review, &known,
             );
             let details = document["topics"][topic]["details"].as_array_mut().ok_or_else(fail)?;
             let offset = (*limit).min(details.len());

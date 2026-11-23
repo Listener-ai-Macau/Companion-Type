@@ -404,12 +404,34 @@ fn alternate_treatment(
     Some((counterpart, treatment))
 }
 
+fn direct_request_sequence(text: &str) -> bool {
+    !text.contains(['?', '？'])
+        && !has(text, &["假设", "如果你", "比如你", "比方说", "能不能", "要不要"])
+        && has(text, &["你要", "你先", "你负责", "请你"])
+        && has(text, &["核对", "核查", "核实", "测算", "调研", "验证", "复核", "统计", "走访", "检查"])
+        && has(text, &["再根据", "再据此", "据此", "相应", "然后", "之后"])
+}
+
+fn rule_under_discussion(text: &str) -> Option<&'static str> {
+    let (proposal, details) = text.split_once("比如").or_else(|| text.split_once("例如"))?;
+    if has(proposal, &["假如", "假设", "已经定", "已经制定", "不用制定", "不要制定"])
+        || !has(proposal, &["要制定", "要制订", "还需明确", "还要明确", "得制定", "需要制定"])
+        || !has(proposal, &["规则", "口径", "标准", "办法", "方案"])
+        || !has(details, &["怎么算", "怎么分", "归谁", "按什么", "如何", "谁来"])
+    {
+        return None;
+    }
+    ["各区", "各部门", "各团队", "各单位", "各地", "各组"].into_iter()
+        .find(|party| proposal.contains(party))
+}
+
 /// Retain source qualifications within a topic that already shows the related
 /// discussion. Excerpts have their own citations and never nominate work.
 pub(super) fn reported_context<'a>(
     topic: &[usize],
     visible: &HashSet<usize>,
     nominated: &HashSet<usize>,
+    unbound_review: &HashMap<usize, &str>,
     known: &HashMap<&'a str, &Value>,
 ) -> Vec<ExamplePassage<'a>> {
     use super::super::source_resolution::split_turn_label;
@@ -427,6 +449,51 @@ pub(super) fn reported_context<'a>(
         speaker(first).is_some_and(|label| speaker(second) == Some(label))
     };
     let mut result = Vec::new();
+    let mut retained_roles = HashSet::new();
+    for &anchor in topic.iter().filter(|index| !visible.contains(index)) {
+        let Some(&role) = unbound_review.get(&anchor) else { continue; };
+        if retained_roles.contains(role) { continue; }
+        let Some((id, raw)) = source(anchor) else { continue; };
+        let body = source_review::bare(raw);
+        let mut related = None;
+        let prefix = match role {
+            "work" if direct_request_sequence(body) => {
+                let acknowledged = (anchor+1..=anchor+2).any(|next| {
+                    speaker(anchor).zip(speaker(next)).is_some_and(|(issuer, reply)| issuer != reply)
+                        && source(next).is_some_and(|(_, text)| matches!(
+                            source_review::bare(text).trim_matches(['。', '，', '！', ' ', '嗯', '啊']),
+                            "好" | "好的" | "行" | "没问题"
+                        ))
+                });
+                if !acknowledged { continue; }
+                "会上提出的办理步骤"
+            },
+            "pending" => {
+                let Some(party) = rule_under_discussion(body) else { continue; };
+                related = (anchor.saturating_sub(12)..anchor).rev().find_map(|index| {
+                    if !topic.contains(&index) || !nominated.contains(&index) || !same_speaker(anchor, index) {
+                        return None;
+                    }
+                    let (id, text) = source(index)?;
+                    let text = source_review::bare(text);
+                    (text.contains(party) && has(text, &["沟通", "协调", "对齐", "交接"]))
+                        .then_some((index, id, text))
+                });
+                if related.is_none() { continue; }
+                "仍待制定的规则"
+            },
+            _ => continue,
+        };
+        let text = format!("{prefix}：{body}");
+        if !canonical_brief::line(&text, 120) { continue; }
+        if let Some((_, source, raw)) = related.filter(|(index, _, _)| !visible.contains(index)) {
+            let text = format!("同一事项的沟通要求：{raw}");
+            if !canonical_brief::line(&text, 120) { continue; }
+            result.push(ExamplePassage {source, text});
+        }
+        result.push(ExamplePassage {source:id,text});
+        retained_roles.insert(role);
+    }
     for &anchor in topic.iter().filter(|index| visible.contains(index)) {
         if !source(anchor).is_some_and(|(_, text)| {
             ALTERNATIVE_SCOPES.iter().any(|(first, _)| has(text, first))
@@ -621,6 +688,43 @@ pub(super) fn reported_context<'a>(
 #[cfg(test)]
 mod tests {
     #[test]
+    fn retains_an_unbound_request_as_source_context_after_another_speaker_acknowledges() {
+        use std::collections::{HashMap, HashSet};
+
+        let mut rows = [
+            ("e0001", serde_json::json!({"text":"经理：采购方面，你要先调研市场，然后据此核对报价。"})),
+            ("e0002", serde_json::json!({"text":"同事：嗯好的。"})),
+        ];
+        let retained = |rows: &[(&str, serde_json::Value)]| {
+            let known = rows.iter().map(|(id, row)| (*id, row)).collect();
+            super::reported_context(&[1, 2], &HashSet::new(), &HashSet::new(), &HashMap::from([(1, "work")]), &known)
+                .into_iter().map(|passage| passage.text).collect::<Vec<_>>()
+        };
+        assert_eq!(retained(&rows), ["会上提出的办理步骤：采购方面，你要先调研市场，然后据此核对报价。"]);
+        rows[1].1 = serde_json::json!({"text":"经理：嗯好的。"});
+        assert!(retained(&rows).is_empty());
+    }
+
+    #[test]
+    fn retains_a_rule_still_to_be_written_with_its_nominated_coordination_context() {
+        use std::collections::{HashMap, HashSet};
+
+        let rows = [
+            ("e0001", serde_json::json!({"text":"发言人：审批这件事，各部门要协调好。"})),
+            ("e0002", serde_json::json!({"text":"发言人：为了避免各部门重复处理，还需明确办法，例如退回单据应该归谁。"})),
+        ];
+        let known = rows.iter().map(|(id, row)| (*id, row)).collect();
+        let mark = HashMap::from([(2, "pending")]);
+        let retain = |nominated: HashSet<usize>| {
+            super::reported_context(&[1, 2], &HashSet::new(), &nominated, &mark, &known)
+                .into_iter().map(|passage| passage.source).collect::<Vec<_>>()
+        };
+        assert!(retain(HashSet::new()).is_empty());
+        assert_eq!(retain(HashSet::from([1])), ["e0001", "e0002"]);
+        assert!(super::rule_under_discussion("各部门已经制定了办法，例如退回单据应该归谁。").is_none());
+    }
+
+    #[test]
     fn a_visible_restriction_keeps_the_other_classes_actual_treatment() {
         use std::collections::HashSet;
 
@@ -633,7 +737,7 @@ mod tests {
         ];
         let display = |rows: &[(&str, serde_json::Value)], visible: &[usize]| {
             let known = rows.iter().map(|(id, row)| (*id, row)).collect();
-            super::reported_context(&[1, 2, 4, 5], &visible.iter().copied().collect::<HashSet<_>>(), &HashSet::new(), &known)
+            super::reported_context(&[1, 2, 4, 5], &visible.iter().copied().collect::<HashSet<_>>(), &HashSet::new(), &std::collections::HashMap::new(), &known)
                 .into_iter().map(|passage| passage.source.to_owned()).collect::<Vec<_>>()
         };
         assert_eq!(display(&rows, &[1, 2]), ["e0004", "e0005"]);
@@ -673,7 +777,7 @@ mod tests {
         let known = rows.iter().map(|(id, row)| (*id, row)).collect();
         let visible = HashSet::new();
         let recover = |nominated: HashSet<usize>| {
-            super::reported_context(&[1, 2, 3], &visible, &nominated, &known)
+            super::reported_context(&[1, 2, 3], &visible, &nominated, &std::collections::HashMap::new(), &known)
                 .into_iter().map(|passage| passage.source).collect::<Vec<_>>()
         };
         assert!(recover(HashSet::from([1])).is_empty());
@@ -691,7 +795,7 @@ mod tests {
         let display = |rows: &[(&str, serde_json::Value)]| {
             let known = rows.iter().map(|(id,row)| (*id,row)).collect();
             let visible = std::collections::HashSet::from([1,3]);
-            super::reported_context(&[1,2,3], &visible, &std::collections::HashSet::new(), &known)
+            super::reported_context(&[1,2,3], &visible, &std::collections::HashSet::new(), &std::collections::HashMap::new(), &known)
                 .into_iter().map(|passage| passage.text).collect::<Vec<_>>()
         };
         assert_eq!(display(&rows), ["长期愿景进度：工作量大，进展不快"]);
