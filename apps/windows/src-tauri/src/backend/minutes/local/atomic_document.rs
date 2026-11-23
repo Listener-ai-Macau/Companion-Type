@@ -2764,6 +2764,28 @@ fn assemble_with_context(
             *limit=offset+count;
         }
     }
+    let mut closing_actions = Vec::new();
+    if let Some(recap) = (!bank.chapter_spans.is_empty())
+        .then(|| super::closing_recap::detect(&sentences)).flatten()
+    {
+        let actions = document["actionItems"].as_array_mut().ok_or_else(fail)?;
+        for handoff in recap.accepted_handoffs(&sentences).into_iter().take(20_usize.saturating_sub(actions.len())) {
+            let anchor = sentences[handoff.directive]["id"].as_str().ok_or_else(fail)?;
+            let existing = result.bindings.iter().any(|(path,id)| {
+                path.starts_with("/actionItems/") && bank.facts.iter().any(|fact| {
+                    &fact.id==id && (fact.text==handoff.item.text || fact.evidence.iter().any(|citation| citation==anchor))
+                })
+            });
+            if existing { continue; }
+            let evidence = handoff.citations.iter().map(|&pos| {
+                let row=&sentences[pos];
+                json!({"source":row["source"],"quote":row["text"]})
+            }).collect::<Vec<_>>();
+            let path=format!("actionItems[{}]",actions.len());
+            actions.push(json!({"text":handoff.item.text,"owner":handoff.item.owner,"due":handoff.item.due,"evidence":evidence}));
+            closing_actions.push((path,handoff));
+        }
+    }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
     let mut parsed = super::evidence_document::parse_with_details_limit(
         &document.to_string(),session,base,MAX_FACTS,reader_limit,&detail_kinds,
@@ -2772,7 +2794,7 @@ fn assemble_with_context(
         use crate::companion_v1::{CompanionV1ActionCitation, CompanionV1MinutesActionEvidence};
         let indices = sentences.iter().enumerate().map(|(i,s)|(s["id"].as_str().unwrap(),i))
             .collect::<HashMap<_,_>>();
-        let actions = result.bindings.iter().filter_map(|(path,id)| {
+        let native_actions = result.bindings.iter().filter_map(|(path,id)| {
             let position = path.strip_prefix("/actionItems/")?.parse::<usize>().ok()?;
             let action = result.document.action_items.get(position)?;
             // A paraphrase shared by two independent actions is not a usable
@@ -2787,7 +2809,15 @@ fn assemble_with_context(
                 .flat_map(|index| timing.action_source_segments(*index, &action.text))
                 .filter(|segment| seen.insert(segment.index)).collect();
             (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:action.text.clone(),segments})
-        }).collect::<Vec<_>>();
+        });
+        let recap_citations = closing_actions.iter().filter_map(|(_,handoff)| {
+            let mut seen = HashSet::new();
+            let segments = handoff.citations.iter()
+                .flat_map(|&index| timing.action_source_segments(index, &handoff.item.text))
+                .filter(|segment| seen.insert(segment.index)).collect::<Vec<_>>();
+            (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:handoff.item.text.clone(),segments})
+        });
+        let actions = native_actions.chain(recap_citations).collect::<Vec<_>>();
         if !actions.is_empty() {
             parsed.minutes.source_action_evidence=Some(CompanionV1MinutesActionEvidence {
                 transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
@@ -2799,6 +2829,7 @@ fn assemble_with_context(
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?
         .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
     if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str()))
+        || closing_actions.iter().any(|(path,_)| !visible_paths.contains(path.as_str()))
         || reader_examples.iter().chain(&reader_outcomes).chain(&reader_future)
             .chain(&reader_reported_context).any(|example| {
             example["path"].as_str().is_none_or(|path| !visible_paths.contains(path))
@@ -2834,6 +2865,12 @@ fn assemble_with_context(
     }
     if !reader_reported_context.is_empty() {
         parsed.receipt["readerReportedContextExcerpts"] = json!(reader_reported_context);
+    }
+    if !closing_actions.is_empty() {
+        parsed.receipt["readerRecapAcceptedWork"] = json!(closing_actions.iter().map(|(path,handoff)| {
+            let ids = handoff.citations.iter().map(|&pos| &sentences[pos]["id"]).collect::<Vec<_>>();
+            json!({"path":path,"sourceIds":ids,"owner":handoff.item.owner,"due":handoff.item.due})
+        }).collect::<Vec<_>>());
     }
     parsed.receipt["requiredReaderFactIds"] = json!(required_visible.iter().map(|(id, _)| id).collect::<Vec<_>>());
     parsed.receipt["visibleSourceRequirements"] = json!(visible_requirements);
