@@ -17,6 +17,8 @@ mod delivery_evidence;
 mod reader_scope;
 mod reader_context;
 mod reader_turns;
+mod confirmed_handoffs;
+mod reader_exchanges;
 mod timed_evidence;
 mod source_checkpoint;
 mod source_review;
@@ -278,8 +280,15 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 };
                 let core = ask(atomic_document::layout_prompt(&bank), atomic_document::layout_input(&bank),
                     atomic_document::layout_schema(&bank)?, transport::COMPACT_CORE_STAGE, context.layout_output())?;
-                atomic_document::review_chapters(&mut bank,Some(&core),&session.transcript_text,
-                    |prompt,input,schema,stage| ask(prompt,input,schema,stage,768))?
+                let layout = atomic_document::review_chapters(&mut bank,Some(&core),&session.transcript_text,
+                    |prompt,input,schema,stage| ask(prompt,input,schema,stage,768))?;
+                if let Err(reason) = atomic_document::review_reply_groups(&mut bank,&session.transcript_text,
+                    |prompt,input,schema,stage| ask(prompt,input,schema,stage,128))
+                {
+                    if stop.load(std::sync::atomic::Ordering::Acquire) { return Err(reason); }
+                    if let Ok(mut trace) = trace.lock() { trace["readerReplyGroupFailure"] = json!(reason); }
+                }
+                layout
             } else {
                 let result=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,context,context.layout_output())?;
                 record_call(&trace,"id-only-organization");

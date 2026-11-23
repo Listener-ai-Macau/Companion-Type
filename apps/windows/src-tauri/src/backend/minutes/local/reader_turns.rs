@@ -6,10 +6,10 @@ use std::collections::HashSet;
 use super::super::{canonical_brief, source_resolution::split_turn_label};
 use super::{reader_context::ExamplePassage, source_context, source_review};
 
-struct Turn<'a> {
-    id: &'a str,
-    speaker: Option<&'a str>,
-    words: &'a str,
+pub(super) struct Turn<'a> {
+    pub(super) id: &'a str,
+    pub(super) speaker: Option<&'a str>,
+    pub(super) words: &'a str,
 }
 
 pub(super) struct Conversation<'a> {
@@ -92,6 +92,10 @@ impl<'a> Conversation<'a> {
             })
             .collect();
         Self { turns }
+    }
+
+    pub(super) fn turns(&self) -> &[Turn<'a>] {
+        &self.turns
     }
 
     fn continuation(&self, index: usize) -> Vec<usize> {

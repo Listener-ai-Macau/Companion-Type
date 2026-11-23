@@ -276,9 +276,37 @@ mod tests{
                     chapter_requests += 1;
                     reply(stage, prompt, input, schema, 768)
                 }).unwrap();
+                let grouped = |call: &Value| {
+                    call["stage"].as_str().is_some_and(|stage| stage.starts_with(super::super::reader_exchanges::STAGE_PREFIX))
+                };
                 assert_eq!(chapter_requests, calls.iter().filter(|call| {
-                    call["stage"].as_str().unwrap_or("").starts_with("chapter-review-")
+                    call["stage"].as_str().unwrap_or("").starts_with("chapter-review-") && !grouped(call)
                 }).count());
+                if calls.iter().any(grouped) {
+                    atomic_document::review_reply_groups(&mut bank, &text, |prompt,input,schema,stage| {
+                        reply(stage,prompt,input,schema,128)
+                    }).unwrap();
+                }
+                if let Some(folder) = std::env::var_os("COMPANION_TEST_CAPTURE_REPLY_GROUPS") {
+                    let folder = PathBuf::from(folder);
+                    let reviewed = std::env::var_os("COMPANION_TEST_REVIEWED_REPLY_GROUPS")
+                        .map(|folder| PathBuf::from(folder).join(format!("{key}.json")))
+                        .map(|path| serde_json::from_slice::<Vec<Value>>(&fs::read(path).unwrap()).unwrap());
+                    let mut captured = Vec::new();
+                    atomic_document::review_reply_groups(&mut bank, &text, |prompt, input, schema, stage| {
+                        let request = json!({"prompt":prompt,"input":input,"schema":schema,"stage":stage});
+                        let mut answer = "{}".to_owned();
+                        if let Some(supplied) = &reviewed {
+                            let choice = supplied.get(captured.len()).ok_or("missing group reply".to_owned())?;
+                            if choice["request"] != request { return Err("group request changed".to_owned()); }
+                            answer = choice["output"].as_str().ok_or("missing exact group reply".to_owned())?.to_owned();
+                        }
+                        captured.push(request);
+                        Ok(answer)
+                    }).unwrap();
+                    if let Some(supplied) = &reviewed { assert_eq!(captured.len(), supplied.len()); }
+                    fs::write(folder.join(format!("{key}.json")),serde_json::to_vec_pretty(&captured).unwrap()).unwrap();
+                }
                 let base=super::super::super::rules_l0_minutes(&session,"engineering-candidate");
                 let rendered=atomic_document::organize(&raw,&bank,&session,&base).unwrap();
                 let result=output.join(key);
