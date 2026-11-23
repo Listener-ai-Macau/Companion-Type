@@ -1777,12 +1777,21 @@ pub(super) fn layout_input(bank: &Bank) -> Value {
     json!({"facts":facts,"purposeChoices":choices})
 }
 
+fn example_for_reader(fact: &Fact) -> bool {
+    ["举例讨论：", "作品情节："].iter().any(|label| fact.text.starts_with(label))
+}
+
+fn supports_overview(bank: &Bank, fact: &Fact) -> bool {
+    !bank.review_quote(&fact.id) && !example_for_reader(fact)
+        && !conversational_prompt(fact) && !bank.before_opening.contains(&fact.id)
+}
+
 fn purpose_choices(bank: &Bank) -> Vec<&str> {
     let eligible: Vec<_> = bank.facts.iter().filter(|fact| {
         matches!(fact.placement, Placement::Topic | Placement::Decision)
             && canonical_brief::line(&fact.text, 80)
     }).collect();
-    let clear: Vec<_> = eligible.iter().copied().filter(|fact| !bank.review_quote(&fact.id)).collect();
+    let clear: Vec<_> = eligible.iter().copied().filter(|fact| supports_overview(bank, fact)).collect();
     let agenda: Vec<_> = clear.iter().copied().filter(|fact| {
         ["会议目标", "会议目的", "会议议题", "讨论主题", "本次议题", "会议围绕", "会议主要讨论", "今天讨论", "今天主要讨论", "本次讨论", "主要议题"]
             .iter().any(|cue| fact.text.contains(cue))
@@ -1794,7 +1803,8 @@ fn purpose_choices(bank: &Bank) -> Vec<&str> {
     }).collect();
     let standalone: Vec<_> = clear.iter().copied()
         .filter(|fact| contextual_point(fact) && fact.text.chars().count() >= 28).collect();
-    [agenda, discussion, standalone, clear, eligible].into_iter().find(|facts| !facts.is_empty()).unwrap_or_default()
+    let relevant = clear.iter().copied().filter(|fact| useful_reader_point(fact)).collect::<Vec<_>>();
+    [agenda, discussion, standalone, relevant, clear, eligible].into_iter().find(|facts| !facts.is_empty()).unwrap_or_default()
         .into_iter().map(|fact| fact.id.as_str()).collect()
 }
 
@@ -2065,7 +2075,9 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
             let rank = if chosen.iter().any(|point| point.id == fact.id) { 'm' } else { 't' };
             assignments.insert(fact.id.clone(), Assignment::Compact(format!("{rank}{}", slot + 1)));
         }
-        chapter_focus.insert(key, (title, chosen.first().ok_or_else(fail)?.id.clone()));
+        let material = chosen.iter().find(|fact| supports_overview(bank, fact));
+        let headline = material.or(chosen.first()).ok_or_else(fail)?;
+        chapter_focus.insert(key, (title, headline.id.clone(), material.is_some()));
     }
     if !descriptions.is_empty() || layout.focus_chapters.len() < bank.chapter_spans.len().min(2)
         || layout.focus_chapters.len() > 3 {
@@ -2075,21 +2087,23 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
     let mut selected_titles = HashSet::new();
     let mut names = Vec::new();
     let mut primary_facts = Vec::new();
+    let has_material = chapter_focus.values().any(|(_, _, material)| *material);
     for key in &layout.focus_chapters {
         if !selected_keys.insert(key) { return Err(fail()); }
-        let (title, fact) = chapter_focus.get(key.as_str()).ok_or_else(fail)?;
-        if selected_titles.insert(title.as_str()) {
+        let (title, fact, material) = chapter_focus.get(key.as_str()).ok_or_else(fail)?;
+        if (!has_material || *material) && selected_titles.insert(title.as_str()) {
             names.push(title.as_str());
             primary_facts.push(fact.clone());
         }
     }
-    if names.len() < title_slots.len().min(2) {
-        // Adjacent chapters may have been given the same supported title.
-        // Add a distinct existing topic instead of repeating that heading.
-        let (title, fact) = chapter_focus.values().find(|(title, _)| !selected_titles.contains(title.as_str()))
-            .ok_or_else(fail)?;
-        names.push(title.as_str());
-        primary_facts.push(fact.clone());
+    // Adjacent chapters can share a heading. Prefer another substantive
+    // chapter to a heading supported solely by an example or review note.
+    for (title, fact, material) in chapter_focus.values() {
+        if names.len() >= title_slots.len().min(2) { break; }
+        if (!has_material || *material) && selected_titles.insert(title.as_str()) {
+            names.push(title.as_str());
+            primary_facts.push(fact.clone());
+        }
     }
     let first = primary_facts.first().cloned().ok_or_else(fail)?;
     let mut seen = HashSet::new();
@@ -2187,7 +2201,12 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     } else if bank.quantity_quotes.contains(purpose_id) {
         "会议原话中的数量待核对"
     } else {
-        &bank.facts.iter().find(|fact| fact.id == purpose_id).ok_or_else(fail)?.text
+        let fact = bank.facts.iter().find(|fact| fact.id == purpose_id).ok_or_else(fail)?;
+        if example_for_reader(fact) {
+            "本段发言通过举例说明讨论内容。"
+        } else {
+            &fact.text
+        }
     };
     let timed_prediction = |fact: &Fact| matches!(fact.kind, Kind::Forecast)
         && super::source_authority::timed_forecast(&fact.text);
@@ -2608,6 +2627,28 @@ fn assemble_with_proposals(
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn an_illustration_stays_in_the_body_without_becoming_the_meeting_overview() {
+        let source = "说话人1：过去两轮培训分别采用分组练习和独立操作，两个环节都在工作室进行。\n说话人1：比方说同事写过一篇学习习惯的文章。";
+        let facts = source.lines().enumerate().map(|(i, line)| {
+            ExtractedFact::verbatim(&format!("e{i:04}"), "status", line)
+        }).collect();
+        let bank = build_bank(facts, source).unwrap();
+        let example = bank.facts.iter().find(|fact| example_for_reader(fact)).unwrap();
+        let actual = bank.facts.iter().find(|fact| fact.text.contains("两轮培训")).unwrap();
+        let layout = json!({
+            "purposeFact": example.id,
+            "topics": {"t1":"分组练习","t2":"学习习惯","t3":null,"t4":null,"t5":null,"t6":null,"t7":null,"t8":null},
+            "assignments": {(actual.id.clone()):"m1",(example.id.clone()):"m2"}
+        });
+        assert_eq!(purpose_choices(&bank), [actual.id.as_str()]);
+        let session = crate::backend::minutes::tests::session_with_text(source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "probe");
+        let result = organize(&layout.to_string(), &bank, &session, &base).unwrap();
+        assert_eq!(result.receipt["document"]["purpose"], actual.text);
+        assert!(result.minutes.markdown.contains("学习习惯的文章"));
+    }
 
     #[test]
     fn competing_start_orders_keep_three_citations_and_the_separate_deadline() {
