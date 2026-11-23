@@ -14,6 +14,8 @@ mod summary_relations;
 mod summary_roles;
 mod summary_stance;
 
+pub(super) use summary_coverage::reported_period_for_summary;
+
 pub(super) const MAX_PROMPT_BYTES: usize = 48 * 1024;
 pub(super) const MAX_OUTPUT_TOKENS: u32 = 8192;
 const CHUNK_BYTES: usize = 16 * 1024;

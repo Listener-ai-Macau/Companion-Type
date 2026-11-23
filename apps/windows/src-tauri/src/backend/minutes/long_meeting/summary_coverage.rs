@@ -155,18 +155,34 @@ fn cited_period<'a>(
     turn: &CitedTurn<'a>,
     names: &[String],
     summary: &str,
+    total: &regex::Captures<'_>,
 ) -> Option<&'a str> {
-    let total = ACTIVITY_COUNT.captures(summary)?;
-    if ACTIVITY_COUNT.captures_iter(summary).nth(1).is_some()
-        || !literal_clause(summary, &total.get(0)?.range())
-    {
-        return None;
-    }
     let mut observed = same_speaker_lines(source, chapter, turn, names)?
         .into_iter()
-        .filter_map(|line| period_in_turn(line, summary, &total));
+        .filter_map(|line| period_in_turn(line, summary, total));
     let first = observed.next()?;
     observed.all(|other| other == first).then_some(first)
+}
+
+fn reported_total(summary: &str) -> Option<regex::Captures<'_>> {
+    let mut totals = ACTIVITY_COUNT.captures_iter(summary);
+    let total = totals.next()?;
+    if totals.next().is_some() || !literal_clause(summary, &total.get(0)?.range()) {
+        return None;
+    }
+    Some(total)
+}
+
+pub(in crate::backend::minutes) fn reported_period_for_summary<'a>(
+    source: &'a str,
+    names: &[String],
+    summary: &str,
+    quotes: &[&str],
+) -> Option<&'a str> {
+    let total = reported_total(summary)?;
+    let full = 0..source.len();
+    let turn = one_cited_turn(source, &full, quotes)?;
+    cited_period(source, &full, &turn, names, summary, &total)
 }
 
 pub(super) fn restore(
@@ -188,8 +204,10 @@ pub(super) fn restore(
         let Some(turn) = one_cited_turn(&session.transcript_text, &chapter, &quotes) else {
             continue;
         };
-        let Some(clause) = cited_limit(&quotes, &turn, summary)
-            .or_else(|| cited_period(&session.transcript_text, &chapter, &turn, &names, summary))
+        let Some(clause) = cited_limit(&quotes, &turn, summary).or_else(|| {
+            let total = reported_total(summary)?;
+            cited_period(&session.transcript_text, &chapter, &turn, &names, summary, &total)
+        })
         else {
             continue;
         };

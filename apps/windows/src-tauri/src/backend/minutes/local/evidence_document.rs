@@ -1,5 +1,7 @@
 //! Local writing contract: choose literal supporting spans before wording each
 //! claim. Binding proves provenance only, never entailment or completeness.
+use std::collections::HashMap;
+
 use serde_json::{json,Value};
 use super::super::canonical_brief::{self,source_units};
 use crate::companion_v1::{CompanionV1HostSession,CompanionV1MeetingMinutes};
@@ -94,13 +96,46 @@ pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1Me
     parse_with_details_limit(raw,session,base,8,None,&[])
 }
 
+// Repair only a surviving reading item. Use the same report check as the
+// paid chapter route and cite the exact clause inside an already cited unit.
+fn restore_reported_period(
+    entry: &mut Value, source: &str, names: &[String], units: &HashMap<&str, &str>, limit: usize,
+) {
+    let addition = (|| {
+        let text = entry["text"].as_str()?;
+        let evidence = entry["evidence"].as_array()?;
+        let quotes = evidence.iter()
+            .map(|row| row["quote"].as_str().map(str::trim))
+            .collect::<Option<Vec<_>>>()?;
+        let clause = super::super::long_meeting::reported_period_for_summary(source, names, text, &quotes)?;
+        let new_text = format!("{}。补充原话「{clause}」。", text.trim_end_matches('。'));
+        if !canonical_brief::line(&new_text, limit) { return None; }
+        let citation = if quotes.iter().any(|quote| quote.contains(clause)) {
+            None
+        } else {
+            if evidence.len() >= 8 { return None; }
+            let id = evidence.iter().filter_map(|row| row["source"].as_str())
+                .find(|id| units.get(id).is_some_and(|text| text.contains(clause)))?;
+            Some(json!({"source":id,"quote":clause}))
+        };
+        Some((new_text, citation))
+    })();
+    if let Some((text, citation)) = addition {
+        if let Some(citation) = citation {
+            entry["evidence"].as_array_mut().expect("checked evidence array").push(citation);
+        }
+        entry["text"] = json!(text);
+    }
+}
+
 pub(super) fn parse_with_details_limit(
     raw: &str, session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
     details_limit: usize, reader_limits: Option<&[usize]>, detail_kinds: &[Vec<Option<canonical_brief::Kind>>],
 ) -> Result<canonical_brief::local_document::Parsed, String> {
     let mut doc:Value=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|"本地纪要返回结构不完整，原文和已有纪要保留。")?;
     let units=source_units(&session.transcript_text);
-    let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<std::collections::HashMap<_,_>>();
+    let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<HashMap<_,_>>();
+    let speaker_names = reader_limits.map(|_| super::super::reviewed_speaker_names(session));
     let mut anchors=Vec::new();
     let mut bind=|entry:&mut Value,path:String|->Result<(),String>{
         let object=entry.as_object_mut().ok_or("本地纪要条目不完整。")?;
@@ -151,7 +186,18 @@ pub(super) fn parse_with_details_limit(
                 }
                 visible_detail_kinds.push(kinds.map_or_else(Vec::new, |kinds| kinds[..entries.len()].to_vec()));
             }
-            for(j,entry)in entries.iter_mut().enumerate(){bind(entry,format!("topics[{i}].{name}[{j}]"))?;}
+            for (j, entry) in entries.iter_mut().enumerate() {
+                if let Some(names) = &speaker_names {
+                    // A contextual clause belongs in the visible details and
+                    // must stay within the existing main-answer budget.
+                    if name == "details"
+                        && matches!(visible_detail_kinds[i].get(j), Some(Some(canonical_brief::Kind::Status)))
+                    {
+                        restore_reported_period(entry, &session.transcript_text, names, &known, 120);
+                    }
+                }
+                bind(entry, format!("topics[{i}].{name}[{j}]"))?;
+            }
         }
         // Compact reading can hide the only source for a proposed heading.
         // Replace that heading before validation without touching the claims,
@@ -237,6 +283,59 @@ mod tests{
         assert!(parsed.minutes.markdown.contains("李敏承诺周五提交测试报告"));
         assert_eq!(parsed.receipt["bankDetailsOutsideReader"],1);
         assert_eq!(parsed.receipt["evidenceAnchors"].as_array().unwrap().len(),3);
+    }
+
+    #[test]
+    fn compact_reader_restores_only_the_same_speakers_verified_report_period() {
+        let short = "这个阶段我们每月处理 10 到 20 次报修。";
+        let total = "过去几年团队处理了 160 多次报修。";
+        let matching_scope = format!("说话人2：{short}{total}");
+        let other_speaker = format!("说话人1：{short}\n说话人2：{total}");
+        let hypothetical = format!("说话人2：如果{short}{total}");
+        let wrong_unit = format!("说话人2：这个阶段我们每月处理 10 到 20 起投诉。{total}");
+        for (source, restored) in [
+            (matching_scope, true), (other_speaker, false), (hypothetical, false), (wrong_unit, false),
+        ] {
+            let session = crate::backend::minutes::tests::session_with_text(&source);
+            let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
+            let unit = source_units(&source).into_iter().find(|unit| unit.text.contains(total)).unwrap();
+            let document = json!({
+                "purpose":"回顾报修处理情况","topics":[{"title":"报修处理","points":[{
+                    "evidence":[{"source":unit.id,"quote":total}],
+                    "kind":"status","text":"会上回顾了报修处理。"
+                }],"details":[{"evidence":[{"source":unit.id,"quote":total}],"text":total}]}],
+                "decisions":[],"actionItems":[],"questions":[]
+            });
+            let kinds = [vec![Some(canonical_brief::Kind::Status)]];
+            let parsed = parse_with_details_limit(&document.to_string(), &session, &base, 8, Some(&[1]), &kinds).unwrap();
+            let (body, _) = parsed.minutes.markdown.rsplit_once("## 主题原话").unwrap();
+            assert_eq!(body.contains("每月处理 10 到 20 次"), restored, "{source}");
+            assert_eq!(parsed.receipt["evidenceAnchors"].as_array().unwrap().len(), if restored { 3 } else { 2 });
+            assert!(body.contains(total));
+            assert!(parsed.minutes.action_items.is_empty());
+        }
+    }
+
+    #[test]
+    fn compact_reader_restores_the_report_period_from_the_public_relief_excerpt() {
+        let period = "这个阶段里我们每年也响应 10 到 20 次";
+        let total = "这几年实践对我们响应了 160 多次灾害，每一次其实都是个迭代。";
+        let source = format!("说话人2: 那{period}的担当，就比较成熟。 {total}");
+        let session = crate::backend::minutes::tests::session_with_text(&source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
+        let document = json!({
+            "purpose":"回顾救灾应对","topics":[{"title":"救灾响应","points":[{
+               "evidence":[{"source":"u000","quote":total}],"kind":"status","text":"会上回顾了救灾响应。"
+            }],"details":[{"evidence":[{"source":"u000","quote":total}],"text":total}]}],
+            "decisions":[],"actionItems":[],"questions":[]
+        });
+        let kinds = [vec![Some(canonical_brief::Kind::Status)]];
+        let parsed = parse_with_details_limit(&document.to_string(), &session, &base, 8, Some(&[1]), &kinds).unwrap();
+        let (body, _) = parsed.minutes.markdown.rsplit_once("## 主题原话").unwrap();
+        assert!(body.contains(period));
+        assert!(body.contains(total));
+        assert!(parsed.receipt["evidenceAnchors"].as_array().unwrap().iter()
+            .any(|anchor| anchor["path"] == "topics[0].details[0]" && anchor["quote"] == period));
     }
     #[test]
     fn fabricated_or_missing_literal_quote_cannot_be_published(){
