@@ -105,6 +105,7 @@ pub(super) struct Bank {
     linked_procedures: Vec<Vec<String>>,
     additional_reader_details: HashSet<String>,
     source_agenda: Option<super::delivery_evidence::OpeningAgenda>,
+    reader_recap_estimates: HashSet<String>,
 }
 impl Bank {
     fn review_quote(&self, id: &str) -> bool {
@@ -1388,17 +1389,14 @@ fn build_bank_with_timing(
             }).collect::<Option<Vec<_>>>()
         }).collect::<Vec<_>>();
     execution_reading.extend(reader_groups.iter().flatten().cloned());
-    let literal = |text: &str| canonical_brief::normalized(
-        super::source_review::bare(text).trim_end_matches(['。', '，', '！', '；', '.', ' ']),
-    );
     let reported_count_groups = super::reader_ranking::reported_count_pairs(&original_sentences).into_iter()
         .filter_map(|(left, right)| {
             [left, right].into_iter().map(|index| {
                 let anchor = sentences[index]["id"].as_str().unwrap();
-                let text = literal(original_sentences[index]);
+                let text = reader_literal(original_sentences[index]);
                 topic_facts.iter().find(|fact| fact.evidence[0] == anchor && matches!(fact.kind, Kind::Status)
                     && !source_quotes.contains(&fact.id) && !quantity_quotes.contains(&fact.id)
-                    && literal(&fact.text) == text).map(|fact| fact.id.clone())
+                    && reader_literal(&fact.text) == text).map(|fact| fact.id.clone())
             }).collect::<Option<Vec<_>>>()
         }).collect::<Vec<_>>();
     let reported_counts = reported_count_groups.iter().flatten().cloned().collect::<HashSet<_>>();
@@ -1425,12 +1423,12 @@ fn build_bank_with_timing(
         .filter_map(|(sources, supplemental, qualified)| {
             let ids = sources.into_iter().map(|index| {
                 let anchor = sentences[index]["id"].as_str().unwrap();
-                let text = literal(original_sentences[index]);
+                let text = reader_literal(original_sentences[index]);
                 topic_facts.iter().find(|fact| {
                     fact.evidence[0] == anchor
                         && (matches!(fact.kind, Kind::Status) || (qualified && matches!(fact.kind, Kind::Opinion | Kind::Forecast)))
                         && !source_quotes.contains(&fact.id) && !quantity_quotes.contains(&fact.id)
-                        && literal(&fact.text) == text
+                        && reader_literal(&fact.text) == text
                 }).map(|fact| fact.id.clone())
             }).collect::<Option<Vec<_>>>()?;
             if ids.iter().any(|id| linked_ids.contains(id)) { return None; }
@@ -1476,7 +1474,7 @@ fn build_bank_with_timing(
         "reportedCountGroups":reported_count_groups,
         "independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,linked_proposals,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,linked_proposals,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda,reader_recap_estimates:HashSet::new() })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -1588,6 +1586,47 @@ fn review_chapter(
 fn retain_unique_ids(ids: &mut Vec<String>) {
     let mut seen = HashSet::new();
     ids.retain(|id| seen.insert(id.clone()));
+}
+
+fn reader_literal(text: &str) -> String {
+    canonical_brief::normalized(
+        super::source_review::bare(text).trim_end_matches(['。', '，', '！', '；', '.', ' ']),
+    )
+}
+
+fn recap_reader_choices(
+    bank: &Bank, source: &str, nominated: &HashSet<&String>,
+) -> Vec<(String,Vec<String>)> {
+    use super::closing_recap;
+    let sentences = factual_audit::evidence_sentences(&source_units(source));
+    let Some(recap) = closing_recap::detect(&sentences) else { return Vec::new() };
+    let rows = sentences.iter().enumerate().filter_map(|(index,row)| {
+        Some((row["id"].as_str()?,(index,row["text"].as_str()?)))
+    }).collect::<HashMap<_,_>>();
+    let topics = bank.topics().filter(|fact| !bank.review_quote(&fact.id)).collect::<Vec<_>>();
+    let mut protected = Vec::new();
+    for (anchor, subject) in recap.budget_statements {
+        let Some((_,text)) = rows.get(anchor).copied() else { continue };
+        let Some(final_fact) = topics.iter().find(|fact| {
+            fact.evidence.first().is_some_and(|id| id == anchor)
+                && reader_literal(&fact.text) == reader_literal(text)
+        }) else { continue };
+        let estimates = topics.iter().filter(|fact| {
+            let Some((index,raw)) = fact.evidence.first().and_then(|id| rows.get(id.as_str())) else { return false };
+            *index < recap.start && closing_recap::early_estimate(raw,subject)
+        }).map(|fact| fact.id.clone()).collect::<Vec<_>>();
+        protected.push((final_fact.id.clone(),estimates));
+    }
+    for fact in topics {
+        let Some((index,raw)) = fact.evidence.first().and_then(|id| rows.get(id.as_str())) else { continue };
+        if *index >= recap.start && nominated.contains(&fact.id)
+            && closing_recap::timed_followup(raw) && reader_literal(&fact.text) == reader_literal(raw)
+            && !protected.iter().any(|(id,_)| id == &fact.id)
+        {
+            protected.push((fact.id.clone(),Vec::new()));
+        }
+    }
+    protected
 }
 
 pub(super) fn review_chapters(
@@ -1709,8 +1748,18 @@ pub(super) fn review_chapters(
         chapters.insert(chapter,presentation);
     }
     bank.reader_order = reader_order;
+    let nominated = execution_ids.iter().collect::<HashSet<_>>();
+    let recap = recap_reader_choices(bank, source, &nominated);
     for id in execution_ids {
         bank.reader_priority.entry(id).and_modify(|rank| *rank = (*rank).max(2)).or_insert(2);
+    }
+    for (id, estimates) in recap {
+        bank.execution_reading.insert(id.clone());
+        bank.additional_reader_details.insert(id.clone());
+        if let Some(first) = estimates.first() {
+            bank.reader_groups.push(vec![first.clone(), id]);
+        }
+        bank.reader_recap_estimates.extend(estimates);
     }
     bank.receipt["chapterReaderCoverage"] = json!(reviewed_counts);
     bank.receipt["chapterExecutionReview"] = json!(execution_review);
@@ -2569,6 +2618,11 @@ fn assemble_with_context(
         {
             entry.insert("kind".into(), json!(Kind::Recommendation));
             reader_recommendations.push(id);
+        }
+        if bank.reader_recap_estimates.contains(id) {
+            if let Some(text) = entry.get("text").and_then(Value::as_str) {
+                entry.insert("text".into(),json!(format!("前期讨论估计：{}",super::source_review::bare(text))));
+            }
         }
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));

@@ -19,6 +19,7 @@ mod reader_context;
 mod timed_evidence;
 mod source_checkpoint;
 mod source_review;
+mod closing_recap;
 pub(crate) use probe::candidate as verify_candidate;
 pub(super) use source_commitments::stated_group_deliverable;
 use std::{collections::HashMap,net::TcpListener,sync::{Arc,Mutex},time::Instant};
