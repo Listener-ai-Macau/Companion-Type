@@ -1411,21 +1411,24 @@ fn build_bank_with_timing(
     let mut linked_ids = HashSet::new();
     let mut additional_reader_details = reported_counts.clone();
     let linked_procedures = super::delivery_evidence::linked_procedures(&sentences, timing.as_ref()).into_iter()
-        .map(|sources| (sources, false))
+        .map(|sources| (sources, false, false))
         .chain(super::delivery_evidence::reported_operation_groups(&sentences,timing.as_ref())
-            .into_iter().map(|sources| (sources, true)))
+            .into_iter().map(|sources| (sources, true, false)))
         .chain(super::delivery_evidence::delivery_access_groups(&sentences,timing.as_ref())
-            .into_iter().map(|sources| (sources, true)))
+            .into_iter().map(|sources| (sources, true, false)))
         .chain(super::delivery_evidence::advance_delivery_groups(&sentences,timing.as_ref())
-            .into_iter().map(|sources| (sources, true)))
+            .into_iter().map(|sources| (sources, true, false)))
         .chain(super::delivery_evidence::reported_reasoning_groups(&sentences,timing.as_ref())
-            .into_iter().map(|sources| (sources, true)))
-        .filter_map(|(sources, supplemental)| {
+            .into_iter().map(|sources| (sources, true, false)))
+        .chain(super::reader_scope::grounded_reported_scopes(&sentences,review,timing.as_ref())
+            .into_iter().map(|sources| (sources, true, true)))
+        .filter_map(|(sources, supplemental, qualified)| {
             let ids = sources.into_iter().map(|index| {
                 let anchor = sentences[index]["id"].as_str().unwrap();
                 let text = literal(original_sentences[index]);
                 topic_facts.iter().find(|fact| {
-                    fact.evidence[0] == anchor && matches!(fact.kind, Kind::Status)
+                    fact.evidence[0] == anchor
+                        && (matches!(fact.kind, Kind::Status) || (qualified && matches!(fact.kind, Kind::Opinion | Kind::Forecast)))
                         && !source_quotes.contains(&fact.id) && !quantity_quotes.contains(&fact.id)
                         && literal(&fact.text) == text
                 }).map(|fact| fact.id.clone())
