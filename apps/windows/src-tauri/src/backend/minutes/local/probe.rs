@@ -175,6 +175,7 @@ mod tests{
         fs::create_dir(&output).unwrap();
         let choices = std::env::var("COMPANION_TEST_CHAPTER_REPLAY_CASES").unwrap_or_default();
         let selected: Vec<_> = choices.split(',').filter(|name| !name.is_empty()).collect();
+        let facts_only = std::env::var("COMPANION_TEST_CHAPTER_REPLAY_FACTS_ONLY").as_deref() == Ok("1");
         let roots = if directory.join("results.json").is_file() { vec![directory] }
             else { vec![directory.join("comparison"), directory.join("market")] };
         let profile = transport::profile().unwrap();
@@ -248,6 +249,17 @@ mod tests{
                     session.utterances = load_saved_utterances(saved).unwrap();
                 }
                 let mut bank = atomic_document::build_session_bank(facts, &session, &review).unwrap();
+                if facts_only {
+                    let result = output.join(key);
+                    fs::create_dir(&result).unwrap();
+                    save_new(&result.join("fact-replay.json"), &json!({
+                        "originalReceipt":path,"originalReceiptSha":original_sha,
+                        "sourceFileSha256":input.expected_file_sha256,"newModelCalls":0,
+                        "atomicFactBank":bank.receipt
+                    })).unwrap();
+                    replayed += 1;
+                    continue;
+                }
                 let original_seals = &original["receipt"]["atomicFactBank"]["seals"];
                 if original_seals.is_array() {
                     assert_eq!(&bank.receipt["seals"], original_seals, "{key} replay changed extracted facts");

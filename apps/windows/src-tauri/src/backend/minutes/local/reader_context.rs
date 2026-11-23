@@ -540,6 +540,38 @@ fn planned_work(original: &str) -> Option<TimedPlan<'_>> {
     None
 }
 
+fn discusses_a_date(source: &str) -> bool {
+    static DATE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:[0-9一二两三四五六七八九十]{1,3}月[0-9一二两三四五六七八九十]{1,3}[日号]|(?:星期|周)[一二三四五六日天]|明天|后天)"
+    ).expect("a calendar or relative meeting date"));
+    DATE.is_match(source) && has(source, &["通知", "时间", "日期", "定在"])
+        && (source.contains(['？', '?']) || has(source, &["你怎么看", "大家怎么看", "是否", "能不能"]))
+}
+
+fn unreceived_notice(source: &str) -> Option<&str> {
+    source.split(['，', ',', '。', '；']).map(str::trim).find(|clause| {
+        !clause.contains(['？', '?']) && !has(clause, &["如果", "假如", "要是", "会不会", "是否", "之前", "过去"])
+            && (clause.ends_with("没有通知") || clause.ends_with("还没通知")
+                || has(clause, &["没有收到通知", "尚未收到通知", "未收到正式通知", "未接到通知", "尚未发布通知"]))
+    })
+}
+
+fn online_access_terms(source: &str) -> Option<&str> {
+    static ACCESS: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:每天|每周|平日|工作日)[^，,。；]{0,8}(?:固定|指定)(?:的)?(?:时间点|时间|时段)[^，,。；]{0,10}(?:在线|值班|开放)[的呀啊呢嗯呃]{0,4}[，,][^，,。；]{0,26}有问题[^，,。；]{0,10}(?:提问|咨询|联系|答疑)"
+    ).expect("a recurring availability and a way to ask for help"));
+    let access = ACCESS.find(source)?;
+    let before = &source[..access.start()];
+    let start = before.rsplit_once(['。', '；']).map_or(0, |(_, last)| before.len() - last.len());
+    let passage = source[start..access.end()].trim();
+    if has(passage, &["如果不能", "不能在线", "不能值班", "不开", "不可以", "不能提问", "无法", "不会"])
+        || has(source, &["已取消", "暂停", "不再在线", "不再值班", "不再开放"])
+    {
+        return None;
+    }
+    canonical_brief::line(passage, 100).then_some(passage)
+}
+
 /// Retain source qualifications within a topic that already shows the related
 /// discussion. Excerpts have their own citations and never nominate work.
 pub(super) fn reported_context<'a>(
@@ -570,6 +602,23 @@ pub(super) fn reported_context<'a>(
         if retained_roles.contains(role) { continue; }
         let Some((id, raw)) = source(anchor) else { continue; };
         let body = source_review::bare(raw);
+        if role == "pending" && discusses_a_date(body) {
+            let missing_notice = (anchor.saturating_sub(4)..anchor).rev().find_map(|index| {
+                if !topic.contains(&index) || !same_speaker(anchor, index) {
+                    return None;
+                }
+                let (id, raw) = source(index)?;
+                unreceived_notice(source_review::bare(raw)).map(|notice| (index, id, notice))
+            });
+            if let Some((index, id, notice)) = missing_notice {
+                if !visible.contains(&index) {
+                    let text = format!("时间待核：{notice}");
+                    result.push(ExamplePassage {source:id,text});
+                }
+                retained_roles.insert(role);
+                continue;
+            }
+        }
         let mut related = None;
         let prefix = match role {
             "work" if direct_request_sequence(body) => {
@@ -623,6 +672,20 @@ pub(super) fn reported_context<'a>(
             canonical_brief::line(&text,120).then_some(ExamplePassage {source:id,text})
         });
         result.extend(passage);
+    }
+    for &anchor in topic.iter().filter(|index| !visible.contains(index)) {
+        let Some((id, raw)) = source(anchor) else { continue };
+        let Some(terms) = online_access_terms(source_review::bare(raw)) else { continue };
+        let discussion_recorded = (anchor.saturating_sub(2)..anchor).rev().any(|index| {
+            topic.contains(&index) && (visible.contains(&index) || nominated.contains(&index))
+                && same_speaker(anchor, index)
+                && source(index).is_some_and(|(_, text)| {
+                    text.contains("线上") && has(text, &["辅导", "答疑", "咨询", "支持", "服务"])
+                })
+        });
+        if discussion_recorded {
+            result.push(ExamplePassage {source:id,text:format!("发言者说明的在线安排：{terms}")});
+        }
     }
     for &anchor in topic.iter().filter(|index| nominated.contains(index)) {
         let Some((id, raw)) = source(anchor) else { continue; };
@@ -896,6 +959,26 @@ mod tests {
         assert_eq!(passages.len(), 1);
         assert!(passages[0].text.contains("会上拟议"));
         assert!(super::reported_context(&[1, 2], &none_visible, &nominated, &unbound, &known).is_empty());
+    }
+
+    #[test]
+    fn a_pending_start_keeps_the_unreceived_notice_and_interim_access() {
+        use std::collections::{HashMap, HashSet};
+        let rows = [
+            ("e0001", serde_json::json!({"text":"主持人：目前主管部门还没有通知。"})),
+            ("e0002", serde_json::json!({"text":"主持人：通知是九月一号儿开始，你怎么看的。"})),
+            ("e0003", serde_json::json!({"text":"助教：课后我们的线上辅导一直在做。"})),
+            ("e0004", serde_json::json!({"text":"助教：老师在频道每天固定时间点在线的，如果同学们有问题可以直接提问，我们也考虑开始下一阶段。"})),
+        ];
+        let known = rows.iter().map(|(id, row)| (*id, row)).collect();
+        let passages = super::reported_context(&[1, 2, 3, 4], &HashSet::new(), &HashSet::from([3]),
+            &HashMap::from([(2, "pending")]), &known);
+        assert!(passages.iter().any(|row| row.source == "e0001" && row.text == "时间待核：目前主管部门还没有通知"));
+        assert!(passages.iter().any(|row| row.source == "e0004"
+            && row.text.ends_with("每天固定时间点在线的，如果同学们有问题可以直接提问")));
+        assert!(passages.iter().all(|row| !row.text.contains("九月一号") && !row.text.contains("考虑开始")));
+        assert!(super::online_access_terms("每天固定时段在线，不过有问题也不可以提问。").is_none());
+        assert!(super::online_access_terms("每天固定时段在线，有问题可以咨询，不过这周暂停。").is_none());
     }
 
     #[test]

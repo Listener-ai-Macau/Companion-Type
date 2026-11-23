@@ -3,7 +3,9 @@
 use std::collections::{BTreeMap, HashSet};
 use std::fmt;
 use std::ops::Range;
+use std::sync::LazyLock;
 
+use regex::Regex;
 use serde::de::{self, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer};
 use serde_json::{Value, json};
@@ -11,6 +13,7 @@ use serde_json::{Value, json};
 use super::atomic_document::{ExtractedFact, array, fail, fact_schema, object};
 use super::source_authority::Authority;
 use super::source_grounding;
+use super::super::source_resolution::split_turn_label;
 use super::super::{automatic_brief::factual_audit, canonical_brief};
 
 const CORE_BYTES: usize = 1800;
@@ -152,6 +155,42 @@ impl SourceWindows {
     fn offered(&self, index: usize) -> Range<usize> {
         let core = &self.core[index];
         core.start.saturating_sub(CONTEXT_SENTENCES)..(core.end + CONTEXT_SENTENCES).min(self.sentences.len())
+    }
+
+    fn planned_location(&self, window: usize, index: usize) -> Option<PlannedLocation<'_>> {
+        let next = index + 1;
+        if !self.offered(window).contains(&next) {
+            return None;
+        }
+        let first = &self.sentences[index];
+        let second = &self.sentences[next];
+        let original = text(first).trim();
+        let continuation = text(second).trim();
+        let speaker = (index.saturating_sub(CONTEXT_SENTENCES)..=index).rev()
+            .find_map(|i| split_turn_label(text(&self.sentences[i]).trim()).map(|(label, _)| label));
+        if let Some((label, _)) = split_turn_label(continuation) {
+            if speaker != Some(label) {
+                return None;
+            }
+        } else if first["source"] != second["source"] || text(first).contains(['\r', '\n']) {
+            return None;
+        }
+        let body = super::source_review::bare(original);
+        let planning = PLANNED_LOCATION.find(body)?;
+        let next_body = super::source_review::bare(continuation);
+        let target = next_body.split(['，', ',', '。', '！', '？', '；']).next()?.trim();
+        let target_key = location_key(target);
+        if !(4..=24).contains(&target_key.chars().count())
+            || !target_key.chars().all(char::is_alphanumeric)
+            || location_key(body).contains(&target_key)
+        {
+            return None;
+        }
+        let background = body[..planning.start()].rsplit_once(['，', ',', '。', '；'])
+            .map_or("", |(complete, _)| complete);
+        Some(PlannedLocation {
+            speaker, planning: planning.as_str(), target, target_key, background, next_id: id(second),
+        })
     }
 
     fn linked_opinion_context(&self, window: usize, index: usize) -> Option<&str> {
@@ -369,6 +408,8 @@ impl SourceWindows {
             let mut overlong = false;
             let mut overlong_commitment = false;
             let mut retained_completed_report = false;
+            let planned_location = self.planned_location(index, i);
+            let mut location_scope_repaired = false;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
@@ -385,6 +426,13 @@ impl SourceWindows {
                 let mut seen = HashSet::from([anchor]);
                 if fact.evidence.len() > 7 || fact.evidence.iter().any(|r| !offered.contains_key(r.as_str()) || !seen.insert(r.as_str())) {
                     return Err(fail());
+                }
+                if planned_location.as_ref().is_some_and(|plan| {
+                    matches!(fact.role.as_str(), "status" | "decision")
+                        && location_key(&fact.text).contains(&plan.target_key)
+                }) {
+                    location_scope_repaired = true;
+                    continue;
                 }
                 fact.evidence.retain(|reference| {
                     !source_grounding::context_only_fragment(offered[reference.as_str()])
@@ -479,6 +527,27 @@ impl SourceWindows {
                 retained_completed_report |= bounded_report;
                 accepted.push(fact);
             }
+            if location_scope_repaired {
+                let plan = planned_location.expect("the scope check found a spoken continuation");
+                // A status on this anchor may reuse the next clause's
+                // content even when it leaves the location out. Keep the
+                // original background instead of redistributing that scope.
+                accepted.retain(|fact| !matches!(fact.role.as_str(), "status" | "decision")
+                    || fact.evidence.len() > 1 || original.contains(&fact.text));
+                for quote in bounded_original_quotes_with_width(plan.background, 90) {
+                    if !accepted.iter().any(|fact| fact.text == quote) {
+                        accepted.push(ExtractedFact::review_quote(anchor, "status", &quote));
+                    }
+                }
+                let proposal = format!("{}{}", plan.planning, plan.target);
+                let attributed = match plan.speaker {
+                    Some(speaker) => format!("{speaker}：{proposal}"),
+                    None => proposal,
+                };
+                let mut continuation = ExtractedFact::verbatim(anchor, "recommendation", &attributed);
+                continuation.evidence.push(plan.next_id.to_owned());
+                accepted.push(continuation);
+            }
             if overlong {
                 let prefix = if overlong_commitment { "原话待核：事项范围。" } else { "" };
                 let role = policy.discussion_role().ok_or_else(fail)?;
@@ -491,7 +560,9 @@ impl SourceWindows {
                 }
             }
             if unmatched.is_empty() && !rejected_causal_claim {
-                let origin = if let Some(reason) = source_quote_origin {
+                let origin = if location_scope_repaired {
+                    "planned-location-scope-quote"
+                } else if let Some(reason) = source_quote_origin {
                     let role = policy.discussion_role().ok_or_else(fail)?;
                     let quote = if accepted.is_empty() || reason == "comparison-source-quote" {
                         complete_leading_excerpt(original)
@@ -548,6 +619,25 @@ impl SourceWindows {
         if !answers.is_empty() { return Err(fail()); }
         Ok(CheckedWindow { facts, reviewed, deferred })
     }
+}
+
+// Keep a location introduced as someone's proposed destination out of a
+// neighboring status claim. The original wording supplies the intent.
+static PLANNED_LOCATION: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+    r"(?:打算|准备|计划|考虑|提议|想)(?:先|暂时|就)?(?:开|设|放|落|搬|迁|办|建|安排|部署|调整|改|定)?(?:在|到|去|于)$"
+).expect("a proposal ending at the start of its destination"));
+
+struct PlannedLocation<'a> {
+    speaker: Option<&'a str>,
+    planning: &'a str,
+    target: &'a str,
+    target_key: String,
+    background: &'a str,
+    next_id: &'a str,
+}
+
+fn location_key(text: &str) -> String {
+    text.chars().filter(|ch| !ch.is_whitespace() && *ch != '的').collect()
 }
 
 // A lengthy descriptive reply can contain a completed first sentence and a
@@ -932,6 +1022,34 @@ mod tests {
         assert!(facts.iter().any(|fact| fact.evidence == ["e0001"] && fact.text == answer));
         assert!(facts.iter().all(|fact| !(fact.evidence[0] == "e0001" && fact.text == prior)));
         assert_eq!(coverage["sentences"][1]["origin"],"source-scope-quote");
+    }
+
+    #[test]
+    fn a_proposed_location_does_not_become_a_status_for_other_parties() {
+        let original = "说话人5: 现在有不同价位的甜品品牌，平价品牌也很常见，然后我打算开在\n说话人5: 社区的贸易街，定位中低档。";
+        let window = SourceWindows::new(original).unwrap();
+        let (input, _) = window.input_and_schema(0);
+        let mut answers = serde_json::Map::new();
+        let mut anchor = "";
+        for row in input["sourceSentences"].as_array().unwrap().iter().filter(|row| row["anchor"] == true) {
+            if text(row).trim_end().ends_with("开在") {
+                anchor = id(row);
+                answers.insert(anchor.to_owned(), json!([{"r":"status","t":"不同价位的甜品品牌都在社区贸易街竞争。"}]));
+            } else {
+                answers.insert(id(row).to_owned(), json!([]));
+            }
+        }
+        assert!(!anchor.is_empty());
+        let (facts, coverage) = window.decode(0, &json!(answers).to_string()).unwrap();
+        assert!(facts.iter().any(|fact| fact.role == "status" && fact.text.contains("平价品牌也很常见")));
+        assert!(facts.iter().any(|fact| fact.role == "recommendation"
+            && fact.text == "说话人5：打算开在社区的贸易街" && fact.evidence.len() == 2));
+        assert!(facts.iter().all(|fact| !fact.text.contains("都在社区贸易街竞争")));
+        assert!(coverage["sentences"].as_array().unwrap().iter()
+            .any(|row| row["origin"] == "planned-location-scope-quote"));
+        let different_speaker = SourceWindows::new(&original.replace("\n说话人5:", "\n说话人6:")).unwrap();
+        let first = different_speaker.sentences.iter().position(|row| id(row) == anchor).unwrap();
+        assert!(different_speaker.planned_location(0, first).is_none());
     }
 
     #[test]
