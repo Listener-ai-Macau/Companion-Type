@@ -283,6 +283,16 @@ mod tests{
     }
 
     #[test]
+    #[ignore = "runs the native local model on an explicitly supplied transcript"]
+    fn run_native_minutes_candidate_on_approved_input() {
+        let input = std::env::var_os("COMPANION_TEST_LOCAL_MINUTES_INPUT").expect("provide a hash-bound input");
+        let output = std::env::var_os("COMPANION_TEST_LOCAL_MINUTES_OUTPUT").expect("provide a new output directory");
+        let result = candidate(Path::new(&input), Path::new(&output)).expect("run the local minutes candidate");
+        assert_eq!(result["receipt"]["newCloudCalls"], 0);
+        assert_eq!(result["state"], "native-candidate-engineer-review-required");
+    }
+
+    #[test]
     fn local_minutes_probe_constructor_preserves_exact_source_and_never_claims_real_capture(){
         let source="观点：预算未批准。\n赵工承诺周五报告。";
         let row=session(source.into(),"公开原文",120000).unwrap();assert_eq!(row.transcript_text,source);
