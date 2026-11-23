@@ -2975,19 +2975,24 @@ fn assemble_with_context(
             *limit=offset+count;
         }
     }
-    let mut closing_actions = Vec::new();
-    if let Some(recap) = (!bank.chapter_spans.is_empty())
-        .then(|| super::closing_recap::detect(&sentences)).flatten()
-    {
+    let mut closing_actions: Vec<(String, super::closing_recap::RecapHandoff)> = Vec::new();
+    if !bank.chapter_spans.is_empty() {
+        let recap = super::closing_recap::detect(&sentences)
+            .map(|recap| recap.accepted_handoffs(&sentences)).unwrap_or_default();
+        let handoffs = recap.into_iter().chain(super::closing_recap::direct_assignments(&sentences));
         let actions = document["actionItems"].as_array_mut().ok_or_else(fail)?;
-        for handoff in recap.accepted_handoffs(&sentences).into_iter().take(20_usize.saturating_sub(actions.len())) {
+        for handoff in handoffs {
+            if actions.len() >= 20 { break; }
             let anchor = sentences[handoff.directive]["id"].as_str().ok_or_else(fail)?;
             let existing = result.bindings.iter().any(|(path,id)| {
                 path.starts_with("/actionItems/") && bank.facts.iter().any(|fact| {
                     &fact.id==id && (fact.text==handoff.item.text || fact.evidence.iter().any(|citation| citation==anchor))
                 })
             });
-            if existing { continue; }
+            if existing || closing_actions.iter().any(|(_, saved)| {
+                saved.directive == handoff.directive
+                    || (saved.item.owner == handoff.item.owner && saved.item.text == handoff.item.text)
+            }) { continue; }
             let evidence = handoff.citations.iter().map(|&pos| {
                 let row=&sentences[pos];
                 json!({"source":row["source"],"quote":row["text"]})

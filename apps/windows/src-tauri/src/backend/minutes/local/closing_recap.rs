@@ -283,8 +283,174 @@ impl ClosingRecap<'_> {
     }
 }
 
+/// Detect a closing instruction with a named team or responsible role. Spoken
+/// handoffs often have neither a deadline nor the formal wording of a recap.
+pub(super) fn direct_assignments(sentences: &[Value]) -> Vec<RecapHandoff> {
+    use crate::companion_v1::CompanionV1ActionItem;
+
+    let pause = |words: &str| {
+        let words = words.trim_matches([' ', '，', '。', '！', '嗯', '呃', '啊', '哦']);
+        matches!(words, "好的" | "没问题" | "收到" | "没有问题")
+            || words.chars().all(|c| "嗯啊好哦呃对是行，。 ".contains(c))
+    };
+    let turn = |index: usize| split_turn_label(sentences.get(index)?["text"].as_str()?);
+    let end = (sentences.len().saturating_sub(18)..sentences.len()).rev().find_map(|pos| {
+        let (lead, words) = turn(pos)?;
+        let terminal = words.trim_end_matches(['。', '！', '，', ' ', '啊', '嗯']);
+        (["散会", "到此结束", "会议结束"].iter().any(|cue| terminal.ends_with(cue))
+            && !tentative(words)).then_some((pos, lead))
+    });
+    let Some((last, lead)) = end else { return Vec::new() };
+    let announce = (last.saturating_sub(12)..=last).rev().find(|&pos| turn(pos).is_some_and(|(actor, words)| {
+        actor == lead && !tentative(words)
+            && has(words, &["本场会", "本次会", "今天的会", "今天就", "这场会"])
+            && has(words, &["开到这儿", "开到这里", "到此结束", "到这里结束", "会议结束"])
+    }));
+    let Some(announce) = announce else { return Vec::new() };
+    let first = if announce == last { last.saturating_sub(8) } else { announce };
+
+    (first..=last).filter_map(|pos| {
+        let (actor, words) = turn(pos)?;
+        if actor != lead || (pos + 1..=last).any(|check| {
+            turn(check).is_some_and(|(who, reply)| who != lead && !pause(reply))
+        }) {
+            return None;
+        }
+        let (owner, operation) = direct_closing_instruction(words, pos >= announce)?;
+        let mut text = operation.to_owned();
+        let mut citations = vec![pos];
+        if matches!(operation, "主抓" | "主抓一下" | "主抓一下儿") {
+            // A terse assignment can refer to the same speaker's immediately
+            // preceding instruction. Keep the literal scope if it is present.
+            let unit = owner.trim_end_matches("部门").trim_end_matches('部');
+            if let Some((scope, detail)) = (pos.saturating_sub(5)..pos).rev().find_map(|at| {
+                let (actor, raw) = turn(at)?;
+                let detail = raw.trim_end_matches(['，', '。', '！', ' ']);
+                (actor == lead && (2..=5).contains(&unit.chars().count()) && detail.starts_with(unit)
+                    && has(detail, &["考虑", "准备", "推进", "检查", "处理"])
+                    && !tentative(detail) && super::super::canonical_brief::line(detail, 28))
+                    .then_some((at, detail))
+            }) {
+                text = format!("{text}，{detail}");
+                citations.insert(0, scope);
+            }
+        }
+        if !citations.contains(&announce) {
+            citations.push(announce);
+        }
+        Some(RecapHandoff {
+            item: CompanionV1ActionItem { text, owner: Some(owner), due: None },
+            citations,
+            directive: pos,
+        })
+    }).collect()
+}
+
+fn direct_closing_instruction(words: &str, after_announce: bool) -> Option<(String, &str)> {
+    static STRICT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<owner>总监|主管|负责人|组长|项目经理|经理)(?:这边儿?|那边儿?)\s*(?:一定要|务必|必须)[^。；！？]{0,12}?(?P<work>注意安全|负责安全|检查现场|把关)",
+    ).expect("a specific instruction and responsible role"));
+    static LITERAL: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"^(?P<owner>[\p{Han}]{2,7}?)(?P<unit>(?:的)?部门儿?|小组儿?|团队|部儿?|这边儿?|那边儿?)\s*",
+        r"(?P<work>(?:来|要|就|务必|主要)?(?:主抓|负责|带头|提交|汇总|核对|统计|调查|准备|通知|",
+        r"跟[^，,。；！？]{2,16}?联系|联系|对接|确认|检查|落实|整理|组织|召开|协调|处理)[^，,。；！？]{0,40})",
+    )).expect("a named team and literal closing instruction"));
+    if tentative(words) || has(words, &[
+        "建议", "可能", "我觉得", "希望", "上次", "当时", "曾经", "不用", "不需要", "不再",
+        "先取消", "先不", "还在讨论", "反对",
+    ]) {
+        return None;
+    }
+    if let Some(found) = STRICT.captures(words) {
+        return Some((found.name("owner")?.as_str().to_owned(), found.name("work")?.as_str()));
+    }
+    if !after_announce { return None; }
+    let post = ["下去以后", "散会以后", "散会后", "会后", "会议结束后"].iter()
+        .find_map(|cue| words.split_once(cue).map(|(_, instruction)| instruction));
+    let mut task = post.or_else(|| words.trim_start_matches(['嗯', '啊', '呃', ' ']).strip_prefix("还有"))?;
+    while let Some(next) = ["还是", "这个", "那个", "就让"].iter()
+        .find_map(|cue| task.trim_start_matches(['嗯', '啊', '呃', ' ', '，']).strip_prefix(cue))
+    {
+        task = next;
+    }
+    let task = task.trim();
+    let task = task.split_once("散会").map_or(task, |(before, _)| {
+        before.trim_end_matches(['行', '好', ' ', '，', '。'])
+    });
+    let found = LITERAL.captures(task)?;
+    let role = found.name("owner")?.as_str();
+    let unit = found.name("unit")?.as_str();
+    let owner = match unit {
+        "的部门" | "的部门儿" | "部门" | "部门儿" => format!("{role}部门"),
+        "这边" | "这边儿" | "那边" | "那边儿" => {
+            if !["销售", "采购", "运营", "设计", "财务", "市场", "售后", "人事", "物业",
+                "后勤", "编辑", "开发", "工程", "生产", "质检"].contains(&role)
+            {
+                return None;
+            }
+            role.to_owned()
+        }
+        _ => format!("{role}{}", unit.trim_end_matches('儿')),
+    };
+    let work = found.name("work")?.as_str().trim_end_matches(['。', ' ', '，']);
+    let work = if work.starts_with('跟') && work.contains("联系") {
+        work.split_once("主抓").map_or(work, |(contact, _)| contact.trim())
+    } else {
+        work
+    };
+    super::super::canonical_brief::line(work, 55).then_some((owner, work))
+}
+
 #[cfg(test)]
 mod tests {
+    use super::direct_assignments;
+    use serde_json::Value;
+
+    fn transcript_rows(lines: &[&str]) -> Vec<Value> {
+        lines.iter().map(|text| serde_json::json!({"text":text})).collect()
+    }
+
+    #[test]
+    fn direct_closing_work_keeps_separate_departments_without_inventing_dates() {
+        let rows = transcript_rows(&[
+            "说话人1：设计风格也要考虑进去。",
+            "说话人5：好。",
+            "说话人1：那咱本场会就先开到这儿，下去以后还是设计的部门儿主抓一下儿。",
+            "说话人5：嗯好的。",
+            "说话人1：还有这个销售这边儿跟学校联系一下儿主抓一下儿这个行散会。",
+            "说话人2：嗯行。",
+        ]);
+        let tasks = direct_assignments(&rows);
+        assert_eq!(tasks.len(), 2);
+        assert_eq!(tasks[0].item.owner.as_deref(), Some("设计部门"));
+        assert!(tasks[0].item.text.contains("设计风格"));
+        assert_eq!(tasks[0].citations, [0, 2]);
+        assert_eq!(tasks[1].item.owner.as_deref(), Some("销售"));
+        assert_eq!(tasks[1].item.text, "跟学校联系一下儿");
+        assert!(tasks.iter().all(|handoff| handoff.item.due.is_none()));
+    }
+
+    #[test]
+    fn a_safety_directive_can_precede_the_closure_without_promoting_opinions() {
+        let mut rows = transcript_rows(&[
+            "说话人1：整个流程一定要，总监这边儿一定要，最主要的就是注意安全。",
+            "说话人2：好。",
+            "说话人1：那咱本场会议就先到此结束，散会。",
+        ]);
+        let tasks = direct_assignments(&rows);
+        assert_eq!(tasks.len(), 1);
+        assert_eq!(tasks[0].item.owner.as_deref(), Some("总监"));
+        assert_eq!(tasks[0].item.text, "注意安全");
+        rows[0]["text"] = serde_json::json!("说话人1：我觉得总监这边儿一定要注意安全。");
+        assert!(direct_assignments(&rows).is_empty());
+        rows[0]["text"] = serde_json::json!("说话人1：总监这边儿一定要注意安全。");
+        rows[1]["text"] = serde_json::json!("说话人2：这个安排还没有确认。");
+        assert!(direct_assignments(&rows).is_empty());
+        rows[1]["text"] = serde_json::json!("说话人2：好。");
+        rows[2]["text"] = serde_json::json!("说话人3：我们今天的会就到此结束，散会。");
+        assert!(direct_assignments(&rows).is_empty());
+    }
+
     #[test]
     fn closing_context_requires_an_announced_recap_and_its_scope() {
         let row = |id,text| serde_json::json!({"id":id,"text":text});
