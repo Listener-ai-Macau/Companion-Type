@@ -1597,6 +1597,8 @@ pub(super) fn review_chapters(
     let mut compact: Option<ChapterOrganization>=compact.map(|raw| {
         serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_| fail())
     }).transpose()?;
+    let proposed = compact.as_ref().into_iter().flat_map(|plan| plan.chapters.0.values())
+        .flat_map(|chapter| chapter.main_facts.iter()).cloned().collect::<Vec<_>>();
     let topics = bank.topics().collect::<Vec<_>>();
     let example_content=source_example_contents(bank,source);
     let mut chapters = BTreeMap::new();
@@ -1713,6 +1715,7 @@ pub(super) fn review_chapters(
     bank.receipt["chapterReaderCoverage"] = json!(reviewed_counts);
     bank.receipt["chapterExecutionReview"] = json!(execution_review);
     bank.receipt["readerExampleBindings"] = json!(example_bindings);
+    bank.receipt["coreProposedReaderFactIds"] = json!(proposed);
     let count = bank.chapter_spans.len();
     let fallback_focus = match count {
         0 => return Err(fail()),
@@ -2302,7 +2305,10 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         .filter_map(|name| theme_name(name).map(str::to_owned)).collect();
     let mut fallback_topics = Vec::new();
     let mut next_fallback = 1;
-    let mut proposal_details = HashSet::new();
+    let mut linked_details = HashMap::new();
+    let proposed: HashSet<_> = bank.receipt["coreProposedReaderFactIds"].as_array().into_iter()
+        .flatten().filter_map(Value::as_str).collect();
+    let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
     for (id,items) in groups {
         let title=topics.remove(id).ok_or_else(fail)?;
         if items.is_empty(){continue;}
@@ -2387,7 +2393,31 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
                 if let Some(index) = details.iter().position(|[detail]| *detail == id).filter(|index| *index >= limit) {
                     let detail = details.remove(index);
                     details.insert(limit, detail);
-                    proposal_details.insert(detail[0].as_str());
+                    linked_details.insert(detail[0].as_str(),"proposal-detail");
+                    limit += 1;
+                }
+            }
+        }
+        if !proposed.is_empty() {
+            let required = details.iter().rposition(|[id]| bank.required_topic(id)).map_or(0, |index| index + 1);
+            let mut limit = required.max(READER_DETAILS + details.iter()
+                .filter(|[id]| bank.additional_reader_details.contains(*id)
+                    || linked_details.contains_key(id.as_str())).count());
+            let visible = points.iter().chain(details.iter().take(limit))
+                .map(|[id]| id.as_str()).collect::<HashSet<_>>();
+            let mut context = points.iter().chain(details.iter()).filter_map(|[id]| {
+                let fact = by_id.get(id.as_str())?;
+                let source = fact.evidence.first()?.strip_prefix('e')?.parse::<usize>().ok()?;
+                (visible.contains(id.as_str()) || !bank.review_quote(id)).then_some(super::reader_context::ComparisonFact {
+                    id, source, text: &fact.text,
+                })
+            }).collect::<Vec<_>>();
+            context.sort_by_key(|fact| fact.source);
+            for id in super::reader_context::contrast_risk_context(&context,&proposed,&visible) {
+                if let Some(index) = details.iter().position(|[fact]| fact.as_str() == id).filter(|index| *index >= limit) {
+                    let detail = details.remove(index);
+                    details.insert(limit,detail);
+                    linked_details.insert(id,"comparison-context");
                     limit += 1;
                 }
             }
@@ -2396,7 +2426,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     }
     if !topics.is_empty(){return Err(fail());}
     let canonical=json!({"purpose":purpose,"topics":arranged,"decisions":decisions,"actionItems":actions,"questions":questions,"excluded":excluded});
-    let mut parsed = assemble_with_proposals(&canonical.to_string(), bank, session, base, &proposal_details)?;
+    let mut parsed = assemble_with_context(&canonical.to_string(), bank, session, base, &linked_details)?;
     if !placed_critical.is_empty() {
         parsed.receipt["priorityReaderFactIds"] = json!(placed_critical);
     }
@@ -2490,12 +2520,12 @@ fn reader_fact_length(bank: &Bank, fact: &Fact) -> usize {
 
 #[cfg(test)]
 fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
-    assemble_with_proposals(raw, bank, session, base, &HashSet::new())
+    assemble_with_context(raw, bank, session, base, &HashMap::new())
 }
 
-fn assemble_with_proposals(
+fn assemble_with_context(
     raw: &str, bank: &Bank, session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
-    proposal_details: &HashSet<&str>,
+    linked_details: &HashMap<&str,&str>,
 ) -> Result<canonical_brief::local_document::Parsed,String>{
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
     let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS,MAX_FACTS)?;
@@ -2539,14 +2569,14 @@ fn assemble_with_proposals(
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
-        let proposal_detail = proposal_details.contains(id.as_str());
-        if bank.required_topic(id) || proposal_detail {
+        let linked_detail = linked_details.contains_key(id.as_str());
+        if bank.required_topic(id) || linked_detail {
             if let ["topics", topic, section, row] = pointer.split('/').skip(1).collect::<Vec<_>>().as_slice() {
                 let topic: usize = topic.parse().map_err(|_|fail())?;
                 let row: usize = row.parse().map_err(|_|fail())?;
                 if *section == "details" {
                     reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1);
-                    if bank.additional_reader_details.contains(id) || proposal_detail { supplemental_details[topic] += 1; }
+                    if bank.additional_reader_details.contains(id) || linked_detail { supplemental_details[topic] += 1; }
                 }
                 required_visible.push((id, format!("topics[{topic}].{section}[{row}]")));
             }
@@ -2557,6 +2587,39 @@ fn assemble_with_proposals(
     }
     for (limit, supplemental) in reader_detail_limits.iter_mut().zip(supplemental_details) {
         *limit = (*limit).max(READER_DETAILS + supplemental);
+    }
+    let mut layout_bindings = result.bindings.clone();
+    let mut reader_examples = Vec::new();
+    if !bank.chapter_spans.is_empty() {
+        let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
+        for (topic,limit) in reader_detail_limits.iter_mut().enumerate() {
+            let prefix = format!("/topics/{topic}/details/");
+            let point_prefix = format!("/topics/{topic}/points/");
+            let example = result.bindings.iter().filter(|(path,_)| {
+                path.starts_with(&prefix) || path.starts_with(&point_prefix)
+            }).find_map(|(_,id)| {
+                let fact=by_id.get(id.as_str())?;
+                super::reader_context::fictional_example(&fact.text,&fact.evidence,&known)
+                    .map(|passages| (id,passages))
+            });
+            let Some((intro, passages)) = example else { continue; };
+            let details = document["topics"][topic]["details"].as_array_mut().ok_or_else(fail)?;
+            let offset = (*limit).min(details.len());
+            let count = passages.len();
+            for (path,_) in &mut layout_bindings {
+                if let Some(row) = path.strip_prefix(&prefix).and_then(|row| row.parse::<usize>().ok()) {
+                    if row >= offset { *path = format!("{prefix}{}",row+count); }
+                }
+            }
+            for (index,passage) in passages.into_iter().enumerate() {
+                let original=known[passage.source];
+                let row=offset+index;
+                details.insert(row,json!({"text":passage.text,"evidence":[{"source":original["source"],"quote":original["text"]}]}));
+                detail_kinds[topic].insert(row,Some(Kind::Opinion));
+                reader_examples.push(json!({"introFactId":intro,"sourceId":passage.source,"path":format!("topics[{topic}].details[{row}]")}));
+            }
+            *limit=offset+count;
+        }
     }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
     let mut parsed = super::evidence_document::parse_with_details_limit(
@@ -2592,12 +2655,16 @@ fn assemble_with_proposals(
     }
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?
         .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
-    if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str())) {
+    if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str()))
+        || reader_examples.iter().any(|example| {
+            example["path"].as_str().is_none_or(|path| !visible_paths.contains(path))
+        })
+    {
         return Err(fail());
     }
     let bindings: HashMap<_,_> = result.bindings.iter().map(|(pointer,id)|(id.as_str(),pointer.as_str())).collect();
     let requirements = bank.facts.iter().filter_map(|fact| {
-        bank.required_role(fact).or_else(|| proposal_details.contains(fact.id.as_str()).then_some("proposal-detail"))
+        bank.required_role(fact).or_else(|| linked_details.get(fact.id.as_str()).copied())
             .map(|role| (fact, role))
     });
     let visible_requirements = requirements.map(|(fact, role)| {
@@ -2612,6 +2679,9 @@ fn assemble_with_proposals(
         }
         Ok(json!({"factId":fact.id,"role":role,"sourceIds":fact.evidence,"path":pointer}))
     }).collect::<Result<Vec<_>,String>>()?;
+    if !reader_examples.is_empty() {
+        parsed.receipt["readerExampleExcerpts"] = json!(reader_examples);
+    }
     parsed.receipt["requiredReaderFactIds"] = json!(required_visible.iter().map(|(id, _)| id).collect::<Vec<_>>());
     parsed.receipt["visibleSourceRequirements"] = json!(visible_requirements);
     if serde_json::to_vec(&bank.facts).map_err(|_|fail())?!=sealed{return Err(fail());}
@@ -2620,7 +2690,7 @@ fn assemble_with_proposals(
     parsed.receipt["facts"]=bank.receipt["facts"].clone();
     parsed.receipt["factSeals"]=bank.receipt["seals"].clone();
     parsed.receipt["nextFactIndex"]=json!(bank.facts.len());
-    parsed.receipt["atomicFactBank"]=bank.receipt.clone();parsed.receipt["layoutBindings"]=json!(result.bindings);
+    parsed.receipt["atomicFactBank"]=bank.receipt.clone();parsed.receipt["layoutBindings"]=json!(layout_bindings);
     parsed.receipt["retainedFactIds"]=json!(result.retained_ids);parsed.receipt["excluded"]=json!(result.excluded);
     let mut quantity_quote_ids: Vec<_> = bank.quantity_quotes.iter().collect();
     quantity_quote_ids.sort();
