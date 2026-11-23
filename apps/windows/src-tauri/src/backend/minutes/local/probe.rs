@@ -213,7 +213,11 @@ mod tests{
                     replay_reply(calls, stage, prompt, input, schema, tokens, &profile, vulkan)
                 };
                 let original_sha=format!("{:x}",Sha256::digest(&raw));
-                let checkpoint:CheckpointInput=serde_json::from_value(json!({"path":path,"sha256":original_sha})).unwrap();
+                let mixed_sources = receipt["reusedSourceBackend"] == "vulkan";
+                assert!(!mixed_sources || !vulkan, "{key} has conflicting archived runtimes");
+                let checkpoint:CheckpointInput=serde_json::from_value(json!({
+                    "path":path,"sha256":original_sha,"useVulkanSourceWindowsOnCpu":mixed_sources
+                })).unwrap();
                 let prefix=CheckedSourcePrefix::load(&checkpoint,&text,&sha,input.duration_ms,vulkan).unwrap();
                 let windows=source_windows::SourceWindows::new(&text).unwrap();
                 assert_eq!(prefix.len(),windows.len());
@@ -264,7 +268,8 @@ mod tests{
                 fs::create_dir(&result).unwrap();
                 fs::write(result.join("candidate.txt"),&rendered.minutes.markdown).unwrap();
                 let mut replay = json!({
-                    "mode": if vulkan { "deterministic-reader-replay-of-real-gpu-replies" }
+                    "mode": if mixed_sources { "deterministic-reader-replay-of-cpu-draft-with-validated-vulkan-source" }
+                        else if vulkan { "deterministic-reader-replay-of-real-gpu-replies" }
                         else { "deterministic-reader-replay-of-real-cpu-replies" },
                     "originalReceipt":path,"originalReceiptSha":original_sha,"backend":run["backend"],
                     "sourceFileSha256":input.expected_file_sha256,"exactChapterRequestsVerified":true,
