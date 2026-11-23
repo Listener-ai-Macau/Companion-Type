@@ -38,6 +38,7 @@ pub(super) fn grounded_handoff_condition(original: &str, candidate: &str) -> boo
     if has(&original, &unresolved) || has(&candidate, &unresolved) {
         return false;
     }
+    if original == candidate && timed_relay(&original) { return true; }
     [&*EVENT_HANDOFF, &*AUTHORIZED_HANDOFF].into_iter().any(|pattern| {
         pattern.captures_iter(&original).any(|witness| {
             let start = witness.get(0).expect("matched handoff").start();
@@ -45,6 +46,56 @@ pub(super) fn grounded_handoff_condition(original: &str, candidate: &str) -> boo
             candidate.contains(&original[start..end])
         })
     })
+}
+
+/// Preserve a reported transfer chain with its lead time and intermediate
+/// recipient. The wording describes the process without assigning new work.
+fn timed_relay(text: &str) -> bool {
+    static FIRST: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"提前(?:[一二两三四五六七八九十百0-9]{1,4})(?:个)?(?:工作日|星期|小时|天|日|周|月)",
+        r"(?:让|由|交由)[\p{Han}]{2,10}?(?:发给|递交给|转给|送给)",
+        r"(?P<receiver>[\p{Han}]{2,12})[，,]由(?P<relay>[\p{Han}]{2,12}?)",
+        r"(?:一次性|统一|随后|再|然后)?的?(?:把(?:它|这份[\p{Han}]{2,8}))?",
+        r"(?:发给|转给|通知|送给|转发给)(?P<destination>[\p{Han}]{2,18})"
+    )).expect("timed relay with explicitly named intermediate recipient"));
+    let uncertain = ["？", "?", "如果", "要不要", "还没确定", "尚未", "建议", "设想", "考虑", "可能", "计划",
+        "比如", "举个例子", "或者改由", "撤销", "不用", "不需要", "不再"];
+    if has(text, &uncertain) || !has(text, &["收集", "收齐", "整理", "汇集", "汇总"]) {
+        return false;
+    }
+    FIRST.captures_iter(text).any(|link| {
+        let receiver = link.name("receiver").unwrap().as_str();
+        let receiver = receiver.strip_prefix("各班").or_else(|| receiver.strip_prefix("每班"))
+            .unwrap_or(receiver).trim_start_matches(['各', '每']);
+        let relay = link.name("relay").unwrap().as_str().trim_start_matches(['各', '每']);
+        receiver == relay && link.name("destination").unwrap().as_str() != relay
+    })
+}
+
+pub(super) fn own_proposal(text: &str) -> bool {
+    !has(text, &["？", "?", "要不要", "能不能", "或者", "别人提议", "他们建议", "假设", "不是说", "已经取消"])
+        && has(text, &["我们希望", "我希望", "希望能够", "我们打算", "我们的设想", "我的设想", "我建议", "我们建议"])
+}
+
+pub(super) fn proposal_subject_matches(lead: &str, first: &str, second: &str) -> bool {
+    super::chapter_labels::segmenter().tag(lead, false).into_iter().any(|term| {
+        term.tag.starts_with('n') && (2..=12).contains(&term.word.chars().count())
+            && !["创意", "内容", "东西", "办法", "方法", "项目", "事情", "工作", "想法", "问题", "情况",
+                "建议", "方案", "方式", "过程", "方面", "全体", "公众", "用户"].contains(&term.word)
+            && first.contains(term.word) && second.contains(term.word)
+    })
+}
+
+#[cfg(test)]
+#[test]
+fn relay_requires_the_original_time_intermediate_role_and_destination() {
+    let source = "这个我们首先由年级部把各个学科的这个作业的任务要求都收集好，然后汇集起来之后提前一周让各区部发给各班班主任，由班主任一次性的把它发给这个每个学生或者家长，这样使这个要求更加明确。";
+    assert!(grounded_handoff_condition(source, source));
+    assert!(!grounded_handoff_condition(source, &source.replace("提前一周", "提前三天")));
+    let changed = source.replace("由班主任一次性", "由教务处一次性");
+    assert!(!grounded_handoff_condition(&changed, &changed));
+    let hypothetical = format!("如果需要，{source}");
+    assert!(!grounded_handoff_condition(&hypothetical, &hypothetical));
 }
 
 #[cfg(test)]

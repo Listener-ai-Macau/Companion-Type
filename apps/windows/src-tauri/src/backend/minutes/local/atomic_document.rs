@@ -80,6 +80,11 @@ impl ExtractedFact{
         Self { quantity_needs_review: true, ..Self::verbatim(id, role, text) }
     }
 }
+struct LinkedProposal {
+    lead: String,
+    details: [String; 2],
+}
+
 pub(super) struct Bank {
     pub facts: Vec<Fact>,
     pub receipt: Value,
@@ -94,6 +99,7 @@ pub(super) struct Bank {
     reader_priority: HashMap<String, u8>,
     reader_order: HashMap<String, usize>,
     reported_counts: HashSet<String>,
+    linked_proposals: Vec<LinkedProposal>,
     execution_reading: HashSet<String>,
     reader_groups: Vec<Vec<String>>,
     linked_procedures: Vec<Vec<String>>,
@@ -1386,6 +1392,11 @@ fn build_bank_with_timing(
         }).collect::<Vec<_>>();
     let reported_counts = reported_count_groups.iter().flatten().cloned().collect::<HashSet<_>>();
     reader_groups.extend(reported_count_groups.iter().cloned());
+    let linked_proposals = if chapter_spans.is_empty() {
+        Vec::new()
+    } else {
+        source_linked_proposals(&topic_facts, &sentences, &source_quotes, &quantity_quotes)
+    };
     let mut linked_ids = HashSet::new();
     let mut additional_reader_details = reported_counts.clone();
     let linked_procedures = super::delivery_evidence::linked_procedures(&sentences, timing.as_ref()).into_iter()
@@ -1445,7 +1456,7 @@ fn build_bank_with_timing(
         "reportedCountGroups":reported_count_groups,
         "independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,linked_proposals,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -2091,6 +2102,57 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
     }, overview))
 }
 
+// An implementation detail needs a cited link to the earlier part of the
+// same proposal. Shared vocabulary alone is insufficient.
+fn source_linked_proposals(
+    facts: &[&Fact], sentences: &[Value], source_quotes: &HashSet<String>, quantity_quotes: &HashSet<String>,
+) -> Vec<LinkedProposal> {
+    use super::delivery_evidence::{own_proposal, proposal_subject_matches};
+    use super::super::source_resolution::split_turn_label;
+
+    let positions: HashMap<_, _> = sentences.iter().enumerate()
+        .filter_map(|(index, row)| Some((row["id"].as_str()?, index))).collect();
+    let mut speaker = None;
+    let speakers = sentences.iter().map(|row| {
+        if let Some((name, _)) = row["text"].as_str().and_then(|line| split_turn_label(line.trim())) {
+            speaker = Some(name);
+        }
+        speaker
+    }).collect::<Vec<_>>();
+    let mut candidates: Vec<_> = facts.iter().copied().filter_map(|fact| {
+        let index = *positions.get(fact.evidence.first()?.as_str())?;
+        let original = sentences[index]["text"].as_str()?;
+        let speaker = speakers[index]?;
+        if source_quotes.contains(&fact.id) || quantity_quotes.contains(&fact.id)
+            || !super::source_grounding::shared_han_phrase(&fact.text, original, 8) {
+            return None;
+        }
+        Some((index, speaker, original, fact))
+    }).collect();
+    candidates.sort_by_key(|(position, ..)| *position);
+
+    let mut result = Vec::new();
+    for &(index, author, original, lead) in &candidates {
+        if !matches!(lead.kind, Kind::Status | Kind::Recommendation) || !own_proposal(original)
+            || !own_proposal(&lead.text) {
+            continue;
+        }
+        let first = candidates.partition_point(|(position, ..)| *position <= index);
+        let nearby = &candidates[first..];
+        let pair = nearby.iter().take_while(|(position, ..)| position-index <= 6).find_map(|&(left, speaker, _, first)| {
+            if author != speaker || !matches!(first.kind, Kind::Recommendation) { return None; }
+            nearby.iter().take_while(|(position, ..)| position-index <= 6)
+                .find(|&&(right, speaker, _, second)| {
+                    left < right && author == speaker && matches!(second.kind, Kind::Recommendation)
+                        && second.evidence.contains(&first.evidence[0])
+                        && proposal_subject_matches(&lead.text, &first.text, &second.text)
+                }).map(|&(_, _, _, second)| LinkedProposal { lead: lead.id.clone(), details: [first.id.clone(), second.id.clone()] })
+        });
+        result.extend(pair);
+    }
+    result
+}
+
 pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let unfenced = crate::backend::minutes::strip_code_fences(raw);
     let raw = unfenced.trim();
@@ -2201,6 +2263,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         .filter_map(|name| theme_name(name).map(str::to_owned)).collect();
     let mut fallback_topics = Vec::new();
     let mut next_fallback = 1;
+    let mut proposal_details = HashSet::new();
     for (id,items) in groups {
         let title=topics.remove(id).ok_or_else(fail)?;
         if items.is_empty(){continue;}
@@ -2272,11 +2335,29 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         }
         details.extend(review.by_ref().take(1));
         details.extend(highlights.chain(review).chain(remainder).chain(prompts));
+        if let Some(link) = bank.linked_proposals.iter().find(|link| {
+            points.iter().any(|[id]| **id == link.lead)
+                && link.details.iter().all(|part| points.iter().chain(&details).any(|[id]| *id == part))
+        }) {
+            // Keep the original reader prefix intact. Only the cited parts
+            // that would be clipped need additional detail space.
+            let required = details.iter().rposition(|[id]| bank.required_topic(id)).map_or(0, |index| index + 1);
+            let mut limit = required.max(READER_DETAILS + details.iter()
+                .filter(|[id]| bank.additional_reader_details.contains(*id)).count());
+            for id in &link.details {
+                if let Some(index) = details.iter().position(|[detail]| *detail == id).filter(|index| *index >= limit) {
+                    let detail = details.remove(index);
+                    details.insert(limit, detail);
+                    proposal_details.insert(detail[0].as_str());
+                    limit += 1;
+                }
+            }
+        }
         arranged.push(json!({"title":title,"points":points,"details":details}));
     }
     if !topics.is_empty(){return Err(fail());}
     let canonical=json!({"purpose":purpose,"topics":arranged,"decisions":decisions,"actionItems":actions,"questions":questions,"excluded":excluded});
-    let mut parsed = assemble(&canonical.to_string(), bank, session, base)?;
+    let mut parsed = assemble_with_proposals(&canonical.to_string(), bank, session, base, &proposal_details)?;
     if !placed_critical.is_empty() {
         parsed.receipt["priorityReaderFactIds"] = json!(placed_critical);
     }
@@ -2368,7 +2449,15 @@ fn reader_fact_length(bank: &Bank, fact: &Fact) -> usize {
     reader_story_framing(bank,fact).map_or_else(||fact.text.chars().count(),|(text,_)|text.chars().count())
 }
 
-pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
+#[cfg(test)]
+fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
+    assemble_with_proposals(raw, bank, session, base, &HashSet::new())
+}
+
+fn assemble_with_proposals(
+    raw: &str, bank: &Bank, session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
+    proposal_details: &HashSet<&str>,
+) -> Result<canonical_brief::local_document::Parsed,String>{
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
     let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS,MAX_FACTS)?;
     for excluded in &result.excluded{
@@ -2411,13 +2500,14 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
-        if bank.required_topic(id) {
+        let proposal_detail = proposal_details.contains(id.as_str());
+        if bank.required_topic(id) || proposal_detail {
             if let ["topics", topic, section, row] = pointer.split('/').skip(1).collect::<Vec<_>>().as_slice() {
                 let topic: usize = topic.parse().map_err(|_|fail())?;
                 let row: usize = row.parse().map_err(|_|fail())?;
                 if *section == "details" {
                     reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1);
-                    if bank.additional_reader_details.contains(id) { supplemental_details[topic] += 1; }
+                    if bank.additional_reader_details.contains(id) || proposal_detail { supplemental_details[topic] += 1; }
                 }
                 required_visible.push((id, format!("topics[{topic}].{section}[{row}]")));
             }
@@ -2467,7 +2557,10 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         return Err(fail());
     }
     let bindings: HashMap<_,_> = result.bindings.iter().map(|(pointer,id)|(id.as_str(),pointer.as_str())).collect();
-    let requirements = bank.facts.iter().filter_map(|fact| bank.required_role(fact).map(|role|(fact,role)));
+    let requirements = bank.facts.iter().filter_map(|fact| {
+        bank.required_role(fact).or_else(|| proposal_details.contains(fact.id.as_str()).then_some("proposal-detail"))
+            .map(|role| (fact, role))
+    });
     let visible_requirements = requirements.map(|(fact, role)| {
         let pointer = bindings.get(fact.id.as_str()).ok_or_else(fail)?;
         let shown = match fact.placement {
