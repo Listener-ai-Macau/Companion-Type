@@ -133,6 +133,97 @@ fn guard_and_trigger_keep_the_full_instruction_with_its_condition() {
     }
 }
 
+// These are distinct frames for a reported count. The original sentences
+// remain separate evidence; this never adds, converts, or compares numbers.
+pub(super) fn reported_count_pairs(sentences: &[&str]) -> Vec<(usize, usize)> {
+    use super::super::source_resolution::split_turn_label;
+
+    static COUNT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?P<activity>[\p{Han}]{2,10}?)\s*[0-9０-９]+(?:\s*(?:到|至|[-–])\s*[0-9０-９]+)?\s*(?:多|余)?\s*(?P<unit>次|场|例|项|起|单)"
+    ).expect("reported count expression"));
+    static RATE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"每(?:一)?(?:年|月|季度|周|星期|天|日)"
+    ).expect("reporting interval"));
+    static TOTAL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"累计|共计|总共|总计|这几年|近几年|过去(?:这)?(?:几|[一二三四五六七八九十0-9]+)年"
+    ).expect("reporting period"));
+
+    let mut turn = None;
+    let mut counts = Vec::new();
+    for (index, sentence) in sentences.iter().enumerate() {
+        let text = sentence.trim();
+        let text = if let Some((_, words)) = split_turn_label(text) {
+            turn = Some(index);
+            words.trim()
+        } else {
+            text
+        };
+        let Some(turn) = turn else { continue; };
+        if text.contains(['?', '？']) || ["希望", "预计", "打算", "应该", "好像", "假如", "比方", "比如",
+            "如果", "目标", "计划", "不是", "尚未", "大概", "最多"].iter().any(|word| text.contains(word)) {
+            continue;
+        }
+        let interval = RATE.find(text);
+        let total = TOTAL.find(text);
+        let (span, is_rate) = match (interval, total) {
+            (Some(scope), None) => (scope, true),
+            (None, Some(scope)) => (scope, false),
+            _ => continue,
+        };
+        let following = &text[span.end()..];
+        let Some(count) = COUNT.captures(following) else { continue; };
+        let action = count.name("activity").unwrap().as_str().trim_end_matches(['了','过','约','达']);
+        if action.chars().count() < 2 { continue; }
+        let unit = count.name("unit").unwrap().as_str();
+        counts.push((index,turn,action,unit,is_rate));
+    }
+    let mut paired = BTreeSet::new();
+    let mut result = Vec::new();
+    for (i, &(left, turn, action, unit, rate)) in counts.iter().enumerate() {
+        if paired.contains(&left) { continue; }
+        let mut matches = counts[i+1..].iter()
+            .take_while(|&&(right, _, _, _, _)| right-left <= 5)
+            .filter(|&&(right, other_turn, other_action, other_unit, other_rate)| {
+                // The end of the same reported activity and its unit are both
+                // required, and the speaker must not have changed.
+                turn == other_turn && unit == other_unit && rate != other_rate && !paired.contains(&right)
+                    && shared_activity_suffix(action, other_action)
+            });
+        let Some(&(right, _, _, _, _)) = matches.next() else { continue; };
+        if matches.next().is_some() { continue; }
+        paired.extend([left,right]);
+        result.push((left,right));
+    }
+    result
+}
+
+fn shared_activity_suffix(left: &str, right: &str) -> bool {
+    let tail = left.char_indices().rev().nth(1).map(|(offset, _)| &left[offset..]);
+    tail.is_some_and(|tail| right.ends_with(tail))
+}
+
+#[cfg(test)]
+#[test]
+fn a_reported_rate_keeps_its_cumulative_count_with_the_original_scope() {
+    let rows = [
+        "说话人2: 那个阶段我们每年也走访 10 到 20 次。",
+        "当时这些材料都交给合作小组。",
+        "这几年实践中我们走访了 160 多次。",
+        "说话人3: 我们每月走访三十个门店。",
+        "我估计近几年做的实际有 30 多次。",
+    ];
+    assert_eq!(reported_count_pairs(&rows), [(0, 2)]);
+    assert!(reported_count_pairs(&[
+        "说话人2: 我们每周巡视 2 次。",
+        "说话人3: 这几年全都巡视了 90 多次。",
+    ]).is_empty());
+    assert!(reported_count_pairs(&[
+        "说话人2: 我们每周巡视 2 次。",
+        "这几年我们整改了 90 多次。",
+        "我们计划累计巡视 90 多次。",
+    ]).is_empty());
+}
+
 fn reported_scale(text: &str) -> bool {
     static SCALE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:累计|共计|响应了|完成了|实际有)[^。；！？]{0,12}[0-9０-９][0-9０-９.,，]*\s*(?:多|余)?\s*(?:次|例|场|项|人|家)"

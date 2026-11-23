@@ -93,10 +93,11 @@ pub(super) struct Bank {
     priority_review: HashSet<String>,
     reader_priority: HashMap<String, u8>,
     reader_order: HashMap<String, usize>,
+    reported_counts: HashSet<String>,
     execution_reading: HashSet<String>,
     reader_groups: Vec<Vec<String>>,
     linked_procedures: Vec<Vec<String>>,
-    supplemental_operations: HashSet<String>,
+    additional_reader_details: HashSet<String>,
     source_agenda: Option<super::delivery_evidence::OpeningAgenda>,
 }
 impl Bank {
@@ -109,13 +110,15 @@ impl Bank {
     }
 
     fn required_topic(&self, id: &str) -> bool {
-        !self.before_opening.contains(id) && (self.execution_reading.contains(id) || self.priority_review.contains(id))
+        !self.before_opening.contains(id) && (self.execution_reading.contains(id) || self.priority_review.contains(id)
+            || self.reported_counts.contains(id))
     }
 
     fn required_role(&self, fact: &Fact) -> Option<&'static str> {
         match fact.placement {
             Placement::Action => Some("follow-up"),
             Placement::Decision => Some("decision"),
+            Placement::Topic if self.reported_counts.contains(&fact.id) => Some("reported-measurement"),
             Placement::Topic if self.required_topic(&fact.id) => {
                 Some(if self.review_quote(&fact.id) { "source-review" } else { "operating-condition" })
             }
@@ -1355,7 +1358,7 @@ fn build_bank_with_timing(
         (Vec::new(), Vec::new())
     };
     let original_sentences: Vec<_> = sentences.iter().map(|sentence| sentence["text"].as_str().unwrap()).collect();
-    let reader_groups = super::reader_ranking::reported_change_groups(&original_sentences).into_iter()
+    let mut reader_groups = super::reader_ranking::reported_change_groups(&original_sentences).into_iter()
         .filter_map(|sources| {
             sources.into_iter().map(|source| {
                 let anchor = sentences[source]["id"].as_str().unwrap();
@@ -1371,8 +1374,20 @@ fn build_bank_with_timing(
     let literal = |text: &str| canonical_brief::normalized(
         super::source_review::bare(text).trim_end_matches(['。', '，', '！', '；', '.', ' ']),
     );
+    let reported_count_groups = super::reader_ranking::reported_count_pairs(&original_sentences).into_iter()
+        .filter_map(|(left, right)| {
+            [left, right].into_iter().map(|index| {
+                let anchor = sentences[index]["id"].as_str().unwrap();
+                let text = literal(original_sentences[index]);
+                topic_facts.iter().find(|fact| fact.evidence[0] == anchor && matches!(fact.kind, Kind::Status)
+                    && !source_quotes.contains(&fact.id) && !quantity_quotes.contains(&fact.id)
+                    && literal(&fact.text) == text).map(|fact| fact.id.clone())
+            }).collect::<Option<Vec<_>>>()
+        }).collect::<Vec<_>>();
+    let reported_counts = reported_count_groups.iter().flatten().cloned().collect::<HashSet<_>>();
+    reader_groups.extend(reported_count_groups.iter().cloned());
     let mut linked_ids = HashSet::new();
-    let mut supplemental_operations = HashSet::new();
+    let mut additional_reader_details = reported_counts.clone();
     let linked_procedures = super::delivery_evidence::linked_procedures(&sentences, timing.as_ref()).into_iter()
         .map(|sources| (sources, false))
         .chain(super::delivery_evidence::reported_operation_groups(&sentences,timing.as_ref())
@@ -1389,7 +1404,7 @@ fn build_bank_with_timing(
             }).collect::<Option<Vec<_>>>()?;
             if ids.iter().any(|id| linked_ids.contains(id)) { return None; }
             if supplemental {
-                supplemental_operations.extend(ids.iter().filter(|id| !execution_reading.contains(*id)).cloned());
+                additional_reader_details.extend(ids.iter().filter(|id| !execution_reading.contains(*id)).cloned());
             }
             linked_ids.extend(ids.iter().cloned());
             Some(ids)
@@ -1427,9 +1442,10 @@ fn build_bank_with_timing(
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters,"claimSourceReview":verification,"topicFactsBeforeMeetingOpening":background_ids,
         "linkedReaderReportGroups":reader_groups,"linkedReaderProcedureGroups":linked_procedures,
+        "reportedCountGroups":reported_count_groups,
         "independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,reader_groups,linked_procedures,supplemental_operations,source_agenda })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -2162,7 +2178,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         // Charging them to the ordinary budget can hide a previously visible rule.
         required_chars += items.iter().enumerate()
             .filter(|(index, (fact, _))| *index == 0
-                || (bank.required_topic(&fact.id) && !bank.supplemental_operations.contains(&fact.id)))
+                || (bank.required_topic(&fact.id) && !bank.additional_reader_details.contains(&fact.id)))
             .map(|(_, (fact, _))| reader_fact_length(bank, fact)).sum::<usize>();
     }
     let mut optional_chars=1000_usize.saturating_sub(required_chars);
@@ -2401,7 +2417,7 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
                 let row: usize = row.parse().map_err(|_|fail())?;
                 if *section == "details" {
                     reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1);
-                    if bank.supplemental_operations.contains(id) { supplemental_details[topic] += 1; }
+                    if bank.additional_reader_details.contains(id) { supplemental_details[topic] += 1; }
                 }
                 required_visible.push((id, format!("topics[{topic}].{section}[{row}]")));
             }

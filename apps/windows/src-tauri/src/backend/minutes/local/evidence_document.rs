@@ -99,7 +99,8 @@ pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1Me
 // Repair only a surviving reading item. Use the same report check as the
 // paid chapter route and cite the exact clause inside an already cited unit.
 fn restore_reported_period(
-    entry: &mut Value, source: &str, names: &[String], units: &HashMap<&str, &str>, limit: usize,
+    entry: &mut Value, source: &str, names: &[String], units: &HashMap<&str, &str>,
+    visible: &[String], limit: usize,
 ) {
     let addition = (|| {
         let text = entry["text"].as_str()?;
@@ -108,6 +109,7 @@ fn restore_reported_period(
             .map(|row| row["quote"].as_str().map(str::trim))
             .collect::<Option<Vec<_>>>()?;
         let clause = super::super::long_meeting::reported_period_for_summary(source, names, text, &quotes)?;
+        if visible.iter().any(|other| other.contains(clause)) { return None; }
         let new_text = format!("{}。补充原话「{clause}」。", text.trim_end_matches('。'));
         if !canonical_brief::line(&new_text, limit) { return None; }
         let citation = if quotes.iter().any(|quote| quote.contains(clause)) {
@@ -173,6 +175,13 @@ pub(super) fn parse_with_details_limit(
     let mut adjusted_titles = Vec::new();
     let mut visible_detail_kinds = Vec::with_capacity(topics.len());
     for(i,topic)in topics.iter_mut().enumerate(){
+        let visible_text = if let Some(limits) = reader_limits {
+            topic["points"].as_array().into_iter().flatten()
+                .chain(topic["details"].as_array().into_iter().flatten().take(limits[i]))
+                .filter_map(|entry| entry["text"].as_str().map(str::to_owned)).collect::<Vec<_>>()
+        } else {
+            Vec::new()
+        };
         for name in ["points","details"]{
             let entries=topic.get_mut(name).and_then(Value::as_array_mut).ok_or("本地纪要返回结构不完整。")?;
             if name=="details" {
@@ -193,7 +202,7 @@ pub(super) fn parse_with_details_limit(
                     if name == "details"
                         && matches!(visible_detail_kinds[i].get(j), Some(Some(canonical_brief::Kind::Status)))
                     {
-                        restore_reported_period(entry, &session.transcript_text, names, &known, 120);
+                        restore_reported_period(entry, &session.transcript_text, names, &known, &visible_text, 120);
                     }
                 }
                 bind(entry, format!("topics[{i}].{name}[{j}]"))?;
