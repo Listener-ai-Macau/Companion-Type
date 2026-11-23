@@ -106,6 +106,7 @@ pub(super) struct Bank {
     additional_reader_details: HashSet<String>,
     source_agenda: Option<super::delivery_evidence::OpeningAgenda>,
     reader_recap_estimates: HashSet<String>,
+    reader_conversation_close: Option<BoundReaderClose>,
 }
 impl Bank {
     fn review_quote(&self, id: &str) -> bool {
@@ -1484,7 +1485,7 @@ fn build_bank_with_timing(
         "reportedCountGroups":reported_count_groups,
         "independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,reader_background,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,linked_proposals,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda,reader_recap_estimates:HashSet::new() })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,reader_background,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),reported_counts,linked_proposals,execution_reading,reader_groups,linked_procedures,additional_reader_details,source_agenda,reader_recap_estimates:HashSet::new(),reader_conversation_close:None })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -1639,6 +1640,33 @@ fn recap_reader_choices(
     protected
 }
 
+struct BoundReaderClose {
+    plan: String,
+    support: Vec<String>,
+    timing: HashSet<String>,
+    alternatives: HashSet<String>,
+}
+
+fn bind_reader_close(bank: &Bank, source: &str) -> Option<BoundReaderClose> {
+    let sentences=factual_audit::evidence_sentences(&source_units(source));
+    let plan=super::conversational_close::confirmed_plan(&sentences)?;
+    let topics=bank.topics().filter(|fact| !bank.review_quote(&fact.id)).collect::<Vec<_>>();
+    let fact_id = |index:usize| {
+        let row=&sentences[index];
+        let id=row["id"].as_str()?;
+        let text=reader_literal(row["text"].as_str()?);
+        topics.iter().find(|fact| {
+            fact.evidence[0]==id && reader_literal(&fact.text)==text
+        }).map(|fact| fact.id.clone())
+    };
+    Some(BoundReaderClose {
+        plan:fact_id(plan.index)?,
+        support:plan.support.iter().filter_map(|&index|sentences[index]["id"].as_str().map(str::to_owned)).collect(),
+        timing:plan.timing.into_iter().filter_map(fact_id).collect(),
+        alternatives:plan.earlier_alternatives.into_iter().filter_map(fact_id).collect(),
+    })
+}
+
 pub(super) fn review_chapters(
     bank: &mut Bank, compact: Option<&str>, source: &str,
     mut ask: impl FnMut(&'static str, Value, Value, &str) -> Result<String, String>,
@@ -1770,6 +1798,13 @@ pub(super) fn review_chapters(
             bank.reader_groups.push(vec![first.clone(), id]);
         }
         bank.reader_recap_estimates.extend(estimates);
+    }
+    if let Some(close)=bind_reader_close(bank,source) {
+        let keep=std::iter::once(&close.plan).chain(&close.timing);
+        bank.execution_reading.extend(keep.clone().cloned());
+        bank.additional_reader_details.extend(keep.cloned());
+        bank.reader_priority.insert(close.plan.clone(),5);
+        bank.reader_conversation_close=Some(close);
     }
     bank.receipt["chapterReaderCoverage"] = json!(reviewed_counts);
     bank.receipt["chapterExecutionReview"] = json!(execution_review);
@@ -2634,6 +2669,23 @@ fn assemble_with_context(
                 entry.insert("text".into(),json!(format!("前期讨论估计：{}",super::source_review::bare(text))));
             }
         }
+        if let Some(close)=&bank.reader_conversation_close {
+            let framing=if &close.plan==id {
+                evidence_ids.extend(close.support.iter().map(String::as_str));
+                Some("会末确认的顺序")
+            } else if close.timing.contains(id) {
+                Some("讨论中提到的时段")
+            } else if close.alternatives.contains(id) {
+                Some("先前讨论的另一种安排")
+            } else {
+                None
+            };
+            if let Some((label,text))=framing.zip(entry.get("text").and_then(Value::as_str)) {
+                let text=format!("{label}：{}",super::source_review::bare(text));
+                let limit=if entry.contains_key("kind") {90} else {120};
+                if canonical_brief::line(&text,limit) { entry.insert("text".into(),json!(text)); }
+            }
+        }
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
@@ -2881,6 +2933,16 @@ fn assemble_with_context(
             let ids = handoff.citations.iter().map(|&pos| &sentences[pos]["id"]).collect::<Vec<_>>();
             json!({"path":path,"sourceIds":ids,"owner":handoff.item.owner,"due":handoff.item.due})
         }).collect::<Vec<_>>());
+    }
+    if let Some(close)=&bank.reader_conversation_close {
+        let mut timing=close.timing.iter().collect::<Vec<_>>();
+        let mut alternatives=close.alternatives.iter().collect::<Vec<_>>();
+        timing.sort_unstable();
+        alternatives.sort_unstable();
+        parsed.receipt["readerConversationalClose"]=json!({
+            "planFactId":close.plan,"acceptanceSources":close.support,
+            "timingFactIds":timing,"earlierAlternativeFactIds":alternatives
+        });
     }
     parsed.receipt["requiredReaderFactIds"] = json!(required_visible.iter().map(|(id, _)| id).collect::<Vec<_>>());
     parsed.receipt["visibleSourceRequirements"] = json!(visible_requirements);
