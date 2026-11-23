@@ -4,10 +4,32 @@ use std::{io::{BufRead,BufReader,Read},sync::{Arc,Mutex,atomic::{AtomicBool,Orde
 use reqwest::blocking::Client;
 use serde_json::{json,Value};
 
-// The fact bank can contain more independent records than the old prose brief.
-// Input + output is still measured against the same fixed16384-token context;
-// no clipping or larger KV allocation is permitted to make a request fit.
+// Bound an entire request against the context actually allocated by the engine.
+// The CPU normally starts with a smaller KV cache. The full profile stays
+// available for requests whose exact token counts exceed that allocation.
 pub(super) const MAX_NEW_TOKENS:usize=6144;
+pub(super) const CONTEXT_LIMIT: &str = "本场文字超出本地模型容量，未截断转写，已有内容保留。";
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub(super) enum Context { ReducedCpu, Full }
+
+impl Context {
+    pub(super) fn tokens(self) -> usize {
+        match self { Self::ReducedCpu => 8192, Self::Full => 16384 }
+    }
+
+    pub(super) fn layout_output(self) -> usize {
+        match self { Self::ReducedCpu => 1536, Self::Full => 3072 }
+    }
+
+    fn fits(self, input: usize, output: usize) -> bool {
+        input <= 12288 && input.saturating_add(output) <= self.tokens()
+    }
+
+    pub(super) fn retry_full(self, reason: &str) -> bool {
+        self == Self::ReducedCpu && reason == CONTEXT_LIMIT
+    }
+}
 // Keep at least2048 answer tokens inside the unchanged total-output/context cap.
 // The1024-token pilot exhausted its reasoning budget on every completed stage;
 // counting its answer with the official tokenizer proved a forced stop rather
@@ -61,7 +83,7 @@ pub(super) fn use_vulkan_schema(body: &mut Value) {
     body["response_format"] = json!({"type":"json_schema","json_schema":{"schema":schema}});
 }
 
-pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,schema:Value,stop:&AtomicBool,trace:&Trace,max_output_tokens:usize)->Result<String,String>{
+pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,schema:Value,stop:&AtomicBool,trace:&Trace,context:Context,max_output_tokens:usize)->Result<String,String>{
     let address=format!("http://127.0.0.1:{port}");
     let client=Client::builder().no_proxy().redirect(reqwest::redirect::Policy::none()).connect_timeout(Duration::from_secs(2))
         .timeout(Duration::from_secs(900)).build().map_err(|_|error())?;
@@ -85,7 +107,12 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     let rendered=rendered["prompt"].as_str().ok_or_else(error)?;
     let tokenized=post(&client,&address,key,"/tokenize",&json!({"content":rendered,"add_special":false,"parse_special":true}),stop)?;
     let tokens=tokenized["tokens"].as_array().ok_or_else(error)?.len();
-    if tokens>12288||tokens+max_output_tokens>16384{return Err("本场文字超出本地模型容量，未截断转写，已有内容保留。".into());}
+    if !context.fits(tokens, max_output_tokens) {
+        if let Ok(mut trace) = trace.lock() {
+            trace["contextLimit"] = json!({"inputTokens":tokens,"outputLimit":max_output_tokens,"contextTokens":context.tokens()});
+        }
+        return Err(CONTEXT_LIMIT.into());
+    }
     if let Ok(mut trace)=trace.lock(){trace["generationProfile"]=profile;}
     let wire=super::evidence_document::wire(&body);
     if let Ok(mut trace)=trace.lock(){
@@ -120,9 +147,29 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
         }
     }
     if let Ok(mut trace)=trace.lock(){trace["output"]=json!(text);trace["reasoningCharacters"]=json!(reasoning_characters);trace["finishReason"]=json!(finish);trace["usage"]=json!(usage);trace["generationSeconds"]=json!(generated.elapsed().as_secs_f64());}
+    if done && finish.as_deref()==Some("length")
+        && context == Context::ReducedCpu && max_output_tokens == context.layout_output() {
+        return Err(CONTEXT_LIMIT.into());
+    }
     if !done||finish.as_deref()!=Some("stop")||text.trim().is_empty(){return Err("本地纪要返回不完整，未发布为完成结果。".into());}
     let usage=usage.ok_or_else(error)?;
     let measured=usage["prompt_tokens"].as_u64().ok_or_else(error)?as usize;
     if measured.abs_diff(tokens)>1{return Err("本地纪要输入核对不一致，已有内容保留。".into());}
     Ok(text)
+}
+
+#[cfg(test)]
+#[test]
+fn cpu_context_saves_layout_capacity_without_accepting_an_oversize_request() {
+    // Longest recorded compact request once tokenized, with its old output cap.
+    let cpu = Context::ReducedCpu;
+    assert!(cpu.fits(6453,cpu.layout_output()));
+    assert!(!cpu.fits(6453,Context::Full.layout_output()));
+    assert!(Context::Full.fits(6453,Context::Full.layout_output()));
+    assert!(cpu.fits(6656,cpu.layout_output()));
+    assert!(!cpu.fits(6657,cpu.layout_output()));
+    assert!(!Context::Full.fits(12289,1));
+    assert!(cpu.retry_full(CONTEXT_LIMIT));
+    assert!(!Context::Full.retry_full(CONTEXT_LIMIT));
+    assert!(!cpu.retry_full("可用内存不足"));
 }
