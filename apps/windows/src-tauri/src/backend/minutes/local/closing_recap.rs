@@ -293,7 +293,11 @@ pub(super) fn direct_assignments(sentences: &[Value]) -> Vec<RecapHandoff> {
         matches!(words, "好的" | "没问题" | "收到" | "没有问题")
             || words.chars().all(|c| "嗯啊好哦呃对是行，。 ".contains(c))
     };
-    let turn = |index: usize| split_turn_label(sentences.get(index)?["text"].as_str()?);
+    let turn = |index: usize| {
+        let line = sentences.get(index)?["text"].as_str()?.trim();
+        let (speaker, words) = split_turn_label(line)?;
+        Some((speaker, words.trim()))
+    };
     let end = (sentences.len().saturating_sub(18)..sentences.len()).rev().find_map(|pos| {
         let (lead, words) = turn(pos)?;
         let terminal = words.trim_end_matches(['。', '！', '，', ' ', '啊', '嗯']);
@@ -407,7 +411,10 @@ mod tests {
     use serde_json::Value;
 
     fn transcript_rows(lines: &[&str]) -> Vec<Value> {
-        lines.iter().map(|text| serde_json::json!({"text":text})).collect()
+        use crate::backend::minutes::{canonical_brief::source_units, automatic_brief::factual_audit::evidence_sentences};
+
+        let source = format!("{}\n", lines.join("\n"));
+        evidence_sentences(&source_units(&source))
     }
 
     #[test]
@@ -428,6 +435,25 @@ mod tests {
         assert_eq!(tasks[1].item.owner.as_deref(), Some("销售"));
         assert_eq!(tasks[1].item.text, "跟学校联系一下儿");
         assert!(tasks.iter().all(|handoff| handoff.item.due.is_none()));
+    }
+
+    #[test]
+    #[ignore = "uses a SHA-bound public transcript from the Windows acceptance run"]
+    fn direct_closing_assignments_from_a_saved_transcript() {
+        use crate::backend::minutes::{canonical_brief::source_units, automatic_brief::factual_audit::evidence_sentences};
+        use sha2::{Digest, Sha256};
+
+        let path = std::env::var_os("COMPANION_TEST_CLOSING_TRANSCRIPT_PATH").expect("supply the frozen input");
+        let expected = std::env::var("COMPANION_TEST_CLOSING_TRANSCRIPT_SHA").expect("supply the frozen digest");
+        let source = std::fs::read_to_string(path).expect("read the frozen transcript");
+        assert_eq!(format!("{:x}", Sha256::digest(source.as_bytes())), expected);
+        let assignments = direct_assignments(&evidence_sentences(&source_units(&source)));
+        assert_eq!(assignments.len(), 2);
+        assert_eq!(assignments[0].item.owner.as_deref(), Some("设计部门"));
+        assert!(assignments[0].item.text.contains("设计") && assignments[0].item.text.contains("主抓"));
+        assert_eq!(assignments[1].item.owner.as_deref(), Some("销售"));
+        assert!(assignments[1].item.text.contains("跟学校联系"));
+        assert!(assignments.iter().all(|item| item.item.due.is_none()));
     }
 
     #[test]
