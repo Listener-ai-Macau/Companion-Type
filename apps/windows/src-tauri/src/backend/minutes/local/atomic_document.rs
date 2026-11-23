@@ -2152,6 +2152,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let mut points=Vec::new();
         let mut required=Vec::new();
         let mut highlights=Vec::new();
+        let mut leading_proposal_sources = [None; 2];
         let mut review=Vec::new();
         let mut prompts=Vec::new();
         let mut remainder=Vec::new();
@@ -2164,6 +2165,11 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             }else if main && points.len()<3 && size<=optional_chars && useful_reader_point(fact){
                 optional_chars-=size;points.push([&fact.id]);
             }else if main && useful_reader_point(fact){
+                if let Some(anchor) = leading_proposal_sources.get_mut(highlights.len()) {
+                    if matches!(fact.kind, Kind::Recommendation) {
+                        *anchor = Some(fact.evidence.as_slice());
+                    }
+                }
                 highlights.push([&fact.id]);
             }else if focus.is_some() && conversational_prompt(fact) {
                 prompts.push([&fact.id]);
@@ -2175,14 +2181,23 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
                 prompts.push([&fact.id]);
             }
         }
-        // Keep a source-backed uncertainty visible even when a chapter has
-        // more interesting highlights than the reading layer can display.
+        // Keep the selected proposal and its source-linked detail together
+        // in the existing reading budget. Required details still come first.
+        let linked_proposal = match leading_proposal_sources {
+            [Some(first), Some(second)] => first != second
+                && first.iter().any(|anchor| second.contains(anchor)),
+            _ => false,
+        };
         review.sort_by_key(|[id]| !bank.priority_review.contains(*id));
         let mut review=review.into_iter();
+        let mut highlights=highlights.into_iter();
         required.sort_by_key(|[id]| procedure_order.get(id.as_str()));
         let mut details=required;
+        if linked_proposal {
+            details.extend(highlights.by_ref().take(2));
+        }
         details.extend(review.by_ref().take(1));
-        details.extend(highlights.into_iter().chain(review).chain(remainder).chain(prompts));
+        details.extend(highlights.chain(review).chain(remainder).chain(prompts));
         arranged.push(json!({"title":title,"points":points,"details":details}));
     }
     if !topics.is_empty(){return Err(fail());}
