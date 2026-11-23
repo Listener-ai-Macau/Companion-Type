@@ -1416,6 +1416,8 @@ fn build_bank_with_timing(
             .into_iter().map(|sources| (sources, true)))
         .chain(super::delivery_evidence::delivery_access_groups(&sentences,timing.as_ref())
             .into_iter().map(|sources| (sources, true)))
+        .chain(super::delivery_evidence::advance_delivery_groups(&sentences,timing.as_ref())
+            .into_iter().map(|sources| (sources, true)))
         .filter_map(|(sources, supplemental)| {
             let ids = sources.into_iter().map(|index| {
                 let anchor = sentences[index]["id"].as_str().unwrap();

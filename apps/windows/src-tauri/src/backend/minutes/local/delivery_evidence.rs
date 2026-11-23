@@ -367,6 +367,78 @@ fn delivery_access_is_linked_only_to_a_usable_channel_from_the_same_account() {
     assert!(delivery_access_groups(&rows, None).is_empty());
 }
 
+/// Keep a stated preparation cutoff with the material and recipient it
+/// concerns, even if the explanation spans a chapter or a speaker takes over.
+pub(super) fn advance_delivery_groups(
+    sentences: &[Value], timing: Option<&super::timed_evidence::Timing<'_>>,
+) -> Vec<Vec<usize>> {
+    static TOO_LATE: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"等(?:到)?[^，。！？；]{1,28}(?:再|才)[^，。！？；]{0,12}(?:发|给|交|送|传|通知)",
+        r"[^，。！？；]{0,18}(?:来不及|赶不上|太晚)"
+    )).expect("waiting until the stated trigger would miss delivery"));
+    let words = |i: usize| body(sentences[i]["text"].as_str().expect("source sentence"));
+    let changed_subject = |row: &str| {
+        super::source_context::question_only(row)
+            || has(row, &["下一项", "下一个问题", "换个话题", "另一个问题", "接下来讨论", "补充另一个"])
+    };
+    let unconfirmed = |row: &str| has(row, &["举例", "假设", "假如", "建议", "尚未确定", "取消", "不再",
+        "没有必要提前", "不需要提前", "并非必须", "不用提前", "不一定要提前", "不至于来不及"]);
+    sentences.iter().enumerate().filter_map(|(index, _)| {
+        let cutoff = words(index);
+        if changed_subject(cutoff) || unconfirmed(cutoff) || !TOO_LATE.is_match(cutoff)
+            || !has(cutoff, &["必须提前准", "需要提前准", "务必提前准", "一定要提前准",
+                "必须提前备", "必须事先准", "务必事先准", "需要事先准"])
+        {
+            return None;
+        }
+        let follow = index + 1;
+        let speaker = speaker_at(sentences, index)?;
+        if follow >= sentences.len() || speaker_at(sentences, follow) != Some(speaker)
+            || timing.is_some_and(|time| !time.speech_gap_within(index, follow, 2_500))
+        {
+            return None;
+        }
+        let explanation = words(follow);
+        if changed_subject(explanation) || unconfirmed(explanation)
+            || !has(explanation, &["什么时候", "什么时间", "何时", "时机"])
+            || !has(explanation, &["传递给", "发给", "交给", "传给", "送给", "通知"])
+        {
+            return None;
+        }
+        let material = ["信息", "通知", "文件", "资料", "名单", "指引", "物料", "报告", "记录", "清单"]
+            .into_iter().find(|material| explanation.contains(material))?;
+        let recipient = (index.saturating_sub(4)..index).rev()
+            .take_while(|&i| !changed_subject(words(i))
+                && timing.is_none_or(|time| time.speech_gap_within(i, i + 1, 2_500)))
+            .find(|&i| {
+                let row = words(i);
+                !unconfirmed(row) && row.contains(material)
+                    && has(row, &["发给", "交给", "给到", "送给", "传给", "提供给", "通知"])
+                    && has(row, &["团队", "部门", "客户", "用户", "人员", "学生", "住户", "司机", "工位", "岗位"])
+            })?;
+        Some(vec![recipient, index, follow])
+    }).collect()
+}
+
+#[cfg(test)]
+#[test]
+fn the_preparation_cutoff_requires_scoped_delivery_and_continuing_explanation() {
+    let mut rows = [
+        "说话人1: 最新的行车通知最终要交给各区司机。",
+        "说话人2: 等他们出车的时候再发就来不及了，必须提前准备。",
+        "所以我们要知道什么时候有变动，才能把最新通知传给他们。",
+    ].into_iter().map(|text| serde_json::json!({"text":text})).collect::<Vec<_>>();
+    assert_eq!(advance_delivery_groups(&rows, None), [vec![0, 1, 2]]);
+    rows[2]["text"] = serde_json::json!("说话人3: 所以我们要知道什么时候有变动，才能把最新通知传给他们。");
+    assert!(advance_delivery_groups(&rows, None).is_empty());
+    rows[2]["text"] = serde_json::json!("所以我们要知道什么时候有变动，才能把最新通知传给他们。");
+    rows[1]["text"] = serde_json::json!("说话人2: 等他们出车的时候再发不至于来不及，并非必须提前准备。");
+    assert!(advance_delivery_groups(&rows, None).is_empty());
+    rows[1]["text"] = serde_json::json!("说话人2: 等他们出车的时候再发就来不及了，必须提前准备。");
+    rows[0]["text"] = serde_json::json!("说话人1: 下一个问题，最新行车通知要交给各区司机。");
+    assert!(advance_delivery_groups(&rows, None).is_empty());
+}
+
 pub(super) fn execution_passage(original: &str) -> Option<&str> {
     static THRESHOLD: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:[0-9零一二两三四五六七八九十]{1,4}月|(?:超过|不超过|不少于|不低于|至少)[0-9零一二两三四五六七八九十]{1,5}(?:天|日|小时|班|分钟)|百分之)"
