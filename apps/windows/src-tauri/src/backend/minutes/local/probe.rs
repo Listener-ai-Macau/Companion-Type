@@ -150,7 +150,7 @@ mod tests{
 
     fn replay_reply(
         calls: &[Value], stage: &str, prompt: &str, input: Value, schema: Value,
-        tokens: usize, profile: &Value,
+        tokens: usize, profile: &Value, vulkan: bool,
     ) -> Result<String, String> {
         use super::super::transport;
         let Some(call) = calls.iter().find(|call| call["stage"] == stage) else {
@@ -158,7 +158,9 @@ mod tests{
         };
         let alias = call["request"]["model"].as_str().unwrap();
         let mut expected = transport::request_body(alias, prompt, input, schema, tokens, profile)?;
-        transport::use_vulkan_schema(&mut expected);
+        if vulkan {
+            transport::use_vulkan_schema(&mut expected);
+        }
         assert_eq!(call["request"], expected, "saved request changed at {stage}");
         call["output"].as_str().filter(|_| call["finishReason"] == "stop").map(str::to_owned)
             .ok_or_else(|| format!("no complete saved response for {stage}"))
@@ -183,7 +185,12 @@ mod tests{
             for (key,run) in runs {
                 if !selected.is_empty() && !selected.contains(&key.as_str()) { continue; }
                 if run.get("exit").is_some_and(|exit| exit != 0) { continue; }
-                assert!(run["backend"]=="vulkan" && run["engineReleased"]==true);
+                let vulkan = match run["backend"].as_str() {
+                    Some("vulkan") => true,
+                    Some("cpu") => false,
+                    other => panic!("{key} has unsupported archived backend {other:?}"),
+                };
+                assert_eq!(run["engineReleased"], true);
                 let input:Input=serde_json::from_slice(&fs::read(from.join(format!("{key}-input.json"))).unwrap()).unwrap();
                 let bytes=fs::read(input.source_file).unwrap();
                 assert_eq!(format!("{:x}",Sha256::digest(&bytes)),input.expected_file_sha256);
@@ -193,10 +200,21 @@ mod tests{
                 let path=from.join(key).join("completed.json");
                 let raw=fs::read(&path).unwrap();
                 let original:Value=serde_json::from_slice(&raw).unwrap();
-                let calls=original["receipt"]["calls"].as_array().unwrap();
+                let receipt = &original["receipt"];
+                assert_eq!(receipt["backend"], run["backend"]);
+                assert_eq!(receipt["serviceReleaseConfirmed"], true);
+                let calls=receipt["calls"].as_array().unwrap();
+                let context = match (vulkan, receipt["contextTokens"].as_u64()) {
+                    (false, Some(8192)) => transport::Context::ReducedCpu,
+                    (_, Some(16384)) | (true, None) => transport::Context::Full,
+                    (_, other) => panic!("{key} has unsupported archived context {other:?}"),
+                };
+                let reply = |stage: &str, prompt: &str, input, schema, tokens| {
+                    replay_reply(calls, stage, prompt, input, schema, tokens, &profile, vulkan)
+                };
                 let original_sha=format!("{:x}",Sha256::digest(&raw));
                 let checkpoint:CheckpointInput=serde_json::from_value(json!({"path":path,"sha256":original_sha})).unwrap();
-                let prefix=CheckedSourcePrefix::load(&checkpoint,&text,&sha,input.duration_ms,true).unwrap();
+                let prefix=CheckedSourcePrefix::load(&checkpoint,&text,&sha,input.duration_ms,vulkan).unwrap();
                 let windows=source_windows::SourceWindows::new(&text).unwrap();
                 assert_eq!(prefix.len(),windows.len());
                 let mut facts=Vec::new();
@@ -210,7 +228,7 @@ mod tests{
                             excerpts += 1;
                             let stage = format!("source-excerpt-{}", index + 1);
                             assert!(calls.iter().any(|call| call["stage"] == stage), "{key} missing {stage}");
-                            replay_reply(calls, &stage, source_windows::EXCERPT_PROMPT, input, schema, 768, &profile).ok()
+                            reply(&stage, source_windows::EXCERPT_PROMPT, input, schema, 768).ok()
                         } else { None };
                         windows.finish_deferred(&mut checked, reply.as_deref());
                     }
@@ -218,7 +236,7 @@ mod tests{
                 }
                 let review = if calls.iter().any(|call| call["stage"].as_str().unwrap_or("").starts_with("independent-source-review-")) {
                     source_review::review(&text, |prompt, input, schema, stage| {
-                        replay_reply(calls, stage, prompt, input, schema, 640, &profile)
+                        reply(stage, prompt, input, schema, 640)
                     }).unwrap()
                 } else { source_review::Review::default() };
                 let mut session=session(text.clone(),&input.title,input.duration_ms).unwrap();
@@ -230,12 +248,12 @@ mod tests{
                 if original_seals.is_array() {
                     assert_eq!(&bank.receipt["seals"], original_seals, "{key} replay changed extracted facts");
                 }
-                let core = replay_reply(calls, "compact-core-organization", atomic_document::layout_prompt(&bank),
-                    atomic_document::layout_input(&bank), atomic_document::layout_schema(&bank).unwrap(), 3072, &profile).unwrap();
+                let core = reply("compact-core-organization", atomic_document::layout_prompt(&bank),
+                    atomic_document::layout_input(&bank), atomic_document::layout_schema(&bank).unwrap(), context.layout_output()).unwrap();
                 let mut chapter_requests = 0;
                 let raw=atomic_document::review_chapters(&mut bank,Some(&core),&text,|prompt,input,schema,stage| {
                     chapter_requests += 1;
-                    replay_reply(calls, stage, prompt, input, schema, 768, &profile)
+                    reply(stage, prompt, input, schema, 768)
                 }).unwrap();
                 assert_eq!(chapter_requests, calls.iter().filter(|call| {
                     call["stage"].as_str().unwrap_or("").starts_with("chapter-review-")
@@ -245,12 +263,18 @@ mod tests{
                 let result=output.join(key);
                 fs::create_dir(&result).unwrap();
                 fs::write(result.join("candidate.txt"),&rendered.minutes.markdown).unwrap();
-                save_new(&result.join("replay.json"),&json!({
-                    "mode":"deterministic-reader-replay-of-real-gpu-replies",
-                    "originalGpuReceipt":path,"originalGpuReceiptSha":original_sha,
+                let mut replay = json!({
+                    "mode": if vulkan { "deterministic-reader-replay-of-real-gpu-replies" }
+                        else { "deterministic-reader-replay-of-real-cpu-replies" },
+                    "originalReceipt":path,"originalReceiptSha":original_sha,"backend":run["backend"],
                     "sourceFileSha256":input.expected_file_sha256,"exactChapterRequestsVerified":true,
                     "newModelCalls":0,"documentReceipt":rendered.receipt
-                })).unwrap();
+                });
+                if vulkan {
+                    replay["originalGpuReceipt"] = json!(path);
+                    replay["originalGpuReceiptSha"] = json!(original_sha);
+                }
+                save_new(&result.join("replay.json"),&replay).unwrap();
                 replayed += 1;
             }
         }
