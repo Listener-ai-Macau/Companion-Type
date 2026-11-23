@@ -149,6 +149,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 trace["contextTokens"]=json!(context.tokens());
                 trace["contextLimit"]=Value::Null;
                 trace["reusedIndependentSourceReviewBatches"]=json!(0);
+                trace["reusedOrganizationRequests"]=json!(0);
             }
             super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),accelerator.is_some(),|stop|{
             let mut facts=Vec::new();
@@ -239,13 +240,25 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             let mut bank=atomic_document::build_session_bank(facts,session,review)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
             let layout=if atomic_document::has_chapters(&bank) {
-                let core=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,context,context.layout_output())?;
-                record_call(&trace,"compact-core-organization");
-                atomic_document::review_chapters(&mut bank,Some(&core),&session.transcript_text,|prompt,input,schema,stage| {
-                    let result=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,768)?;
+                let mut saved = reused.organization(context);
+                let mut ask = |prompt, input, schema, stage: &str, tokens| {
+                    if let Some((call, raw)) = saved.next(stage, prompt, &input, &schema, tokens) {
+                        if let Ok(mut trace) = trace.lock() {
+                            if !trace["calls"].is_array() { trace["calls"] = json!([]); }
+                            trace["calls"].as_array_mut().unwrap().push(call);
+                            let count = trace["reusedOrganizationRequests"].as_u64().unwrap_or(0);
+                            trace["reusedOrganizationRequests"] = json!(count + 1);
+                        }
+                        return Ok(raw);
+                    }
+                    let raw = transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace,context,tokens)?;
                     record_call(&trace,stage);
-                    Ok(result)
-                })?
+                    Ok(raw)
+                };
+                let core = ask(atomic_document::layout_prompt(&bank), atomic_document::layout_input(&bank),
+                    atomic_document::layout_schema(&bank)?, "compact-core-organization", context.layout_output())?;
+                atomic_document::review_chapters(&mut bank,Some(&core),&session.transcript_text,
+                    |prompt,input,schema,stage| ask(prompt,input,schema,stage,768))?
             } else {
                 let result=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,context,context.layout_output())?;
                 record_call(&trace,"id-only-organization");

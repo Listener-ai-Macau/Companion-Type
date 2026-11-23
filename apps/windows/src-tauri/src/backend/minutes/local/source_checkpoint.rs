@@ -16,6 +16,8 @@ pub(super) struct CheckpointInput {
     reuse_independent_source_review: bool,
     #[serde(default)]
     use_vulkan_source_windows_on_cpu: bool,
+    #[serde(default)]
+    reuse_organization: bool,
 }
 
 #[derive(Clone, Copy)]
@@ -31,10 +33,43 @@ struct CheckedSourceReview {
     calls: Vec<Value>,
 }
 
+pub(super) struct OrganizationPrefix<'a> {
+    calls: std::slice::Iter<'a, Value>,
+}
+
+impl OrganizationPrefix<'_> {
+    pub(super) fn next(
+        &mut self, stage: &str, prompt: &str, input: &Value, schema: &Value, tokens: usize,
+    ) -> Option<(Value, String)> {
+        let result = self.calls.next().and_then(|call| {
+            if call["stage"] != stage || call["finishReason"] != "stop" {
+                return None;
+            }
+            let request = &call["request"];
+            let alias = request["model"].as_str()?;
+            let profile = transport::profile().ok()?;
+            let expected = transport::request_body(alias, prompt, input.clone(), schema.clone(), tokens, &profile).ok()?;
+            if *request != expected {
+                return None;
+            }
+            let raw = call["output"].as_str()?.to_owned();
+            let mut replay = call.clone();
+            replay["reused"] = Value::Bool(true);
+            Some((replay, raw))
+        });
+        if result.is_none() {
+            // Later chapter replies depend on the current organization prefix.
+            self.calls = [].iter();
+        }
+        result
+    }
+}
+
 #[derive(Default)]
 pub(super) struct CheckedSourcePrefix {
     windows: Vec<(SourceEncoding, Option<Value>)>,
     independent_source_review: Option<CheckedSourceReview>,
+    organization: Vec<Value>,
     vulkan_source_on_cpu: bool,
 }
 
@@ -82,6 +117,21 @@ impl CheckedSourcePrefix {
         )?;
         if cross_backend && checked.len() != SourceWindows::new(source)?.len() {
             return Err(failure());
+        }
+        if input.reuse_organization {
+            if vulkan || trace["backend"] != "cpu"
+                || checked.independent_source_review.as_ref().is_none_or(|review| review.complete.is_none())
+            {
+                return Err(failure());
+            }
+            let calls = trace["calls"].as_array().ok_or_else(failure)?;
+            if let Some(start) = calls.iter().position(|call| call["stage"] == "compact-core-organization") {
+                checked.organization = calls[start..].iter().take_while(|call| {
+                    (call["stage"] == "compact-core-organization"
+                        || call["stage"].as_str().is_some_and(|stage| stage.starts_with("chapter-review-")))
+                        && call["finishReason"] == "stop"
+                }).cloned().collect();
+            }
         }
         checked.vulkan_source_on_cpu = cross_backend;
         Ok(checked)
@@ -205,7 +255,7 @@ impl CheckedSourcePrefix {
         } else {
             None
         };
-        Ok(Self { windows: prefix, independent_source_review, vulkan_source_on_cpu: false })
+        Ok(Self { windows: prefix, independent_source_review, ..Self::default() })
     }
 
     pub(super) fn len(&self) -> usize { self.windows.len() }
@@ -228,6 +278,11 @@ impl CheckedSourcePrefix {
         self.independent_source_review.as_ref()
             .filter(|checked| checked.context_tokens == context.tokens())
             .map_or(&[], |checked| checked.calls.as_slice())
+    }
+
+    pub(super) fn organization(&self, context: transport::Context) -> OrganizationPrefix<'_> {
+        let calls = if self.independent_source_review(context).is_some() { &self.organization[..] } else { &[] };
+        OrganizationPrefix { calls: calls.iter() }
     }
 
     #[cfg(test)]
@@ -308,6 +363,38 @@ mod tests {
         assert!(CheckedSourcePrefix::from_runtime_report(
             &report, &source, &hash, duration, ArchiveRuntime::CpuWithVulkanSource, true,
         ).is_err());
+    }
+
+    #[test]
+    fn the_interrupted_whole_meeting_can_replay_its_exact_completed_organization() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_INTERRUPTED_MINUTES_ORGANIZATION") else { return; };
+        let bytes = std::fs::read(&path).unwrap();
+        let report: Value = serde_json::from_slice(&bytes).unwrap();
+        let source = std::fs::read_to_string(report["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let hash = format!("{:x}", Sha256::digest(source.as_bytes()));
+        let input: CheckpointInput = serde_json::from_value(serde_json::json!({
+            "path": PathBuf::from(&path), "sha256": format!("{:x}", Sha256::digest(&bytes)),
+            "useVulkanSourceWindowsOnCpu": true, "reuseIndependentSourceReview": true, "reuseOrganization": true
+        })).unwrap();
+        let checked = CheckedSourcePrefix::load(&input, &source, &hash, report["durationMs"].as_u64().unwrap(), false).unwrap();
+        assert_eq!(checked.independent_source_review(transport::Context::ReducedCpu).unwrap().1.len(), 10);
+        let [saved] = checked.organization.as_slice() else { panic!("expected exactly one completed organization stage"); };
+        let request = &saved["request"];
+        let stage = "compact-core-organization";
+        let prompt = request["messages"][0]["content"].as_str().unwrap();
+        let previous_input: Value = serde_json::from_str(request["messages"][1]["content"].as_str().unwrap()).unwrap();
+        let schema = &request["response_format"]["schema"];
+        let tokens = transport::Context::ReducedCpu.layout_output();
+        let (replay, raw) = checked.organization(transport::Context::ReducedCpu)
+            .next(stage, prompt, &previous_input, schema, tokens).unwrap();
+        assert_eq!(replay["reused"], true);
+        assert_eq!(saved["output"], raw);
+        let mut different = checked.organization(transport::Context::ReducedCpu);
+        assert!(different.next(stage, "different prompt", &previous_input, schema, tokens).is_none());
+        assert!(different.next(stage, prompt, &previous_input, schema, tokens).is_none());
+        assert!(checked.organization(transport::Context::Full)
+            .next(stage, prompt, &previous_input, schema, tokens).is_none());
     }
 
     #[test]
