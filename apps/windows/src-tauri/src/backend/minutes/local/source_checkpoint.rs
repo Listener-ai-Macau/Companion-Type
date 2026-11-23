@@ -14,6 +14,8 @@ pub(super) struct CheckpointInput {
     sha256: String,
     #[serde(default)]
     reuse_independent_source_review: bool,
+    #[serde(default)]
+    use_vulkan_source_windows_on_cpu: bool,
 }
 
 struct CheckedSourceReview {
@@ -26,6 +28,7 @@ struct CheckedSourceReview {
 pub(super) struct CheckedSourcePrefix {
     windows: Vec<(SourceEncoding, Option<Value>)>,
     independent_source_review: Option<CheckedSourceReview>,
+    vulkan_source_on_cpu: bool,
 }
 
 fn failure() -> String {
@@ -42,9 +45,24 @@ impl CheckedSourcePrefix {
             return Err(failure());
         }
         let report: Value = serde_json::from_slice(&bytes).map_err(|_| failure())?;
-        Self::from_runtime_report(
-            &report, source, source_sha256, duration_ms, vulkan, input.reuse_independent_source_review,
-        )
+        let cross_backend = input.use_vulkan_source_windows_on_cpu;
+        if cross_backend && (vulkan || input.reuse_independent_source_review
+            || report["state"] != "native-candidate-engineer-review-required"
+            || report["receipt"]["backend"] != "vulkan"
+            || report["receipt"]["serviceReleaseConfirmed"] != true)
+        {
+            return Err(failure());
+        }
+        // Validate the donor against its own archive format and pinned
+        // runtime. Only complete primary-source replies can cross backends.
+        let mut checked = Self::from_runtime_report(
+            &report, source, source_sha256, duration_ms, vulkan || cross_backend, input.reuse_independent_source_review,
+        )?;
+        if cross_backend && checked.len() != SourceWindows::new(source)?.len() {
+            return Err(failure());
+        }
+        checked.vulkan_source_on_cpu = cross_backend;
+        Ok(checked)
     }
 
     #[cfg(test)]
@@ -161,10 +179,12 @@ impl CheckedSourcePrefix {
         } else {
             None
         };
-        Ok(Self { windows: prefix, independent_source_review })
+        Ok(Self { windows: prefix, independent_source_review, vulkan_source_on_cpu: false })
     }
 
     pub(super) fn len(&self) -> usize { self.windows.len() }
+
+    pub(super) fn reuses_vulkan_on_cpu(&self) -> bool { self.vulkan_source_on_cpu }
 
     pub(super) fn window(&self, index: usize) -> Option<(SourceEncoding, Option<&Value>)> {
         self.windows.get(index).map(|(encoding, call)| (*encoding, call.as_ref()))
@@ -184,6 +204,29 @@ impl CheckedSourcePrefix {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn an_explicit_cpu_comparison_reuses_only_validated_vulkan_source_windows() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_VULKAN_SOURCE_FOR_CPU") else { return; };
+        let bytes = std::fs::read(&path).unwrap();
+        let report: Value = serde_json::from_slice(&bytes).unwrap();
+        let source = std::fs::read_to_string(report["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let hash = format!("{:x}", Sha256::digest(source.as_bytes()));
+        let duration = report["durationMs"].as_u64().unwrap();
+        let mut input: CheckpointInput = serde_json::from_value(serde_json::json!({
+            "path": PathBuf::from(path), "sha256": format!("{:x}", Sha256::digest(&bytes))
+        })).unwrap();
+        assert!(CheckedSourcePrefix::load(&input, &source, &hash, duration, false).is_err());
+        input.use_vulkan_source_windows_on_cpu = true;
+        let prefix = CheckedSourcePrefix::load(&input, &source, &hash, duration, false).unwrap();
+        assert!(prefix.reuses_vulkan_on_cpu());
+        assert_eq!(prefix.len(), SourceWindows::new(&source).unwrap().len());
+        assert!(prefix.independent_source_review(transport::Context::ReducedCpu).is_none());
+        assert!(CheckedSourcePrefix::load(&input, &source, &hash, duration, true).is_err());
+        input.reuse_independent_source_review = true;
+        assert!(CheckedSourcePrefix::load(&input, &source, &hash, duration, false).is_err());
+    }
 
     #[test]
     fn a_completed_independent_review_can_replay_exact_cpu_requests_only() {

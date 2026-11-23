@@ -173,7 +173,9 @@ pub(super) fn frames(sentences: &[Value], timing: Option<&Timing<'_>>) -> Vec<Fr
         };
         while end < (start + 8).min(sentences.len()) {
             let words = text(sentences, end);
-            if changes_context(words) || opening(words).is_some()
+            let returned_to_own_procedure = kind == Kind::Example && !continues_reference(Kind::Example, words)
+                && super::delivery_evidence::reported_timed_relay(words).is_some();
+            if returned_to_own_procedure || changes_context(words) || opening(words).is_some()
                 || (kind == Kind::ExternalTerms && !external[end] && !filler(words)) {
                 break;
             }
@@ -240,6 +242,20 @@ mod tests {
     use super::*;
     use crate::backend::minutes::{automatic_brief::factual_audit::evidence_sentences, canonical_brief::source_units};
     use crate::companion_v1::CompanionV1UtteranceSegment;
+
+    #[test]
+    fn an_object_example_stops_before_the_speakers_reported_relay() {
+        let raw = "说话人1: 比方说物理和化学有不同的作业要求。我们首先由年级部汇总要求，提前一周让各区部发给各班班主任，由班主任一次性发给每个学生或者家长。";
+        let rows = evidence_sentences(&source_units(raw));
+        let result = frames(&rows, None);
+        assert_eq!(result.len(), 1);
+        assert_eq!(result[0].sentences, 0..1);
+        let cited_example = raw.replace("我们首先由", "在这个例子中我们首先由");
+        let rows = evidence_sentences(&source_units(&cited_example));
+        let result = frames(&rows, None);
+        assert_eq!(result.len(), 1);
+        assert_eq!(result[0].sentences, 0..2);
+    }
 
     #[test]
     fn an_example_covers_fragments_of_the_same_utterance() {

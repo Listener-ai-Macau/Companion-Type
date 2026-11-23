@@ -103,6 +103,9 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         if let Ok(mut trace)=trace.lock() {
             trace["reusedSourceWindows"] = json!(reused.len());
             trace["freshWholeRun"] = json!(reused.len() == 0);
+            if reused.reuses_vulkan_on_cpu() {
+                trace["reusedSourceBackend"] = json!("vulkan");
+            }
         }
         let _lease=assets::compute_lease()?;
         let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;

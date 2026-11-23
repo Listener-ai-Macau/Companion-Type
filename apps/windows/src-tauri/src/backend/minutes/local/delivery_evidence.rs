@@ -38,7 +38,8 @@ pub(super) fn grounded_handoff_condition(original: &str, candidate: &str) -> boo
     if has(&original, &unresolved) || has(&candidate, &unresolved) {
         return false;
     }
-    if original == candidate && timed_relay(&original) { return true; }
+    if original.trim_end_matches('。') == candidate.trim_end_matches('。')
+        && reported_timed_relay(&original).is_some() { return true; }
     [&*EVENT_HANDOFF, &*AUTHORIZED_HANDOFF].into_iter().any(|pattern| {
         pattern.captures_iter(&original).any(|witness| {
             let start = witness.get(0).expect("matched handoff").start();
@@ -50,6 +51,16 @@ pub(super) fn grounded_handoff_condition(original: &str, candidate: &str) -> boo
 
 /// Preserve a reported transfer chain with its lead time and intermediate
 /// recipient. The wording describes the process without assigning new work.
+pub(super) fn reported_timed_relay(source: &str) -> Option<&str> {
+    let text = body(source).trim_end_matches(['，', '；', '。']);
+    if !canonical_brief::line(text, 90)
+        || !has(text, &["我们首先由", "我们先由", "我们一直由", "我们现在由", "我们是由", "目前我们由"])
+        || !timed_relay(&canonical_brief::normalized(text)) {
+        return None;
+    }
+    Some(text)
+}
+
 fn timed_relay(text: &str) -> bool {
     static FIRST: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
         r"提前(?:[一二两三四五六七八九十百0-9]{1,4})(?:个)?(?:工作日|星期|小时|天|日|周|月)",

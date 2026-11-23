@@ -692,6 +692,17 @@ fn source_verified_facts(
                 continue;
             }
         }
+        if let Some(clause) = delivery_evidence::reported_timed_relay(original).filter(|_| {
+            !copied_execution && !scope_conflicts.iter().any(|pair| pair.earlier == index || pair.later == index)
+        }) {
+            let literal = canonical_brief::normalized(clause);
+            current.retain(|item| !matches!(item.role.as_str(), "status" | "opinion")
+                || item.source_needs_review || item.quantity_needs_review || !is_covered_by_literal(item, &literal));
+            let mut fact = ExtractedFact::verbatim(id, "status", clause);
+            fact.execution_reading = true;
+            verified.push(fact);
+            audit.push(json!({"sentenceId":id,"reason":"retained-original-timed-notification-chain"}));
+        }
         if let Some((category, clause)) = super::reader_ranking::documented_clause(original).filter(|_| {
             !copied_execution && !scope_conflicts.iter().any(|pair| pair.earlier == index || pair.later == index)
                 && !exceptions.iter().any(|(earlier, later, _, _)| *earlier == index || *later == index)
