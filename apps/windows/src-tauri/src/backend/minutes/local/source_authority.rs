@@ -326,7 +326,18 @@ pub(super) fn protected_stance(source: &str) -> Option<&'static str> {
         return Some("recommendation");
     }
     if has(source, &["好像", "大概", "估计", "预计", "约莫", "大约"]) && QUANTITY.is_match(source) {
-        return Some("forecast");
+        // Approximation describes precision. Only treat a clearly reported
+        // past amount as status when there is no forecast or future cue.
+        let forward = has(source, FORECAST) || has(source, &[
+            "接下来", "未来", "今后", "以后", "将会", "将要", "还要", "计划", "打算", "如果", "假如", "要是",
+        ]);
+        let retrospective = has(source, &["当时", "那时候", "此前", "以前", "过去", "上一年", "去年"]);
+        let measured = source.split(['，', ',', '。', '；', ';']).any(|clause| {
+            QUANTITY.is_match(clause) && has(clause, &[
+                "给了", "收了", "退回了", "发了", "付了", "花了", "卖了", "用了", "赔了", "完成了",
+            ])
+        });
+        return Some(if !forward && (retrospective || measured) { "status" } else { "forecast" });
     }
     let compact = source.replace(char::is_whitespace, "");
     if !has(&compact, DECISION)
@@ -346,4 +357,18 @@ pub(super) fn protected_stance(source: &str) -> Option<&'static str> {
         return Some("opinion");
     }
     None
+}
+
+#[cfg(test)]
+#[test]
+fn a_past_approximate_amount_keeps_the_original_reporting_time() {
+    assert_eq!(
+        protected_stance("呃四五万块钱，有当时每个人的股份大概也就才"),
+        Some("status")
+    );
+    assert_eq!(protected_stance("后来退的时候给了大概四五万块钱。"), Some("status"));
+    assert_eq!(protected_stance("当时预计要花大约五万元。"), Some("forecast"));
+    assert_eq!(protected_stance("下次付款大概还要五万元。"), Some("forecast"));
+    assert_eq!(protected_stance("如果已经花了大概五万元，可以再提交。"), Some("forecast"));
+    assert_eq!(protected_stance("好像是两天到三天。"), Some("forecast"));
 }
