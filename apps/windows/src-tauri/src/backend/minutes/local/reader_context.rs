@@ -572,6 +572,115 @@ fn online_access_terms(source: &str) -> Option<&str> {
     canonical_brief::line(passage, 100).then_some(passage)
 }
 
+fn conditional_option(text: &str) -> Option<(&str, &str)> {
+    let text = text.split_once("，比如").map_or(text, |(option, _)| option);
+    let (condition, activity) = text.split_once("就可以").or_else(|| text.split_once("才能"))?;
+    let activity = activity.trim_start_matches("进行")
+        .trim_start_matches("什么样的")
+        .trim_end_matches(['。', '，', '！', '？', '吧', '啊', '嘛', ' ']);
+    (activity.chars().count() >= 2 && !has(activity, &["这样", "那样", "等等", "什么的"]))
+        .then_some((condition, activity))
+}
+
+fn invited_method<'a>(text: &'a str, objective: &str) -> Option<&'a str> {
+    if !["所以", "然后", "那我们"].iter().any(|cue| text.starts_with(cue)) {
+        return None;
+    }
+    let (method, invitation) = text.split_once("邀请")?;
+    let (audience, tail) = invitation.split_once("参加")?;
+    let audience = audience.trim_start_matches("就");
+    let audience = ["所有的", "所有", "各位", "各"].iter()
+        .find_map(|cue| audience.strip_prefix(cue)).unwrap_or(audience).trim();
+    if audience.chars().count() < 2 || !objective.contains(audience) {
+        return None;
+    }
+    let whole = &text[..text.len() - tail.len()];
+    (has(method, &["开", "办", "组织"])
+        && has(method, &["视频会议", "线上会议", "现场", "线下", "电话会议"])
+        && !has(whole, &["要是", "假如", "如果", "不邀请", "不用", "先不", "取消", "还是不要"]))
+    .then_some(whole)
+}
+
+/// Retain competing conditions from an actual exchange. The visible proposal
+/// anchors the cluster even if the organizer split the dialogue between topics.
+fn discussed_conditions<'a, 'text>(
+    topic: &[usize],
+    visible: &HashSet<usize>,
+    source: impl Fn(usize) -> Option<(&'a str, &'text str)>,
+    speaker: impl Fn(usize) -> Option<&'text str>,
+) -> Vec<ExamplePassage<'a>> {
+    use super::source_grounding::shared_han_phrase;
+
+    for &anchor in topic.iter().filter(|index| visible.contains(index)) {
+        let Some((_, raw)) = source(anchor) else { continue };
+        let body = source_review::bare(raw);
+        if !has(body, &["门槛", "额度", "资格", "达到标准"])
+            || !has(body, &["才可以", "才能", "才允许"])
+        {
+            continue;
+        }
+        let Some(author) = speaker(anchor) else { continue };
+        let dissent = (anchor.saturating_sub(10)..anchor).rev().find(|&index| {
+            speaker(index) == Some(author) && source(index).is_some_and(|(_, raw)| {
+                let words = source_review::bare(raw);
+                ["不不", "我不同意", "我不太同意", "不太行", "这么不行"]
+                    .iter().any(|cue| words.starts_with(cue))
+            })
+        });
+        let Some(dissent) = dissent else { continue };
+        let alternative = (dissent.saturating_sub(8)..dissent).rev().find_map(|index| {
+            if !speaker(index).is_some_and(|name| name != author) { return None; }
+            let (id, raw) = source(index)?;
+            let body = source_review::bare(raw);
+            let (condition, activity) = conditional_option(body)?;
+            (has(condition, &["我觉得", "我建议", "我认为", "我想"])
+                && condition.contains("只要") && !body.contains(['？', '?']))
+                .then_some((index, id, activity, raw.trim()))
+        });
+        let Some((alternative_index, alternative_id, activity, alternative)) = alternative else { continue };
+        let tighter = (alternative_index.saturating_sub(8)..alternative_index).rev().find_map(|index| {
+            if speaker(index) != Some(author) { return None; }
+            let (id, raw) = source(index)?;
+            let body = source_review::bare(raw);
+            let (condition, strict_activity) = conditional_option(body)?;
+            let quote = raw.trim().split_once("，比如").map_or(raw.trim(), |(words, _)| words);
+            (has(condition, &["满多少", "达到", "满足", "审核通过", "通过审批", "先取得", "先完成"])
+                && !body.contains(['？', '?']) && shared_han_phrase(activity, strict_activity, 2))
+                .then_some((index, id, condition, quote))
+        });
+        let Some((strict_index, strict_id, condition, strict)) = tighter else { continue };
+        if visible.contains(&strict_index) && visible.contains(&alternative_index) {
+            continue;
+        }
+        let proposal = (strict_index.saturating_sub(14)..strict_index).rev().find_map(|index| {
+            if visible.contains(&index) || speaker(index) != Some(author) { return None; }
+            let (id, raw) = source(index)?;
+            let body = source_review::bare(raw);
+            let first_sentence = body.split_once('。').map_or(body, |(sentence, _)| sentence);
+            let goal = first_sentence.split(['，', ',']).rev().map(str::trim).find(|clause| {
+                ["我是打算", "我打算", "我准备", "我想做", "我想开", "我计划"]
+                    .iter().any(|cue| clause.starts_with(cue))
+                    && shared_han_phrase(clause, condition, 2)
+                    && shared_han_phrase(clause, activity, 2)
+            })?;
+            Some((id, format!("原提案（{author}）{goal}")))
+        });
+
+        let first = format!("发言者提出的条件：{strict}");
+        let second = format!("另一位发言者的建议：{alternative}");
+        if canonical_brief::line(&first, 100) && canonical_brief::line(&second, 100) {
+            return proposal.into_iter().filter(|(_, text)| canonical_brief::line(text, 100))
+                .map(|(source, text)| ExamplePassage { source, text })
+                .chain([
+                    (strict_index, ExamplePassage { source: strict_id, text: first }),
+                    (alternative_index, ExamplePassage { source: alternative_id, text: second }),
+                ].into_iter().filter_map(|(index, passage)| (!visible.contains(&index)).then_some(passage)))
+                .collect();
+        }
+    }
+    Vec::new()
+}
+
 /// Retain source qualifications within a topic that already shows the related
 /// discussion. Excerpts have their own citations and never nominate work.
 pub(super) fn reported_context<'a>(
@@ -595,7 +704,28 @@ pub(super) fn reported_context<'a>(
     let same_speaker = |first, second| {
         speaker(first).is_some_and(|label| speaker(second) == Some(label))
     };
-    let mut result = Vec::new();
+    let mut result = discussed_conditions(topic, visible, source, speaker);
+    for &anchor in topic.iter().filter(|index| visible.contains(index)) {
+        let Some((_, raw)) = source(anchor) else { continue };
+        let objective = source_review::bare(raw);
+        if !has(objective, &["沟通", "动员", "通知", "培训", "说明", "交流", "讨论", "征求"]) {
+            continue;
+        }
+        let method = (anchor + 1..=anchor + 3).find_map(|index| {
+            if visible.contains(&index) || !topic.contains(&index) || !same_speaker(anchor, index) {
+                return None;
+            }
+            let (id, raw) = source(index)?;
+            let approach = invited_method(source_review::bare(raw), objective)?;
+            let text = format!("会上提出的组织方式：{approach}");
+            canonical_brief::line(&text, 100).then_some(ExamplePassage { source: id, text })
+        });
+        if let Some(method) = method {
+            result.push(method);
+            break;
+        }
+    }
+
     let mut retained_roles = HashSet::new();
     for &anchor in topic.iter().filter(|index| !visible.contains(index)) {
         let Some(&role) = unbound_review.get(&anchor) else { continue; };
@@ -927,6 +1057,52 @@ pub(super) fn reported_context<'a>(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn different_access_conditions_stay_together_after_a_topic_split() {
+        let rows = [
+            ("e0001", "说话人1：我打算开一个展柜体验区。"),
+            ("e0002", "说话人1：体验展柜得先通过审批，然后就可以操作展柜。"),
+            ("e0003", "说话人2：我觉得只要登记就可以操作展柜吧。"),
+            ("e0004", "说话人1：我不同意，这个需要保护展品。"),
+            ("e0005", "说话人1：得设个门槛，才可以使用。"),
+        ];
+        let retain = |rows: &[(&str, &str)], visible: &[usize]| {
+            let records = rows.iter().map(|(id, text)| (*id, serde_json::json!({"text":text}))).collect::<Vec<_>>();
+            let known = records.iter().map(|(id, row)| (*id, row)).collect();
+            let visible = visible.iter().copied().collect();
+            super::reported_context(&[5], &visible, &Default::default(), &Default::default(), &known)
+                .into_iter().map(|passage| passage.source.to_owned()).collect::<Vec<_>>()
+        };
+        assert_eq!(retain(&rows, &[5]), ["e0001", "e0002", "e0003"]);
+        assert_eq!(retain(&rows, &[1, 2, 5]), ["e0003"]);
+        assert!(retain(&rows, &[2, 3, 5]).is_empty());
+        let mut unrelated = rows;
+        unrelated[2].1 = "说话人2：我觉得只要登记就可以查阅目录吧。";
+        assert!(retain(&unrelated, &[5]).is_empty());
+        let mut no_dissent = rows;
+        no_dissent[3].1 = "说话人3：我不同意，这个需要保护展品。";
+        assert!(retain(&no_dissent, &[5]).is_empty());
+    }
+
+    #[test]
+    fn a_linked_invitation_keeps_its_actual_audience_and_method() {
+        let mut rows = [
+            ("e0001", serde_json::json!({"text":"说话人1：还需要对技术伙伴做一次上线说明。"})),
+            ("e0002", serde_json::json!({"text":"说话人4：嗯。"})),
+            ("e0003", serde_json::json!({"text":"说话人1：所以我们开视频会议，然后邀请各位技术伙伴参加，方便大家提问。"})),
+        ];
+        let retain = |rows: &[(&str, serde_json::Value)]| {
+            let known = rows.iter().map(|(id, row)| (*id, row)).collect();
+            super::reported_context(&[1, 2, 3], &std::collections::HashSet::from([1]), &Default::default(), &Default::default(), &known)
+                .into_iter().map(|passage| passage.text).collect::<Vec<_>>()
+        };
+        assert_eq!(retain(&rows), ["会上提出的组织方式：所以我们开视频会议，然后邀请各位技术伙伴参加"]);
+        rows[2].1 = serde_json::json!({"text":"说话人4：所以我们开视频会议，然后邀请各位技术伙伴参加。"});
+        assert!(retain(&rows).is_empty());
+        rows[2].1 = serde_json::json!({"text":"说话人1：所以我们开视频会议，然后邀请销售伙伴参加。"});
+        assert!(retain(&rows).is_empty());
+    }
+
     #[test]
     fn a_timed_proposal_keeps_its_activity_and_original_stance() {
         let followup = super::planned_work("同事：会员档案已经整理完，嗯可以做点准备，整理完以后下个月准备安排回访。").unwrap();
