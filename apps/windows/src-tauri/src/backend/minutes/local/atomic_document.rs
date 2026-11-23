@@ -2616,6 +2616,63 @@ fn reader_fact_length(bank: &Bank, fact: &Fact) -> usize {
     reader_story_framing(bank,fact).map_or_else(||fact.text.chars().count(),|(text,_)|text.chars().count())
 }
 
+// The fact bank can contain both the required original excerpt and a checked,
+// more complete reading of the same requirement. Use the existing line's
+// character budget and retain the original anchor and stance.
+fn complete_reader_requirement(visible: &Fact, alternate: &Fact) -> Option<String> {
+    if !matches!(visible.kind, Kind::Status) || !matches!(alternate.kind, Kind::Status)
+        || !visible.evidence.iter().all(|id| alternate.evidence.contains(id))
+    {
+        return None;
+    }
+    let current = super::source_review::bare(&visible.text);
+    let replacement = super::source_review::bare(&alternate.text);
+    if current != visible.text.trim() || current == replacement
+        || replacement.contains(['？', '?']) || replacement.ends_with(['，', ',', '：', ':', '…'])
+        || !super::source_grounding::unsupported_quantities(current, &[replacement]).is_empty()
+    {
+        return None;
+    }
+    let same_source = visible.evidence == alternate.evidence;
+    if same_source {
+        if !current.ends_with(['，', ',']) {
+            return None;
+        }
+        let last = current.trim_end_matches(['，', ',']).rsplit(['，', ',']).next()?
+            .trim_start_matches(['嗯', '啊', '呃', ' ']);
+        let (_, continuation) = replacement.split_once(last)?;
+        if last.chars().count() < 8
+            || continuation.trim_matches(|ch: char| !ch.is_alphanumeric()).chars().count() < 4
+        {
+            return None;
+        }
+    } else if !super::source_grounding::shared_han_phrase(current, replacement, 4)
+        || !super::source_review::explicit_operating_condition(current)
+        || !super::source_review::explicit_operating_condition(replacement)
+    {
+        return None;
+    }
+
+    let protected = ["如果", "假如", "只有", "除非", "之前", "之后", "提前", "最晚", "当天", "每天", "每周",
+        "至少", "至多", "不超过", "不得", "不再", "不能", "不允许", "不要", "否则", "仅限", "只允许",
+        "暂未", "可能", "待核", "建议", "必须"];
+    if protected.iter().any(|cue| current.contains(cue) && !replacement.contains(cue)) {
+        return None;
+    }
+    let mut text = replacement.to_owned();
+    // A separately stated exception still applies when the rest of the
+    // spoken instruction can be expressed more compactly.
+    for exception in ["不是说", "并非", "无需", "不需要"] {
+        if current.contains(exception) && !replacement.contains(exception) {
+            if !same_source { return None; }
+            let clause = current.split(['，', ',']).find(|clause| clause.contains(exception))?;
+            if clause.contains(['？', '?']) { return None; }
+            text = format!("{}。{}。", text.trim_end_matches('。'), clause);
+        }
+    }
+    canonical_brief::line(&text, visible.text.chars().count()).then_some(text)
+}
+
 #[cfg(test)]
 fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     assemble_with_context(raw, bank, session, base, &HashMap::new())
@@ -2713,6 +2770,7 @@ fn assemble_with_context(
     let mut reader_outcomes = Vec::new();
     let mut reader_future = Vec::new();
     let mut reader_reported_context = Vec::new();
+    let mut reader_complete_requirements = Vec::new();
     if !bank.chapter_spans.is_empty() {
         let by_id: HashMap<_,_> = bank.topics().map(|fact| (fact.id.as_str(),fact)).collect();
         let proposed: HashSet<_> = bank.receipt["coreProposedReaderFactIds"].as_array().into_iter()
@@ -2726,6 +2784,32 @@ fn assemble_with_context(
         for (topic,limit) in reader_detail_limits.iter_mut().enumerate() {
             let prefix = format!("/topics/{topic}/details/");
             let point_prefix = format!("/topics/{topic}/points/");
+            let reader_path = |path: &str| {
+                path.starts_with(&point_prefix)
+                    || path.strip_prefix(&prefix).and_then(|index| index.parse::<usize>().ok())
+                        .is_some_and(|index| index < *limit)
+            };
+            let hidden = result.bindings.iter().filter(|(path, _)| path.starts_with(&prefix) && !reader_path(path))
+                .filter_map(|(_, id)| by_id.get(id.as_str()).copied())
+                .filter(|fact| !bank.review_quote(&fact.id)).collect::<Vec<_>>();
+            let mut used = HashSet::new();
+            for (path, id) in result.bindings.iter().filter(|(path, id)| {
+                reader_path(path) && bank.execution_reading.contains(id) && !bank.review_quote(id)
+            }) {
+                let Some(fact) = by_id.get(id.as_str()) else { continue };
+                let Some((alternate, text)) = hidden.iter().filter(|other| !used.contains(other.id.as_str()))
+                    .find_map(|other| complete_reader_requirement(fact, other).map(|text| (*other, text)))
+                else { continue };
+                let entry = document.pointer_mut(path).ok_or_else(fail)?;
+                entry["text"] = json!(text);
+                entry["evidence"] = json!(alternate.evidence.iter().map(|source| {
+                    let original = known[source.as_str()];
+                    json!({"source": original["source"], "quote": original["text"]})
+                }).collect::<Vec<_>>());
+                used.insert(alternate.id.as_str());
+                reader_complete_requirements.push(json!({"path":path,"visibleFactId":id,"scopeFactId":alternate.id,
+                    "sourceIds":alternate.evidence}));
+            }
             let example = result.bindings.iter().filter(|(path,_)| {
                 path.starts_with(&prefix) || path.starts_with(&point_prefix)
             }).find_map(|(_,id)| {
@@ -2944,6 +3028,9 @@ fn assemble_with_context(
     if !reader_reported_context.is_empty() {
         parsed.receipt["readerReportedContextExcerpts"] = json!(reader_reported_context);
     }
+    if !reader_complete_requirements.is_empty() {
+        parsed.receipt["readerRequirementCompletions"] = json!(reader_complete_requirements);
+    }
     if !closing_actions.is_empty() {
         parsed.receipt["readerRecapAcceptedWork"] = json!(closing_actions.iter().map(|(path,handoff)| {
             let ids = handoff.citations.iter().map(|&pos| &sentences[pos]["id"]).collect::<Vec<_>>();
@@ -2984,6 +3071,29 @@ fn assemble_with_context(
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn a_reader_requirement_can_use_a_more_complete_fact_in_the_same_space() {
+        let fact = |id: &str, text: &str, evidence: &[&str]| Fact {
+            id: id.to_owned(), kind: Kind::Status, placement: Placement::Topic,
+            text: text.to_owned(), owner: None, due: None,
+            evidence: evidence.iter().map(|id| (*id).to_owned()).collect(),
+        };
+        let requirement = fact("a0", "目前每位领用品的同事在领用登记物品时，必须按当班批次登记。", &["e0001"]);
+        let complete = fact("a1", "领用品必须按当班批次登记，归还时核对数量。", &["e0001", "e0002"]);
+        assert_eq!(complete_reader_requirement(&requirement, &complete).as_deref(), Some(complete.text.as_str()));
+        let no_requirement = fact("a2", "领用品可按当班批次登记，归还时核对数量。", &["e0001", "e0002"]);
+        assert!(complete_reader_requirement(&requirement, &no_requirement).is_none());
+        let unrelated = fact("a3", &complete.text, &["e0002"]);
+        assert!(complete_reader_requirement(&requirement, &unrelated).is_none());
+
+        let clipped = fact("a4", "我们由负责人员核验设备，不是说要全部换掉，这笔预算本轮需要考虑，保证在正式启用之前一个星期，", &["e0003"]);
+        let finished = fact("a5", "由负责人员核验设备，保证在正式启用之前一个星期，核验完成。", &["e0003"]);
+        let completion = complete_reader_requirement(&clipped, &finished).unwrap();
+        assert!(completion.contains("正式启用之前一个星期，核验完成。"));
+        assert!(completion.contains("不是说要全部换掉"));
+        assert!(completion.chars().count() <= clipped.text.chars().count());
+    }
 
     #[test]
     fn an_illustration_stays_in_the_body_without_becoming_the_meeting_overview() {
