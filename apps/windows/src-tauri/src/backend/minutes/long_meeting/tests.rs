@@ -1084,6 +1084,47 @@ fn long_source_check_keeps_archived_roundtable_chapters_free_of_group_reviews() 
 }
 
 #[test]
+fn inspect_long_source_check_on_frozen_transcripts() {
+    let Some(manifest) = std::env::var_os("COMPANION_TEST_LONG_HOLDOUT") else { return };
+    let output = PathBuf::from(std::env::var_os("COMPANION_TEST_LONG_HOLDOUT_OUTPUT").unwrap());
+    let manifest: Value = serde_json::from_slice(&fs::read(manifest).unwrap()).unwrap();
+    let mut rows = Vec::new();
+    for case in manifest["cases"].as_array().unwrap() {
+        let case_id = case["id"].as_str().unwrap();
+        let bytes = fs::read(case["sourceFile"].as_str().unwrap()).unwrap();
+        assert_eq!(hash(&bytes), case["textSha256"].as_str().unwrap(), "{case_id}");
+        let source = session(std::str::from_utf8(&bytes).unwrap());
+        let root = root();
+        let began = Instant::now();
+        let draft = run_with(&root, "https://fixture.invalid", "holdout-model", "holdout-key", &source, "probe",
+            |_, _, part, _| Ok(response(part))).unwrap();
+        let wall = began.elapsed().as_secs_f64();
+        let progress = draft.processing.as_ref().unwrap();
+        assert!(progress.is_complete(), "{case_id}");
+        let identity = Identity::new("https://fixture.invalid", "holdout-model", "holdout-key", &source);
+        let checkpoint = read_checkpoint(&root.join(identity.filename())).unwrap();
+        let mut reviews = Vec::new();
+        for chapter in checkpoint.chapters.iter().flatten() {
+            for row in chapter.evidence.iter().filter(|item| item.field == "questions") {
+                let question = &chapter.minutes.questions[row.index];
+                if question.starts_with("待核对：请确认这项交办当前是否有效。") {
+                    reviews.push(serde_json::json!({"text":question,"quote":row.quote}));
+                }
+            }
+        }
+        let resumed = run_with(&root, "https://fixture.invalid", "holdout-model", "holdout-key", &source, "probe",
+            |_, _, _, _| panic!("the source check should reuse the valid response")).unwrap();
+        assert_eq!(resumed.questions, draft.questions, "{case_id}");
+        assert_eq!(resumed.markdown, draft.markdown, "{case_id}");
+        rows.push(serde_json::json!({"id":case_id,"chapterCount":progress.total_chunks,
+            "sourceBytes":progress.processed_source_bytes,"reviews":reviews,"wallSeconds":wall,
+            "cachedReadingMatched":true,"realProviderCalls":0,"wholeMeetingQualityMeasured":false}));
+        cleanup(root);
+    }
+    fs::write(output, serde_json::to_vec_pretty(&rows).unwrap()).unwrap();
+}
+
+#[test]
 fn long_conditional_quote_never_becomes_unconditional_deadline() {
     let quote=format!("{}周五发报价", "会议讨论".repeat(150));assert!(quote.len()>1024);
     let text=format!("如果客户同意，{quote}");let source=session(&text);let (mut m,_)=response(&source);

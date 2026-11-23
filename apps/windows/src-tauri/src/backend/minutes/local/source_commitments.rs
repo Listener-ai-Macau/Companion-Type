@@ -550,6 +550,13 @@ pub(in crate::backend::minutes) fn stated_group_deliverable(source: &str) -> Opt
     static DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
         Regex::new(r"都要|务必|必须|需具体|分别负责").expect("group imperative")
     });
+    static ADDRESSED_DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"^[\s，,嗯啊呃哦]*也要").expect("requirement addressed to the group")
+    });
+    static REFERENCE_PREFIX: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"(?:根据|按照|依照|结合|参照|按)\s*(?:你们|他们|我们|你|其)?\s*$")
+            .expect("group referred to as the basis for the work")
+    });
     static CLAUSE_START: LazyLock<Regex> = LazyLock::new(|| {
         Regex::new(r"然后|至于|另外|[。；！]").expect("spoken clause boundary")
     });
@@ -560,13 +567,17 @@ pub(in crate::backend::minutes) fn stated_group_deliverable(source: &str) -> Opt
     {
         return None;
     }
-    let mut groups = REQUEST.captures_iter(words).peekable();
+    // A group mentioned as the basis for the work does not start another assignment.
+    let mut groups = REQUEST.captures_iter(words).filter(|request| {
+        let address = request.get(0).expect("the group match");
+        !REFERENCE_PREFIX.is_match(&words[..address.start()])
+    }).peekable();
     while let Some(request)=groups.next() {
         let addressed=request.get(0)?;
         let end=groups.peek().and_then(|next|next.get(0)).map_or(words.len(),|next|next.start());
         let instruction=CLAUSE_START.split(&words[addressed.end()..end]).next()?.trim();
         if instruction.chars().count()>82 { continue; }
-        let imperative = DIRECTIVE.find(instruction);
+        let imperative = ADDRESSED_DIRECTIVE.find(instruction).or_else(|| DIRECTIVE.find(instruction));
         let deliverable = imperative.and_then(|marker| DELIVERABLE.find_at(instruction, marker.end()))
             .or_else(|| DELIVERABLE.find(instruction));
         let Some(deliverable) = deliverable else { continue; };
@@ -1059,6 +1070,25 @@ mod tests {
             "如果设备通过试运行，然后各部门都要提交验收计划。",
             "举例说明，然后各部门都要提交验收计划。",
             "另外各部门不得提交验收计划。",
+        ] {
+            assert!(stated_group_deliverable(source).is_none(), "{source}");
+        }
+    }
+
+    #[test]
+    fn a_group_can_be_addressed_and_referenced_in_the_same_directive() {
+        let work = stated_group_deliverable(
+            "行，那具体到时候嗯再具体计划各部门儿做出来一个方案，我们我们这边儿也会做出来个方案的，你们各部门儿也要根据你各部门儿情况做一个这个具体的方案。"
+        ).unwrap();
+        assert_eq!(work.owner.as_deref(), Some("各部门"));
+        assert!(work.text.contains("根据你各部门儿情况做一个这个具体的方案"));
+        assert!(work.due.is_none());
+        for source in [
+            "我建议各小组也要结合各小组状态准备材料。",
+            "如果条件允许，各科室也要按照各科室的情况准备材料。",
+            "咱们再根据刚你们各部门儿交交上的这个计划宣布。",
+            "各小组先听一下，主管也要出一个报告。",
+            "各小组也要说明进度，各部门各自看一下昨天的报告。",
         ] {
             assert!(stated_group_deliverable(source).is_none(), "{source}");
         }
