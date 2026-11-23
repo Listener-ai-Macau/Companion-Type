@@ -96,6 +96,7 @@ pub(super) struct Bank {
     execution_reading: HashSet<String>,
     reader_groups: Vec<Vec<String>>,
     linked_procedures: Vec<Vec<String>>,
+    supplemental_operations: HashSet<String>,
     source_agenda: Option<super::delivery_evidence::OpeningAgenda>,
 }
 impl Bank {
@@ -1336,8 +1337,12 @@ fn build_bank_with_timing(
         super::source_review::bare(text).trim_end_matches(['。', '，', '！', '；', '.', ' ']),
     );
     let mut linked_ids = HashSet::new();
+    let mut supplemental_operations = HashSet::new();
     let linked_procedures = super::delivery_evidence::linked_procedures(&sentences, timing.as_ref()).into_iter()
-        .filter_map(|sources| {
+        .map(|sources| (sources, false))
+        .chain(super::delivery_evidence::reported_operation_groups(&sentences,timing.as_ref())
+            .into_iter().map(|sources| (sources, true)))
+        .filter_map(|(sources, supplemental)| {
             let ids = sources.into_iter().map(|index| {
                 let anchor = sentences[index]["id"].as_str().unwrap();
                 let text = literal(original_sentences[index]);
@@ -1348,6 +1353,9 @@ fn build_bank_with_timing(
                 }).map(|fact| fact.id.clone())
             }).collect::<Option<Vec<_>>>()?;
             if ids.iter().any(|id| linked_ids.contains(id)) { return None; }
+            if supplemental {
+                supplemental_operations.extend(ids.iter().filter(|id| !execution_reading.contains(*id)).cloned());
+            }
             linked_ids.extend(ids.iter().cloned());
             Some(ids)
         }).collect::<Vec<_>>();
@@ -1386,7 +1394,7 @@ fn build_bank_with_timing(
         "linkedReaderReportGroups":reader_groups,"linkedReaderProcedureGroups":linked_procedures,
         "independentSourceReview":review.batches,
         "savedUtteranceContext":timing.as_ref().map(|timing|timing.receipt())});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,reader_groups,linked_procedures,source_agenda })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices,before_opening,reader_places,priority_review,reader_priority,reader_order:HashMap::new(),execution_reading,reader_groups,linked_procedures,supplemental_operations,source_agenda })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -2092,8 +2100,11 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             items.sort_by_key(|(fact, main)| (procedure_order.get(fact.id.as_str()), bank.review_quote(&fact.id), priority(fact), !*main, !important(fact, *main)));
         }
         placed_critical.append(&mut protected);
+        // These short original passages are necessary to read the procedure.
+        // Charging them to the ordinary budget can hide a previously visible rule.
         required_chars += items.iter().enumerate()
-            .filter(|(index, (fact, _))| *index == 0 || bank.required_topic(&fact.id))
+            .filter(|(index, (fact, _))| *index == 0
+                || (bank.required_topic(&fact.id) && !bank.supplemental_operations.contains(&fact.id)))
             .map(|(_, (fact, _))| reader_fact_length(bank, fact)).sum::<usize>();
     }
     let mut optional_chars=1000_usize.saturating_sub(required_chars);
@@ -2279,6 +2290,7 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let mut document=serde_json::to_value(&result.document).map_err(|_|fail())?;
     let mut reader_recommendations = Vec::new();
     let mut reader_detail_limits=vec![READER_DETAILS; result.document.topics.len()];
+    let mut supplemental_details=vec![0; result.document.topics.len()];
     let mut detail_kinds = result.document.topics.iter()
         .map(|topic| vec![None; topic.details.len()]).collect::<Vec<_>>();
     let mut required_visible = Vec::new();
@@ -2314,13 +2326,19 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             if let ["topics", topic, section, row] = pointer.split('/').skip(1).collect::<Vec<_>>().as_slice() {
                 let topic: usize = topic.parse().map_err(|_|fail())?;
                 let row: usize = row.parse().map_err(|_|fail())?;
-                if *section == "details" { reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1); }
+                if *section == "details" {
+                    reader_detail_limits[topic] = reader_detail_limits[topic].max(row + 1);
+                    if bank.supplemental_operations.contains(id) { supplemental_details[topic] += 1; }
+                }
                 required_visible.push((id, format!("topics[{topic}].{section}[{row}]")));
             }
         }
         entry.remove("sources");entry.insert("evidence".into(),json!(evidence_ids.iter().map(|id|{
             let s=known[*id];json!({"source":s["source"],"quote":s["text"]})
         }).collect::<Vec<_>>()));
+    }
+    for (limit, supplemental) in reader_detail_limits.iter_mut().zip(supplemental_details) {
+        *limit = (*limit).max(READER_DETAILS + supplemental);
     }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
     let mut parsed = super::evidence_document::parse_with_details_limit(

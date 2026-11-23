@@ -137,6 +137,97 @@ fn procedure_links_require_ordered_conditions_and_continuing_source() {
     assert!(linked_procedures(&rows, None).is_empty());
 }
 
+/// Preserve an explicitly reported arrangement or an ordinary response
+/// procedure as a set of original statements. These are reader details, so
+/// a preparation someone says is possible never becomes a newly assigned task.
+pub(super) fn reported_operation_groups(
+    sentences: &[Value], timing: Option<&super::timed_evidence::Timing<'_>>,
+) -> Vec<Vec<usize>> {
+    let source: Vec<_> = sentences.iter().map(|row| row["text"].as_str().expect("source sentence")).collect();
+    let words = |i: usize| body(source[i]);
+    let connected = |left: usize, right: usize| {
+        match (speaker_at(sentences,left), speaker_at(sentences,right)) {
+            (Some(a), Some(b)) if a != b => false,
+            (Some(_), Some(_)) => timing.is_none_or(|time| time.speech_gap_within(left,right,2_500)),
+            _ => timing.is_some_and(|time| time.speech_gap_within(left,right,2_500)),
+        }
+    };
+    let nearby_after = |anchor: usize, limit: usize| {
+        (anchor + 1..(anchor + 1 + limit).min(source.len())).take_while(move |&i| {
+            let next = words(i).trim_start_matches(['嗯','呃','啊',' ']);
+            connected(i - 1, i) && !["还有就是", "另一个", "换个话题", "下一项", "接下来讨论"]
+                .iter().any(|cue| next.starts_with(cue))
+        })
+    };
+    let uncertain = |text: &str| {
+        has(text,&["建议","假如","假设","听说","打算","考虑","暂定","尚未","没有决定","不再","取消","不用","我觉得"])
+            || super::source_context::question_only(text)
+    };
+    let mut groups = Vec::new();
+    for i in 1..source.len() {
+        let original = words(i);
+        if uncertain(original) { continue; }
+        let previous = words(i - 1);
+        let prior = connected(i - 1,i) && !uncertain(previous);
+        if has(original,&["我们决定由","我们是决定由","会议决定由","本次确定由","已经明确由","已确定由"]) {
+            let resource = prior && has(previous,&["提前预留","预先预留","提前备好","事先备好"])
+                && !has(previous,&["例如","比如","没必要"]);
+            let standard = nearby_after(i,6)
+                .take_while(|&j| !super::source_context::question_only(words(j)))
+                .find(|&j| {
+                    let row=words(j);
+                    !uncertain(row) && has(row,&["按照","按规定","按标准"]) && row.contains("标准")
+                        && has(row,&["准备","布置","执行","办理","接待","提供"])
+                });
+            groups.push(resource.then_some(i-1).into_iter().chain([i]).chain(standard).collect());
+            continue;
+        }
+        let routine = has(original,&["一般这种情况下","通常这种情况下","遇到这种情况"])
+            && has(original,&["我们会","我们通常会","咱们会"])
+            && has(original,&["广播","通知","联系","登记","引导","报警","核查"]);
+        if !routine || !prior || !has(previous,&["有这种情况","有这样的情况","遇到过这种情况"]) {
+            continue;
+        }
+        let mut answer = nearby_after(i,10).take_while(|&j| !super::source_context::question_only(words(j)));
+        let Some(contact) = answer.find(|&j| {
+            let row=words(j);
+            !uncertain(row) && has(row,&["询问","核对","登记"]) && has(row,&["广播","通知","联系","告知"])
+        }) else { continue; };
+        let Some(help) = answer.find(|&j| {
+            let row=words(j);
+            !uncertain(row) && has(row,&["人员","部门","班组"])
+                && has(row,&["配合","协助"]) && has(row,&["寻找","处置","办理","检查","核查","疏散"])
+        }) else { continue; };
+        let fallback = nearby_after(help,5).find(|&j| {
+            let row=words(j);
+            !uncertain(row) && has(row,&["找不着","找不到","还未找到","仍未找到","仍未解决","无法确认"])
+                && has(row,&["也可以","还可以","再"])
+                && has(row,&["调监控","调取监控","查看监控","调阅记录","复核记录"])
+        });
+        groups.push([i-1,i,contact,help].into_iter().chain(fallback).collect());
+    }
+    groups
+}
+
+#[cfg(test)]
+#[test]
+fn reported_operations_keep_their_conditions_and_current_status() {
+    let mut rows = [
+        "说话人1: 这两个候补库位可以提前预留出来。",
+        "说话人1: 我们是决定由主管带检查员来验货。",
+        "说话人1: 使用的容器都是按照无菌标准准备的。",
+        "说话人2: 对，有这样的情况，标签可能被水浸坏。",
+        "说话人2: 一般这种情况下我们会通知前台。",
+        "说话人2: 询问客户订单号，然后通知服务台核对。",
+        "说话人2: 仓库人员协助核查。",
+        "说话人2: 如果仍未找到，还可以调阅记录。",
+    ].into_iter().map(|text| serde_json::json!({"text":text})).collect::<Vec<_>>();
+    assert_eq!(reported_operation_groups(&rows,None),[vec![0,1,2],vec![3,4,5,6,7]]);
+    rows[1]["text"] = serde_json::json!("说话人1: 只是建议，尚未确定由谁验货。");
+    rows[5]["text"] = serde_json::json!("说话人3: 询问客户订单号，然后通知服务台核对。");
+    assert!(reported_operation_groups(&rows,None).is_empty());
+}
+
 pub(super) fn execution_passage(original: &str) -> Option<&str> {
     static THRESHOLD: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:[0-9零一二两三四五六七八九十]{1,4}月|(?:超过|不超过|不少于|不低于|至少)[0-9零一二两三四五六七八九十]{1,5}(?:天|日|小时|班|分钟)|百分之)"
