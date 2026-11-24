@@ -239,14 +239,13 @@ pub(super) fn parse_with_details_limit(
         &doc.to_string(),session,base,details_limit,reader_limits.is_none(),&visible_detail_kinds
     )?;
     parsed.minutes.markdown=exact_origins(&parsed.minutes.markdown,&doc,&anchors)?;
-    // Imported text has no verified audio times. Preserve exact reading
-    // anchors separately and keep them scoped to the adopted transcript.
-    if session.source == "importedTranscript" && session.utterances.is_empty() {
-        let actions = parsed.minutes.action_items.iter().enumerate().filter_map(|(index, item)| {
-            if parsed.minutes.action_items.iter().filter(|action| action.text == item.text).count() != 1 {
+    // Preserve exact reading anchors separately from verified audio times.
+    let anchored_quotes = |field: &str, items: Vec<&str>| {
+        items.iter().enumerate().filter_map(|(index, &text)| {
+            if items.iter().filter(|&&other| other == text).count() != 1 {
                 return None;
             }
-            let path = format!("actionItems[{index}]");
+            let path = format!("{field}[{index}]");
             let mut seen = std::collections::HashSet::new();
             let transcript_quotes = anchors.iter().filter(|anchor| anchor["path"] == path)
                 .filter_map(|anchor| anchor["quote"].as_str().map(str::trim))
@@ -254,16 +253,20 @@ pub(super) fn parse_with_details_limit(
                     && seen.insert(*quote) && session.transcript_text.matches(*quote).take(2).count() == 1)
                 .map(str::to_owned).collect::<Vec<_>>();
             (!transcript_quotes.is_empty()).then(|| CompanionV1ActionCitation {
-                text:item.text.clone(),segments:Vec::new(),transcript_quotes,
+                text:text.to_owned(),segments:Vec::new(),transcript_quotes,
             })
-        }).collect::<Vec<_>>();
-        if !actions.is_empty() {
-            parsed.minutes.source_action_evidence = Some(CompanionV1MinutesActionEvidence {
-                transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
-                review_revision: session.transcript_review.as_ref().map(|review|review.revision),
-                actions,
-            });
-        }
+        }).collect::<Vec<_>>()
+    };
+    let decisions = anchored_quotes("decisions", parsed.minutes.decisions.iter().map(String::as_str).collect());
+    let actions = if session.source == "importedTranscript" && session.utterances.is_empty() {
+        anchored_quotes("actionItems", parsed.minutes.action_items.iter().map(|item| item.text.as_str()).collect())
+    } else { Vec::new() };
+    if !actions.is_empty() || !decisions.is_empty() {
+        parsed.minutes.source_action_evidence = Some(CompanionV1MinutesActionEvidence {
+            transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
+            review_revision: session.transcript_review.as_ref().map(|review|review.revision),
+            actions, decisions,
+        });
     }
     parsed.receipt["evidenceAnchors"]=json!(anchors);
     parsed.receipt["literalEvidenceBound"]=json!(true);
@@ -313,6 +316,29 @@ mod tests{
         s.transcript_text.push_str("李敏承诺周五提交测试报告。");
         let repeated = parse(&d.to_string(),&s,&b).unwrap();
         assert!(repeated.minutes.source_action_evidence.is_none());
+    }
+
+    #[test]
+    fn each_decision_keeps_only_its_own_unique_original_words() {
+        let (mut session, base, mut doc) = fixture();
+        session.source = "importedTranscript".into();
+        session.utterances.clear();
+        doc["decisions"] = json!([{"text":"未通过测试前不上线。","evidence":[
+            {"source":"u000","quote":"测试未通过不能上线。"}
+        ]},{"text":"当前预算还未批准。","evidence":[
+            {"source":"u000","quote":"预算10000元未批准"}
+        ]}]);
+        let parsed = parse(&doc.to_string(), &session, &base).unwrap();
+        let evidence = parsed.minutes.source_action_evidence.unwrap();
+        assert_eq!(evidence.decisions[0].text, "未通过测试前不上线。");
+        assert_eq!(evidence.decisions[0].transcript_quotes, ["测试未通过不能上线。"]);
+        assert_eq!(evidence.decisions[1].text, "当前预算还未批准。");
+        assert_eq!(evidence.decisions[1].transcript_quotes, ["预算10000元未批准"]);
+        assert_eq!(evidence.actions[0].transcript_quotes, ["李敏承诺周五提交测试报告。"]);
+        session.transcript_text.push_str("测试未通过不能上线。");
+        let repeated = parse(&doc.to_string(), &session, &base).unwrap().minutes.source_action_evidence.unwrap();
+        assert_eq!(repeated.decisions.len(), 1);
+        assert_eq!(repeated.decisions[0].text, "当前预算还未批准。");
     }
 
     #[test]

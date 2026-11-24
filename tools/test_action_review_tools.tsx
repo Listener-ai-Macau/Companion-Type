@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import React from 'react';
 import {act,create,type ReactTestRenderer} from 'react-test-renderer';
 import {ActionReviewTools,useActionReview} from '../packages/ui/src/ActionReviewTools';
+import {MeetingActions} from '../packages/ui/src/MeetingActions';
 import {savedActionReview} from '../packages/ui/src/actionReview';
 import {MobileActionCards} from '../apps/mobile/src/MobileActionCards';
 import {MinutesDocument} from '../apps/mobile/src/MinutesDocument';
@@ -70,4 +71,20 @@ assert.equal(tree.root.findAll(n=>n.props.className==='mobile-action-card').leng
 assert.equal(tree.root.findAll(n=>n.type==='details'&&n.props.className==='minutes-more mobile-action-more').length,0,'All filtered matches must be visible, including the original folded remainder');
 assert.deepEqual(publicActions.actionItems.map(item=>item.text),publicSource.split('\n').map(line=>line.slice(2)));
 act(()=>tree.unmount());
-console.log('PASS saved-action filters and followup: exact identities after hidden rows, completion persistence roundtrip, owner/missing/date/review scope, source-bound copy success/failure, record switch reset, native mobile target preservation and all21actual public phone items. No model, external send or source mutation.');
+{
+  const decisionMarkdown='## Decisions\n\n- 未通过测试前不上线。\n- 当前预算还未批准。\n';
+  const locators:string[]=[];
+  let decisionView:ReturnType<typeof create>;
+  act(()=>{decisionView=create(<MeetingActions markdown={decisionMarkdown}
+    decisionQuotes={new Map([['未通过测试前不上线。',['测试未通过不能上线。']]])}
+    onLocate={(_section,text)=>locators.push(text??'')}
+    onLocateTranscript={text=>locators.push(text)}/>);});
+  const buttons=decisionView!.root.findAllByType('button');
+  assert.equal(buttons[0].props.children[0],'查看转写');
+  assert.equal(buttons[1].props.children[0],'查看纪要');
+  act(()=>buttons[0].props.onClick());
+  act(()=>buttons[1].props.onClick());
+  assert.deepEqual(locators,['测试未通过不能上线。','当前预算还未批准。']);
+  act(()=>decisionView!.unmount());
+}
+console.log('PASS saved-action filters, exact decision originals, export scope and native mobile review. No model, external send or source mutation.');

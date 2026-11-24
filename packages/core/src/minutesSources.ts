@@ -112,9 +112,17 @@ export function companionStoredActionSources(evidence: CompanionMinutesActionEvi
 
 /** Call only after verifying the adopted transcript digest. */
 export function companionStoredActionQuotes(evidence: CompanionMinutesActionEvidence): ReadonlyMap<string, string[]> {
+  return storedQuotes(evidence.actions);
+}
+
+export function companionStoredDecisionQuotes(evidence: CompanionMinutesActionEvidence): ReadonlyMap<string, string[]> {
+  return storedQuotes(evidence.decisions ?? []);
+}
+
+function storedQuotes(items: readonly {text:string;transcriptQuotes?:string[]}[]): ReadonlyMap<string, string[]> {
   const links = new Map<string, string[]>();
-  for (const item of evidence.actions) {
-    if (evidence.actions.filter(other => other.text === item.text).length !== 1) continue;
+  for (const item of items) {
+    if (items.filter(other => other.text.trim() === item.text.trim()).length !== 1) continue;
     const quotes = item.transcriptQuotes?.filter(quote => quote.trim());
     if (quotes?.length) links.set(item.text.trim(), quotes);
   }

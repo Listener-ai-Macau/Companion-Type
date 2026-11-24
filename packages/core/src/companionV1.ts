@@ -345,6 +345,7 @@ export interface CompanionMinutesActionEvidence {
     segments: { index: number; text: string; startMs: number; endMs: number }[];
     transcriptQuotes?: string[];
   }[];
+  decisions?: {text: string; transcriptQuotes?: string[]}[];
 }
 
 export interface CompanionMinutesNoteContext {

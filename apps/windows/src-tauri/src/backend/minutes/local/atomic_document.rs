@@ -3243,11 +3243,13 @@ fn assemble_with_context(
         });
         let actions = native_actions.chain(recap_citations).collect::<Vec<_>>();
         if !actions.is_empty() {
-            parsed.minutes.source_action_evidence=Some(CompanionV1MinutesActionEvidence {
+            let evidence = parsed.minutes.source_action_evidence.get_or_insert_with(|| CompanionV1MinutesActionEvidence {
                 transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
                 review_revision: session.transcript_review.as_ref().map(|review|review.revision),
-                actions,
+                actions: Vec::new(),
+                decisions: Vec::new(),
             });
+            evidence.actions = actions;
         }
     }
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?

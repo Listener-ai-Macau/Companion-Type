@@ -1,9 +1,10 @@
-import {useMemo} from 'react';
+import {useId,useMemo} from 'react';
 import {ArrowUpRight,CheckCheck,ListTodo,MessageCircleQuestion} from 'lucide-react';
 import {meetingReaderModel} from './meetingReaderModel';
 
 /** The saved decisions and arrangements, with their original qualifications. */
-export function MeetingActions({markdown,onLocate,onLocateTranscript,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;onLocateTranscript?:(text:string)=>void;reviewPending?:boolean}){
+export function MeetingActions({markdown,onLocate,onLocateTranscript,decisionQuotes,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;reviewPending?:boolean}){
+ const sourceId=useId();
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
  const groups=model.groups.filter(group=>group.id!=='discussionQuestions');
  const requirements=reviewPending?model.sections.find(section=>section.title==='执行要求（待复核）'):undefined;
@@ -20,10 +21,18 @@ export function MeetingActions({markdown,onLocate,onLocateTranscript,reviewPendi
   </section>:null}
   {groups.map(group=>{const Icon=icons[group.id];return <section className="meeting-action-group" key={group.id} aria-label={group.label}>
    <h3><Icon size={16} aria-hidden="true"/>{group.label}<span>{group.items.length}</span></h3>
-   <ul>{group.items.map((item,index)=><li key={index}>
-    <div>{item.qualifier&&<span className="meeting-action-qualifier">{item.qualifier}</span>}<p>{item.body}</p></div>
-    <button type="button" className="meeting-action-source" onClick={()=>onLocate(item.section,item.text)}>原文<ArrowUpRight size={13} aria-hidden="true"/></button>
-   </li>)}</ul>
+   <ul>{group.items.map((item,index)=>{
+    const decision=item.section===model.decisions?.title;
+    const quote=decision&&!reviewPending&&onLocateTranscript?decisionQuotes?.get(item.text.trim())?.[0]:undefined;
+    const returnId=`${sourceId}-${group.id}-${index}`;
+    return <li key={index}>
+     <div>{item.qualifier&&<span className="meeting-action-qualifier">{item.qualifier}</span>}<p>{item.body}</p></div>
+     <button type="button" id={returnId} className="meeting-action-source"
+       onClick={()=>quote&&onLocateTranscript?onLocateTranscript(quote,returnId):onLocate(item.section,item.text)}>
+       {quote?'查看转写':decision?'查看纪要':'原文'}<ArrowUpRight size={13} aria-hidden="true"/>
+     </button>
+    </li>;
+   })}</ul>
   </section>;})}
  </section>;
 }
