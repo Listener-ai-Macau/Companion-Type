@@ -91,7 +91,7 @@ pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingM
     if let Some(root)=delivery_preview_root(){
         let fields=["backend","vulkanDevice","runtimeFallback","sourceWindow","inferenceRequestAttempts","contextTokens","contextFallback",
             "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","modelLoadMode","newCloudCalls",
-            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB","reviewableDraft"];
+            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB","reviewableDraft","modelVerificationSeconds"];
         let summary=fields.into_iter().map(|key|(key.to_owned(),trace[key].clone())).collect::<serde_json::Map<_,_>>();
         let _=std::fs::write(root.join("local-minutes-delivery-trace.json"),Value::Object(summary).to_string());
     }
@@ -188,7 +188,12 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         if !assets::cpu_supported(){return Err("这台电脑暂不支持当前本地纪要引擎，可选择云端整理。".into());}
         let windows=source_windows::SourceWindows::new(&session.transcript_text)?;
         let _lease=assets::compute_lease()?;
-        let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
+        let model = assets::model_path()?;
+        let verification_started = Instant::now();
+        assets::verified(&model, assets::MODEL_BYTES, assets::MODEL_SHA)?;
+        if let Ok(mut trace) = trace.lock() {
+            trace["modelVerificationSeconds"] = json!(verification_started.elapsed().as_secs_f64());
+        }
         let pressure_retry = matches!(policy, RuntimePolicy::Application { pressure_retry: true });
         let desktop = matches!(policy, RuntimePolicy::Application { .. });
         let accelerator = match policy {

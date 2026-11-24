@@ -2,7 +2,10 @@
 //! in place and promoted by rename; generation never copies model weights.
 use std::{fs::{self,File,OpenOptions},io::Read,path::{Path,PathBuf},time::Duration};
 use serde::Deserialize;
-use sha2::{Digest,Sha256};
+use windows::Win32::Security::Cryptography::{
+    BCryptCreateHash, BCryptDestroyHash, BCryptFinishHash, BCryptHashData,
+    BCRYPT_HASH_HANDLE, BCRYPT_SHA256_ALG_HANDLE,
+};
 pub(super) const MODEL_BYTES:u64=2_740_937_888;
 pub(super) const MODEL_SHA:&str="00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4";
 const MODEL_URL:&str="https://modelscope.cn/models/unsloth/Qwen3.5-4B-GGUF/resolve/167b4afc359863325cb4164418c715421b4e9118/Qwen3.5-4B-Q4_K_M.gguf";
@@ -30,9 +33,32 @@ pub(super) fn runtime_root()->Result<PathBuf,String>{
 pub(super) fn verified(path:&Path,size:u64,sha:&str)->Result<(),String>{
     let mut file=File::open(path).map_err(|_|"本地纪要组件缺失，请先准备本地模型。")?;
     if file.metadata().map_err(|_|"无法读取本地纪要组件。")?.len()!=size{return Err("本地纪要组件大小不符，请重新准备。".into());}
-    let mut digest=Sha256::new();let mut buffer=[0u8;256*1024];
-    loop{let n=file.read(&mut buffer).map_err(|_|"无法校验本地纪要组件。")?;if n==0{break;}digest.update(&buffer[..n]);}
-    if format!("{:x}",digest.finalize())!=sha{return Err("本地纪要组件校验失败，未加载。".into());}Ok(())
+    let unable = || "无法校验本地纪要组件。".to_owned();
+    let mut hash = BCRYPT_HASH_HANDLE::default();
+    // The Windows SHA-256 provider owns the hash object storage. Stream the
+    // file and compare every byte with the same pinned digest as before.
+    unsafe { BCryptCreateHash(BCRYPT_SHA256_ALG_HANDLE, &mut hash, None, None, 0) }
+        .ok().map_err(|_| unable())?;
+    struct Hash(BCRYPT_HASH_HANDLE);
+    impl Drop for Hash {
+        fn drop(&mut self) {
+            let _ = unsafe { BCryptDestroyHash(self.0) };
+        }
+    }
+    let hash = Hash(hash);
+    let mut buffer = vec![0; 1024 * 1024];
+    loop {
+        let read = file.read(&mut buffer).map_err(|_| unable())?;
+        if read == 0 { break; }
+        unsafe { BCryptHashData(hash.0, &buffer[..read], 0) }.ok().map_err(|_| unable())?;
+    }
+    let mut digest = [0; 32];
+    unsafe { BCryptFinishHash(hash.0, &mut digest, 0) }.ok().map_err(|_| unable())?;
+    let actual = digest.iter().map(|byte| format!("{byte:02x}")).collect::<String>();
+    if actual != sha {
+        return Err("本地纪要组件校验失败，未加载。".into());
+    }
+    Ok(())
 }
 pub(super) fn runtime()->Result<PathBuf,String>{
     let root=runtime_root()?;
@@ -133,11 +159,22 @@ pub(super) fn prepare()->Result<(),String>{
 #[cfg(test)]
 mod tests{
     use super::*;
+    use sha2::{Digest, Sha256};
     #[test]
     fn local_minutes_asset_verification_checks_bytes_and_hash_without_replacing(){
         let root=std::env::temp_dir().join(format!("local-minutes-assets-{}",uuid::Uuid::new_v4()));fs::create_dir(&root).unwrap();
         let file=root.join("fixture");fs::write(&file,b"original").unwrap();let hash=format!("{:x}",Sha256::digest(b"original"));
         assert!(verified(&file,8,&hash).is_ok());assert!(verified(&file,7,&hash).is_err());assert!(verified(&file,8,MODEL_SHA).is_err());
-        assert_eq!(fs::read(&file).unwrap(),b"original");fs::remove_file(file).unwrap();fs::remove_dir(root).unwrap();
+        assert_eq!(fs::read(&file).unwrap(), b"original");
+        let mut multi_chunk = vec![0x5a_u8; 1024 * 1024 + 113];
+        fs::write(&file, &multi_chunk).unwrap();
+        let expected = format!("{:x}", Sha256::digest(&multi_chunk));
+        assert!(verified(&file, multi_chunk.len() as u64, &expected).is_ok());
+        let end = multi_chunk.len() - 1;
+        multi_chunk[end] ^= 0x33;
+        fs::write(&file, &multi_chunk).unwrap();
+        assert!(verified(&file, multi_chunk.len() as u64, &expected).is_err());
+        fs::remove_file(file).unwrap();
+        fs::remove_dir(root).unwrap();
     }
 }
