@@ -67,7 +67,7 @@ enum RuntimePolicy<'a> {
     Application { pressure_retry: bool },
 }
 
-fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&str>,context:transport::Context,pressure_retry:bool)->Result<Vec<String>,String>{
+fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&str>,context:transport::Context,pressure_retry:bool,batch_threads:usize)->Result<Vec<String>,String>{
     let model=model.to_str().ok_or("无法读取本地模型路径。")?;
     let profile=transport::profile()?;
     let template=json!({"enable_thinking":profile["enableThinking"]}).to_string();
@@ -76,7 +76,7 @@ fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&
     let (layers,load_mode)=if device.is_some(){("99","none")}else{("0","mmap")};
     let prompt_cache = if pressure_retry && device.is_none() { "0" } else { "256" };
     let mut args=["-m",model,"--host","127.0.0.1","--port",&port.to_string(),"--api-key",key,"--alias",alias,
-        "-c",&context.tokens().to_string(),"-np","1","-ngl",layers,"-t","4","-tb","4","-b","128","-ub","64",
+        "-c",&context.tokens().to_string(),"-np","1","-ngl",layers,"-t","4","-tb",&batch_threads.to_string(),"-b","128","-ub","64",
         "--fit","off","--load-mode",load_mode,"--no-repack","--cache-ram",prompt_cache,"-lv","0",
         "--no-warmup","--no-context-shift","--no-webui","--chat-template-kwargs",&template]
         .into_iter().map(str::to_owned).collect::<Vec<_>>();
@@ -91,7 +91,7 @@ pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingM
     if let Some(root)=delivery_preview_root(){
         let fields=["backend","vulkanDevice","runtimeFallback","sourceWindow","inferenceRequestAttempts","contextTokens","contextFallback",
             "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","modelLoadMode","newCloudCalls",
-            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB","reviewableDraft","modelVerificationSeconds"];
+            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB","cpuBatchThreads","reviewableDraft","modelVerificationSeconds"];
         let summary=fields.into_iter().map(|key|(key.to_owned(),trace[key].clone())).collect::<serde_json::Map<_,_>>();
         let _=std::fs::write(root.join("local-minutes-delivery-trace.json"),Value::Object(summary).to_string());
     }
@@ -245,6 +245,10 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         };
         let empty_prefix = source_checkpoint::CheckedSourcePrefix::default();
         let reused = if desktop && accelerator.is_some() { &empty_prefix } else { reused };
+        // Parallelize prompt input while keeping the generation worker count.
+        // GPU and memory-pressure retries continue to use four batch workers.
+        let batch_threads = if desktop && accelerator.is_none() && !pressure_retry
+            && std::thread::available_parallelism().is_ok_and(|cores| cores.get() >= 8) { 8 } else { 4 };
         if let Ok(mut trace) = trace.lock() {
             trace["reusedSourceWindows"] = json!(reused.len());
             trace["freshWholeRun"] = json!(reused.len() == 0);
@@ -254,6 +258,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             trace["backend"] = json!(if accelerator.is_some() { "vulkan" } else { "cpu" });
             if accelerator.is_none() {
                 trace["cpuPromptCacheMiB"] = json!(if pressure_retry { 0 } else { 256 });
+                trace["cpuBatchThreads"] = json!(batch_threads);
             }
             trace["modelLoadMode"] = json!(if accelerator.is_some() { "none" } else { "mmap" });
             if let Some((_, device)) = &accelerator {
@@ -267,7 +272,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         let program=runtime.to_str().ok_or("本地纪要引擎路径无效。")?;
         let cancellation=super::super::meeting_processing_job::current();
         let run = |context, earlier: &ContextRetry| {
-            let args=arguments(&model,port,&key,&alias,accelerator.as_ref().map(|(_,device)|device.as_str()),context,pressure_retry)?;
+            let args=arguments(&model,port,&key,&alias,accelerator.as_ref().map(|(_,device)|device.as_str()),context,pressure_retry,batch_threads)?;
             if let Ok(mut trace)=trace.lock() {
                 trace["stage"]=json!("loading-engine");
                 trace["contextTokens"]=json!(context.tokens());
@@ -491,7 +496,9 @@ mod tests{
     use super::*;
     #[test]
     fn local_minutes_arguments_keep_the_proven_cpu_memory_profile_and_loopback(){
-        let args=arguments(std::path::Path::new("C:/fixture/model.gguf"),12345,"test-key","test-model",None,transport::Context::ReducedCpu,false).unwrap();
+        let args=arguments(std::path::Path::new("C:/fixture/model.gguf"),12345,"test-key","test-model",None,transport::Context::ReducedCpu,false,8).unwrap();
+        assert!(args.windows(2).any(|pair| pair[0] == "-tb" && pair[1] == "8"));
+        assert!(args.windows(2).any(|pair| pair[0] == "-t" && pair[1] == "4"));
         assert!(args.windows(2).any(|p|p==["--load-mode","mmap"]));assert!(args.contains(&"--no-repack".into()));
         assert!(args.windows(2).any(|p|p==["-ngl","0"]));assert!(args.windows(2).any(|p|p==["--host","127.0.0.1"]));
         assert!(args.windows(2).any(|p|p==["--cache-ram","256"]));
@@ -500,7 +507,7 @@ mod tests{
     #[test]
     fn local_minutes_vulkan_streams_the_same_model_with_the_same_context(){
         let model=std::path::Path::new("C:/fixture/model.gguf");
-        let args=arguments(model,12345,"test-key","test-model",Some("Vulkan0"),transport::Context::Full,false).unwrap();
+        let args=arguments(model,12345,"test-key","test-model",Some("Vulkan0"),transport::Context::Full,false,4).unwrap();
         for pair in [["-m","C:/fixture/model.gguf"],["--load-mode","none"],["-ngl","99"],
             ["--device","Vulkan0"],["-c","16384"],["--cache-ram","256"]] {
             assert!(args.windows(2).any(|actual|actual==pair));
