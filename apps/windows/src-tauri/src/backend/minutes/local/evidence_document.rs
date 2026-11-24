@@ -174,6 +174,9 @@ pub(super) fn parse_with_details_limit(
     }
     let mut hidden_details=0;
     let mut adjusted_titles = Vec::new();
+    let original_titles = topics.iter().filter_map(|topic| topic["title"].as_str().map(str::to_owned))
+        .collect::<std::collections::HashSet<_>>();
+    let mut used_titles = std::collections::HashSet::new();
     let mut visible_detail_kinds = Vec::with_capacity(topics.len());
     for(i,topic)in topics.iter_mut().enumerate(){
         let visible_text = if let Some(limits) = reader_limits {
@@ -209,20 +212,25 @@ pub(super) fn parse_with_details_limit(
                 bind(entry, format!("topics[{i}].{name}[{j}]"))?;
             }
         }
-        // Compact reading can hide the only source for a proposed heading.
-        // Replace that heading before validation without touching the claims,
-        // citations, owners or dates in the visible document.
-        if reader_limits.is_some() {
-            let originals = ["points", "details"].into_iter()
-                .flat_map(|section| topic[section].as_array().into_iter().flatten())
-                .flat_map(|entry| entry["sources"].as_array().into_iter().flatten())
-                .filter_map(|source| known.get(source.as_str()?).copied())
-                .collect::<Vec<_>>().join("\n");
-            if topic["title"].as_str().is_some_and(|title| {
+        // Partitioned reading may repeat a heading. Its visible points
+        // may also lose the evidence for a caption when details are hidden.
+        // Keep section identity independent of the claims and citations.
+        if let Some(title) = topic["title"].as_str() {
+            let lacks_evidence = reader_limits.is_some() && {
+                let originals = ["points", "details"].into_iter()
+                    .flat_map(|section| topic[section].as_array().into_iter().flatten())
+                    .flat_map(|entry| entry["sources"].as_array().into_iter().flatten())
+                    .filter_map(|source| known.get(source.as_str()?).copied())
+                    .collect::<Vec<_>>().join("\n");
                 !canonical_brief::local_document::identifiers_bound(title, &originals)
-            }) {
+            };
+            if lacks_evidence || !used_titles.insert(title.to_owned()) {
                 let ordinal = TOPIC_ORDINALS.get(i).ok_or("本地纪要主题过多。")?;
-                topic["title"] = json!(format!("第{ordinal}项讨论"));
+                let replacement = std::iter::once(format!("第{ordinal}项讨论"))
+                    .chain(TOPIC_ORDINALS.iter().map(|suffix| format!("第{ordinal}项讨论（分段{suffix}）")))
+                    .find(|candidate| !original_titles.contains(candidate) && used_titles.insert(candidate.clone()))
+                    .ok_or("本地纪要主题过多。")?;
+                topic["title"] = json!(replacement);
                 adjusted_titles.push(i);
             }
         }
@@ -319,6 +327,26 @@ mod tests{
         d["topics"][0]["points"][0]["text"] = json!("预算30000元未批准。");
         assert!(parse_with_details_limit(&d.to_string(), &s, &b, 8, Some(&[0]), &[]).is_err());
     }
+    #[test]
+    fn repeated_reader_headings_keep_distinct_bodies_and_anchors() {
+        for limits in [None, Some(&[0, 0, 0][..])] {
+            let (s, b, mut d) = fixture();
+            let second = json!({"title":"上线前提","points":[{"kind":"status",
+                "text":"测试未通过不能上线。","evidence":[{"source":"u000","quote":"测试未通过不能上线。"}]}],"details":[]});
+            let third = json!({"title":"第二项讨论","points":[{"kind":"status",
+                "text":"预算10000元未批准。","evidence":[{"source":"u000","quote":"预算10000元未批准"}]}],"details":[]});
+            let topics = d["topics"].as_array_mut().unwrap();
+            topics.extend([second, third]);
+            let parsed = parse_with_details_limit(&d.to_string(), &s, &b, 8, limits, &[]).unwrap();
+            assert_eq!(parsed.minutes.keywords, ["上线前提", "第二项讨论（分段一）", "第二项讨论"]);
+            assert_eq!(parsed.receipt["topicTitlesReplacedAfterSourceCheck"], json!([1]));
+            assert_eq!(parsed.receipt["evidenceAnchors"].as_array().unwrap().len(), 4);
+            assert!(parsed.minutes.markdown.contains("测试未通过不能上线。"));
+            assert!(parsed.minutes.markdown.contains("预算10000元未批准。"));
+            assert_eq!(parsed.minutes.action_items.len(), 1);
+        }
+    }
+
     #[test]
     fn compact_reader_does_not_print_hidden_details_or_their_quotes() {
         let(mut s,b,mut d)=fixture();
