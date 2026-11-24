@@ -323,6 +323,12 @@ mod tests{
                 let result=output.join(key);
                 fs::create_dir(&result).unwrap();
                 fs::write(result.join("candidate.txt"),&rendered.minutes.markdown).unwrap();
+                if std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_SAVE_MINUTES").is_some() {
+                    let finalized = super::super::finish_desktop_minutes(
+                        &session, &base, Ok(rendered.minutes.clone()), &mut Value::Null, None,
+                    ).unwrap();
+                    save_new(&result.join("candidate.json"), &serde_json::to_value(finalized).unwrap()).unwrap();
+                }
                 if let Some((core_only, with_sources)) = core_only {
                     fs::write(result.join("core-only.txt"), &core_only.minutes.markdown).unwrap();
                     fs::write(result.join("core-with-source-marks.txt"), &with_sources.minutes.markdown).unwrap();

@@ -131,6 +131,7 @@ import {
   companionStoredActionSources,
   companionStoredActionQuotes,
   companionStoredDecisionQuotes,
+  companionStoredQuestionQuotes,
   companionTranscriptSources,
   companionTranscriptSourceIsCurrent,
   type CompanionTranscriptSource,
@@ -1322,6 +1323,8 @@ export function CompanionDashboard({
     ? companionStoredActionQuotes(verifiedActionEvidence) : undefined, [verifiedActionEvidence]);
   const storedDecisionQuotes = useMemo(() => verifiedActionEvidence
     ? companionStoredDecisionQuotes(verifiedActionEvidence) : undefined, [verifiedActionEvidence]);
+  const storedQuestionQuotes = useMemo(() => verifiedActionEvidence
+    ? companionStoredQuestionQuotes(verifiedActionEvidence) : undefined, [verifiedActionEvidence]);
   const sourceContext = useRef({ session: selectedSession, blocked: false });
   // Preparing the selected audio itself temporarily makes the app busy.  Once
   // a seek starts, validate the actual source and recording, not that transient
@@ -1444,7 +1447,8 @@ export function CompanionDashboard({
                 actionsBlocked={recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||selectedMinutesStale||minutesIncomplete
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
-                 storedActionSources={storedActionSources} storedActionQuotes={storedActionQuotes} decisionQuotes={storedDecisionQuotes}
+                 storedActionSources={storedActionSources} storedActionQuotes={storedActionQuotes}
+                 decisionQuotes={storedDecisionQuotes} questionQuotes={storedQuestionQuotes}
                 blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
                 onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?(text,returnId,preferExact)=>{
                   setMeetingPane('source');setSourceSelection(null);
@@ -4019,9 +4023,10 @@ function meetingSource(session: CompanionV1HostSession): string {
   return '演示记录';
 }
 
-function MinutesReadingView({decisionQuotes,...props}:Parameters<typeof MinutesReadingBody>[0]&{decisionQuotes?:ReadonlyMap<string,string[]>}) {
+function MinutesReadingView({decisionQuotes,questionQuotes,...props}:Parameters<typeof MinutesReadingBody>[0]&{
+    decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>}) {
   const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
-  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes}
+  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes}
     onLocateTranscript={!props.blocked&&props.onShowTranscript?(text,returnId)=>props.onShowTranscript?.(text,returnId,true):undefined} blocked={props.blocked}>
     <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
     {reading.review.trim()?<MeetingDisclosure className="ct-full-minutes ct-source-review" title="原话与待核对内容" description="核对来源，不作为已确认结论">

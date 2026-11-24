@@ -623,7 +623,7 @@ pub struct CompanionV1ActionItem {
     pub due: Option<String>,
 }
 
-/// A generated action or decision is tied to the transcript used for that generation.
+/// Saved outcomes are tied to the transcript used for generation.
 /// Older minutes without saved evidence fall back to text search.
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -633,6 +633,8 @@ pub struct CompanionV1MinutesActionEvidence {
     pub actions: Vec<CompanionV1ActionCitation>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub decisions: Vec<CompanionV1ActionCitation>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub questions: Vec<CompanionV1ActionCitation>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

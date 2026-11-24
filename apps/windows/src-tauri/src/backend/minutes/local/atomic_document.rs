@@ -2060,6 +2060,7 @@ struct ChapterFocus {
     overview: String,
     primary_facts: Vec<String>,
     agenda_fact: Option<String>,
+    title_restrictions: HashSet<String>,
 }
 
 fn stated_meeting_agenda(bank: &Bank) -> Option<(&str, &str)> {
@@ -2223,6 +2224,7 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
     let mut topics: BTreeMap<_, _> = THEME_IDS.iter().map(|id| (id.to_string(), None)).collect();
     let mut assignments = BTreeMap::new();
     let mut chapter_focus = BTreeMap::new();
+    let mut title_restrictions = HashSet::new();
     for (index, span) in bank.chapter_spans.iter().enumerate() {
         let key = THEME_IDS[index];
         let description = descriptions.remove(key).ok_or_else(fail)?;
@@ -2234,33 +2236,50 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
         if !(1..=2).contains(&labels.len()) || (labels.len() == 2 && labels[0] == labels[1]) {
             return Err(label_error());
         }
-        let fits_chapter = |label: &str| super::source_grounding::named_place_context(label)
+        let valid_place = |label: &str| super::source_grounding::named_place_context(label)
             .is_none_or(|place| rows.iter().all(|fact| bank.reader_places.get(&fact.id)
                 .is_none_or(|actual| actual == place)));
-        let mut labels = labels.into_iter().filter(|label| fits_chapter(label)).collect::<Vec<_>>();
-        if labels.is_empty() {
-            labels.extend(choices.values().map(String::as_str).find(|label| fits_chapter(label)));
+        let mut selected_labels = labels.into_iter().filter(|label| valid_place(label)).collect::<Vec<_>>();
+        if selected_labels.is_empty() {
+            selected_labels.extend(choices.values().map(String::as_str).find(|label| valid_place(label)));
         }
-        let title = match labels.as_slice() {
+        let omits_negation = |label: &str| {
+            super::chapter_labels::omits_negated_change(label, rows.iter().map(|fact| fact.text.as_str()))
+        };
+        for label in selected_labels.iter().copied().filter(|label| omits_negation(label)) {
+            if let Some(fact) = rows.iter().find(|fact|
+                super::chapter_labels::omits_negated_change(label, std::iter::once(fact.text.as_str()))
+            ) {
+                title_restrictions.insert(fact.id.clone());
+            }
+        }
+        let safe_to_print = |label: &str| valid_place(label) && !omits_negation(label);
+        let mut visible_labels = selected_labels.iter().copied().filter(|label| safe_to_print(label)).collect::<Vec<_>>();
+        if visible_labels.is_empty() {
+            visible_labels.extend(choices.values().map(String::as_str).find(|label| safe_to_print(label)));
+        }
+        let join_title = |labels: &[&str]| match labels {
             [] => format!("第{}项讨论", super::evidence_document::TOPIC_ORDINALS[index]),
             [first, second] if first.contains(*second) => (*first).to_owned(),
             [first, second] if second.contains(*first) => (*second).to_owned(),
             _ => labels.join("、"),
         };
+        let source_title = join_title(&selected_labels);
+        let title = join_title(&visible_labels);
         let main: HashSet<_> = description.main_facts.iter().map(String::as_str).collect();
         let chosen = if bank.reader_order.is_empty() {
             let allowed: HashSet<_> = bank.chapter_point_choices[index].iter().map(|pos| rows[*pos].id.as_str()).collect();
             if main.is_empty() || main.len() > CHAPTER_HIGHLIGHTS || main.len() != description.main_facts.len() || !main.is_subset(&allowed) {
                 return Err(fail());
             }
-            reader_selection(rows, &description.main_facts, &allowed, &heading_terms(&title), bank)
+            reader_selection(rows, &description.main_facts, &allowed, &heading_terms(&source_title), bank)
         } else {
             description.main_facts.iter().map(|id| {
                 rows.iter().copied().find(|fact| &fact.id == id && bank.reader_order.contains_key(id)).ok_or_else(fail)
             }).collect::<Result<Vec<_>, _>>()?
         };
         let next_slot = title_slots.len();
-        let slot = *title_slots.entry(title.clone()).or_insert(next_slot);
+        let slot = *title_slots.entry((source_title, title.clone())).or_insert(next_slot);
         let topic = THEME_IDS[slot];
         topics.insert(topic.to_string(), Some(title.clone()));
         for fact in rows {
@@ -2311,7 +2330,7 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
             None => (format!("这场会议讨论了{subject_list}。"), None),
         },
     };
-    let overview = ChapterFocus { overview, primary_facts, agenda_fact };
+    let overview = ChapterFocus { overview, primary_facts, agenda_fact, title_restrictions };
     Ok((Organization {
         purpose_fact: first,
         topics: super::source_windows::UniqueMap(topics),
@@ -2522,9 +2541,13 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let mut remainder=Vec::new();
         for (index,(fact,main)) in items.into_iter().enumerate(){
             let size=reader_fact_length(bank,fact);
+            let has_title_restriction = focus.as_ref().is_some_and(|focus| focus.title_restrictions.contains(&fact.id));
+            if has_title_restriction {
+                linked_details.insert(fact.id.as_str(), "negated-heading-context");
+            }
             if index==0 || reserved.contains(fact.id.as_str()){
                 points.push([&fact.id]);
-            }else if bank.required_topic(&fact.id){
+            }else if bank.required_topic(&fact.id) || has_title_restriction {
                 required.push([&fact.id]);
             }else if main && points.len()<3 && size<=optional_chars && useful_reader_point(fact){
                 optional_chars-=size;points.push([&fact.id]);
@@ -3207,6 +3230,10 @@ fn assemble_with_context(
             closing_actions.push((path,handoff));
         }
     }
+    let (decision_paths, pending_decisions) = review_unclear_decisions(&mut document)?;
+    for (pointer, _) in &mut layout_bindings {
+        if let Some(new_path) = decision_paths.get(pointer) { *pointer = new_path.clone(); }
+    }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
     let mut parsed = super::evidence_document::parse_with_details_limit(
         &document.to_string(),session,base,MAX_FACTS,reader_limit,&detail_kinds,
@@ -3248,6 +3275,7 @@ fn assemble_with_context(
                 review_revision: session.transcript_review.as_ref().map(|review|review.revision),
                 actions: Vec::new(),
                 decisions: Vec::new(),
+                questions: Vec::new(),
             });
             evidence.actions = actions;
         }
@@ -3263,7 +3291,9 @@ fn assemble_with_context(
     {
         return Err(fail());
     }
-    let bindings: HashMap<_,_> = result.bindings.iter().map(|(pointer,id)|(id.as_str(),pointer.as_str())).collect();
+    let bindings: HashMap<_,_> = result.bindings.iter().map(|(pointer,id)| {
+        (id.as_str(), decision_paths.get(pointer).unwrap_or(pointer).as_str())
+    }).collect();
     let requirements = bank.facts.iter().filter_map(|fact| {
         bank.required_role(fact).or_else(|| linked_details.get(fact.id.as_str()).copied())
             .map(|role| (fact, role))
@@ -3338,12 +3368,61 @@ fn assemble_with_context(
     parsed.receipt["sourceQuoteFactIds"] = json!(source_quote_ids);
     parsed.receipt["factBodiesUnchangedAfterOrganization"]=json!(true);
     parsed.receipt["explicitReaderRecommendations"]=json!(reader_recommendations);
+    if !pending_decisions.is_empty() {
+        parsed.receipt["unclearDecisionExecutors"] = json!(pending_decisions);
+    }
     Ok(parsed)
+}
+
+fn review_unclear_decisions(document: &mut Value) -> Result<(HashMap<String, String>, Vec<String>), String> {
+    let original = std::mem::take(document["decisions"].as_array_mut().ok_or_else(fail)?);
+    let mut decided = Vec::with_capacity(original.len());
+    let questions = document["questions"].as_array_mut().ok_or_else(fail)?;
+    let mut paths = HashMap::new();
+    let mut pending = Vec::new();
+    for (index, mut entry) in original.into_iter().enumerate() {
+        let from = format!("/decisions/{index}");
+        let unresolved = entry["text"].as_str().and_then(super::source_grounding::unclear_assigned_step)
+            .filter(|step| entry["evidence"].as_array().into_iter().flatten().any(|citation| {
+                citation["quote"].as_str().and_then(super::source_grounding::unclear_assigned_step) == Some(*step)
+            }));
+        if let Some(step) = unresolved {
+            entry["text"] = json!(format!("待核对：{step}。执行人未明确。"));
+            pending.push(from.clone());
+            if questions.len() < canonical_brief::question_limit(MAX_FACTS) {
+                paths.insert(from, format!("/questions/{}", questions.len()));
+                questions.push(entry);
+                continue;
+            }
+        }
+        if decided.len() != index {
+            paths.insert(from, format!("/decisions/{}", decided.len()));
+        }
+        decided.push(entry);
+    }
+    document["decisions"] = Value::Array(decided);
+    Ok((paths, pending))
 }
 
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn unresolved_decision_executor_goes_to_questions_with_the_original_quote() {
+        let quote = "我们决定由员工独主管，直接联系供应商核对清单。";
+        let mut doc = json!({"decisions":[
+            {"text":"由员工独主管，直接联系供应商核对清单","evidence":[{"source":"u000","quote":quote}]},
+            {"text":"请员工和主管，分别核对一份清单。","evidence":[{"source":"u001","quote":"请员工和主管，分别核对一份清单。"}]}
+        ], "questions":[]});
+        let (paths, pending) = review_unclear_decisions(&mut doc).unwrap();
+        assert_eq!(pending, ["/decisions/0"]);
+        assert_eq!(paths["/decisions/0"], "/questions/0");
+        assert_eq!(paths["/decisions/1"], "/decisions/0");
+        assert_eq!(doc["questions"][0]["text"], "待核对：直接联系供应商核对清单。执行人未明确。");
+        assert_eq!(doc["questions"][0]["evidence"][0]["quote"], quote);
+        assert_eq!(doc["decisions"][0]["text"], "请员工和主管，分别核对一份清单。");
+    }
 
     #[test]
     fn closing_commitments_preserve_the_groups_that_accepted_them() {

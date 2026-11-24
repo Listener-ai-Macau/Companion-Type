@@ -3,7 +3,7 @@ import {ArrowUpRight,CheckCheck,ListTodo,MessageCircleQuestion} from 'lucide-rea
 import {meetingReaderModel} from './meetingReaderModel';
 
 /** The saved decisions and arrangements, with their original qualifications. */
-export function MeetingActions({markdown,onLocate,onLocateTranscript,decisionQuotes,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;reviewPending?:boolean}){
+export function MeetingActions({markdown,onLocate,onLocateTranscript,decisionQuotes,questionQuotes,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;reviewPending?:boolean}){
  const sourceId=useId();
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
  const groups=model.groups.filter(group=>group.id!=='discussionQuestions');
@@ -23,13 +23,15 @@ export function MeetingActions({markdown,onLocate,onLocateTranscript,decisionQuo
    <h3><Icon size={16} aria-hidden="true"/>{group.label}<span>{group.items.length}</span></h3>
    <ul>{group.items.map((item,index)=>{
     const decision=item.section===model.decisions?.title;
-    const quote=decision&&!reviewPending&&onLocateTranscript?decisionQuotes?.get(item.text.trim())?.[0]:undefined;
+    const question=item.section===model.questions?.title;
+    const quotes=decision?decisionQuotes:question?questionQuotes:undefined;
+    const quote=!reviewPending&&onLocateTranscript?quotes?.get(item.text.trim())?.[0]:undefined;
     const returnId=`${sourceId}-${group.id}-${index}`;
     return <li key={index}>
      <div>{item.qualifier&&<span className="meeting-action-qualifier">{item.qualifier}</span>}<p>{item.body}</p></div>
      <button type="button" id={returnId} className="meeting-action-source"
        onClick={()=>quote&&onLocateTranscript?onLocateTranscript(quote,returnId):onLocate(item.section,item.text)}>
-       {quote?'查看转写':decision?'查看纪要':'原文'}<ArrowUpRight size={13} aria-hidden="true"/>
+       {quote?'查看转写':decision||question?'查看纪要':'原文'}<ArrowUpRight size={13} aria-hidden="true"/>
      </button>
     </li>;
    })}</ul>

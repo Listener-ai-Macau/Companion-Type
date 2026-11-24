@@ -14,6 +14,54 @@ pub(super) fn segmenter() -> &'static Jieba {
     SEGMENTER.get_or_init(Jieba::new)
 }
 
+/// A noun can name a topic even inside a negative statement. An extracted
+/// change or promise is different: its title must not drop the restriction.
+pub(super) fn omits_negated_change<'a>(label: &str, facts: impl Iterator<Item = &'a str>) -> bool {
+    const CHANGES: &[&str] = &[
+        "降低", "提高", "下调", "上调", "增加", "减少", "扩大", "缩减", "取消", "停止",
+        "暂停", "提前", "推迟", "延期", "允许", "采用", "启用", "发布", "上线", "交付",
+        "实施", "批准", "签署", "替代", "取代", "支付", "开放", "恢复",
+    ];
+    const NEGATION: &[&str] = &["不", "未", "没有"];
+    static NEGATED_PREFIX: OnceLock<regex::Regex> = OnceLock::new();
+    if !CHANGES.iter().any(|change| label.contains(change))
+        || NEGATION.iter().any(|cue| label.contains(cue))
+    {
+        return false;
+    }
+    let negated_prefix = NEGATED_PREFIX.get_or_init(|| regex::Regex::new(
+        r"(?:不会|不能|不得|不再|不应|未能|没有|不|未)(?:说|再|继续)?(?:(?:因为|由于|因)[\p{Han}]{0,10})?\s*$"
+    ).expect("bounded negation before a chapter label"));
+    let mut negated = false;
+    for text in facts {
+        for (start, _) in text.match_indices(label) {
+            let prefix = text[..start].rsplit(['，','。','；','！','？',',',';','\n']).next().unwrap_or("");
+            if !negated_prefix.is_match(prefix) {
+                return false;
+            }
+            negated = true;
+        }
+    }
+    negated
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn titles_only_suppress_changes_confined_to_negative_clauses() {
+        let exam = "按正常标准出，不会不会说因为疫情降低标准。";
+        assert!(omits_negated_change("疫情降低标准", [exam].into_iter()));
+        assert!(omits_negated_change("降低标准", [exam].into_iter()));
+        assert!(!omits_negated_change("疫情", [exam].into_iter()));
+        assert!(!omits_negated_change("不会因为疫情降低标准", [exam].into_iter()));
+        assert!(!omits_negated_change("降低标准", [exam, "补考试卷可以降低标准。"].into_iter()));
+        assert!(omits_negated_change("推迟交付", ["这批没有推迟交付。"].into_iter()));
+        assert!(!omits_negated_change("上线", ["已经完成样品，不用周报。计划月底上线。"].into_iter()));
+    }
+}
+
 /// Build a small vocabulary for each chapter solely from contiguous source text.
 pub(super) fn rank(chapters: &[&[&str]]) -> Vec<Vec<String>> {
     let jieba = segmenter();

@@ -119,6 +119,10 @@ export function companionStoredDecisionQuotes(evidence: CompanionMinutesActionEv
   return storedQuotes(evidence.decisions ?? []);
 }
 
+export function companionStoredQuestionQuotes(evidence: CompanionMinutesActionEvidence): ReadonlyMap<string, string[]> {
+  return storedQuotes(evidence.questions ?? []);
+}
+
 function storedQuotes(items: readonly {text:string;transcriptQuotes?:string[]}[]): ReadonlyMap<string, string[]> {
   const links = new Map<string, string[]>();
   for (const item of items) {

@@ -258,14 +258,15 @@ pub(super) fn parse_with_details_limit(
         }).collect::<Vec<_>>()
     };
     let decisions = anchored_quotes("decisions", parsed.minutes.decisions.iter().map(String::as_str).collect());
+    let questions = anchored_quotes("questions", parsed.minutes.questions.iter().map(String::as_str).collect());
     let actions = if session.source == "importedTranscript" && session.utterances.is_empty() {
         anchored_quotes("actionItems", parsed.minutes.action_items.iter().map(|item| item.text.as_str()).collect())
     } else { Vec::new() };
-    if !actions.is_empty() || !decisions.is_empty() {
+    if !actions.is_empty() || !decisions.is_empty() || !questions.is_empty() {
         parsed.minutes.source_action_evidence = Some(CompanionV1MinutesActionEvidence {
             transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
             review_revision: session.transcript_review.as_ref().map(|review|review.revision),
-            actions, decisions,
+            actions, decisions, questions,
         });
     }
     parsed.receipt["evidenceAnchors"]=json!(anchors);

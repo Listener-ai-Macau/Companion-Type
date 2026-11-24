@@ -121,6 +121,20 @@ pub(super) fn has_open_qualifier(text: &str) -> bool {
     OPEN_QUANTITY.iter().any(|cue| text.contains(cue))
 }
 
+/// Do not silently choose an executor when an assignment's spoken actor
+/// contains two distinct roles joined by a stranded restriction.
+pub(super) fn unclear_assigned_step(text: &str) -> Option<&str> {
+    const ACTOR: &str = r"学生|孩子们?|同学们?|家长|老师|教师|员工|职工|同事|主任|主管|经理|组长|负责人|供应商|客户";
+    static ASSIGNMENT: LazyLock<Regex> = LazyLock::new(|| Regex::new(&format!(
+        r"(?:让|由|请|安排)(?P<first>{ACTOR})(?:独|单|只|仅)(?P<other>{ACTOR})[，,]\s*(?P<step>(?:单独|直接|先|统一|分别)?(?:到|去|前往|把|负责|联系|领取|接收|提交|办理|完成|核对)[^。；！？\r\n]{{2,70}})(?:[。；！？\r\n]|$)"
+    )).expect("assignment with a stranded actor restriction"));
+    let parsed = ASSIGNMENT.captures(text)?;
+    let first = parsed.name("first")?.as_str().trim_end_matches('们');
+    let other = parsed.name("other")?.as_str().trim_end_matches('们');
+    if first == other { return None; }
+    Some(parsed.name("step")?.as_str().trim_end_matches(['，',',',' ']))
+}
+
 pub(super) fn crosses_negated_cost_comparison(claim: &str, source: &str) -> bool {
     static NEGATED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:没有|不比|并不)[^，。；,;]{0,22}(?:更高|高于|贵于)"

@@ -72,19 +72,22 @@ assert.equal(tree.root.findAll(n=>n.type==='details'&&n.props.className==='minut
 assert.deepEqual(publicActions.actionItems.map(item=>item.text),publicSource.split('\n').map(line=>line.slice(2)));
 act(()=>tree.unmount());
 {
-  const decisionMarkdown='## Decisions\n\n- 未通过测试前不上线。\n- 当前预算还未批准。\n';
+  const decisionMarkdown='## Decisions\n\n- 未通过测试前不上线。\n- 当前预算还未批准。\n\n## Open Questions\n\n- 待核对：联系供应商。执行人未明确。\n';
   const locators:string[]=[];
   let decisionView:ReturnType<typeof create>;
   act(()=>{decisionView=create(<MeetingActions markdown={decisionMarkdown}
     decisionQuotes={new Map([['未通过测试前不上线。',['测试未通过不能上线。']]])}
+    questionQuotes={new Map([['待核对：联系供应商。执行人未明确。',['让员工独主管，联系供应商。']]])}
     onLocate={(_section,text)=>locators.push(text??'')}
     onLocateTranscript={text=>locators.push(text)}/>);});
   const buttons=decisionView!.root.findAllByType('button');
   assert.equal(buttons[0].props.children[0],'查看转写');
   assert.equal(buttons[1].props.children[0],'查看纪要');
+  assert.equal(buttons[2].props.children[0],'查看转写');
   act(()=>buttons[0].props.onClick());
   act(()=>buttons[1].props.onClick());
-  assert.deepEqual(locators,['测试未通过不能上线。','当前预算还未批准。']);
+  act(()=>buttons[2].props.onClick());
+  assert.deepEqual(locators,['测试未通过不能上线。','当前预算还未批准。','让员工独主管，联系供应商。']);
   act(()=>decisionView!.unmount());
 }
 console.log('PASS saved-action filters, exact decision originals, export scope and native mobile review. No model, external send or source mutation.');
