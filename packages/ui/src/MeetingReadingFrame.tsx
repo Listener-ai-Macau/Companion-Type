@@ -10,7 +10,7 @@ import type {CompanionTranscriptSource} from '../../core/src/minutesSources';
 import './meetingReadingFrame.css';
 import './meetingVisual.css';
 
-export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[],onOpenSpeakerSource,onLocateTranscript,decisionQuotes,questionQuotes,blocked=false,children}:{markdown:string;title?:string;sections?:readonly string[];speakerSources?:readonly CompanionTranscriptSource[];onOpenSpeakerSource?:(source:CompanionTranscriptSource)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;blocked?:boolean;children:ReactNode}){
+export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[],onOpenSpeakerSource,onLocateTranscript,decisionQuotes,questionQuotes,actionQuotes,actionSources,blocked=false,children}:{markdown:string;title?:string;sections?:readonly string[];speakerSources?:readonly CompanionTranscriptSource[];onOpenSpeakerSource?:(source:CompanionTranscriptSource)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;actionQuotes?:ReadonlyMap<string,string[]>;actionSources?:ReadonlyMap<string,CompanionTranscriptSource[]>;blocked?:boolean;children:ReactNode}){
  const content=useRef<HTMLDivElement>(null);
  const outline=useRef<HTMLDetailsElement>(null);
  const viewControls=useRef<HTMLDivElement>(null);
@@ -92,7 +92,7 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
   <div hidden={view!=='overview'}><MeetingOverview markdown={markdown} onLocate={navigate} onRead={read}/></div>
   <div className="meeting-graphic-surface" hidden={view!=='map'}><MeetingMapView markdown={markdown} title={title} onLocate={navigate} onRead={read}/></div>
   <div hidden={view!=='speakers'}><MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/></div>
-  <div hidden={view!=='actions'}><MeetingActions markdown={markdown} onLocate={navigate} onLocateTranscript={onLocateTranscript} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes} reviewPending={reviewPending}/></div>
+  <div hidden={view!=='actions'}><MeetingActions markdown={markdown} onLocate={navigate} onLocateTranscript={onLocateTranscript} onOpenSource={blocked?undefined:onOpenSpeakerSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes} actionQuotes={actionQuotes} actionSources={actionSources} reviewPending={reviewPending}/></div>
   {view==='reading'&&<button type="button" className="meeting-reading-back" onClick={returnToNotes}><ArrowLeft size={14} aria-hidden="true"/>返回{viewLabels[returnView.current]}</button>}
   <div className="meeting-reading-content" ref={content} hidden={view!=='reading'}>{children}</div>
  </div>;

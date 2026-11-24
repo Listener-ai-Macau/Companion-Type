@@ -4026,7 +4026,7 @@ function meetingSource(session: CompanionV1HostSession): string {
 function MinutesReadingView({decisionQuotes,questionQuotes,...props}:Parameters<typeof MinutesReadingBody>[0]&{
     decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>}) {
   const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
-  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes}
+  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes} actionQuotes={props.storedActionQuotes} actionSources={props.storedActionSources}
     onLocateTranscript={!props.blocked&&props.onShowTranscript?(text,returnId)=>props.onShowTranscript?.(text,returnId,true):undefined} blocked={props.blocked}>
     <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
     {reading.review.trim()?<MeetingDisclosure className="ct-full-minutes ct-source-review" title="原话与待核对内容" description="核对来源，不作为已确认结论">

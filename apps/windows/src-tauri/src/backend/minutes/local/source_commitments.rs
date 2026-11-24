@@ -258,6 +258,92 @@ fn scoped_commitment(body: &str, institutional_voice: bool) -> Option<CompanionV
     Some(CompanionV1ActionItem { text: text.into(), owner: owner.clone(), due: None })
 }
 
+/// Preserve a time-bounded plan even when its deadline is an event rather than
+/// a calendar word and the speaker's personal name is unavailable.
+pub(super) fn event_scheduled_work(source: &str) -> Option<CompanionV1ActionItem> {
+    static TIME: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:期末考试|期中考试|升学考试|考试|考核|评审|审查|验收|复盘|发布|上线|开工|开学|开幕|闭幕|演示|彩排|演练|联调|交接|结算|盘点|迁移|发货|收货)(?:结束|开始|完成|完毕)?(?:之前|以前|前|之后|以后|后)"
+    ).expect("event-relative times"));
+    static SPEAKER: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:我们|咱们|我)(?:这边儿?)?"
+    ).expect("first-person speaker"));
+    static PROMISE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:一定会|将会|会|将|来负责|负责)"
+    ).expect("explicit first-person commitment"));
+    static BOUNDED_WORK: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:先|再|也)?(?:进行|开展|组织|举办|执行|安排|完成|开|做|跑)(?:[1-9][0-9]*|[一二两三四五六七八九十百]+)(?:次|轮|遍|场|组|项)[\p{Han}A-Za-z0-9]"
+    ).expect("intentional work with a bounded amount"));
+    static COMPLETED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:发|发送|检查|测试|准备|提交|交接|记录|整理|通知|安排|完成|做)(?:完|好)?[了过]"
+    ).expect("action already taken"));
+
+    let body = split_turn_label(source).map_or(source, |(_, words)| words);
+    let clauses: Vec<_> = body.trim_end_matches(['。', '！', ' '])
+        .split(['，', ',', '；', ';', '。']).map(str::trim).collect();
+    let uncertain = |part: &str| {
+        part.contains(['？', '?']) || contains(part, SOFT) || contains(part, NEGATION)
+            || contains(part, CONTEXT)
+            || contains(part, &["应该", "预计", "争取", "尽量", "视情况", "看情况", "据说",
+                "他会说", "他是说", "他说", "你说", "她说", "往年", "曾经", "已经", "当时", "通常"])
+    };
+    let work = |words: &str| {
+        let action = words.trim_start();
+        if !complete_piece(action) || COMPLETED.is_match(action) {
+            return false;
+        }
+        if actionable(action) || BOUNDED_WORK.is_match(action) {
+            return true;
+        }
+        ["根据", "结合", "按照", "参照"].iter().find_map(|cue| action.strip_prefix(cue))
+            .is_some_and(|details| details.char_indices().skip(2).take(18)
+                .any(|(offset, _)| actionable(&details[offset..]) && !COMPLETED.is_match(&details[offset..])))
+    };
+    for (index, clause) in clauses.iter().enumerate() {
+        if uncertain(clause) || established_routine(clause, None)
+            || index.checked_sub(1).is_some_and(|i| uncertain(clauses[i]) || conditional_clause(clauses[i]).is_some())
+            || clauses.get(index + 1).is_some_and(|next| conditional_clause(next).is_some())
+        {
+            continue;
+        }
+        let lead = clause.trim_start_matches(['嗯', '啊', '呃', ' ']);
+        let lead = ["但是", "而且", "然后", "所以", "那"].iter().find_map(|cue| lead.strip_prefix(cue)).unwrap_or(lead);
+        let time = TIME.find(lead);
+        let explicit = time.and_then(|time| {
+            let frame = &lead[..time.start()];
+            let at = frame.rsplit_once('在').map_or(frame, |(actor, _)| actor);
+            let after = lead[time.end()..].trim_start();
+            if at.is_empty() {
+                let actor = SPEAKER.find(after)?;
+                let promise = PROMISE.find(&after[actor.end()..])?;
+                return work(&after[actor.end() + promise.end()..]).then_some(lead);
+            }
+            let actor = SPEAKER.find(at)?;
+            let remainder = &at[actor.end()..];
+            PROMISE.find(remainder).filter(|modal| modal.end() == remainder.len())?;
+            work(after).then_some(lead)
+        });
+        let text = explicit.map(str::to_owned).or_else(|| {
+            let time = time.filter(|time| time.end() == lead.len())?;
+            let frame = &lead[..time.start()];
+            if !(frame.is_empty() || frame.starts_with('在') || SPEAKER.is_match(frame)) {
+                return None;
+            }
+            let next = clauses.get(index + 1).filter(|next| !uncertain(next))?;
+            if clauses.get(index + 2).is_some_and(|next| conditional_clause(next).is_some()) {
+                return None;
+            }
+            let actor = SPEAKER.find(next)?;
+            let rest = &next[actor.end()..];
+            let action = PROMISE.find(rest).map_or(rest, |modal| &rest[modal.end()..]);
+            work(action).then(|| format!("{lead}，{next}"))
+        });
+        if let Some(text) = text.filter(|text| canonical_brief::line(text, 90)) {
+            return Some(CompanionV1ActionItem { text, owner: None, due: None });
+        }
+    }
+    None
+}
+
 fn agreed_handoff(text: &str) -> Option<CompanionV1ActionItem> {
     static HANDOFF: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"^(?:行|好的|好)[，,]\s*(?:那么|那就|那)?(?P<record>[^，,。！？；;]{2,34}?(?:准备好|写好|完成|确认|审核通过|回来|结束|确定下来|下来)(?:了)?(?:以后|之后|后)[，,]?\s*(?:就|再)(?:由[^，,。！？；;]{1,14})?(?:交给|转给|提交给|发给)[^，,。！？；;]{2,34})"
@@ -1124,6 +1210,41 @@ mod tests {
         rows.iter().enumerate().map(|(i, text)| json!({
             "id":format!("e{i:04}"), "source":"u000", "text":text
         })).collect()
+    }
+
+    #[test]
+    fn event_relative_plans_keep_the_literal_deadline_and_no_invented_person() {
+        for (text, expected) in [
+            ("嗯但也不能太难，毕竟大家也没有面对面实操过，不知道他们到底是有什么基础，但是在期末考试前我会进行三次模拟。",
+             "在期末考试前我会进行三次模拟"),
+            ("我们会在上线前做两轮联调。", "我们会在上线前做两轮联调"),
+            ("在消防验收以前，咱们开展两次疏散演练。", "在消防验收以前，咱们开展两次疏散演练"),
+            ("所以我们就是这场就是这个期末考试结束之后，我们根据各科成绩做一个简单一个分析评估。",
+             "我们就是这场就是这个期末考试结束之后，我们根据各科成绩做一个简单一个分析评估"),
+        ] {
+            let action = event_scheduled_work(text).unwrap_or_else(|| panic!("missing work: {text}"));
+            assert_eq!(action.text, expected);
+            assert!(action.owner.is_none() && action.due.is_none());
+        }
+    }
+
+    #[test]
+    fn event_relative_suggestions_outcomes_and_history_do_not_become_work() {
+        for text in [
+            "在期末考试前，我打算做三次模拟。",
+            "是否可以在期末考试前，我会进行三次模拟？",
+            "在期末考试前我会进行三次模拟，如果排课能确认。",
+            "举个例子，比如有人问进度，在上线前我会做两轮联调。",
+            "他是说预期时间，在上线前我会做两轮联调。",
+            "以前项目不上线，验收之前，我们已经安排了复查。",
+            "在验收前，我准备好了材料。",
+            "在验收前我会面临两次审查。",
+            "在开学前我会取消两轮彩排。",
+            "通常在上线前，我们每天做一次巡检。",
+            "在复盘前，我觉得还可以考虑做三次走访。",
+        ] {
+            assert!(event_scheduled_work(text).is_none(), "invented work: {text}");
+        }
     }
 
     #[test]

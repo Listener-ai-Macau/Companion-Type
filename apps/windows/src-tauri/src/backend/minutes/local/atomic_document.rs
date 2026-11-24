@@ -3177,7 +3177,8 @@ fn assemble_with_context(
             *limit=offset+count;
         }
     }
-    let mut closing_actions: Vec<(String, super::closing_recap::RecapHandoff)> = Vec::new();
+    let mut source_actions: Vec<(String, super::closing_recap::RecapHandoff)> = Vec::new();
+    let mut recap_count = 0;
     if !bank.chapter_spans.is_empty() {
         let recap = super::closing_recap::detect(&sentences)
             .map(|recap| recap.accepted_handoffs(&sentences)).unwrap_or_default();
@@ -3197,7 +3198,7 @@ fn assemble_with_context(
                     || same_source && (!scoped_owner || same_owner || fact.owner.is_none());
                 covered.then_some((index, same_source && same_owner))
             });
-            if closing_actions.iter().any(|(_, saved)| {
+            if source_actions.iter().any(|(_, saved)| {
                 (saved.directive == handoff.directive && (!scoped_owner || saved.item.owner == handoff.item.owner))
                     || (saved.item.owner == handoff.item.owner && saved.item.text == handoff.item.text)
             }) { continue; }
@@ -3220,14 +3221,42 @@ fn assemble_with_context(
                         if originals.len() < 8 && !originals.contains(&quote) { originals.push(quote); }
                     }
                     entry["text"] = json!(handoff.item.text);
-                    closing_actions.push((format!("actionItems[{index}]"), handoff));
+                    source_actions.push((format!("actionItems[{index}]"), handoff));
                 }
                 continue;
             }
             if actions.len() >= 20 { continue; }
             let path=format!("actionItems[{}]",actions.len());
             actions.push(json!({"text":handoff.item.text,"owner":handoff.item.owner,"due":handoff.item.due,"evidence":evidence}));
-            closing_actions.push((path,handoff));
+            source_actions.push((path,handoff));
+        }
+        recap_count = source_actions.len();
+        // Event-relative plans come from the verified original. Keep the
+        // sealed model inputs unchanged and attach the literal receipt here.
+        for (index, row) in sentences.iter().enumerate() {
+            if actions.len() >= 20 { break; }
+            let quote = row["text"].as_str().ok_or_else(fail)?;
+            let Some(mut item) = super::source_commitments::event_scheduled_work(quote) else { continue; };
+            let speaker = super::super::source_resolution::split_turn_label(quote)
+                .map_or("原话", |(label, _)| label);
+            let cited_text = format!("{speaker}：“{}”", item.text);
+            if super::source_commitments::current_procedure_reply(&sentences, index).is_some()
+                || actions.iter().any(|action| {
+                    action["text"].as_str().is_some_and(|text|
+                        canonical_brief::normalized(text) == canonical_brief::normalized(&item.text) || text == cited_text)
+                        || action["evidence"].as_array().is_some_and(|citations|
+                            citations.iter().any(|citation| citation["quote"] == quote))
+                })
+            {
+                continue;
+            }
+            item.text = cited_text;
+            let path = format!("actionItems[{}]", actions.len());
+            actions.push(json!({"text":item.text,"owner":item.owner,"due":item.due,
+                "evidence":[{"source":row["source"],"quote":quote}]}));
+            source_actions.push((path, super::closing_recap::RecapHandoff {
+                item, citations: vec![index], directive: index,
+            }));
         }
     }
     let (decision_paths, pending_decisions) = review_unclear_decisions(&mut document)?;
@@ -3244,7 +3273,7 @@ fn assemble_with_context(
             .collect::<HashMap<_,_>>();
         let native_actions = result.bindings.iter().filter_map(|(path,id)| {
             let position = path.strip_prefix("/actionItems/")?.parse::<usize>().ok()?;
-            if closing_actions.iter().any(|(changed, _)| changed == &format!("actionItems[{position}]")) {
+            if source_actions.iter().any(|(changed, _)| changed == &format!("actionItems[{position}]")) {
                 return None;
             }
             let action = result.document.action_items.get(position)?;
@@ -3261,14 +3290,14 @@ fn assemble_with_context(
                 .filter(|segment| seen.insert(segment.index)).collect();
             (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:action.text.clone(),segments,transcript_quotes:Vec::new()})
         });
-        let recap_citations = closing_actions.iter().filter_map(|(_,handoff)| {
+        let source_citations = source_actions.iter().filter_map(|(_,handoff)| {
             let mut seen = HashSet::new();
             let segments = handoff.citations.iter()
                 .flat_map(|&index| timing.action_source_segments(index, &handoff.item.text))
                 .filter(|segment| seen.insert(segment.index)).collect::<Vec<_>>();
             (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:handoff.item.text.clone(),segments,transcript_quotes:Vec::new()})
         });
-        let actions = native_actions.chain(recap_citations).collect::<Vec<_>>();
+        let actions = native_actions.chain(source_citations).collect::<Vec<_>>();
         if !actions.is_empty() {
             let evidence = parsed.minutes.source_action_evidence.get_or_insert_with(|| CompanionV1MinutesActionEvidence {
                 transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
@@ -3283,7 +3312,7 @@ fn assemble_with_context(
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?
         .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
     if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str()))
-        || closing_actions.iter().any(|(path,_)| !visible_paths.contains(path.as_str()))
+        || source_actions.iter().any(|(path,_)| !visible_paths.contains(path.as_str()))
         || reader_examples.iter().chain(&reader_outcomes).chain(&reader_future)
             .chain(&reader_reported_context).chain(&grouped_replies).any(|example| {
             example["path"].as_str().is_none_or(|path| !visible_paths.contains(path))
@@ -3334,8 +3363,12 @@ fn assemble_with_context(
     if !reader_coverage.is_empty() {
         parsed.receipt["readerCoverageReplacements"] = json!(reader_coverage);
     }
-    if !closing_actions.is_empty() {
-        parsed.receipt["readerRecapAcceptedWork"] = json!(closing_actions.iter().map(|(path,handoff)| {
+    for (label, entries) in [
+        ("readerRecapAcceptedWork", &source_actions[..recap_count]),
+        ("readerEventScheduledWork", &source_actions[recap_count..]),
+    ] {
+        if entries.is_empty() { continue; }
+        parsed.receipt[label] = json!(entries.iter().map(|(path,handoff)| {
             let ids = handoff.citations.iter().map(|&pos| &sentences[pos]["id"]).collect::<Vec<_>>();
             json!({"path":path,"sourceIds":ids,"owner":handoff.item.owner,"due":handoff.item.due})
         }).collect::<Vec<_>>());
