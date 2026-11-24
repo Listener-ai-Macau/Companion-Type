@@ -134,6 +134,26 @@ impl SourceWindows {
 
     pub(super) fn len(&self) -> usize { self.core.len() }
 
+    pub(super) fn reviewable_requirements(&self) -> String {
+        let mut excerpts = std::collections::BTreeSet::new();
+        let mut lines = String::new();
+        for sentence in &self.sentences {
+            let source = text(sentence).trim();
+            let words = super::super::source_resolution::split_turn_label(source).map_or(source, |(_, words)| words.trim());
+            if !super::reader_ranking::reviewable_operating_clause(words) || !excerpts.insert(words) {
+                continue;
+            }
+            if lines.is_empty() {
+                lines.push_str("\n## 执行要求（待复核）\n\n");
+            }
+            lines.push_str(&format!("- {source}\n"));
+            if excerpts.len() == 8 {
+                break;
+            }
+        }
+        lines
+    }
+
     pub(super) fn requires_model(&self, index: usize, encoding: SourceEncoding) -> bool {
         self.core[index].clone().any(|i| self.pending(i, encoding))
     }
@@ -787,6 +807,22 @@ impl<'de, T: Deserialize<'de>> Deserialize<'de> for UniqueMap<T> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn interrupted_draft_surfaces_operating_requirements_with_their_conditions() {
+        let source = concat!(
+            "说话人1: 每班结束前必须核对登记表。\n",
+            "说话人2: 如果交班前数据异常，要及时报备。\n",
+            "说话人1: 举例，每天都要检查设备。\n",
+            "说话人2: 每天都要检查设备吗？\n",
+            "每周五要求清理储存柜。"
+        );
+        let excerpt = SourceWindows::new(source).unwrap().reviewable_requirements();
+        assert!(excerpt.contains("- 说话人1: 每班结束前必须核对登记表。"));
+        assert!(excerpt.contains("- 说话人2: 如果交班前数据异常，要及时报备。"));
+        assert!(excerpt.contains("- 每周五要求清理储存柜。"));
+        assert!(!excerpt.contains("检查设备"));
+    }
+
     use super::*;
 
     #[test]

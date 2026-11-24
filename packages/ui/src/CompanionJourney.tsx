@@ -1,4 +1,5 @@
 import {operationErrorText} from './operationFailure';
+import {isSourceOnlyMinutesDraft} from './meetingReading';
 import { ArrowRight, Check, FileText, LoaderCircle } from 'lucide-react';
 import {
   companionSessionHasFinalTranscript,
@@ -27,6 +28,7 @@ export type MeetingJourney = {
   optional?: boolean;
   handlesFailure?: boolean;
   textOnly?: boolean;
+  textImport?: boolean;
 };
 
 export function meetingHasFinalMinutes(session: CompanionV1HostSession): boolean {
@@ -59,6 +61,7 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
         ? Boolean(session.audioStored && session.retention.audioCached && session.audioPath && session.audioBytes > 0)
         : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
   const stage = finalMinutes ? 3 : finalText ? 2 : localAudio ? 1 : 0;
+  const textImport = session.source === 'importedTranscript' && !localAudio;
   if (session.status === 'recording') return { stage: 0, title: '这场会议正在录音', detail: '结束后再整理；当前文字可能仍是未完成片段。', processing: true };
   if ((session.source === 'hostMicrophone' || session.source === 'hostMeeting') && !localAudio
     && ((!finalText && !finalMinutes) || Boolean(session.audioPath) || Boolean(session.meetingTracks?.root))) return {
@@ -121,10 +124,20 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   }
   if (finalMinutes && !recovery) return { stage: 3, optional: true, title: '整理好了', detail: '文字和纪要已保存在本机。可以继续查看、核对并导出。' };
   if (finalText) {
-    if (draft && !context.minutesReady) return { stage: 2, optional: optionalOrganization, title: '原句摘录已生成', detail: '已从文字中摘录原句，供你核对、补充。原音和文字仍保留。' };
+    const storedText = textImport ? '导入文字仍保留。' : '已有录音和文字仍保留。';
+    const reviewDraft = (variants.length ? variants : [session.minutes]).some(
+      (item) => item?.quality === 'draft' && isSourceOnlyMinutesDraft(item.markdown),
+    );
+    if (reviewDraft && !finalMinutes) return {
+      stage: 2, textImport, title: '纪要复核未完成', handlesFailure: true,
+      detail: '可以先查看原话。决定、交办和期限仍待复核。' + storedText,
+      label: context.minutesReady ? '继续整理' : undefined,
+      request: context.minutesReady ? { action: 'meetingGenerateMinutes', sessionId: session.id } : undefined,
+    };
+    if (draft && !context.minutesReady) return { stage: 2, textImport, optional: optionalOrganization, title: '原句摘录已生成', detail: '已从文字中摘录原句，供你核对、补充。' + storedText };
     // Once text is complete, organizing it is optional. Requested recovery stays visible.
-    return { stage: 2, textOnly:session.processingPolicy==='localTranscription', optional: optionalOrganization, title: recovery ? '继续整理这条内容' : '文字已保存，可按需整理',
-      detail: context.minutesReady ? '按已保存的文字提取重点与待办，原文保留。无需再次连接设备。' : '从文字中摘录原句作为草稿，供你核对、补充。原音和文字仍保留。',
+    return { stage: 2, textImport, textOnly:session.processingPolicy==='localTranscription', optional: optionalOrganization, title: recovery ? '继续整理这条内容' : '文字已保存，可按需整理',
+      detail: context.minutesReady ? '按已保存的文字提取重点与待办，原文保留。无需再次连接设备。' : '从文字中摘录原句作为草稿，供你核对、补充。' + storedText,
       label: context.minutesReady ? recovery ? '继续整理' : '整理重点' : '生成基础草稿',
       request: { action: 'meetingGenerateMinutes', sessionId: session.id } };
   }
@@ -149,12 +162,14 @@ export function CompanionJourney({ journey, blocked, onControl, onSettings, onWo
   onSettings: () => void; onWorkflow: () => void;
 }) {
   return <section className="ct-journey" aria-label="这条录音的下一步">
-    {journey.optional ? <p className="ct-optional-processing">可选 · 转写与纪要</p> : <ol className="ct-journey-progress" aria-label="录音处理进度">
-      {(journey.textOnly?['原音已保存', '转成文字']:['原音已保存', '转成文字', '整理重点']).map((label, index) => <li key={label}
-        className={index < journey.stage ? 'done' : index === journey.stage ? 'current' : ''}
-        aria-current={index === journey.stage ? 'step' : undefined}>
-        <span>{index < journey.stage ? <Check size={12} /> : index + 1}</span>{label}
-      </li>)}
+    {journey.optional ? <p className="ct-optional-processing">可选 · 转写与纪要</p> : <ol className="ct-journey-progress" aria-label={journey.textImport ? "处理进度" : "录音处理进度"}>
+      {(journey.textImport?['文字已导入', '整理重点']:journey.textOnly?['原音已保存', '转成文字']:['原音已保存', '转成文字', '整理重点']).map((label, index) => {
+        const step = journey.textImport ? index + 1 : index;
+        return <li key={label}
+        className={step < journey.stage ? 'done' : step === journey.stage ? 'current' : ''}
+        aria-current={step === journey.stage ? 'step' : undefined}>
+        <span>{step < journey.stage ? <Check size={12} /> : index + 1}</span>{label}
+      </li>;})}
     </ol>}
     <div className="ct-journey-body">
       <div><h3>{journey.processing ? <LoaderCircle size={18} /> : <FileText size={18} />}{journey.title}</h3><p>{journey.detail}</p></div>

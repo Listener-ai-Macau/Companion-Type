@@ -86,8 +86,8 @@ fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&
 
 pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<CompanionV1MeetingMinutes,String>{
     if !supported(){return Err("本地会议整理尚未准备好，已有文字和纪要保留。".into());}
-    let (result,mut trace)=generate_on_desktop(session,base);
-    let result = finish_desktop_minutes(session, base, result, &mut trace);
+    let (result, mut trace, retained) = generate_on_desktop(session, base);
+    let result = finish_desktop_minutes(session, base, result, &mut trace, retained.as_deref());
     if let Some(root)=delivery_preview_root(){
         let fields=["backend","vulkanDevice","runtimeFallback","sourceWindow","inferenceRequestAttempts","contextTokens","contextFallback",
             "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","modelLoadMode","newCloudCalls",
@@ -101,6 +101,7 @@ pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingM
 fn finish_desktop_minutes(
     session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
     result: Result<CompanionV1MeetingMinutes, String>, trace: &mut Value,
+    retained: Option<&source_checkpoint::CheckedSourcePrefix>,
 ) -> Result<CompanionV1MeetingMinutes, String> {
     match result {
         Ok(mut minutes) => {
@@ -108,10 +109,7 @@ fn finish_desktop_minutes(
             Ok(minutes)
         }
         Err(reason) => {
-            if trace["retainedSourceWindows"].as_u64().unwrap_or(0) == 0 {
-                return Err(reason);
-            }
-            let Some(mut draft) = source_only_review_draft(session, base, trace) else {
+            let Some(mut draft) = retained.and_then(|prefix| source_only_review_draft(session, base, prefix)) else {
                 return Err(reason);
             };
             draft.quality = "draft".into();
@@ -123,15 +121,10 @@ fn finish_desktop_minutes(
 }
 
 fn source_only_review_draft(
-    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, trace: &Value,
+    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
+    prefix: &source_checkpoint::CheckedSourcePrefix,
 ) -> Option<CompanionV1MeetingMinutes> {
-    let prefix = source_checkpoint::CheckedSourcePrefix::for_desktop_retry(&session.transcript_text, trace)?;
-    let context = match trace["contextTokens"].as_u64()? {
-        8192 => transport::Context::ReducedCpu,
-        16384 => transport::Context::Full,
-        _ => return None,
-    };
-    let checked_review = prefix.independent_source_review(context);
+    let checked_review = prefix.completed_source_review();
     let windows = source_windows::SourceWindows::new(&session.transcript_text).ok()?;
     if prefix.len() != windows.len() { return None; }
 
@@ -149,7 +142,7 @@ fn source_only_review_draft(
         facts.extend(checked.facts);
     }
     let default_review = source_review::Review::default();
-    let review = checked_review.map_or(&default_review, |(review, _)| review);
+    let review = checked_review.unwrap_or(&default_review);
     let bank = atomic_document::build_session_bank(facts, session, review).ok()?;
     let layout = atomic_document::reviewable_layout(&bank)?;
     let mut draft = atomic_document::organize(&layout, &bank, session, base).ok()?.minutes;
@@ -163,14 +156,26 @@ fn source_only_review_draft(
         // interrupted, so leave decisions and assignments unsettled.
         let (_, originals) = draft.markdown.rsplit_once("## 主题原话\n\n")?;
         if originals.trim().is_empty() { return None; }
-        let originals = originals.split_inclusive('\n').map(|line| match line {
-            "### 共同决定 · 原话\n" => "### 涉及决定的发言 · 待复核\n",
-            "### 会后行动 · 原话\n" => "### 涉及后续安排的发言 · 待复核\n",
-            "### 待确认问题 · 原话\n" => "### 涉及问题的发言 · 待复核\n",
-            _ => line,
-        }).collect::<String>();
+        let mut appendix = String::new();
+        for line in originals.split_inclusive('\n') {
+            match line {
+                "### 共同决定 · 原话\n" => appendix.push_str("### 涉及决定的发言 · 待复核\n"),
+                "### 会后行动 · 原话\n" => appendix.push_str("### 涉及后续安排的发言 · 待复核\n"),
+                "### 待确认问题 · 原话\n" => appendix.push_str("### 涉及问题的发言 · 待复核\n"),
+                _ => {
+                    if let Some(topic) = line.strip_prefix("### ").and_then(|heading| heading.strip_suffix(" · 原话\n")) {
+                        appendix.push_str(&format!("### 议题「{topic}」 · 原话\n"));
+                    } else {
+                        appendix.push_str(line);
+                    }
+                }
+            }
+        }
+        // Surface exact rules of operation even if the first pass selected
+        // only the adjacent discussion. Keep them outside confirmed tasks.
+        let requirements = windows.reviewable_requirements();
         draft.markdown = format!(
-            "> 本地复核草稿。独立复核尚未完成，以下仅供回查原话。决定、交办和期限仍待复核。\n\n## 已整理原话\n\n{originals}"
+            "> 本地复核草稿。独立复核尚未完成，决定、交办和期限仍待复核。\n{requirements}\n## 已整理原话\n\n{appendix}"
         );
         draft.decisions.clear();
         draft.action_items.clear();
@@ -182,7 +187,7 @@ fn source_only_review_draft(
 }
 
 fn generate_on_desktop(session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes)
-    -> (Result<CompanionV1MeetingMinutes, String>, Value)
+    -> (Result<CompanionV1MeetingMinutes, String>, Value, Option<Arc<source_checkpoint::CheckedSourcePrefix>>)
 {
     static RETRY: desktop_retry::RetrySlot = desktop_retry::RetrySlot::new();
     let cancel = super::super::meeting_processing_job::current();

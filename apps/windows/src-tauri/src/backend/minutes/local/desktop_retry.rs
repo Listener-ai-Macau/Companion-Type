@@ -65,12 +65,20 @@ fn pressure<T>(result: &Result<T, String>, trace: &Value) -> bool {
         && trace["backend"] == "cpu"
 }
 
+fn keep_validated_source(saved: &mut Option<Arc<CheckedSourcePrefix>>, source: &str, trace: &Value) {
+    let Some(prefix) = CheckedSourcePrefix::for_desktop_retry(source, trace) else { return; };
+    let progress = |checked: &CheckedSourcePrefix| (checked.len(), checked.completed_source_review().is_some());
+    if saved.as_ref().is_none_or(|prior| progress(&prefix) >= progress(prior)) {
+        *saved = Some(Arc::new(prefix));
+    }
+}
+
 pub(super) fn generate<T>(
     slot: &RetrySlot,
     session: &CompanionV1HostSession,
     mut run: impl FnMut(&CheckedSourcePrefix, bool) -> (Result<T, String>, Value),
     mut memory_recovered: impl FnMut() -> bool,
-) -> (Result<T, String>, Value) {
+) -> (Result<T, String>, Value, Option<Arc<CheckedSourcePrefix>>) {
     let start = Instant::now();
     let source = SourceKey::for_session(session);
     let empty = CheckedSourcePrefix::default();
@@ -78,9 +86,7 @@ pub(super) fn generate<T>(
     let (mut result, mut trace) = run(saved.as_deref().unwrap_or(&empty), saved.is_some());
 
     if pressure(&result, &trace) {
-        if let Some(prefix) = CheckedSourcePrefix::for_desktop_retry(&session.transcript_text, &trace) {
-            saved = Some(Arc::new(prefix));
-        }
+        keep_validated_source(&mut saved, &session.transcript_text, &trace);
         if memory_recovered() {
             let first_seconds = trace["seconds"].clone();
             let first_requests = trace["inferenceRequestAttempts"].clone();
@@ -93,9 +99,7 @@ pub(super) fn generate<T>(
             });
             trace["seconds"] = json!(start.elapsed().as_secs_f64());
             if pressure(&result, &trace) {
-                if let Some(prefix) = CheckedSourcePrefix::for_desktop_retry(&session.transcript_text, &trace) {
-                    saved = Some(Arc::new(prefix));
-                }
+                keep_validated_source(&mut saved, &session.transcript_text, &trace);
             }
         }
 
@@ -103,12 +107,12 @@ pub(super) fn generate<T>(
             if let Some(prefix) = saved {
                 let windows = prefix.len();
                 if let Ok(mut cache) = slot.0.lock() {
-                    *cache = Some(Saved { source, prefix });
+                    *cache = Some(Saved { source, prefix: Arc::clone(&prefix) });
                     trace["retainedSourceWindows"] = json!(windows);
                     let lead = super::super::LOCAL_MEMORY_RETRY_PREFIX;
                     let message = format!("{lead}，已保留 {windows} 段整理进度。内存恢复后，点击重试可接着生成。");
                     trace["error"] = json!(message);
-                    return (Err(message), trace);
+                    return (Err(message), trace, Some(prefix));
                 }
             }
         }
@@ -117,7 +121,7 @@ pub(super) fn generate<T>(
     if result.is_ok() {
         slot.clear(&source);
     }
-    (result, trace)
+    (result, trace, None)
 }
 
 
@@ -141,7 +145,7 @@ mod tests {
         let slot = RetrySlot::new();
         let session = session_with_text("测试环境今天仍然可用。");
         let mut attempts = Vec::new();
-        let (result, trace) = generate(
+        let (result, trace, retained) = generate(
             &slot, &session,
             |prefix, lean| {
                 attempts.push((prefix.len(), lean));
@@ -154,6 +158,7 @@ mod tests {
             || true,
         );
         assert!(result.is_ok());
+        assert!(retained.is_none());
         assert_eq!(attempts, [(0, false), (1, true)]);
         assert_eq!(trace["memoryRecovery"]["resumedSourceWindows"], 1);
         assert!(slot.get(&SourceKey::for_session(&session)).is_none());
@@ -164,14 +169,21 @@ mod tests {
         let slot = RetrySlot::new();
         let session = session_with_text("测试环境今天仍然可用。");
         let mut attempts = 0;
-        let (result, trace) = generate(
+        let (result, trace, retained) = generate(
             &slot, &session,
-            |_, _| {
+            |prefix, _| {
                 attempts += 1;
-                (Err::<(), _>(LOCAL_SERVICE_LOW_MEMORY.into()), interrupted_trace())
+                let trace = if attempts == 1 {
+                    interrupted_trace()
+                } else {
+                    assert_eq!(prefix.len(), 1);
+                    json!({"backend":"cpu","reusedSourceWindows":1})
+                };
+                (Err::<(), _>(LOCAL_SERVICE_LOW_MEMORY.into()), trace)
             },
             || true,
         );
+        assert_eq!(retained.unwrap().len(), 1);
         assert_eq!(attempts, 2);
         assert_eq!(trace["retainedSourceWindows"], 1);
         assert!(result.unwrap_err().contains("保留 1 段"));
@@ -200,7 +212,7 @@ mod tests {
             || false,
         );
         assert_eq!(attempts, 1);
-        let (result, _) = generate(&slot, &session, |prefix, lean| {
+        let (result, _, _) = generate(&slot, &session, |prefix, lean| {
             assert_eq!(prefix.len(), 1);
             assert!(lean);
             (Ok(()), json!({"backend":"cpu","reusedSourceWindows":prefix.len()}))

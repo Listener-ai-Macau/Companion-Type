@@ -388,7 +388,7 @@ mod tests{
         let retry_slot = super::super::desktop_retry::RetrySlot::new();
         let mut first = Some(saved["receipt"].clone());
         let started = Instant::now();
-        let (result, trace) = super::super::desktop_retry::generate(&retry_slot, &session,
+        let (result, trace, _) = super::super::desktop_retry::generate(&retry_slot, &session,
             |prefix, pressure_retry| {
                 if let Some(trace) = first.take() {
                     assert!(!pressure_retry);
@@ -429,7 +429,8 @@ mod tests{
         let mut trace = result["receipt"].clone();
         let requests = trace["inferenceRequestAttempts"].clone();
         let start = std::time::Instant::now();
-        let minutes = super::super::finish_desktop_minutes(&session, &base, Err(reason.clone()), &mut trace).unwrap();
+        let retained = super::super::source_checkpoint::CheckedSourcePrefix::for_desktop_retry(&session.transcript_text, &trace).unwrap();
+        let minutes = super::super::finish_desktop_minutes(&session, &base, Err(reason.clone()), &mut trace, Some(&retained)).unwrap();
         assert_eq!(minutes.quality, "draft");
         assert_eq!(minutes.llm_note.as_deref(), Some(reason.as_str()));
         assert!(minutes.markdown.contains("本地复核草稿") && minutes.markdown.contains("## 主题原话"));
@@ -441,9 +442,15 @@ mod tests{
         interrupted_review["calls"].as_array_mut().unwrap().retain(|call| {
             call["stage"].as_str().is_some_and(|stage| stage.starts_with("source-window-"))
         });
+        let retained = super::super::source_checkpoint::CheckedSourcePrefix::for_desktop_retry(
+            &session.transcript_text, &interrupted_review,
+        ).unwrap();
+        // The retry can stop before it records or replays any source calls.
+        interrupted_review["calls"] = json!([]);
+        interrupted_review["reviewedSourceWindows"] = json!([]);
         let start_partial = std::time::Instant::now();
         let excerpts = super::super::finish_desktop_minutes(
-            &session, &base, Err(reason.clone()), &mut interrupted_review,
+            &session, &base, Err(reason.clone()), &mut interrupted_review, Some(&retained),
         ).unwrap();
         let partial_seconds = start_partial.elapsed().as_secs_f64();
         assert_eq!(interrupted_review["reviewableDraft"], true);
@@ -455,7 +462,7 @@ mod tests{
         assert!(excerpts.questions.is_empty() && excerpts.source_action_evidence.is_none());
         let mut invalid = trace.clone();
         invalid["retainedSourceWindows"] = json!(0);
-        assert!(super::super::finish_desktop_minutes(&session, &base, Err(reason), &mut invalid).is_err());
+        assert!(super::super::finish_desktop_minutes(&session, &base, Err(reason), &mut invalid, None).is_err());
         save_new(Path::new(&out), &json!({
             "draft":minutes,"seconds":start.elapsed().as_secs_f64(),"sourceSha256":original["sourceSha256"],
             "validatedWindows":trace["retainedSourceWindows"],"additionalModelRequests":0,

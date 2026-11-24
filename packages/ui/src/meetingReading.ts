@@ -17,6 +17,9 @@ export function splitGeneratedMeetingMetadata(markdown:string):{body:string;meta
  }
  return {body:markdown,metadata:null};
 }
+export function isSourceOnlyMinutesDraft(markdown:string):boolean {
+ return markdown.startsWith('> 本地复核草稿。独立复核尚未完成，') && /^## 已整理原话\s*$/m.test(markdown);
+}
 export function meetingHeadingForDisplay(title:string):string {
  const labels:Record<string,string>={Summary:'会议摘要',Decisions:'讨论结论（需核对）','Action Items':'行动事项',Questions:'会中问题','Open Questions':'待确认问题',Keywords:'关键词','全会重点':'讨论要点'};
  return labels[title]||title;

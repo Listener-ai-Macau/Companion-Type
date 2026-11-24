@@ -312,6 +312,10 @@ impl CheckedSourcePrefix {
         self.windows.get(index).map(|(encoding, call)| (*encoding, call.as_ref()))
     }
 
+    pub(super) fn completed_source_review(&self) -> Option<&source_review::Review> {
+        self.independent_source_review.as_ref()?.complete.as_ref()
+    }
+
     pub(super) fn independent_source_review(&self, context: transport::Context) -> Option<(&source_review::Review, &[Value])> {
         let checked = self.independent_source_review.as_ref()?;
         if checked.context_tokens != context.tokens() {

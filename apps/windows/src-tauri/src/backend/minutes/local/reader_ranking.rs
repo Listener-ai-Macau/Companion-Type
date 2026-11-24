@@ -283,6 +283,25 @@ pub(super) fn binding_requirement(text: &str) -> Option<OperationalEvidence> {
     None
 }
 
+/// Find literal operational requirements and exceptions for an interrupted
+/// draft. The excerpt is not a decision or an assignment.
+pub(super) fn reviewable_operating_clause(words: &str) -> bool {
+    if words.chars().count() > 92 || words.contains(['？', '?']) || super::source_context::question_only(words) {
+        return false;
+    }
+    let has = |terms: &[&str]| terms.iter().any(|term| words.contains(term));
+    if has(&["比如", "举例", "举个例", "假设", "其实不用", "不用再", "建议", "商量", "可能", "原先", "原来是"]) {
+        return false;
+    }
+    let recurring = has(&["每天", "每一天", "每日", "每周", "每班", "每次", "每一次", "定期"])
+        && has(&["都要", "必须", "要求", "应当", "务必"]);
+    let conditional = has(&["如果", "一旦", "若有"])
+        && has(&["前", "之后", "当班", "当日", "当天"])
+        && has(&["及时", "立即", "马上"]);
+    (recurring || conditional)
+        && has(&["清空", "清理", "消毒", "巡查", "检查", "核对", "登记", "交接", "点检", "处理", "报备", "切断"])
+}
+
 /// Select a self-contained stretch of the original speech. These clauses
 /// describe a reported stage or an operating rule, never a new assignment.
 pub(super) fn documented_clause(text: &str) -> Option<(OperationalEvidence, &str)> {

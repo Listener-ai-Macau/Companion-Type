@@ -1,6 +1,6 @@
 import {useEffect,useLayoutEffect,useMemo,useRef,useState,type ReactNode} from 'react';
 import {meetingSectionTitles} from './meetingOutline';
-import {meetingHeadingForDisplay} from './meetingReading';
+import {isSourceOnlyMinutesDraft,meetingHeadingForDisplay} from './meetingReading';
 import {ArrowLeft,BookOpen,GitBranch,List,ListTodo,Users,ChevronDown} from 'lucide-react';
 import {MeetingMapView} from './MeetingMapView';
 import {MeetingOverview} from './MeetingOverview';
@@ -17,15 +17,17 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
  const sectionKey=sections.join('\n');
  const titles=useMemo(()=>sections.length?[...new Set(sections)]:meetingSectionTitles(markdown),[markdown,sectionKey]);
  const indexed=markdown.trim().length>=1600||titles.length>=7;
+ const reviewPending=isSourceOnlyMinutesDraft(markdown);
+ const initialView=reviewPending?'overview':'map';
  const [active,setActive]=useState<string|null>(null);
- const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'|'actions'>('map');
- const [keypointView,setKeypointView]=useState<'overview'|'map'>('map');
- const returnView=useRef<Exclude<typeof view,'reading'>>('map');
+ const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'|'actions'>(initialView);
+ const [keypointView,setKeypointView]=useState<'overview'|'map'>(initialView);
+ const returnView=useRef<Exclude<typeof view,'reading'>>(initialView);
  const sourceButton=useRef<HTMLElement|null>(null),restoreFocus=useRef(false);
  const keypoints=view==='map'||view==='overview';
  const viewLabels={overview:'重点列表',map:'重点图解',speakers:'发言人',actions:'待办'};
  function changeFormat(next:typeof keypointView){setKeypointView(next);setView(next);}
- useEffect(()=>{returnView.current='map';sourceButton.current=null;restoreFocus.current=false;setKeypointView('map');setView('map');},[markdown,title]);
+ useEffect(()=>{returnView.current=initialView;sourceButton.current=null;restoreFocus.current=false;setKeypointView(initialView);setView(initialView);},[markdown,title,initialView]);
  useLayoutEffect(()=>{if(!restoreFocus.current||view==='reading')return;restoreFocus.current=false;const target=sourceButton.current?.isConnected?sourceButton.current:viewControls.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]');target?.focus({preventScroll:true});target?.scrollIntoView({block:'nearest',behavior:'auto'});},[view]);
  function enterReading(){if(view!=='reading'){returnView.current=view;sourceButton.current=document.activeElement instanceof HTMLElement?document.activeElement:null;}setView('reading');}
  function returnToNotes(){restoreFocus.current=true;setView(returnView.current);}
@@ -90,7 +92,7 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
   <div hidden={view!=='overview'}><MeetingOverview markdown={markdown} onLocate={navigate} onRead={read}/></div>
   <div className="meeting-graphic-surface" hidden={view!=='map'}><MeetingMapView markdown={markdown} title={title} onLocate={navigate} onRead={read}/></div>
   <div hidden={view!=='speakers'}><MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/></div>
-  <div hidden={view!=='actions'}><MeetingActions markdown={markdown} onLocate={navigate}/></div>
+  <div hidden={view!=='actions'}><MeetingActions markdown={markdown} onLocate={navigate} reviewPending={reviewPending}/></div>
   {view==='reading'&&<button type="button" className="meeting-reading-back" onClick={returnToNotes}><ArrowLeft size={14} aria-hidden="true"/>返回{viewLabels[returnView.current]}</button>}
   <div className="meeting-reading-content" ref={content} hidden={view!=='reading'}>{children}</div>
  </div>;
