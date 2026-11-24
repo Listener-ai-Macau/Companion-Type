@@ -1,0 +1,323 @@
+{
+  "format": "companion-meeting-engineering-handoff-v1",
+  "scope": "2026-11-24 快照。以下为已确认的原回执字段与原文件 SHA-256。早期回执索引用于和既有工程日志互相核对。",
+  "baselines": {
+    "windowsLocalMinutes": "429918c8f1a03db2d2b178118c2263a780c8fe52",
+    "windowsAsrCheckpoint": "1ab072ad164ac708ee8c543e1ffb16a95f262446",
+    "paidIndependentMinutes": {
+      "criteria": 36,
+      "complete": 27,
+      "formallyPassedMeetings": 0,
+      "meetingCount": 3
+    },
+    "sameInputFixedRegression": {
+      "criteria": 36,
+      "criticalCriteria": 18,
+      "earlyLocalComplete": 10,
+      "earlyLocalCriticalComplete": 5,
+      "laterLocalComplete": 27,
+      "laterLocalCriticalComplete": 17,
+      "archivedDeepSeekComplete": 27,
+      "archivedDeepSeekCriticalComplete": 12
+    }
+  },
+  "asr": {
+    "dataset": "AliMeeting R8001_M8004，远场单麦",
+    "desktopPcmImport": {
+      "receipt": "mandarin-paid-desktop-import-pcm-20261120.json",
+      "originalSha256": "27cfc49654ea7faa351a3ea3e3b28c2f6146e5f955c167d12d771c745bd437a7",
+      "schema": "companion.paid-desktop-import-pcm.v1",
+      "at": "2026-11-20T22:27:51+08:00",
+      "timing": "候选导入并转写经过 22.2 秒，转文字按钮到结果 11.5 秒。平台上次专用 CLI 的整缓存耗时作为独立结果保留。",
+      "codeRevision": "8c180fa588b176100a42b09b38169edc1a3a9eef",
+      "counts": {
+        "samples": 24829120,
+        "changedBefore": 24749485,
+        "changedAfter": 0,
+        "cacheHits": 26,
+        "timedUtterances": 283
+      }
+    },
+    "resumedPaidAsr": {
+      "receipt": "mandarin-fixed-paid-client-controls-resume-20261120.json",
+      "originalSha256": "3381403acd8437cb0cc4031b15504ba5fb3a8ea6a03afcfe29ca2f12242c0d24",
+      "schema": "companion.fixed-paid-client-controls-resume.v1",
+      "at": "2026-11-20T21:58:53+08:00",
+      "timing": "恢复节省 206.422 秒。新旧完整缓存回放分别为 6.944、5.958 秒，各测一次。候选恢复无分段重试日志，已存在的 13 个缓存文件逐字节不变。",
+      "codeRevision": "60ff7068586ed784e80f5129d3fc5521e515d810",
+      "baselineRevision": "e499dd106daf81bc3a3a1e2cd882035adf2c7762",
+      "decision": "修复分段调度，保留缓存身份、原录音顺序、并发上限及终稿规则。完整缓存此次多约一秒，保留实测差异。单场结果用来验证恢复路径和当前错漏机制，后续多场核对内容交付。",
+      "paidReplay": {
+        "times": {
+          "volc-repair": 454.443,
+          "volc-warm": 5.958,
+          "volc-resume-batched": 248.021,
+          "volc-resume-warm": 6.944
+        },
+        "cer": {
+          "volc-repair": 0.3806812879141391,
+          "volc-resume-batched": 0.37946803546430236
+        },
+        "oldRevision": "e499dd106daf81bc3a3a1e2cd882035adf2c7762",
+        "newRevision": "60ff7068586ed784e80f5129d3fc5521e515d810",
+        "pcmSha256": "22bd27d37d312d375b7c131f013af7dd0071d37e3e432ef2fbad78d552af8bed",
+        "sameBoundaries": 26,
+        "originalCacheSegments": [
+          2,
+          3,
+          6,
+          8,
+          9,
+          12,
+          13,
+          15,
+          18,
+          19,
+          21,
+          24,
+          26
+        ],
+        "changedSections": [
+          1,
+          4,
+          5,
+          7,
+          10,
+          11,
+          14,
+          16,
+          17,
+          20,
+          22,
+          23
+        ],
+        "candidateLogRetries": 0
+      }
+    },
+    "desktopReviewAndExport": {
+      "receipt": "mandarin-paid-desktop-review-export-20261120.json",
+      "originalSha256": "00abdf307decde9020c15dd0e281ee431516b61e912192dc78847aa026840a6b",
+      "schema": "companion.paid-native-review-export.v1",
+      "at": "2026-11-20T22:41:11+08:00",
+      "scope": "同一场公开 AliMeeting R8001_M8004 单麦。使用 Windows 工程候选 8c180fa5 的普通按钮，实际生成两份云纪要、播放原音、保存两处工程复核修订、预览、复制所选 TXT 后重开。受测会话和 WebView 属于后台隔离实例，Tauri 将这次公开测试的分享临时文件写入标准本机应用缓存，证据已保全。",
+      "timing": "首次纪要 119.1 秒，修订后真实重生成 125.8 秒。",
+      "decision": "现有修订与导出链路以本场实际验证为准。自动生成的纪要仍漏掉已修正的协作要求，继续按高影响事项复核。"
+    },
+    "targetedPaidRiskReplay": {
+      "receipt": "mandarin-paid-single-primary-risk-replay-20261120.json",
+      "originalSha256": "e437e32c251f1efcb14201bfc63614a13f8dd7c6dc1e4183e43ce021c100eec5",
+      "schema": "companion.paid-single-primary-review.v1",
+      "at": "2026-11-20T22:13:01+08:00",
+      "timing": "13 个固定短段实际送音 180.2 秒，双路 63.3 秒。扩大到发言边界合计 206.9 秒，又校了 7 个改变的短段，未再救回期限。逐字字段筛查 19/19 窗成功，耗时 10.4 秒。下周二短段请求用时 14.2 秒。",
+      "counts": {
+        "broadPhoneFields": 17,
+        "precisePhoneFields": 9,
+        "precisePhonePositions": 8,
+        "flaggedAudioRuns": 13,
+        "knownPhoneRisksRecovered": 2,
+        "knownPhoneRisksChecked": 3,
+        "nativeGuardTests": 12
+      },
+      "decision": "保留两种互补信号用于人工复核。扩大边界与全场通用筛查均存在已复现的缺口。区间复转结果保留为并列候选，地点和对象仍有分歧时按原音核实。隔离原生 12 项验证通过，包括保留原稿、保存时原子替换、旧纪要防错用、初稿导出和只使用当前版本的待办。"
+    },
+    "revisedTranscriptLoss": {
+      "revision": 1,
+      "revisedAndExportedTranscriptContainsRequirement": true,
+      "newMinutesContainsDepartmentCooperationRequirement": false,
+      "newMinutesContainsTuesdayDeadline": true
+    }
+  },
+  "localMinutes": {
+    "completion": {
+      "receipt": "completion-batch-summary.json",
+      "originalSha256": "9d7c05ca1aec3df27f120fb182445e93fc7e44e628a0579fb424a8db5eb977eb",
+      "timestamp": "2026-11-24T18:40:19.169197+08:00",
+      "baseline": "56a37d69",
+      "candidate": "429918c8f1a03db2d2b178118c2263a780c8fe52",
+      "scope": "两份既有纪要在普通 Windows 私有候选上验清单保存编辑与导出。重新整理另用无纪要、无复用检查点的真实整场转写，以同一现有本地4B计时。",
+      "why": "原模型在给足原话时仍把到访前一周的检查时间扩大到更换和检查，遗漏教练安排的条件与预约。旧短稿则把这些内容停在原话摘录层，用户需要自己整理并转换清单。",
+      "change": "把有明确证据的操作、原文相对时间、责任范围、适用条件放入固定字段。维修更换单列在检查之后且完成时间待核实，教练安排保留条件，报计划保留部门和经理。待办自动预览，可直接保存成可编辑的逐条清单，原话一起写入本机引用，重开可查。",
+      "frozenContrast": "八场冻结对照新规则只在度假区样本产生三项，其他七场没有新增，仍不能推广为通用交办提取。教学会实机沿已有带来源的安排保存为十条可编辑项，包含已明确和待确认两种标记，访谈未生成任务。",
+      "interfaceProof": "全程用保存过的纪要做界面脚本，打开待办、保存、补一个日期问题、到导出预览用时 1.69 / 1.13 秒；这是界面操作脚本耗时，不计生成等待、阅读或真人复核。实际TXT、重开后本机清单与原话引用已核对。",
+      "cold": "度假区半年复盘，到十分钟参考线时仍未出完整纪要，按同一限时结束该场验收 600.3 秒，关闭后无可验模型完成回执。线上教学安排，到十分钟参考线时仍未出完整纪要，按同一限时结束该场验收 600.6 秒，关闭后无可验模型完成回执。",
+      "decision": "本轮正式自动成稿在整会验收未通过。按约定收住现有本地4B自动成稿修法，保留已验的辅助短稿和可编辑清单工程候选。正式交付继续标为未通过。",
+      "next": "保留两类会议原文、可用候选和未过结果作为下一次同输入基线。有能缩短整会生成或跨会型保住条件、责任的新证据，再重新打开正式自动成稿验证。没有同场人工复核计时，界面秒数仅用于界面回归。"
+    },
+    "desktopSavedDrafts": {
+      "receipt": "verification.json",
+      "originalSha256": "39b7b32e6310852c4000feede8179e66408d5e271777a7d567678e2f6c996c0b",
+      "candidate": "429918c8f1a03db2d2b178118c2263a780c8fe52",
+      "measuredAt": "2026-11-24T18:19:34.550324+08:00",
+      "reopenedAndVerified": true,
+      "paidCalls": 0,
+      "scope": "saved native replay and normal Windows UI; automation timing covers opening an already generated draft through save/edit and preview, no inference or human timing",
+      "cases": [
+        {
+          "case": "resort",
+          "openToChecklistMs": 93,
+          "originalLocated": true,
+          "saveToVisibleMs": 155,
+          "items": 3,
+          "verifyPreviewMs": 1689
+        },
+        {
+          "case": "school",
+          "openToChecklistMs": 68,
+          "saveToVisibleMs": 288,
+          "items": 10,
+          "verifyPreviewMs": 1130
+        },
+        {
+          "case": "interview",
+          "noTasks": true
+        }
+      ]
+    },
+    "coldGeneration": [
+      {
+        "receipt": "cold-proof.json",
+        "originalSha256": "47b5b2b564dafc4aadcdceaf52d83d787773277a6ccdd317736c994bac01f53c",
+        "case": "resort",
+        "stage": "reached-ten-minute-reference",
+        "newPaidCalls": 0,
+        "startedAt": "2026-11-24T10:19:35.931Z",
+        "trace": null,
+        "wallSeconds": 600.267
+      },
+      {
+        "receipt": "cold-proof.json",
+        "originalSha256": "4cefacc3506b172cb00cfde6681fb1387f54ecaa737efb9248db7da48073276f",
+        "case": "school",
+        "stage": "reached-ten-minute-reference",
+        "newPaidCalls": 0,
+        "startedAt": "2026-11-24T10:29:37.970Z",
+        "trace": null,
+        "wallSeconds": 600.558
+      }
+    ],
+    "sameInputSourceLockReplay": {
+      "receipt": "source-lock-contrast.json",
+      "originalSha256": "45f88b049c7b0179fbc05a192a28f4616f60c9528a91ef2b372ce8bf8412a9ae",
+      "cases": [
+        {
+          "case": "cross-industry-interview",
+          "newItems": 0,
+          "sourceQuotes": 0
+        },
+        {
+          "case": "graduate-employment-guidance",
+          "newItems": 0,
+          "sourceQuotes": 0
+        },
+        {
+          "case": "maternal-care-operations",
+          "newItems": 0,
+          "sourceQuotes": 0
+        },
+        {
+          "case": "property-staff-training",
+          "newItems": 0,
+          "sourceQuotes": 0
+        },
+        {
+          "case": "resort-half-year-review",
+          "newItems": 3,
+          "sourceQuotes": 5
+        },
+        {
+          "case": "school-online-term",
+          "newItems": 0,
+          "sourceQuotes": 0
+        },
+        {
+          "case": "three-professions-interview",
+          "newItems": 0,
+          "sourceQuotes": 0
+        },
+        {
+          "case": "university-entrepreneurs",
+          "newItems": 0,
+          "sourceQuotes": 0
+        }
+      ]
+    },
+    "earlierAiCustomerSession": {
+      "receipt": "customer-assessment.json",
+      "originalSha256": "09ef6671125220164358e0ff1f9e7c7a44c3f6a529daca96b9eed09b424d6ba2",
+      "at": "2026-11-24T17:51:23.905988+08:00",
+      "candidate": "56a37d69",
+      "scenario": "度假区半年度复盘，导入文字与现成纪要",
+      "priceUsd": 199,
+      "purchaseVerdict": "暂不购买",
+      "timeEstimatedMinutes": 6,
+      "savedLocalCheckableItems": 3,
+      "savedNoteSha256": "17c887acfd6d7c6096b1001e9f15d4711a859fe5f143800446943850a2a5873f",
+      "droveThroughRecordingOrASR": false,
+      "ranNewGeneration": false,
+      "actuallySentOrPaid": false,
+      "originalReceiptSha": "5da4a206331d02b420d678c22c6b4852c62c94222c32149dcdc18dd7e16219df"
+    }
+  },
+  "earlierMinutesEngineeringRecords": [
+    {
+      "receipt": "minutes_scoring_handoff.json",
+      "originalSha256": "fc6534ef9fddfcde7c7a082984e50adadf511269e1791fbeb83cd872da5d9ef7",
+      "entry": "2026-11-20T10:16:50+08:00 Companion 会议纪要评分复核与根因"
+    },
+    {
+      "receipt": "minutes_community_handoff.json",
+      "originalSha256": "aad86c07e6044cf6952436ee7a2c74340c6fa0abfc6b8d6f3996e019b028ad40",
+      "entry": "2026-11-20T10:26:09+08:00 Companion 会议纪要社区方案与底座对照"
+    },
+    {
+      "receipt": "minutes_small_specialist_handoff.json",
+      "originalSha256": "087b6e77c203b8b80180fd995b98f23b47cbc79760ed73145739136c7a4b3b6e",
+      "entry": "2026-11-20T10:37:11+08:00 Companion 轻量纪要专用模型社区基线"
+    },
+    {
+      "receipt": "minutes_flash_handoff.json",
+      "originalSha256": "88eb85ded8475256617a4bef4a42ffe89ef11ed818a20abd6ae483f0b434edb4",
+      "entry": "2026-11-20T10:49:35+08:00 Companion 低成本云端整会基线"
+    },
+    {
+      "receipt": "minutes_meaning_handoff.json",
+      "originalSha256": "d3be1aa41674132c9fd1f2f6f7f35fba51981e97e2c14aba0747b5292aea6e1c",
+      "entry": "2026-11-20T11:02:02+08:00 Companion 会议纪要大意复核"
+    },
+    {
+      "receipt": "minutes_status_handoff.json",
+      "originalSha256": "26aa2f4ba3f4a52aeddeb288543055394ab1faab1f024ecb66880d798f2ac123",
+      "entry": "2026-11-20T11:18:51+08:00 Companion 会议纪要关键状态离线修复"
+    },
+    {
+      "receipt": "minutes_local_comparison_handoff.json",
+      "originalSha256": "b029ec20165e4f87858b1fd398b2de4a46a85bbe13146e4e95aa34d9a219d976",
+      "entry": "2026-11-20T11:56:36+08:00 Companion 纪要 4B 与 Flash 对齐验证"
+    },
+    {
+      "receipt": "minutes_coverage_handoff.json",
+      "originalSha256": "309c32d9d304093eb38fe3746aeec3300a046a9193dc359a357ced0fe0f825a1",
+      "entry": "2026-11-20T12:46:19+08:00 Companion 纪要本地证据覆盖补读"
+    },
+    {
+      "receipt": "minutes_decision_handoff.json",
+      "originalSha256": "56d33adb57ead1e25e3ed70ce562ee333c02655f92a6f9dfd56e2a2897555047",
+      "entry": "2026-11-20T13:09:37+08:00 Companion 本地纪要跨会议状态核对"
+    },
+    {
+      "receipt": "minutes_source_focus_handoff.json",
+      "originalSha256": "dd4d4af3e20f9d88cadee246e9cff4d34825704c1c3a7f3452aed6d7fb9e0415",
+      "entry": "2026-11-20T12:08:25+08:00 Companion 会议纪要全文选材与短段理解对照"
+    },
+    {
+      "receipt": "minutes_genre_handoff.json",
+      "originalSha256": "d6990a12074ceebf589b5403374ca870f92504a1c58e762b34851d291c4d933d",
+      "entry": "2026-11-20T10:09:29+08:00 Companion 会议纪要跨类型工程复验"
+    },
+    {
+      "receipt": "minutes_long_rotation_handoff.json",
+      "originalSha256": "f0287e4cd12ea78f94220121c2ac6bcdce365203a3af77b843ac92168ce2ef04",
+      "entry": "<!-- companion-minutes-long-rotation-20261120 -->"
+    }
+  ]
+}
