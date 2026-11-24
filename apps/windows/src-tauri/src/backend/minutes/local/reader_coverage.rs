@@ -168,6 +168,109 @@ pub(super) fn select<'a>(
     hidden_selected.find_map(|i| shift_boundary(turns, topic, i).or_else(|| periodic_inspection(turns, topic, i)))
 }
 
+// Restore a material qualification when the short reading contains only one
+// part of the exchange. Render the original speaker's position as a discussion
+// point. Neither an opinion nor a proposed expense becomes a team commitment.
+pub(super) fn missing_qualification<'a>(
+    turns: &[Turn<'a>], topic: &[usize], visible: &HashSet<usize>,
+    used_roles: &HashSet<&str>,
+) -> Option<Reading<'a>> {
+    let examples = ["假设", "假如", "如果", "比如", "举例", "原来是", "听说"];
+    if !used_roles.contains("proposal-cost") {
+        let cost = topic.iter().copied().filter(|index| visible.contains(index)).find_map(|index| {
+            let proposal = &turns[index];
+            let speaker = proposal.speaker?;
+            let phase = ["前期", "试点", "第一阶段", "筹备期"].into_iter()
+                .find(|phase| proposal.words.contains(phase))?;
+            if speculative(proposal.words)
+                || !contains_any(proposal.words, &["打算", "准备", "计划", "可以", "先做", "先搞", "前期搞"])
+            {
+                return None;
+            }
+            let cost = (index + 1..turns.len().min(index + 6))
+                .take_while(|&i| turns[i].speaker == Some(speaker))
+                .filter(|&i| topic.binary_search(&i).is_ok())
+                .filter_map(|i| {
+                    let words = turns[i].words;
+                    if speculative(words) || contains_any(words, &["除非", "前提", "否则", "获批", "预算上限"]) {
+                        return None;
+                    }
+                    let clause = words.split(['，', ',', '。', '；']).next()?.trim();
+                    (clause.contains(phase)
+                        && contains_any(clause, &["费用", "成本", "预算", "经费"])
+                        && contains_any(clause, &["要投入", "得投入", "要留", "得留", "需要预留", "需要增加"])
+                        && !contains_any(clause, &["不要", "不需要", "不用", "不投入", "不能", "不会"]))
+                    .then_some((i, clause))
+                }).find(|(i, _)| !visible.contains(i))?;
+            let words = cost.1.trim_start_matches("我们");
+            let words = if words.starts_with(phase) { words } else { cost.1 };
+            Some(Reading {
+                text: format!("{speaker}提出：{words}。"),
+                sources: vec![proposal.id, turns[cost.0].id],
+                role: "proposal-cost",
+            })
+        });
+        if cost.is_some() { return cost; }
+    }
+    if used_roles.contains("other-outlook") { return None; }
+
+    topic.iter().copied().filter(|index| visible.contains(index)).find_map(|index| {
+        let risk = &turns[index];
+        let speaker = risk.speaker?;
+        if speculative(risk.words) || !contains_any(risk.words, &["风险", "泡沫", "不景气", "不乐观", "隐患"]) {
+            return None;
+        }
+        let short = topic.iter().copied().rev().find(|&i| {
+            i < index && index - i <= 24 && turns[i].speaker.is_some_and(|name| name != speaker)
+                && contains_any(turns[i].words, &["短期内", "短时间内", "短期来看", "短期看", "现阶段"])
+                && !contains_any(turns[i].words, &examples)
+                && super::source_grounding::shared_han_phrase(risk.words, turns[i].words, 3)
+        })?;
+        let author = turns[short].speaker?;
+        let onward = short + 1..index.min(short + 11);
+        let pivot = onward.clone().take(3).find(|&i| {
+            turns[i].speaker == Some(author)
+                && ["但", "不过", "然而"].iter().any(|prefix| turns[i].words.starts_with(prefix))
+                && contains_any(turns[i].words, &["我觉得", "我认为", "我看"])
+                && !contains_any(turns[i].words, &examples)
+        })?;
+        let (at, subject, clause) = (pivot..onward.end).take_while(|&i| {
+            let line = &turns[i];
+            line.speaker == Some(author) || matches!(line.words.trim_matches(['。', '，', ' ']), "嗯" | "对" | "是")
+        }).find_map(|i| {
+            let line = &turns[i];
+            let words = line.words.trim_end_matches(['。', '，', ' ']);
+            if line.speaker != Some(author) || topic.binary_search(&i).is_err() || visible.contains(&i)
+                || speculative(words) || contains_any(words, &["不能", "不会", "没有", "不再", "除非", "得看"])
+                || !contains_any(words, &["仍", "依然", "未来", "后续", "长期", "长远", "今后"])
+                || !contains_any(words, &["机会", "空间", "前景", "有望", "大有作为"])
+            {
+                return None;
+            }
+            // A clipped conclusion may follow the same speaker's restatement
+            // of the subject. Require that restatement to match the visible risk.
+            let scope = if super::source_grounding::shared_han_phrase(risk.words, words, 3) {
+                i
+            } else {
+                let previous = &turns[i - 1];
+                if previous.speaker != Some(author)
+                    || !super::source_grounding::shared_han_phrase(risk.words, previous.words, 3) {
+                    return None;
+                }
+                i - 1
+            };
+            Some((i, scope, words))
+        })?;
+        let mut sources = vec![turns[short].id, turns[pivot].id, turns[subject].id, turns[at].id];
+        sources.dedup();
+        Some(Reading {
+            text: format!("{author}对后续的看法：{clause}。"),
+            sources,
+            role: "other-outlook",
+        })
+    })
+}
+
 /// Replace incomplete background only. A usable point, an action, or a review
 /// warning should continue to occupy its visible slot.
 pub(super) fn replaceable(text: &str) -> bool {
@@ -184,6 +287,46 @@ mod tests {
     use super::*;
     use crate::backend::minutes::{automatic_brief::factual_audit, canonical_brief::source_units};
     use crate::backend::minutes::local::reader_turns::Conversation;
+
+    #[test]
+    fn proposed_cost_keeps_its_owner_and_nearby_phase_without_making_a_commitment() {
+        let check = |cost, speaker| {
+            let rows = [
+                Turn { id: "e0", speaker: Some("甲"), words: "前期准备办一场学徒培训。" },
+                Turn { id: "e1", speaker: Some(speaker), words: cost },
+            ];
+            missing_qualification(&rows, &[0, 1], &HashSet::from([0]), &HashSet::new())
+                .map(|selected| (selected.role, selected.sources, selected.text))
+        };
+        let (role, sources, text) = check("前期的教材费用需要预留，提前列个清单。", "甲").unwrap();
+        assert_eq!(role, "proposal-cost");
+        assert_eq!(sources, ["e0", "e1"]);
+        assert_eq!(text, "甲提出：前期的教材费用需要预留。");
+        assert!(check("前期的教材费用需要预留。", "乙").is_none());
+        assert!(check("前期的教材费用需要预留，如果取得批准的话。", "甲").is_none());
+        assert!(check("前期的教材费用不用投入。", "甲").is_none());
+    }
+
+    #[test]
+    fn qualified_outlook_keeps_the_other_speakers_view_without_resolving_it() {
+        let check = |interjection, shown| {
+            let rows = [
+                Turn { id: "e0", speaker: Some("甲"), words: "这个维修项目短期内回报不高。" },
+                Turn { id: "e1", speaker: Some("甲"), words: "但我觉得后续的服务需求会增加。" },
+                Turn { id: "e2", speaker: Some("乙"), words: interjection },
+                Turn { id: "e3", speaker: Some("甲"), words: "维修项目仍有发展空间。" },
+                Turn { id: "e4", speaker: Some("丙"), words: "维修项目的资金风险很大。" },
+            ];
+            missing_qualification(&rows, &[0, 1, 2, 3, 4], &shown, &HashSet::new())
+                .map(|selected| (selected.role, selected.sources, selected.text))
+        };
+        let (role, sources, text) = check("嗯", HashSet::from([4])).unwrap();
+        assert_eq!(role, "other-outlook");
+        assert_eq!(sources, ["e0", "e1", "e3"]);
+        assert_eq!(text, "甲对后续的看法：维修项目仍有发展空间。");
+        assert!(check("换说预算", HashSet::from([4])).is_none());
+        assert!(check("嗯", HashSet::from([3, 4])).is_none());
+    }
 
     #[test]
     fn confirmed_reference_is_kept_with_its_unambiguous_proposal() {

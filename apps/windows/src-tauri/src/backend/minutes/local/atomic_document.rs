@@ -2822,6 +2822,7 @@ fn assemble_with_context(
     let mut reader_complete_requirements = Vec::new();
     let mut reader_connected_answers = Vec::new();
     let mut reader_coverage = Vec::new();
+    let mut saved_qualification_roles = HashSet::new();
     let mut grouped_replies = Vec::new();
     if !bank.chapter_spans.is_empty() {
         let conversation = super::reader_turns::Conversation::new(&sentences);
@@ -3045,7 +3046,11 @@ fn assemble_with_context(
                 discretionary_slots -= 1;
                 true
             }).collect::<Vec<_>>();
-            let count = example_count + outcome_count + future_count + reported.len() + replies.len();
+            let qualification = super::reader_coverage::missing_qualification(
+                conversation.turns(), &topic_sources, &visible_sources, &saved_qualification_roles,
+            ).filter(|row| canonical_brief::line(&row.text, 60));
+            let count = example_count + outcome_count + future_count + reported.len() + replies.len()
+                + usize::from(qualification.is_some());
             if count==0 { continue; }
             for (path,_) in &mut layout_bindings {
                 if let Some(row) = path.strip_prefix(&prefix).and_then(|row| row.parse::<usize>().ok()) {
@@ -3084,7 +3089,7 @@ fn assemble_with_context(
                 detail_kinds[topic].insert(row, Some(Kind::Status));
                 reader_reported_context.push(json!({"sourceId":passage.source,"path":format!("topics[{topic}].details[{row}]")}));
             }
-            let reply_offset = offset + count - replies.len();
+            let reply_offset = offset + count - replies.len() - usize::from(qualification.is_some());
             for (index, reply) in replies.into_iter().enumerate() {
                 let row = reply_offset + index;
                 let evidence = reply.sources.iter().map(|id| {
@@ -3094,6 +3099,18 @@ fn assemble_with_context(
                 details.insert(row, json!({"text":reply.text,"evidence":evidence}));
                 detail_kinds[topic].insert(row, Some(Kind::Status));
                 grouped_replies.push(json!({"sourceIds":reply.sources,"path":format!("topics[{topic}].details[{row}]")}));
+            }
+            if let Some(qualification) = qualification {
+                let row = offset + count - 1;
+                let evidence = qualification.sources.iter().map(|source| {
+                    let original = known[*source];
+                    json!({"source":original["source"],"quote":original["text"]})
+                }).collect::<Vec<_>>();
+                details.insert(row, json!({"text":qualification.text,"evidence":evidence}));
+                detail_kinds[topic].insert(row, Some(Kind::Opinion));
+                saved_qualification_roles.insert(qualification.role);
+                grouped_replies.push(json!({"sourceIds":qualification.sources,"role":qualification.role,
+                    "path":format!("topics[{topic}].details[{row}]")}));
             }
             *limit=offset+count;
         }
