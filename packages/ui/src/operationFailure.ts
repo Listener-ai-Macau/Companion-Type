@@ -57,6 +57,8 @@ export function calendarExportNeedsTime(error:unknown):boolean{
 }
 export function localMinutesPauseMessage(error:unknown):string|null{
   const text=messageOf(error).replace(/^Error:\s*/,'');
+  const saved=/^可用内存不足，已保存 ([1-9]\d{0,3}) 段本地整理进度。释放内存后可以继续。$/.exec(text);
+  if(saved) return `可用内存不足，已在本机保存 ${saved[1]} 段整理进度。释放一些内存后可继续，关闭后也可重新打开接着整理。`;
   const retained=/^可用内存不足，已保留 ([1-9]\d{0,3}) 段整理进度。内存恢复后，点击重试可接着生成。$/.exec(text);
   if(retained) return `可用内存不足，暂停时已整理 ${retained[1]} 段。释放一些内存后可继续。保持 Companion 打开，才能使用本次保留的进度。`;
   return text==='可用内存不足，本地纪要已停止，已有内容保留。'?advice.memory:null;

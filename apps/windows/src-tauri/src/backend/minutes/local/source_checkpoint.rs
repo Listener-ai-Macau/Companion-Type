@@ -2,7 +2,7 @@
 use std::{fs::File, io::Read, path::PathBuf};
 
 use serde::Deserialize;
-use serde_json::Value;
+use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 
 use super::{assets, source_review, source_windows::{SourceEncoding, SourceWindows}, transport};
@@ -305,6 +305,26 @@ impl CheckedSourcePrefix {
     }
 
     pub(super) fn len(&self) -> usize { self.windows.len() }
+
+    pub(super) fn desktop_receipt(&self) -> Value {
+        let review = self.independent_source_review.as_ref();
+        let calls = self.windows.iter().filter_map(|(_, call)| call.as_ref())
+            .chain(review.into_iter().flat_map(|review| review.calls.iter()))
+            .chain(self.organization.iter());
+        json!({
+            "provider":"local", "backend":"cpu", "runtimeSha256":assets::SERVER_SHA,
+            "modelSha256":assets::MODEL_SHA, "newCloudCalls":0, "trainingUpdates":0,
+            "contextTokens":review.map_or(8192, |review| review.context_tokens),
+            "reviewedSourceWindows":self.windows.iter().enumerate().map(|(index, (encoding, _))| {
+                json!({"window":index + 1, "sourceEncoding":encoding.name()})
+            }).collect::<Vec<_>>(),
+            "calls":calls.map(|call| json!({
+                "stage":call["stage"], "request":call["request"], "finishReason":call["finishReason"],
+                "output":call["output"], "inputTokens":call["inputTokens"],
+                "outputTokens":call["outputTokens"]
+            })).collect::<Vec<_>>()
+        })
+    }
 
     pub(super) fn reuses_vulkan_on_cpu(&self) -> bool { self.vulkan_source_on_cpu }
 

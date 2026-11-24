@@ -388,7 +388,7 @@ mod tests{
         let retry_slot = super::super::desktop_retry::RetrySlot::new();
         let mut first = Some(saved["receipt"].clone());
         let started = Instant::now();
-        let (result, trace, _) = super::super::desktop_retry::generate(&retry_slot, &session,
+        let (result, trace, _) = super::super::desktop_retry::generate(&retry_slot, &session, None,
             |prefix, pressure_retry| {
                 if let Some(trace) = first.take() {
                     assert!(!pressure_retry);
@@ -400,6 +400,7 @@ mod tests{
                     super::super::RuntimePolicy::Application { pressure_retry })
             },
             || crate::backend::external_command::wait_for_local_memory_recovery(None),
+            || false,
         );
         save_new(&output.join("desktop-retry-result.json"), &json!({
             "seconds":started.elapsed().as_secs_f64(),"receipt":trace,

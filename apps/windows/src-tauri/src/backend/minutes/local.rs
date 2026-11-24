@@ -91,7 +91,8 @@ pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingM
     if let Some(root)=delivery_preview_root(){
         let fields=["backend","vulkanDevice","runtimeFallback","sourceWindow","inferenceRequestAttempts","contextTokens","contextFallback",
             "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","modelLoadMode","newCloudCalls",
-            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB","reviewableDraft","modelVerificationSeconds"];
+            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB","reviewableDraft","modelVerificationSeconds",
+            "restoredLocalCheckpoint","savedLocalCheckpoint","reusedIndependentSourceReviewBatches","reusedOrganizationRequests"];
         let summary=fields.into_iter().map(|key|(key.to_owned(),trace[key].clone())).collect::<serde_json::Map<_,_>>();
         let _=std::fs::write(root.join("local-minutes-delivery-trace.json"),Value::Object(summary).to_string());
     }
@@ -194,9 +195,11 @@ fn generate_on_desktop(session: &CompanionV1HostSession, base: &CompanionV1Meeti
     desktop_retry::generate(
         &RETRY,
         session,
+        super::long_meeting::cache_root().as_deref(),
         |prefix, pressure_retry| recorded_attempt(session, base, new_trace(), prefix,
             RuntimePolicy::Application { pressure_retry }),
         || super::super::external_command::wait_for_local_memory_recovery(cancel.as_ref().map(|c| c.flag())),
+        || cancel.as_ref().is_some_and(|job| job.flag().load(std::sync::atomic::Ordering::Acquire)),
     )
 }
 

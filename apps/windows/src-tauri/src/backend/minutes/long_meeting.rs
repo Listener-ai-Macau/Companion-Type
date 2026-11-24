@@ -141,11 +141,11 @@ pub(in crate::backend) fn cache_root() -> Option<PathBuf> {
     super::super::persistence::state_file_path().parent().map(|p| p.join("minutes-work"))
 }
 
-fn regular(path: &Path) -> bool {
+pub(super) fn regular(path: &Path) -> bool {
     fs::symlink_metadata(path).is_ok_and(|m| m.is_file() && !m.file_type().is_symlink())
 }
 
-fn root_lock(root: &Path) -> Result<File, String> {
+pub(super) fn root_lock(root: &Path) -> Result<File, String> {
     if root.exists() && fs::symlink_metadata(root).is_ok_and(|m| m.file_type().is_symlink()) {
         return Err("纪要缓存目录是链接，未写入或清理。".into());
     }
@@ -174,6 +174,18 @@ fn root_lock(root: &Path) -> Result<File, String> {
     #[cfg(not(target_os="android"))]
     guard.try_lock().map_err(|_| "长会议正在另一处理任务中整理；请完成后重试。")?;
     Ok(guard)
+}
+
+#[cfg(windows)]
+pub(super) fn local_resume_filename(id: &str) -> String {
+    format!("{}.local.json", hash(id.as_bytes()))
+}
+
+fn local_resume_owner(path: &Path) -> Option<&str> {
+    let name = path.file_name()?.to_str()?;
+    let owner = name.strip_suffix(".local.json").or_else(|| name.strip_suffix(".local.part"))?;
+    (owner.len() == 64 && owner.bytes().all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase()))
+        .then_some(owner)
 }
 
 fn read_checkpoint(path: &Path) -> Result<Checkpoint, String> {
@@ -1658,6 +1670,14 @@ pub(in crate::backend) fn erase(root: &Path, session_ids: &[String], all: bool) 
     for item in fs::read_dir(root).map_err(|_| "无法检查纪要缓存，删除未完成。")? {
         let path = item.map_err(|_| "无法检查纪要缓存，删除未完成。")?.path();
         if path.file_name().is_some_and(|s| s == "work.lock") { continue; }
+        if let Some(owner) = local_resume_owner(&path) {
+            if !regular(&path) { unknown += 1; continue; }
+            if all || owners.contains(owner) {
+                fs::remove_file(path).map_err(|_| "本地纪要整理进度不可删除；会议资料尚未完全清理。")?;
+                removed += 1;
+            }
+            continue;
+        }
         let Ok(checkpoint) = read_checkpoint(&path) else { unknown += 1; continue; };
         if checkpoint.identity.schema != SCHEMA || path.file_name().is_none_or(|s| s != checkpoint.identity.filename().as_str()) {
             unknown += 1; continue;

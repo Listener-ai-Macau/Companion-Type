@@ -72,6 +72,8 @@ async function main() {
   assert.equal(cloudJourney.destination, 'settings');
   assert.equal(describeOperationFailure(localPause).kind, 'memory');
   assert.equal(describeOperationFailure(localPause + ' private-service-info').kind, 'unknown');
+  const savedPause = '可用内存不足，已保存 18 段本地整理进度。释放内存后可以继续。';
+  assert.match(describeOperationFailure(savedPause).message, /本机保存 18 段.*重新打开接着整理/);
 
   snapshot.host.sessions.push(raw); snapshot.host.selectedSessionId = session.id;
   snapshot.connected = false; snapshot.device.connected = false;
