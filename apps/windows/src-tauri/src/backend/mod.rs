@@ -110,6 +110,7 @@ pub(crate) use diarization::prepare_runtime as prepare_speaker_runtime;
 pub(crate) mod diagnostics;
 pub(crate) mod export;
 pub(crate) mod content_export;
+mod followup_handoff;
 mod spreadsheet_export;
 mod presentation_export;
 mod mindmap_image_export;

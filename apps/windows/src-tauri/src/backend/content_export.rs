@@ -56,15 +56,15 @@ fn readable_minutes(markdown:&str)->String {
 }
 
 fn saved_followup(session: &CompanionV1HostSession, mode: &str, markdown: &str) -> Result<String, String> {
-    let ready = super::export::minutes_variant_for_mode(session, mode).is_some_and(|minutes| {
+    let ready = super::export::minutes_variant_for_mode(session, mode).filter(|minutes| {
         minutes.source == "llm_local_qwen" && minutes.status == "minutesReady" && minutes.quality == "final"
             && minutes.processing.as_ref().is_none_or(|progress| progress.is_complete())
             && super::transcript_review::minutes_current(session, minutes.source_review_revision)
             && super::minutes_context::current(session, &minutes.source_note_context)
     });
-    if !ready {
+    let Some(ready) = ready else {
         return Err("请先完成并核对当前版本的本地纪要，再提取决定与跟进。".into());
-    }
+    };
     let mut output = Vec::new();
     let mut include = false;
     for line in markdown.lines() {
@@ -81,8 +81,11 @@ fn saved_followup(session: &CompanionV1HostSession, mode: &str, markdown: &str) 
     }
     let title = session.title.lines().next().unwrap_or("").trim();
     let title = if title.is_empty() { "会议跟进" } else { title };
+    let grouped = ready.source_action_evidence.as_ref()
+        .and_then(|evidence| super::followup_handoff::grouped(session,evidence,&output));
+    let body = grouped.unwrap_or_else(|| output.join("\n").trim_end().to_owned());
     Ok(readable_minutes(&format!("# {title}\n\n> 已保存纪要中的决定与跟进，发送前请核对。\n\n{}",
-        output.join("\n").trim_end())))
+        body)))
 }
 
 fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,literal_transcript:bool)->Result<String,String>{
@@ -222,6 +225,47 @@ mod tests {
         assert_eq!(prepare(&row, "offlineStore", Format::Txt, &choice).unwrap().bytes, text.as_bytes());
         row.minutes_by_mode.offline_store.as_mut().unwrap().quality = "draft".into();
         assert!(source(&row, "offlineStore", &choice).is_err());
+    }
+
+    #[test]
+    fn followup_short_draft_groups_verified_contacts_and_separates_requests() {
+        use sha2::{Digest,Sha256};
+        let mut row=sample();
+        let intro="说话人2: 零零四啊我是初一";
+        let work="说话人2: 在期末考试前，我会进行三次模拟。";
+        let notice="说话人1: 考试时候要向家长说明考试时间。";
+        let transcript=format!("{intro}\n说话人4: 主任。\n说话人2: 班主任。\n{work}\n{notice}");
+        row.transcript_text=transcript.clone();
+        let v=row.minutes_by_mode.offline_store.as_mut().unwrap();
+        v.source="llm_local_qwen".into();
+        v.status="minutesReady".into();
+        v.quality="final".into();
+        v.source_review_revision=None;
+        v.source_note_context=None;
+        v.processing=None;
+        let action="初一｜在期末考试前，进行三次模拟";
+        let pending="初一｜向家长说明考试时间，通知安排待确认。";
+        v.markdown=format!("## Action Items\n\n- {action}\n\n## Open Questions\n\n- {pending}\n- 领取教材的人选尚未确认。\n");
+        v.source_action_evidence=Some(serde_json::from_value(serde_json::json!({
+            "transcriptSha256":format!("{:x}",Sha256::digest(transcript.as_bytes())),
+            "reviewRevision":null,
+            "actions":[{"text":action,"segments":[],"transcriptQuotes":[work,intro]}],
+            "questions":[{"text":pending,"segments":[],"transcriptQuotes":[notice,intro]}],
+        })).unwrap());
+        let choice=Selection{minutes_followup_only:true,minutes:true,transcript:false,highlights:false,timeline:false,note_ids:vec![]};
+        let draft=source(&row,"offlineStore",&choice).unwrap();
+        let section=draft.split("## 请初一班主任核对").nth(1).unwrap();
+        assert!(section.contains("- 已明确 · 在期末考试前，进行三次模拟。"));
+        assert!(section.contains("- 请确认 · 上述安排的具体日期或时间。"));
+        assert!(section.contains("- 请确认 · 向家长说明考试时间的通知安排。"));
+        assert!(draft.contains("## 待确认问题\n\n- 领取教材的人选尚未确认。"));
+        assert!(!draft.contains("初一｜")&&!draft.contains("## 请初一主任核对"));
+        assert_eq!(prepare(&row,"offlineStore",Format::Txt,&choice).unwrap().bytes,draft.as_bytes());
+        let v=row.minutes_by_mode.offline_store.as_mut().unwrap();
+        v.source_action_evidence.as_mut().unwrap().transcript_sha256="stale".into();
+        let legacy=source(&row,"offlineStore",&choice).unwrap();
+        assert!(legacy.contains(action)&&legacy.contains(pending));
+        assert!(!legacy.contains("## 请初一班主任核对"));
     }
 
     fn sample()->CompanionV1HostSession {
