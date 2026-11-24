@@ -410,6 +410,98 @@ fn closing_summary_handoff(sentences: &[Value]) -> Option<RecapHandoff> {
     None
 }
 
+type Role<'a> = (usize, &'a str, &'a str);
+
+fn closing_lead<'a>(rows: &'a [Value], at: usize, roles: &[Role<'a>]) -> Option<(&'a str, usize)> {
+    if at < rows.len().saturating_sub(38) { return None; }
+    use super::source_commitments::{meeting_lead, sentence_speaker};
+    let speaker = sentence_speaker(rows, at)?;
+    let &(intro, _, _) = roles.iter().find(|(_, label, role)| *label == speaker && meeting_lead(role))?;
+    let close = (at.saturating_sub(3)..(at + 23).min(rows.len())).any(|pos| {
+        let text = bare(rows[pos]["text"].as_str().unwrap_or(""));
+        sentence_speaker(rows, pos) == Some(speaker)
+            && has(text, &["散会", "会议结束", "会议就先到此结束", "会议就到此结束", "今天就先到这"])
+            && !tentative(text)
+    });
+    close.then_some((speaker, intro))
+}
+
+/// Require both adoption by the lead and a bound original procedure
+/// reported by the named unit. A participant's own practice stays a report.
+pub(super) fn adopted_procedure(
+    rows: &[Value], at: usize, roles: &[Role<'_>],
+) -> Option<(String, Vec<usize>)> {
+    static ADOPTED: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?:以后|今后|从现在起|接下来)[嗯啊呃就都 ]{0,8}(?:要|一律|统一)?(?:按照|按|沿用|参照)",
+        r"[这个那嗯啊呃 ]{0,8}(?P<unit>[\p{Han}]{2,8}?)(?:这边儿?|那边儿?|的)",
+        r"[的这个那呃嗯啊 ]{0,8}(?:怎么说呢)?[的一个嗯啊呃 ]{0,8}(?:流程|做法|制度)"
+    )).expect("explicit adoption of a named procedure"));
+    let (speaker, intro) = closing_lead(rows, at, roles)?;
+    let words = bare(rows[at]["text"].as_str()?);
+    if tentative(words) || has(words, &["建议", "考虑", "准备", "还要确认", "先不", "不要按照"]) { return None; }
+    let adopted = ADOPTED.captures(words)?;
+    let unit = adopted.name("unit")?.as_str();
+    let next = rows.get(at + 1)?.get("text")?.as_str()?;
+    let continued = super::source_commitments::sentence_speaker(rows, at + 1) == Some(speaker);
+    let scope = if continued { format!("{words}{}", bare(next)) } else { words.to_owned() };
+    let group = ["每个幼儿园", "各幼儿园", "各园", "各部门", "各单位", "各门店", "各项目组", "各小组", "各团队"]
+        .into_iter().find(|group| scope.contains(group))?;
+    if !has(&scope[adopted.get(0)?.end()..], &["都要", "都得", "执行", "学习", "落实"]) { return None; }
+    let &(report_intro, reporter, name) = roles.iter().find(|(_, reporter, role)| {
+        *reporter != speaker && (*role == unit || role.ends_with('幼') && unit.ends_with('院')
+            && role.strip_suffix('幼') == unit.strip_suffix('院'))
+    })?;
+    let (protocol, description) = (at.saturating_sub(22)..at).rev().find_map(|pos| {
+        let text = bare(rows[pos]["text"].as_str()?);
+        if super::source_commitments::sentence_speaker(rows, pos) != Some(reporter) || tentative(text) {
+            return None;
+        }
+        if text.contains("门口") && has(text, &["接走", "接孩子", "接着", "交接"]) {
+            return Some((pos, "门口接送流程"));
+        }
+        has(text, &["流程", "做法", "制度"]).then_some((pos, "流程"))
+    })?;
+    let mut sources = vec![intro, report_intro, protocol];
+    if continued && !has(words, &["学习", "落实", "执行"]) { sources.push(at + 1); }
+    Some((format!("{group}沿用{name}的{description}。"), sources))
+}
+
+pub(super) fn final_group_delivery(rows: &[Value], at: usize, roles: &[Role<'_>]) -> Option<RecapHandoff> {
+    use crate::companion_v1::CompanionV1ActionItem;
+    use super::super::canonical_brief;
+    static DELIVERY: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?P<owner>各(?:个)?(?:幼儿园|院|部门|单位|门店|项目组|团队|小组))\s*(?:都)?(?:要)?(?:把|将)",
+        r"(?P<object>[^。！？；]{3,65}?)\s*(?:然后|之后|再)?(?:发给|交给|提交给|报给)(?P<recipient>我|[\p{Han}]{2,10})(?:[。！，,；]|$)"
+    )).expect("a concrete closing delivery addressed to several groups"));
+    let (speaker, intro) = closing_lead(rows, at, roles)?;
+    let words = bare(rows[at]["text"].as_str()?);
+    if tentative(words) || has(words, &["不用", "先不", "不要", "我建议", "提议", "考虑", "原来让", "之前让"]) { return None; }
+    let delivery = DELIVERY.captures(words)?;
+    let owner = delivery.name("owner")?.as_str();
+    let object = delivery.name("object")?.as_str().trim();
+    let recipient = delivery.name("recipient")?.as_str();
+    let receiver = if recipient == "我" {
+        roles.iter().find(|(_, label, _)| *label == speaker)?.2
+    } else { recipient };
+    let original = object.strip_prefix(owner).and_then(|rest| rest.strip_prefix('的')).unwrap_or(object);
+    let corrected = original.split_once("不是").and_then(|(old, new)| {
+        // An interrupted “计…” supports a correction. Complete objects
+        // on both sides of “不是” can be a contrast and stay unresolved.
+        old.ends_with('计').then_some(new.trim_start_matches(['，', ' ']))
+    });
+    let selected = corrected.or_else(|| (!original.contains("不是")).then_some(original))?;
+    let selected = selected.trim_end_matches("然后").trim();
+    if !["计划", "计划书", "报告", "清单", "方案", "报表", "材料"].iter().any(|name| selected.ends_with(name)) {
+        return None;
+    }
+    let selected = selected.replace("的一个", "");
+    if !canonical_brief::line(&selected, 48) { return None; }
+    Some(RecapHandoff {
+        item: CompanionV1ActionItem { text: format!("将{selected}发给{receiver}"), owner: Some(owner.to_owned()), due: None },
+        citations: vec![at, intro], directive: at,
+    })
+}
+
 fn direct_closing_instruction(words: &str, after_announce: bool) -> Option<(String, &str)> {
     static STRICT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?P<owner>总监|主管|负责人|组长|项目经理|经理)(?:这边儿?|那边儿?)\s*(?:一定要|务必|必须)[^。；！？]{0,12}?(?P<work>注意安全|负责安全|检查现场|把关)",

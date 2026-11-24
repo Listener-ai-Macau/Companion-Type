@@ -322,6 +322,38 @@ fn source_verified_facts(
             }
             continue;
         }
+        if current.iter().any(|fact| fact.role == "decision") {
+            if let Some((intro, scope, unit)) = source_commitments::reported_decision_scope(
+                sentences, index, &participants,
+            ) {
+                for fact in current.iter_mut().filter(|fact| fact.role == "decision") {
+                    let text = format!("{unit}汇报：{}", super::source_review::bare(&fact.text));
+                    if canonical_brief::line(&text, 90) { fact.text = text; }
+                    fact.role = "status".into();
+                    fact.clear_non_action_metadata();
+                    extend_references(fact, sentences, &[intro, scope]);
+                    audit.push(json!({"sentenceId":id,"reason":"department-decision-reported",
+                        "unit":unit,"evidence":fact.evidence}));
+                }
+            }
+        }
+        if let Some((text, sources)) = super::closing_recap::adopted_procedure(sentences, index, &participants)
+            .filter(|(_, sources)| sources.iter().all(|at| frames_at[*at].is_none() && !hypothetical.contains(at)))
+        {
+            let mut fact = ExtractedFact::verbatim(id, "decision", &text);
+            extend_references(&mut fact, sentences, &sources);
+            current.retain(|fact| !matches!(fact.role.as_str(), "decision" | "status"));
+            audit.push(json!({"sentenceId":id,"reason":"group-adopts-reported-procedure","evidence":fact.evidence}));
+            verified.push(fact);
+        }
+        if let Some(delivery) = super::closing_recap::final_group_delivery(sentences, index, &participants) {
+            let text = delivery.item.text.clone();
+            let mut fact = ExtractedFact::original_action(id, &text, delivery.item);
+            extend_references(&mut fact, sentences, &delivery.citations);
+            current.retain(|fact| !matches!(fact.role.as_str(), "action" | "status"));
+            audit.push(json!({"sentenceId":id,"reason":"closing-group-delivery","evidence":fact.evidence}));
+            verified.push(fact);
+        }
         if let Some(reading)=delivery_evidence::inspection_time_review(original) {
             let mut fact=ExtractedFact::review_quote(id,"status",&reading);
             fact.execution_reading=true;
@@ -3303,6 +3335,46 @@ fn assemble_with_context(
 #[cfg(test)]
 mod tests{
     use super::*;
+
+    #[test]
+    fn closing_commitments_preserve_the_groups_that_accepted_them() {
+        fn check(rows: &str, local_claim: &str, unit: &str, procedure: &str, work: &str) {
+            let units = source_units(rows);
+            let sentences = factual_audit::evidence_sentences(&units);
+            let local = sentences.iter().find(|row| row["text"].as_str().unwrap().contains(local_claim)).unwrap();
+            let seeded = ExtractedFact::verbatim(local["id"].as_str().unwrap(), "decision", local_claim);
+            let (facts, audit) = source_verified_facts(
+                vec![seeded], &sentences, None, &super::super::source_review::Review::default(),
+            ).unwrap();
+            assert!(facts.iter().any(|fact| fact.role == "status"
+                && fact.text.contains(unit) && fact.text.contains(local_claim)),
+                "missing local report for {local_claim} in {audit:?}");
+            assert!(!facts.iter().any(|fact| fact.role == "decision" && fact.text.contains(local_claim)));
+            assert!(facts.iter().any(|fact| fact.role == "decision" && fact.text.contains(procedure)),
+                "{audit:?}");
+            let action = facts.iter().find(|fact| fact.role == "action" && fact.text.contains(work))
+                .unwrap_or_else(|| panic!("missing closing work: {audit:?}"));
+            assert!(action.due.is_none());
+            assert!(!action.text.contains("下个月"));
+            assert!(action.evidence.len() >= 2);
+        }
+        check(
+            "说话人1：我是经理。\n说话人2：我是交付组。\n说话人2：我们交付组这边先介绍。我们决定内部换一个标签。\n\
+             说话人2：交接流程是先登记再复核。\n说话人1：以后都按照交付组的流程各部门都要落实。\n\
+             说话人1：会议就先到此结束，各部门把各部门的下个月的一个计不是下半年度的一个计划发给我。\n\
+             说话人2：好的。\n说话人1：散会。",
+            "内部换一个标签", "交付组", "各部门沿用交付组的流程", "下半年度计划",
+        );
+        let ambiguous = "说话人1：我是经理。\n说话人1：会议就先到此结束，各部门把月度计划不是半年度计划发给我。\n说话人1：散会。";
+        let sentences = factual_audit::evidence_sentences(&source_units(ambiguous));
+        let roles = super::super::source_commitments::meeting_roles(&sentences);
+        assert!((0..sentences.len()).all(|at| {
+            super::super::closing_recap::final_group_delivery(&sentences, at, &roles).is_none()
+        }));
+        let Some(source) = std::env::var_os("COMPANION_TEST_CLOSING_PUBLIC_TRANSCRIPT") else { return; };
+        let rows = std::fs::read_to_string(source).unwrap();
+        check(&rows, "决定向那个益智类的靠拢", "五幼", "每个幼儿园沿用五幼的门口接送流程", "下半年度计划");
+    }
 
     #[test]
     fn a_reader_requirement_can_use_a_more_complete_fact_in_the_same_space() {

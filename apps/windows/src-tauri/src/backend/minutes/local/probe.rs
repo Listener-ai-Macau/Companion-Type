@@ -271,6 +271,10 @@ mod tests{
                 });
                 let core = reply(transport::COMPACT_CORE_STAGE, atomic_document::layout_prompt(&bank),
                     atomic_document::layout_input(&bank), atomic_document::layout_schema(&bank).unwrap(), core_output).unwrap();
+                let core_only = std::env::var_os("COMPANION_TEST_REPLAY_COMPARE_CORE").map(|_| {
+                    let base=super::super::super::rules_l0_minutes(&session,"engineering-candidate");
+                    atomic_document::organize(&core, &bank, &session, &base).unwrap()
+                });
                 let mut chapter_requests = 0;
                 let raw=atomic_document::review_chapters(&mut bank,Some(&core),&text,|prompt,input,schema,stage| {
                     chapter_requests += 1;
@@ -312,6 +316,17 @@ mod tests{
                 let result=output.join(key);
                 fs::create_dir(&result).unwrap();
                 fs::write(result.join("candidate.txt"),&rendered.minutes.markdown).unwrap();
+                if let Some(core_only) = core_only {
+                    fs::write(result.join("core-only.txt"), &core_only.minutes.markdown).unwrap();
+                    let chapter_seconds: f64 = calls.iter().filter(|call| {
+                        call["stage"].as_str().is_some_and(|stage| stage.starts_with("chapter-review-"))
+                    }).filter_map(|call| call["generationSeconds"].as_f64()).sum();
+                    save_new(&result.join("core-only.json"), &json!({
+                        "experiment":"same archived facts and first layout, without the extra chapter passes",
+                        "measuredArchivedChapterSeconds":chapter_seconds,"newModelCalls":0,
+                        "documentReceipt":core_only.receipt,
+                    })).unwrap();
+                }
                 let mut replay = json!({
                     "mode": if mixed_sources { "deterministic-reader-replay-of-cpu-draft-with-validated-vulkan-source" }
                         else if vulkan { "deterministic-reader-replay-of-real-gpu-replies" }

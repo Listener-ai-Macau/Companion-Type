@@ -309,6 +309,38 @@ pub(super) fn meeting_roles(sentences: &[Value]) -> Vec<(usize, &str, &str)> {
     }).collect()
 }
 
+/// Bind "我们决定" to the reporting unit when the same speaker has
+/// explicitly established its scope. Meeting-wide adoption is separate.
+pub(super) fn reported_decision_scope<'a>(
+    rows: &'a [Value], index: usize, roles: &[(usize, &'a str, &'a str)],
+) -> Option<(usize, usize, &'a str)> {
+    let (_, body) = split(&rows[index]);
+    let speaker = sentence_speaker(rows, index)?;
+    if !contains(body, &["我们决定", "我们就决定", "我们最终决定"])
+        || contains(body, &["会上决定", "会议决定", "各部门统一", "全体一致", "大家一致", "咱们今天都"])
+    {
+        return None;
+    }
+    let &(intro, _, unit) = roles.iter().find(|(_, label, role)| *label == speaker && !meeting_lead(role))?;
+    if unit.chars().count() < 2 || !unit.chars().all(|c| c.is_alphanumeric()) {
+        return None;
+    }
+    let scope = (index.saturating_sub(48)..=index).rev().find(|&pos| {
+        let (_, words) = split(&rows[pos]);
+        sentence_speaker(rows, pos) == Some(speaker) && words.match_indices(unit).any(|(at, name)| {
+            let before = words[..at].trim_end();
+            let after = &words[at + name.len()..];
+            before.ends_with("我们") || before.ends_with("咱们")
+                || after.starts_with("这边") && contains(before, &["汇报", "先说", "我们"])
+        })
+    })?;
+    let changed_subject = (scope + 1..index).any(|pos| {
+        let (label, words) = split(&rows[pos]);
+        label.is_some_and(|label| label != speaker) && words.chars().count() > 18
+    });
+    (!changed_subject).then_some((intro, scope, unit))
+}
+
 pub(super) struct DirectedWork {
     pub(super) item: CompanionV1ActionItem,
     pub(super) support: Vec<usize>,
@@ -450,6 +482,18 @@ pub(super) fn continued_collective_work(
         item: CompanionV1ActionItem { text, owner: Some(owner.to_owned()), due: None },
         support,
     }, last))
+}
+
+/// Inherit a speaker only across sentence cuts in the same source line.
+pub(super) fn sentence_speaker(rows: &[Value], index: usize) -> Option<&str> {
+    let row = rows.get(index)?;
+    if let Some((label, _)) = split_turn_label(row["text"].as_str()?.trim()) { return Some(label); }
+    for earlier in rows[..index].iter().rev().take(8) {
+        let text = earlier["text"].as_str()?;
+        if earlier["source"] != row["source"] || text.ends_with('\n') { return None; }
+        if let Some((label, _)) = split_turn_label(text.trim()) { return Some(label); }
+    }
+    None
 }
 
 fn preceding_turn(sentences: &[Value], index: usize) -> Option<(usize, &str)> {
