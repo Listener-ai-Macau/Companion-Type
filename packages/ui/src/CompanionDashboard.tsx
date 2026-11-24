@@ -1,3 +1,4 @@
+import {minutesActionExportBlock} from './minutesExportReadiness';
 import {meetingReadingSources} from './meetingReadingSources';
 import type {TranscriptLookup} from './transcriptMatching';
 import {LibraryPanel} from './LibraryPanel';
@@ -1034,6 +1035,7 @@ export function CompanionDashboard({
       : legacyMinutes?.llmNote != null))
   );
   const minutesIncomplete = minutesReviewDraft || Boolean(minutesProcessing && !companionMinutesProcessingComplete(minutesProcessing));
+  const actionExportBlock = (format: string) => minutesActionExportBlock(format, {stale:selectedMinutesStale,incomplete:minutesIncomplete,reviewDraft:minutesReviewDraft});
   const manualMinutes = (selectedMinutesVariant || legacyMinutes)?.source === 'userAuthored';
   const minutesDisplayContext = manualMinutes ? undefined : (selectedMinutesVariant || legacyMinutes)?.sourceNoteContext;
   const recordingMode = selectedSession?.meetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
@@ -1648,6 +1650,11 @@ export function CompanionDashboard({
   const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string,reviewChoice?:CalendarReminderChoice&{singleDeadlineChange?:{index:number;before:CalendarExportItem[]}},calendarSaveToken?:string,calendarSavedName=false) => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id,exportSourceKey=copySourceKey;
+    const actionBlock = actionExportBlock(format);
+    if (actionBlock) {
+      setExportResult({sessionId, format, origin, kind:'error', message:actionBlock});
+      return;
+    }
     const savedCalendarReview=(format==='ics'||format.startsWith('calendar'))?calendarExportReview:null;
     const restoreCalendarReview=()=>{
       if(savedCalendarReview?.sourceKey===exportSourceKey&&copySourceRef.current===exportSourceKey)
@@ -2701,7 +2708,7 @@ export function CompanionDashboard({
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
                   onClick={()=>void exportMeeting(!minutesIncomplete && savedActions(minutesMarkdown).length>0?'todotxt':'markdown')}><Download size={15}/>
                   {minutesReviewDraft?'导出待核草稿':minutesIncomplete?'保存部分纪要':savedActions(minutesMarkdown).length>0?'导出待办 TXT':'导出整理'}</button> : null}
-                {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording} onClick={openContentExport}>预览并导出完整内容</button> : null}
+                {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete} onClick={openContentExport}>预览并导出完整内容</button> : null}
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale||minutesIncomplete}
                   title={minutesIncomplete ? '整理完成后才能导出整场待办' : '把未完成事项和已确认时间写成日程文件，导入常用日历后核对提醒'}
@@ -3904,9 +3911,10 @@ export function CompanionDashboard({
             <div className="ct-button-row">
               {(['markdown', 'docx', 'mindmap', 'txt', 'json', 'srt', 'todo', 'todotxt', 'ics'] as const).map((format) => <button key={format} type="button" className="ct-action"
                 disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || (['markdown', 'docx', 'mindmap', 'todo', 'todotxt', 'ics'].includes(format) ? !hasMinutes : !finalTranscript)
-                  || (format==='srt' && (!selectedSession || !companionReviewedUtterances(selectedSession).length || companionReviewedUtterances(selectedSession).some(u=>u.approximateTiming)))}
+                  || Boolean(actionExportBlock(format)) || (format==='srt' && (!selectedSession || !companionReviewedUtterances(selectedSession).length || companionReviewedUtterances(selectedSession).some(u=>u.approximateTiming)))}
                 onClick={() => void exportMeeting(format,'settings')}>{format === 'markdown' ? 'Markdown' : format === 'docx' ? 'Word 文档' : format === 'mindmap' ? '思维导图' : format === 'todo' ? '清单 Markdown' : format === 'todotxt' ? '清单 TXT' : format === 'ics' ? '日历待办 (.ics)' : format.toUpperCase()}</button>)}
             </div>
+            {hasMinutes && actionExportBlock('todo') ? <p className="ct-step-warn" role="status">{actionExportBlock('todo')}</p> : null}
             {renderExportFeedback('settings')}
             <p className="ct-step-meta">选择保存位置；导出只使用已保存的内容，不会重新调用转写或纪要服务。SRT 需要真实时间戳。</p>
             <p className="ct-step-meta">待办取自当前纪要的“行动项 / Action Items”列表；修改后请先保存。日历文件使用 VTODO，需支持待办的日历应用；仅明确的日期或带时区时间设为截止时间，“周五”等保留原文供核对，不自动猜日期。</p>

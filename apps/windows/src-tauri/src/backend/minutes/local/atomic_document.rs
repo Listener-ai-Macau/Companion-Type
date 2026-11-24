@@ -322,6 +322,28 @@ fn source_verified_facts(
             }
             continue;
         }
+        // A speaker asked for on-the-spot reporting, not a post-meeting task.
+        // Recover it before using model facts or applying any assignment rules.
+        if let Some(clause) = super::reader_ranking::meeting_only_department_request(original)
+        {
+            let cancelled = sentences.iter().enumerate().skip(index + 1).any(|(later_index,row)| {
+                frames_at[later_index].is_none() && !hypothetical.contains(&later_index)
+                    && row["text"].as_str().is_some_and(|later|
+                        super::reader_ranking::cancels_meeting_department_request(original, later))
+            });
+            if cancelled {
+                audit.push(json!({"sentenceId":id,"reason":"discarded-cancelled-in-meeting-department-request"}));
+                continue;
+            }
+            if !superseded.contains(&index) && !revised.contains_key(&index) {
+                let mut fact = ExtractedFact::verbatim(id, "status", clause);
+                fact.execution_reading = true;
+                audit.push(json!({"sentenceId":id,"reason":"retained-in-meeting-department-request",
+                    "evidence":fact.evidence}));
+                verified.push(fact);
+                continue;
+            }
+        }
         if current.iter().any(|fact| fact.role == "decision") {
             if let Some((intro, scope, unit)) = source_commitments::reported_decision_scope(
                 sentences, index, &participants,
@@ -4149,6 +4171,50 @@ mod tests{
         let timing=bank.facts.iter().filter(|fact|fact.text.contains("十分二十分钟")).collect::<Vec<_>>();
         assert_eq!(timing.len(),1);
         assert_eq!(bank.required_role(timing[0]),Some("source-review"));
+    }
+
+    #[test]
+    fn on_the_spot_department_report_survives_extraction_without_becoming_followup() {
+        let opening = "这次会议讨论商场客诉和项目验收安排。";
+        let request = "请各部门现在依次汇报本周客诉处理情况。";
+        let task = "各小组都要在周五前提交验收方案。";
+        let source = format!("{opening}\n{request}\n{task}");
+        let session = crate::backend::minutes::tests::session_with_text(&source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
+        for extraction in [
+            vec![ExtractedFact::verbatim("e0000", "status", opening)],
+            vec![ExtractedFact::verbatim("e0000", "status", opening),
+                ExtractedFact::verbatim("e0001", "action", request)],
+        ] {
+            let bank = build_bank(extraction, &source).unwrap();
+            let kept = bank.facts.iter().find(|f| f.text.contains("客诉处理情况")).unwrap();
+            assert_eq!(kept.evidence, ["e0001"]);
+            assert_eq!(bank.required_role(kept), Some("operating-condition"));
+            let topic_ids = bank.topics().map(|f| f.id.as_str()).collect::<Vec<_>>();
+            let assignments = topic_ids.iter().map(|id| ((*id).to_owned(), json!("m1")))
+                .collect::<serde_json::Map<_, _>>();
+            let layout = json!({
+                "purposeFact": topic_ids[0], "topics":{"t1":"项目验收", "t2":null, "t3":null,
+                    "t4":null, "t5":null, "t6":null, "t7":null, "t8":null},
+                "assignments":assignments,
+            });
+            let output = organize(&layout.to_string(), &bank, &session, &base).unwrap();
+            assert!(output.minutes.markdown.contains("客诉处理情况"));
+            assert_eq!(output.minutes.action_items.len(), 1);
+            assert!(output.minutes.action_items[0].text.contains("验收方案"));
+            assert_eq!(output.minutes.action_items[0].due.as_deref(), Some("周五前"));
+        }
+        let matcher = super::super::reader_ranking::meeting_only_department_request;
+        for negative in ["请各部门会后汇报本周客诉处理情况。", "建议请各部门现在汇报客诉。",
+            "比如请各部门现在汇报进度。", "请各部门现在汇报客诉，周五前提交整改单。",
+            "请各部门现在说明为什么不用汇报客诉。"] {
+            assert!(matcher(negative).is_none(), "{negative}");
+        }
+        let canceled_source = format!("{source}\n不用汇报本周客诉处理情况。");
+        let bank = build_bank(vec![ExtractedFact::verbatim("e0000", "status", opening),
+            ExtractedFact::verbatim("e0001", "action", request)], &canceled_source).unwrap();
+        assert!(!bank.facts.iter().any(|f| f.evidence.first().map(String::as_str) == Some("e0001")));
+        assert!(bank.facts.iter().any(|f| f.placement == Placement::Action && f.text.contains("验收方案")));
     }
 
     #[test]

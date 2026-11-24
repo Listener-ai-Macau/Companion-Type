@@ -302,6 +302,44 @@ pub(super) fn reviewable_operating_clause(words: &str) -> bool {
         && has(&["清空", "清理", "消毒", "巡查", "检查", "核对", "登记", "交接", "点检", "处理", "报备", "切断"])
 }
 
+/// An explicit, self-contained request for an update in the current meeting.
+pub(super) fn meeting_only_department_request(text: &str) -> Option<&str> {
+    let raw = super::super::source_resolution::split_turn_label(text.trim())
+        .map_or(text.trim(), |(_, words)| words.trim());
+    let clause = raw.trim_end_matches(['。', '！', '；']).trim_end();
+    static REQUEST: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?:请|麻烦|要求)(?:各(?:个)?部门|所有部门|相关部门|(?:运营|财务|市场|销售|工程|安保|物业)部)(?:现在|当场|会上|在本次会上|在会上)(?:逐一|依次|分别|先)?(?:汇报|说明|反馈|同步)[^，,。；！？?]{2,40}$"
+    ).expect("explicit in-meeting department request"));
+    if clause.chars().count() > 90
+        || ["会后", "散会", "明天", "下次", "如果", "假设", "例如", "比如", "是否", "之前要",
+            "不用", "不必", "无需", "取消", "撤回", "不需要", "不再", "暂缓", "先不", "为何", "为什么"]
+            .iter().any(|cue| clause.contains(cue))
+    {
+        return None;
+    }
+    REQUEST.is_match(clause).then_some(clause)
+}
+
+/// Only explicit cancellation of the very same operation and object counts.
+/// Other updates and vague references to "the previous requirement" do not.
+pub(super) fn cancels_meeting_department_request(request_source: &str, later: &str) -> bool {
+    let Some(request) = meeting_only_department_request(request_source) else { return false; };
+    use super::super::source_resolution::split_turn_label as label;
+    let Some(start) = ["汇报", "说明", "反馈", "同步"].into_iter().filter_map(|verb| request.find(verb)).min()
+        else { return false; };
+    let operation = &request[start..];
+    let later_label = label(later.trim());
+    if label(request_source.trim()).map(|(speaker, _)| speaker)
+        != later_label.map(|(speaker, _)| speaker)
+    {
+        return false;
+    }
+    let raw = later_label.map_or(later.trim(), |(_, words)| words.trim());
+    let later = raw.trim_end_matches(['。', '！', '；']).trim_end();
+    ["取消", "撤销", "不用", "不必", "无需", "不需要", "不再"]
+        .into_iter().any(|cue| later.strip_prefix(cue).is_some_and(|tail| tail == operation))
+}
+
 /// Select a self-contained stretch of the original speech. These clauses
 /// describe a reported stage or an operating rule, never a new assignment.
 pub(super) fn documented_clause(text: &str) -> Option<(OperationalEvidence, &str)> {

@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+snapshot.host.persistence={status:'ready'};
+const s=snapshot.host.sessions[0];
+const variant=s.minutesByMode?.offlineStore; assert(variant);
+const reviewed={...variant,quality:'draft' as const,source:'llm_deepseek' as const,processing:undefined};
+s.minutes=reviewed;s.minutesByMode={...s.minutesByMode,offlineStore:reviewed};
+let writes=0;
+let tree:any;
+act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null}
+  onRefresh={()=>{}} onControl={()=>{}} onExportMeeting={async()=>{writes++;return null;}}/>);});
+const text=(n:any):string=>n==null?'':typeof n==='string'?n:(n.children??[]).map(text).join('');
+const nav=tree.root.findByProps({'aria-label':'主要功能'});
+act(()=>nav.findAllByType('button').find((x:any)=>text(x)==='设置').props.onClick());
+const settings=tree.root.findByProps({'aria-label':'设置与工具内容'});
+const button=(label:string)=>settings.findAllByType('button').find((x:any)=>text(x)===label);
+assert.equal(settings.props.hidden,false);
+assert.equal(button('清单 TXT').props.disabled,true);
+assert.equal(button('日历待办 (.ics)').props.disabled,true);
+assert.match(text(settings),/这版纪要仍待核对/);
+assert.equal(button('Markdown').props.disabled,false);
+assert.equal(writes,0);
+act(()=>tree.unmount());
+console.log('PASS real Dashboard Settings render: draft TXT/calendar disabled with reason; Markdown available');
