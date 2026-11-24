@@ -3306,7 +3306,13 @@ fn assemble_with_context(
                 decisions: Vec::new(),
                 questions: Vec::new(),
             });
-            evidence.actions = actions;
+            for action in actions {
+                if let Some(original) = evidence.actions.iter_mut().find(|saved| saved.text == action.text) {
+                    original.segments = action.segments;
+                } else {
+                    evidence.actions.push(action);
+                }
+            }
         }
     }
     let visible_paths: HashSet<_> = parsed.receipt["evidenceAnchors"].as_array().ok_or_else(fail)?

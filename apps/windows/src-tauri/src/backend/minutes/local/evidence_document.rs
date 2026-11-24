@@ -259,9 +259,7 @@ pub(super) fn parse_with_details_limit(
     };
     let decisions = anchored_quotes("decisions", parsed.minutes.decisions.iter().map(String::as_str).collect());
     let questions = anchored_quotes("questions", parsed.minutes.questions.iter().map(String::as_str).collect());
-    let actions = if session.source == "importedTranscript" && session.utterances.is_empty() {
-        anchored_quotes("actionItems", parsed.minutes.action_items.iter().map(|item| item.text.as_str()).collect())
-    } else { Vec::new() };
+    let actions = anchored_quotes("actionItems", parsed.minutes.action_items.iter().map(|item| item.text.as_str()).collect());
     if !actions.is_empty() || !decisions.is_empty() || !questions.is_empty() {
         parsed.minutes.source_action_evidence = Some(CompanionV1MinutesActionEvidence {
             transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
@@ -305,18 +303,20 @@ mod tests{
     }
 
     #[test]
-    fn imported_actions_keep_a_unique_literal_source_without_audio_timing() {
-        let (mut s,b,d) = fixture();
-        s.source = "importedTranscript".into();
-        s.utterances.clear();
-        let parsed = parse(&d.to_string(),&s,&b).unwrap();
-        let evidence = parsed.minutes.source_action_evidence.unwrap();
-        assert_eq!(evidence.actions[0].text,"提交测试报告。");
-        assert!(evidence.actions[0].segments.is_empty());
-        assert_eq!(evidence.actions[0].transcript_quotes,["李敏承诺周五提交测试报告。"]);
-        s.transcript_text.push_str("李敏承诺周五提交测试报告。");
-        let repeated = parse(&d.to_string(),&s,&b).unwrap();
-        assert!(repeated.minutes.source_action_evidence.is_none());
+    fn actions_keep_a_unique_literal_source_without_audio_timing() {
+        for source in ["importedTranscript","hostMeeting"] {
+            let (mut s,b,d) = fixture();
+            s.source = source.into();
+            s.utterances.clear();
+            let parsed = parse(&d.to_string(),&s,&b).unwrap();
+            let evidence = parsed.minutes.source_action_evidence.unwrap();
+            assert_eq!(evidence.actions[0].text,"提交测试报告。");
+            assert!(evidence.actions[0].segments.is_empty());
+            assert_eq!(evidence.actions[0].transcript_quotes,["李敏承诺周五提交测试报告。"]);
+            s.transcript_text.push_str("李敏承诺周五提交测试报告。");
+            let repeated = parse(&d.to_string(),&s,&b).unwrap();
+            assert!(repeated.minutes.source_action_evidence.is_none());
+        }
     }
 
     #[test]
