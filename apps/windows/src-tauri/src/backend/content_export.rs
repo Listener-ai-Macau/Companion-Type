@@ -8,6 +8,8 @@ use super::export::{MeetingExportFormat as Format,PreparedMeetingExport};
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 pub struct Selection {
     pub minutes:bool,
+    #[serde(default)]
+    pub minutes_followup_only: bool,
     pub transcript:bool,
     pub highlights:bool,
     pub timeline:bool,
@@ -53,16 +55,54 @@ fn readable_minutes(markdown:&str)->String {
     let mut output=result.join("\n");if markdown.ends_with('\n'){output.push('\n');}output
 }
 
+fn saved_followup(session: &CompanionV1HostSession, mode: &str, markdown: &str) -> Result<String, String> {
+    let ready = super::export::minutes_variant_for_mode(session, mode).is_some_and(|minutes| {
+        minutes.source == "llm_local_qwen" && minutes.status == "minutesReady" && minutes.quality == "final"
+            && minutes.processing.as_ref().is_none_or(|progress| progress.is_complete())
+            && super::transcript_review::minutes_current(session, minutes.source_review_revision)
+            && super::minutes_context::current(session, &minutes.source_note_context)
+    });
+    if !ready {
+        return Err("请先完成并核对当前版本的本地纪要，再提取决定与跟进。".into());
+    }
+    let mut output = Vec::new();
+    let mut include = false;
+    for line in markdown.lines() {
+        if let Some(heading) = line.strip_prefix("## ") {
+            if heading.trim_end() == "主题原话" { break; }
+            include = matches!(heading.trim_end(), "Decisions" | "Action Items" | "Open Questions" | "协作要求");
+        }
+        if include {
+            output.push(line);
+        }
+    }
+    if output.is_empty() {
+        return Err("已保存的纪要没有决定、行动或待确认事项，可导出完整纪要。".into());
+    }
+    let title = session.title.lines().next().unwrap_or("").trim();
+    let title = if title.is_empty() { "会议跟进" } else { title };
+    Ok(readable_minutes(&format!("# {title}\n\n> 已保存纪要中的决定与跟进，发送前请核对。\n\n{}",
+        output.join("\n").trim_end())))
+}
+
 fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,literal_transcript:bool)->Result<String,String>{
     super::library_lifecycle::require_available(session)?;
     if !matches!(mode,"offlineStore"|"onlineLive") {return Err("不支持的会议版本。".into());}
     if !choice.minutes&&!choice.transcript&&!choice.highlights&&choice.note_ids.is_empty(){return Err("请选择要导出或复制的内容。".into());}
+    if choice.minutes_followup_only && !choice.minutes {return Err("请选择要导出的整理结果。".into());}
     if choice.timeline&&!choice.transcript{return Err("分段时间和说话人需要同时选择录音文字。".into());}
     let ids:std::collections::HashSet<_>=choice.note_ids.iter().collect();
     if ids.len()!=choice.note_ids.len()||ids.len()>128 {return Err("所选材料重复或过多，请重新选择。".into());}
     if ids.iter().any(|id|!session.meeting_notes.iter().any(|note|&note.id==*id)){return Err("所选材料已不存在，请重新选择；未导出其他材料。".into());}
     let mut parts=Vec::new();
-    if choice.minutes {parts.push(readable_minutes(&super::export::saved_minutes_markdown_for_mode(session,mode)?));}
+    if choice.minutes {
+        let markdown = super::export::saved_minutes_markdown_for_mode(session, mode)?;
+        parts.push(if choice.minutes_followup_only {
+            saved_followup(session, mode, &markdown)?
+        } else {
+            readable_minutes(&markdown)
+        });
+    }
     if choice.transcript {
         super::export::require_final_transcript(session)?;
         if !super::transcript_review::effective_unrecognized(session).is_empty(){
@@ -151,13 +191,37 @@ mod tests {
         row.minutes.as_mut().unwrap().markdown=raw.into();
         row.minutes_by_mode.offline_store.as_mut().unwrap().markdown=raw.into();
         let before=serde_json::to_vec(&row).unwrap();
-        let choice=Selection{minutes:true,transcript:false,highlights:false,timeline:false,note_ids:vec![]};
+        let choice=Selection{minutes_followup_only:false,minutes:true,transcript:false,highlights:false,timeline:false,note_ids:vec![]};
         let selected=source(&row,"offlineStore",&choice).unwrap();
         assert!(selected.contains("## 会议摘要")&&!selected.contains("Minutes engine:"));
         assert_eq!(prepare(&row,"offlineStore",Format::Txt,&choice).unwrap().bytes,selected.as_bytes());
         assert_eq!(serde_json::to_vec(&row).unwrap(),before);
         let manual="用户原文：Generated: 自述\nDuration: 5 ms\n## 未知自定义标题\n- FALSE 0 未批准";
         assert_eq!(readable_minutes(manual),manual);
+    }
+
+    #[test]
+    fn followup_export_keeps_the_decision_conditions_action_and_unresolved_heading() {
+        let mut row = sample();
+        let current = row.minutes_by_mode.offline_store.as_mut().unwrap();
+        current.source = "llm_local_qwen".into();
+        current.status = "minutesReady".into();
+        current.quality = "final".into();
+        current.source_review_revision = None;
+        current.source_note_context = None;
+        current.processing = None;
+        current.markdown = "## 主题脉络\n\n- 非所选讨论\n\n## Decisions\n\n- 验收后才能上线。\n\n## Action Items\n\n- 李明核对差额（日期待定）。\n\n## Open Questions\n\n- 外包价格待确认。\n\n## 主题原话\n\n### 行动项 · 原话\n\n- 不导出的原话\n".into();
+        let choice: Selection = serde_json::from_value(serde_json::json!({
+            "minutes":true,"minutesFollowupOnly":true,"transcript":false,"highlights":false,"timeline":false
+        })).unwrap();
+        let text = source(&row, "offlineStore", &choice).unwrap();
+        for piece in ["验收后才能上线", "李明核对差额（日期待定）", "外包价格待确认", "发送前请核对"] {
+            assert!(text.contains(piece));
+        }
+        assert!(!text.contains("非所选讨论") && !text.contains("不导出的原话"));
+        assert_eq!(prepare(&row, "offlineStore", Format::Txt, &choice).unwrap().bytes, text.as_bytes());
+        row.minutes_by_mode.offline_store.as_mut().unwrap().quality = "draft".into();
+        assert!(source(&row, "offlineStore", &choice).is_err());
     }
 
     fn sample()->CompanionV1HostSession {
@@ -169,7 +233,7 @@ mod tests {
     fn content051_selection_is_identical_across_text_and_document_routes_without_unselected_data(){
         use std::io::{Cursor,Read};
         let row=sample();let before=serde_json::to_vec(&row).unwrap();
-        let choice=Selection{minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]};
+        let choice=Selection{minutes_followup_only:false,minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]};
         let selected=source(&row,"offlineStore",&choice).unwrap();
         assert!(selected.contains("20%差额，尚未确认采购"));assert!(selected.contains("The purchase has not been approved."));assert!(!selected.contains("UNSELECTED_PRIVATE_MATERIAL"));
         for format in [Format::Txt,Format::Markdown] {
@@ -180,7 +244,7 @@ mod tests {
         assert!(xml.contains("20%差额，尚未确认采购"));assert!(!xml.contains("UNSELECTED_PRIVATE_MATERIAL"));
         assert_eq!(serde_json::to_vec(&row).unwrap(),before);
         let mut missing=choice.clone();missing.note_ids.push("missing".into());assert!(prepare(&row,"offlineStore",Format::Txt,&missing).is_err());
-        let empty=Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![]};assert!(prepare(&row,"offlineStore",Format::Txt,&empty).is_err());
+        let empty=Selection{minutes_followup_only:false,minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![]};assert!(prepare(&row,"offlineStore",Format::Txt,&empty).is_err());
         let prepared=prepare(&row,"offlineStore",Format::Txt,&choice).unwrap();let hash=super::super::export::content_hash(&prepared);
         let mut changed=row.clone();changed.transcript_text.push_str("会后修订");assert!(super::super::export::require_unchanged(&prepare(&changed,"offlineStore",Format::Txt,&choice).unwrap(),Some(&hash)).is_err());
     }
@@ -190,7 +254,7 @@ mod tests {
         let mut row=sample();row.transcript_review=None;
         let literal="# 原样井号\n## 不是文档标题\n> 原样引用符\n- 原样短横线\n  # 保留缩进\n**原样星号** <A&B> 😀\n=HYPERLINK(\"https://example.invalid\",\"literal\")";
         row.transcript_text=literal.into();
-        let choice=Selection{minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![]};
+        let choice=Selection{minutes_followup_only:false,minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![]};
         let exact=source(&row,"offlineStore",&choice).unwrap();assert!(exact.ends_with(literal));
         for format in [Format::Txt,Format::Markdown] {
             assert_eq!(prepare(&row,"offlineStore",format,&choice).unwrap().bytes,exact.as_bytes());
@@ -214,7 +278,7 @@ mod tests {
     #[test]
     fn content051_can_export_a_saved_material_without_ai_minutes_or_audio(){
         let mut row=sample();row.minutes=None;row.minutes_by_mode.offline_store=None;row.minutes_by_mode.online_live=None;row.transcript_text.clear();row.transcript_final=false;
-        let choice=Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]};
+        let choice=Selection{minutes_followup_only:false,minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]};
         for f in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap,Format::Pptx,Format::Png]{assert!(prepare(&row,"offlineStore",f,&choice).is_ok());}
         assert!(prepare(&row,"offlineStore",Format::Srt,&choice).is_err());
     }
@@ -226,8 +290,8 @@ mod tests {
         row.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment{text:row.transcript_text.clone(),start_ms:0,end_ms:4000,speaker:Some(0),approximate_timing:false}];
         std::fs::write(root.join("public-session.json"),serde_json::to_vec_pretty(&vec![row.clone()]).unwrap()).unwrap();
         let mut manifest=Vec::new();
-        for (label,choice) in [("transcript",Selection{minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![]}),
-            ("material",Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]})]{
+        for (label,choice) in [("transcript",Selection{minutes_followup_only:false,minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![]}),
+            ("material",Selection{minutes_followup_only:false,minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]})]{
             let expected=source(&row,"offlineStore",&choice).unwrap();
             for format in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap,Format::Pptx,Format::Png]{
                 let prepared=prepare(&row,"offlineStore",format,&choice).unwrap();let file=format!("{label}.{}",format.extension());
@@ -235,7 +299,7 @@ mod tests {
                 manifest.push(serde_json::json!({"file":file,"selectedText":expected,"title":row.title,"bytes":bytes.len()}));
             }
         }
-        let srt=prepare(&row,"offlineStore",Format::Srt,&Selection{minutes:false,transcript:true,highlights:false,timeline:true,note_ids:vec![]}).unwrap();
+        let srt=prepare(&row,"offlineStore",Format::Srt,&Selection{minutes_followup_only:false,minutes:false,transcript:true,highlights:false,timeline:true,note_ids:vec![]}).unwrap();
         std::fs::write(root.join("transcript.srt"),srt.bytes).unwrap();
         std::fs::write(root.join("manifest.json"),serde_json::to_vec_pretty(&manifest).unwrap()).unwrap();
         println!("CONTENT051_EXTERNAL_FILES={}",root.display());

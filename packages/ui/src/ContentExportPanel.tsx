@@ -4,12 +4,12 @@ import {Download,Copy,Share2} from 'lucide-react';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import type {CompanionMeetingExportRequest} from './CompanionDashboard';
-export type ContentSelection={minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean;noteIds:string[]};
+export type ContentSelection={minutes:boolean;minutesFollowupOnly?:boolean;transcript:boolean;highlights:boolean;timeline:boolean;noteIds:string[]};
 export type ContentExportTarget={requestId:string;sessionId:string;noteId:string};
 type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png'|'bundle';
 const formats:readonly [Format,string][]=[['bundle','图文 ZIP（含原图）'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
 type Preview={contentHash:string;textContent?:string|null};
-type Props={standalone?:boolean;target?:ContentExportTarget|null;onClearTarget?:()=>void;sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
+type Props={standalone?:boolean;target?:ContentExportTarget|null;onClearTarget?:()=>void;sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;followupAvailable?:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
  onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
  onSave?:(request:CompanionMeetingExportRequest)=>Promise<{path:string;bytes:number;warning?:string|null}|null>;
  onCopy?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
@@ -20,6 +20,7 @@ export function ContentExportPanel(props:Props){
  const panel=useRef<HTMLDetailsElement>(null),appliedTarget=useRef<string|null>(null);
  const [scopeExpanded,setScopeExpanded]=useState(false);
  const [format,setFormat]=useState<Format>('pdf');
+ const [followupOnly,setFollowupOnly]=useState(false);
  const [phase,setPhase]=useState<'preview'|'save'|'copy'|'share'|'folder'|'fileCopy'|null>(null);
  const [preview,setPreview]=useState<{key:string;text:string}|null>(null);
  const [feedback,setFeedback]=useState<{key:string;kind:'saved'|'copied'|'opened'|'cancelled'|'error';text:string;manual?:string}|null>(null);
@@ -28,17 +29,19 @@ export function ContentExportPanel(props:Props){
  const targetPending=!!target&&appliedTarget.current!==target.requestId;
  const effective=targetPending?{minutes:false,transcript:false,highlights:false,timeline:false,noteIds:targetNote?[targetNote.id]:[]}:selection;
  useEffect(()=>{
-   if(!target){if(appliedTarget.current){setSelection({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});setScopeExpanded(false);appliedTarget.current=null;}return;}
-   appliedTarget.current=target.requestId;setSelection({minutes:false,transcript:false,highlights:false,timeline:false,noteIds:targetNote?[targetNote.id]:[]});setFormat('pdf');setScopeExpanded(false);setFeedback(null);setPreview(null);
+   if(!target){if(appliedTarget.current){setSelection({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});setScopeExpanded(false);setFollowupOnly(false);appliedTarget.current=null;}return;}
+   appliedTarget.current=target.requestId;setSelection({minutes:false,transcript:false,highlights:false,timeline:false,noteIds:targetNote?[targetNote.id]:[]});setFormat('pdf');setScopeExpanded(false);setFollowupOnly(false);setFeedback(null);setPreview(null);
    if(panel.current){panel.current.open=true;panel.current.scrollIntoView({block:'start'});}
  },[target?.requestId,props.sessionId]);
  const choice:ContentSelection={minutes:effective.minutes&&props.minutes,transcript:effective.transcript&&props.transcript,highlights:effective.highlights&&props.highlights,
    timeline:effective.timeline&&effective.transcript&&props.transcript&&props.timing,noteIds:effective.noteIds.filter(id=>props.notes.some(note=>note.id===id))};
+ if (choice.minutes&&followupOnly) choice.minutesFollowupOnly=true;
+ const followupUnavailable=!!choice.minutesFollowupOnly&&!props.followupAvailable;
  const key=JSON.stringify([props.sessionId,props.meetingMode,props.sourceVersion,choice,format,target?.requestId]);
  const currentKey=useRef(key);currentKey.current=key;
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;task.current?.cancel();};},[]);
  useEffect(()=>()=>{task.current?.cancel();},[key]);
- const any=(!target||!!targetNote)&&(choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0);
+ const any=!followupUnavailable&&(!target||!!targetNote)&&(choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0);
  const dirty=props.unsaved.title||(choice.minutes&&props.unsaved.minutes)||(choice.transcript&&props.unsaved.transcript)||(choice.highlights&&props.unsaved.highlights)||(choice.noteIds.length>0&&props.unsaved.notes);
  const request=():CompanionMeetingExportRequest=>({sessionId:props.sessionId,meetingMode:props.meetingMode,format,contentSections:choice});
  const run=async(action:'preview'|'save'|'copy'|'share'|'folder'|'fileCopy')=>{
@@ -93,6 +96,11 @@ export function ContentExportPanel(props:Props){
        <label><input type="checkbox" checked={choice.highlights} disabled={!props.highlights||subtitles} onChange={e=>setChecked('highlights',e.currentTarget.checked)}/>录音重点</label>
        <label><input type="checkbox" checked={choice.timeline} disabled={!choice.transcript||!props.timing||subtitles} onChange={e=>setChecked('timeline',e.currentTarget.checked)}/>分段时间与说话人</label>
      </div>
+     {choice.minutes&&(props.followupAvailable||followupOnly)&&!subtitles?<label className="ct-export-format">整理结果范围 <select
+       value={followupOnly?'followup':'full'} onChange={e=>setFollowupOnly(e.currentTarget.value==='followup')}>
+       <option value="full">完整纪要</option><option value="followup">决定、行动和待确认事项</option>
+     </select></label>:null}
+     {followupUnavailable&&!subtitles?<p role="status">请先完成当前版本的纪要，或重新选择完整纪要。</p>:null}
      {props.notes.length>0?<details className="ct-content-materials"><summary>材料与补充（已选 {choice.noteIds.length} / {props.notes.length}）</summary>
        <div style={{display:'grid',gap:8,margin:'10px 0'}}>{props.notes.map(note=>{const title=note.text.split('\n')[0].slice(0,90)||'未命名补充';return <label key={note.id} style={{display:'flex',alignItems:'flex-start',gap:8}}><input type="checkbox" checked={choice.noteIds.includes(note.id)} disabled={subtitles} aria-label={`选择材料：${title}`} onChange={e=>{const checked=e.currentTarget.checked;setSelection(old=>({...old,noteIds:checked?[...old.noteIds,note.id]:old.noteIds.filter(id=>id!==note.id)}));}}/><span>{title}</span></label>;})}</div>
      </details>:null}

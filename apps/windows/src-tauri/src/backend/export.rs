@@ -144,7 +144,7 @@ pub fn require_unchanged(prepared: &PreparedMeetingExport, expected: Option<&str
     Ok(())
 }
 
-fn minutes_variant_for_mode<'a>(
+pub(super) fn minutes_variant_for_mode<'a>(
     session: &'a CompanionV1HostSession,
     meeting_mode: &str,
 ) -> Option<&'a CompanionV1MinutesVariant> {

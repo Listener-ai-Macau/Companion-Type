@@ -2683,7 +2683,10 @@ export function CompanionDashboard({
             target={noteExportTarget?.sessionId===selectedSession.id?noteExportTarget:null} onClearTarget={()=>setNoteExportTarget(null)}
             standalone={surface==='windows'} sessionId={selectedSession.id} meetingMode={minutesViewMode}
             sourceVersion={JSON.stringify([copySourceKey,selectedSession.transcriptText,selectedSession.noteRevision,selectedSession.bookmarkRevision,selectedSession.transcriptReview?.revision,bookmarkUnsaved])}
-            minutes={hasMinutes} transcript={finalTranscript} highlights={Boolean(selectedSession.bookmarks?.length)} timing={hasReviewedTiming}
+            minutes={hasMinutes} followupAvailable={selectedMinutesVariant?.source==='llm_local_qwen'&&selectedMinutesVariant.status==='minutesReady'
+              &&selectedMinutesVariant.quality==='final'&&!minutesIncomplete&&!selectedMinutesStale
+              &&/^## (Decisions|Action Items|Open Questions|协作要求)$/m.test(minutesMarkdown)}
+            transcript={finalTranscript} highlights={Boolean(selectedSession.bookmarks?.length)} timing={hasReviewedTiming}
             exactTiming={Boolean(finalTranscript&&companionReviewedUtterances(selectedSession).length&&!companionReviewedUtterances(selectedSession).some(row=>row.approximateTiming||row.endMs<=row.startMs))}
             notes={selectedSession.meetingNotes??[]} blocked={controlsBusy||oobeBlockedByRecording} desktopFileSharing={surface==='windows'}
             unsaved={{title:titleDirty,minutes:minutesDirty,transcript:transcriptReviewUnsaved,highlights:bookmarkUnsaved,notes:noteUnsaved}}

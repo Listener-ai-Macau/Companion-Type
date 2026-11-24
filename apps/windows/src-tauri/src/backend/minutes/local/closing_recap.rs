@@ -469,7 +469,103 @@ pub(super) fn adopted_procedure(
     })?;
     let mut sources = vec![intro, report_intro, protocol];
     if continued && !has(words, &["学习", "落实", "执行"]) { sources.push(at + 1); }
-    Some((format!("{group}沿用{name}的{description}。"), sources))
+    let statement = format!("{group}沿用{name}的{description}");
+    if description == "门口接送流程" {
+        if let Some(mut anchors) = school_handoff_steps(rows, protocol, at, reporter) {
+            anchors.push(report_intro);
+            // The current sentence is cited by the caller. Keep the next
+            // sentence if the scope or an explicit instruction relies on it.
+            if continued && (!words.contains(group)
+                || !has(words, &["都要按照", "一律按照", "统一按照", "都要按", "都要学习", "落实"]))
+            {
+                anchors.push(at + 1);
+            }
+            anchors.sort_unstable();
+            anchors.dedup();
+            if anchors.len() <= 7 {
+                let steps = "入园时由老师登记并领孩子进班；离园时各班列队到门口，确认家长后当面交接；日常接送时家长不进园";
+                return Some((format!("{statement}：{steps}。"), anchors));
+            }
+        }
+    }
+    // A compact, self-contained ordered procedure can be used verbatim.
+    let original = bare(rows[protocol]["text"].as_str()?).trim_end_matches(['。', '！', ' ']);
+    if let Some(steps) = original.split_once("流程是").map(|(_, steps)| steps) {
+        if steps.starts_with('先') && has(steps, &["再", "然后"])
+            && !has(steps, &["不再", "不用", "也可以", "或者", "取消"])
+            && super::super::canonical_brief::line(steps, 60)
+        {
+            return Some((format!("{statement}：{steps}。"), sources));
+        }
+    }
+    Some((format!("{statement}。"), sources))
+}
+
+/// Only reconstruct the operational sequence if every required step is stated
+/// by the reporting school in one continuous account.
+fn school_handoff_steps(
+    rows: &[Value], protocol: usize, decision: usize, reporter: &str,
+) -> Option<Vec<usize>> {
+    use super::source_commitments::sentence_speaker;
+    let lower = protocol.saturating_sub(5);
+    let upper = (protocol + 6).min(decision);
+    let start = (lower..protocol).rev().take_while(|&i| sentence_speaker(rows, i) == Some(reporter))
+        .last().unwrap_or(protocol);
+    let end = (protocol + 1..upper).take_while(|&i| sentence_speaker(rows, i) == Some(reporter))
+        .last().unwrap_or(protocol);
+    let step = |range: std::ops::RangeInclusive<usize>, keywords: &[&str]| {
+        range.into_iter().find(|&i| rows[i]["text"].as_str().is_some_and(|text| {
+            has(text, keywords) && !has(text, &["改为", "取消", "不再", "不用", "假设", "仅建议", "拟采用"])
+        }))
+    };
+    let line = |index: usize| rows[index]["text"].as_str().unwrap_or("");
+    let check_in = step(start..=protocol, &["点名卡", "登记卡", "签到表"])?;
+    if !line(check_in).contains("老师") { return None; }
+    let escort = step(check_in..=protocol, &["领进班级", "带进班级", "领进教室", "带进教室"])?;
+    if !line(escort).contains("老师") { return None; }
+    let exit = step(escort..=protocol, &["一个队的形式", "列队", "排队"])?;
+    if !line(exit).contains("门口") || !has(line(exit), &["接走", "放学", "离园"])
+        || !has(line(exit), &["一个班", "按班", "各班", "每班"])
+        || !has(line(escort), &["画一个名字", "打勾", "登记", "签到", "点名"])
+    {
+        return None;
+    }
+    let recognize = step(exit..=end, &["认家长", "确认家长", "核对家长"])?;
+    let handover = step(recognize..=end, &["送到家长手上", "交到家长手上", "当面交接"])?;
+    let boundary = step(handover..=end, &["不允许让家长进园", "家长不进园", "家长不入园", "不许家长进园"])?;
+    Some(vec![check_in, escort, exit, recognize, handover, boundary])
+}
+
+/// Keep a school's own explicit uniform plan together with its stated use
+/// conditions. It is never a decision or assignment for the other schools.
+pub(super) fn school_uniform_plan(rows: &[Value], at: usize, roles: &[Role<'_>]) -> Option<RecapHandoff> {
+    use super::source_commitments::sentence_speaker;
+    use crate::companion_v1::CompanionV1ActionItem;
+    static PLAN: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"我们(?:下一下一季度|下一季度|下季度)(?:会|将)(?:那个|专门|统一|呃|嗯| )*",
+        r"(?:配置|配备|配发)我们(?P<school>[一二三四五六七八九十]+幼)(?:的|专门儿?的|统一的|那个){0,4}校服"
+    )).expect("reported school uniform plan"));
+    let speaker = sentence_speaker(rows, at)?;
+    let text = bare(rows[at]["text"].as_str()?);
+    if tentative(text) || has(text, &["不配置", "不会", "取消", "建议", "拟", "打算", "还没有决定"]) { return None; }
+    let plan = PLAN.captures(text)?;
+    let school = plan.name("school")?.as_str();
+    let &(intro, _, _) = roles.iter().find(|(_, label, role)| *label == speaker && *role == school)?;
+    let mut citations = vec![at, intro];
+    let mut action = "下一季度配置本园校服".to_owned();
+    if sentence_speaker(rows, at + 1) == Some(speaker) {
+        let conditions = bare(rows[at+1]["text"].as_str()?);
+        if !tentative(conditions) && !has(conditions, &["改为", "取消", "仅供讨论"])
+            && has(conditions, &["平常上学", "平时上学", "日常上学"])
+            && has(conditions, &["可以不穿", "可以呃不穿", "不要求穿"])
+            && has(conditions, &["出游", "外出活动", "春游"])
+            && has(conditions, &["必须穿统一", "必须统一穿", "要穿统一"])
+        {
+            citations.push(at + 1);
+            action.push_str("；出游时须统一穿着，平时上学可不穿");
+        }
+    }
+    Some(RecapHandoff {item:CompanionV1ActionItem {text:action,owner:Some(school.to_owned()),due:None}, citations,directive:at})
 }
 
 pub(super) fn final_group_delivery(rows: &[Value], at: usize, roles: &[Role<'_>]) -> Option<RecapHandoff> {

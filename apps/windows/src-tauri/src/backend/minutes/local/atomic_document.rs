@@ -346,12 +346,17 @@ fn source_verified_facts(
             audit.push(json!({"sentenceId":id,"reason":"group-adopts-reported-procedure","evidence":fact.evidence}));
             verified.push(fact);
         }
-        if let Some(delivery) = super::closing_recap::final_group_delivery(sentences, index, &participants) {
+        if let Some((delivery, reason)) = super::closing_recap::final_group_delivery(sentences, index, &participants)
+            .map(|item| (item, "closing-group-delivery"))
+            .or_else(|| super::closing_recap::school_uniform_plan(sentences, index, &participants)
+                .map(|item| (item, "reported-school-uniform-plan")))
+            .filter(|(item, _)| item.citations.iter().all(|&at| frames_at[at].is_none() && !hypothetical.contains(&at)))
+        {
             let text = delivery.item.text.clone();
             let mut fact = ExtractedFact::original_action(id, &text, delivery.item);
             extend_references(&mut fact, sentences, &delivery.citations);
             current.retain(|fact| !matches!(fact.role.as_str(), "action" | "status"));
-            audit.push(json!({"sentenceId":id,"reason":"closing-group-delivery","evidence":fact.evidence}));
+            audit.push(json!({"sentenceId":id,"reason":reason,"evidence":fact.evidence}));
             verified.push(fact);
         }
         if let Some(reading)=delivery_evidence::inspection_time_review(original) {
@@ -3374,6 +3379,18 @@ mod tests{
         let Some(source) = std::env::var_os("COMPANION_TEST_CLOSING_PUBLIC_TRANSCRIPT") else { return; };
         let rows = std::fs::read_to_string(source).unwrap();
         check(&rows, "决定向那个益智类的靠拢", "五幼", "每个幼儿园沿用五幼的门口接送流程", "下半年度计划");
+        let sentences = factual_audit::evidence_sentences(&source_units(&rows));
+        let roles = super::super::source_commitments::meeting_roles(&sentences);
+        let (decision, anchors) = (0..sentences.len())
+            .find_map(|at| super::super::closing_recap::adopted_procedure(&sentences, at, &roles)).unwrap();
+        for requirement in ["老师登记并领孩子进班", "列队到门口", "确认家长后当面交接", "家长不进园"] {
+            assert!(decision.contains(requirement), "missing {requirement}: {decision} {anchors:?}");
+        }
+        let uniform = (0..sentences.len())
+            .find_map(|at| super::super::closing_recap::school_uniform_plan(&sentences, at, &roles)).unwrap();
+        assert_eq!(uniform.item.owner.as_deref(), Some("二幼"));
+        assert!(uniform.item.text.contains("下一季度配置本园校服；出游时须统一穿着，平时上学可不穿"));
+        assert_eq!(uniform.citations.len(),3);
     }
 
     #[test]
