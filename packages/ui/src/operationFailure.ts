@@ -1,13 +1,14 @@
 import {knownOperationErrors} from './knownOperationErrors';
 
 export type OperationScope='general'|'device'|'recording'|'save'|'export'|'playback'|'settings'|'update'|'diagnostics'|'diagnosticsRead'|'serviceCheck'|'components'|'chat'|'profile';
-export type OperationFailureKind='permission'|'storage'|'rateLimit'|'network'|'device'|'configuration'|'busy'|'conflict'|'integrity'|'cancelled'|'serviceUnavailable'|'unknown';
+export type OperationFailureKind='permission'|'storage'|'memory'|'rateLimit'|'network'|'device'|'configuration'|'busy'|'conflict'|'integrity'|'cancelled'|'serviceUnavailable'|'unknown';
 export type OperationFailure={kind:OperationFailureKind;message:string};
 
 const known=new Set(knownOperationErrors);
 const advice={
   permission:'无法访问所需文件或功能。请检查当前用户的权限，或解除其它程序对相关文件和功能的占用；不要清空已有录音。',
   storage:'本机磁盘空间不足。请释放保存位置所在磁盘的空间，再重试；尚未确认保存的修改请先保留。',
+  memory:'可用内存不足，已暂停本地纪要。释放一些内存后可重试。已有内容已保留。',
   rateLimit:'服务暂时限制请求。请稍后再试，或核对当前服务额度；不要连续重复提交。',
   network:'服务连接未完成。请检查网络和服务状态后再试；原有内容请保留，不需要重新录音。',
   serviceUnavailable:'转写服务暂时不可用，请稍后重试；原音已保留，不需要重新录音。',
@@ -54,6 +55,12 @@ function messageOf(error:unknown):string{
 export function calendarExportNeedsTime(error:unknown):boolean{
   return /^CALENDAR_TIME_REQUIRED(?::|$)/.test(messageOf(error).replace(/^Error:\s*/,''));
 }
+export function localMinutesPauseMessage(error:unknown):string|null{
+  const text=messageOf(error).replace(/^Error:\s*/,'');
+  const retained=/^可用内存不足，已保留 ([1-9]\d{0,3}) 段整理进度。内存恢复后，点击重试可接着生成。$/.exec(text);
+  if(retained) return `可用内存不足，暂停时已整理 ${retained[1]} 段。释放一些内存后可继续。保持 Companion 打开，才能使用本次保留的进度。`;
+  return text==='可用内存不足，本地纪要已停止，已有内容保留。'?advice.memory:null;
+}
 function classify(text:string,scope:OperationScope):OperationFailureKind{
   if(/(?:\b(?:ENOSPC|StorageFull)\b|no space left on device|\bdisk (?:is )?full\b|os error 112\b|磁盘空间不足)/i.test(text))return 'storage';
   if(/(?:(?:^(?:HTTP\s*)?(?:401|403)\b|\bHTTP(?: status)?[:= ]+(?:401|403)\b|\b(?:Unauthorized|Forbidden)\b)|服务.{0,8}(?:密钥|授权|配置)|未配置|not configured|missing (?:api|access)[ _-]?key)/i.test(text))return 'configuration';
@@ -75,6 +82,8 @@ function classify(text:string,scope:OperationScope):OperationFailureKind{
  * arbitrary OS/service details become bounded, actionable public guidance. */
 export function describeOperationFailure(error:unknown,scope:OperationScope='general'):OperationFailure{
   const text=messageOf(error).replace(/^Error:\s*/,''),kind=classify(text,scope);
+  const memory=localMinutesPauseMessage(text);
+  if(memory) return {kind:'memory',message:memory};
   if(/^(?:Native BLE connect failed: )?DEVICE_UNREACHABLE(?::|$)/.test(text))return {kind:'device',message:'录音卡暂时没有回应，尚未连接。请确认设备有电、电脑蓝牙已开启，并让设备处于唤醒状态；如果它已连接另一台手机或电脑，先在那里断开，再重新连接。'};
   if(scope==='export'&&calendarExportNeedsTime(error))return{kind:'unknown',message:'请先确认未完成事项的日历日期或时刻；本次还没有打开文件保存窗口，原清单保持不变。'};
   if(scope==='export'&&/^CALENDAR_NO_PENDING_ACTIONS(?::|$)/.test(text))return{kind:'unknown',message:'清单中的事项均已完成，没有需要放入日历的未完成事项；原清单保持不变。'};

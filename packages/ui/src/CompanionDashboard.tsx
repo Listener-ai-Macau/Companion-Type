@@ -1263,10 +1263,13 @@ export function CompanionDashboard({
       focus?.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'smooth'});
     });
   };
+  const localMinutesSelected = productSettings?.minutesProvider === 'local';
   const journey = selectedSession ? meetingJourney(selectedSession, {
     connected, deviceId: device?.deviceId, asrReady: asrConfigured,
     localAsrReady: Boolean(productSettings?.localAsrAvailable),autoLocalCard: productSettings?.autoLocalCardTranscription===true,
-    minutesReady: Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet),
+    localMinutesSelected,
+    minutesReady: localMinutesSelected ? productSettings?.localMinutesAvailable === true
+      : Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet),
   }) : null;
   const journeyRepeatsPrimaryTranscription = Boolean(selectedSession && !finalTranscript && !journey?.handlesFailure
     && journey?.request?.action === 'meetingTranscribeAudio' && journey.request.sessionId === selectedSession.id);

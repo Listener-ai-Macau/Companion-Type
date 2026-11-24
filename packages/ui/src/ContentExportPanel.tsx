@@ -18,11 +18,12 @@ type Props={standalone?:boolean;target?:ContentExportTarget|null;onClearTarget?:
 export function ContentExportPanel(props:Props){
  const [selection,setSelection]=useState<ContentSelection>({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});
  const panel=useRef<HTMLDetailsElement>(null),appliedTarget=useRef<string|null>(null);
+ const previewRegion=useRef<HTMLElement>(null);
  const [scopeExpanded,setScopeExpanded]=useState(false);
  const [format,setFormat]=useState<Format>('pdf');
  const [followupOnly,setFollowupOnly]=useState(false);
  const [phase,setPhase]=useState<'preview'|'save'|'copy'|'share'|'folder'|'fileCopy'|null>(null);
- const [preview,setPreview]=useState<{key:string;text:string}|null>(null);
+ const [preview,setPreview]=useState<{key:string;text:string;reveal:boolean}|null>(null);
  const [feedback,setFeedback]=useState<{key:string;kind:'saved'|'copied'|'opened'|'cancelled'|'error';text:string;manual?:string}|null>(null);
  const task=useRef<ReturnType<typeof savedExportPreview<Preview>>|null>(null),active=useRef(false),mounted=useRef(true);
  const target=props.target,targetNote=target?.sessionId===props.sessionId?props.notes.find(note=>note.id===target.noteId):undefined;
@@ -39,6 +40,11 @@ export function ContentExportPanel(props:Props){
  const followupUnavailable=!!choice.minutesFollowupOnly&&!props.followupAvailable;
  const key=JSON.stringify([props.sessionId,props.meetingMode,props.sourceVersion,choice,format,target?.requestId]);
  const currentKey=useRef(key);currentKey.current=key;
+ useEffect(()=>{
+   if(preview?.key!==key||!preview.reveal) return;
+   previewRegion.current?.focus({preventScroll:true});
+   previewRegion.current?.scrollIntoView({block:'nearest'});
+ },[preview,key]);
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;task.current?.cancel();};},[]);
  useEffect(()=>()=>{task.current?.cancel();},[key]);
  const any=!followupUnavailable&&(!target||!!targetNote)&&(choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0);
@@ -55,7 +61,7 @@ export function ContentExportPanel(props:Props){
      if(task.current===pending)task.current=null;
      if(!current())return;
      if(!/^[a-f0-9]{64}$/.test(source.contentHash)||typeof source.textContent!=='string'||!source.textContent.trim())throw Error('没有可用的已保存内容，请重新选择。');
-     setPreview({key:operationKey,text:source.textContent});
+     setPreview({key:operationKey,text:source.textContent,reveal:action==='preview'});
      if(action==='preview')return;
      setPhase(action);const checked={...request(),expectedContentHash:source.contentHash};
      if(action==='save'){
@@ -129,6 +135,6 @@ export function ContentExportPanel(props:Props){
    {feedback?.key===key?<div aria-label="所选内容操作结果"><p role={feedback.kind==='error'?'alert':'status'} className={feedback.kind==='error'?'ct-step-warn':'ct-step-meta'}>{feedback.text}</p>
      {feedback.manual?<textarea readOnly aria-label="手动复制所选内容" value={feedback.manual} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:160}}/>:null}
    </div>:null}
-   {preview?.key===key?<section className="ct-content-preview" aria-label="所选正文预览"><h4>正文预览</h4><pre aria-label="所选内容预览" style={{whiteSpace:'pre-wrap',maxHeight:320,overflow:'auto'}}>{preview.text}</pre></section>:null}
+    {preview?.key===key?<section ref={previewRegion} tabIndex={-1} className="ct-content-preview" aria-label="所选正文预览"><h4>正文预览</h4><pre aria-label="所选内容预览" style={{whiteSpace:'pre-wrap',maxHeight:320,overflow:'auto'}}>{preview.text}</pre></section>:null}
  </details>;
 }

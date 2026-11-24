@@ -1,4 +1,4 @@
-import {operationErrorText} from './operationFailure';
+import {localMinutesPauseMessage, operationErrorText} from './operationFailure';
 import {isSourceOnlyMinutesDraft} from './meetingReading';
 import { ArrowRight, Check, FileText, LoaderCircle } from 'lucide-react';
 import {
@@ -43,7 +43,7 @@ export function meetingHasFinalMinutes(session: CompanionV1HostSession): boolean
 
 export function meetingJourney(session: CompanionV1HostSession, context: {
   connected: boolean; deviceId?: string | null; asrReady: boolean; minutesReady: boolean;
-  localAsrReady?: boolean; autoLocalCard?: boolean;
+  localAsrReady?: boolean; autoLocalCard?: boolean; localMinutesSelected?: boolean;
 }): MeetingJourney {
   const recovery = describeCompanionMeetingRecovery(session);
   if(recovery&&session.recovery?.lastError&&recovery.message.includes(session.recovery.lastError))
@@ -97,15 +97,24 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   const failedProduct=session.minutesByMode?.[failedMode]
     ?? (session.meetingMode===failedMode?session.minutes:undefined);
   const noteContext=failedProduct?.sourceNoteContext;
+  const contextCurrent=noteContext && companionMinutesNotesCurrent(session,noteContext)
+    && companionMinutesMatchTranscript(session,failedProduct.sourceReviewRevision);
+  const memoryPause=finalText && session.recovery?.stage==='paused'
+    ? localMinutesPauseMessage(session.recovery.lastError) : null;
+  if (memoryPause) {
+    const canResume=context.localMinutesSelected && context.minutesReady;
+    return {stage:2,textImport,title:'本地整理已暂停',detail:memoryPause,handlesFailure:true,
+      ...(canResume ? {label:'继续本地整理',request:{action:'meetingGenerateMinutes',sessionId:session.id,meetingMode:failedMode,
+        ...(failedProduct?.quality!=='final'&&contextCurrent?{contextNoteRevision:noteContext.noteRevision}:{})}}
+        : {label:'检查本地纪要设置',destination:'settings'})};
+  }
   if (finalText && noteContext && failedProduct?.quality!=='final'
       && session.recovery?.stage==='paused') {
-    const current=companionMinutesNotesCurrent(session,noteContext)
-      && companionMinutesMatchTranscript(session,failedProduct.sourceReviewRevision);
     return {stage:2,title:'整理未完成',handlesFailure:true,
-      detail:current?'原话和补充仍保存在本机。重试会参考上次明确选择的原话与补充。'
+      detail:contextCurrent?'原话和补充仍保存在本机。重试会参考上次明确选择的原话与补充。'
         :'原话或补充已变化，已有内容仍保留。重试时请重新选择这次要整理的内容。',
       label:'重试整理',request:{action:'meetingGenerateMinutes',sessionId:session.id,meetingMode:failedMode,
-        ...(current?{contextNoteRevision:noteContext.noteRevision}:{})}};
+        ...(contextCurrent?{contextNoteRevision:noteContext.noteRevision}:{})}};
   }
   if (localAudio && !finalText && session.processingPolicy==='localTranscription') {
     if(session.recovery?.stage==='transcribing')return {stage:1,textOnly:true,title:'正在本机转成文字',detail:'本机正在处理已保存的原音。可以离开这条记录，稍后回来查看。',processing:true};

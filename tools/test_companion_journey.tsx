@@ -4,6 +4,7 @@ import { act, create } from 'react-test-renderer';
 import { applyCompanionV1ControlFixture, createCompanionV1Fixture, describeCompanionMeetingRecovery } from '../packages/core/src/companionV1';
 import { meetingJourney } from '../packages/ui/src/CompanionJourney';
 import { CompanionDashboard } from '../packages/ui/src/CompanionDashboard';
+import { describeOperationFailure } from '../packages/ui/src/operationFailure';
 
 // Pure component/state checks. No browser, device, file dialog or remote service.
 async function main() {
@@ -57,6 +58,20 @@ async function main() {
   const oldComplete = { ...session, captureIncomplete: true,
     recovery: { ...interrupted.recovery, stage: 'complete' as const } };
   assert.equal(describeCompanionMeetingRecovery(oldComplete), null, 'a committed product is not retroactively resubmitted');
+  const localPause = '可用内存不足，已保留 18 段整理进度。内存恢复后，点击重试可接着生成。';
+  const pausedMinutes = { ...transcribed, id: session.id, source: 'importedTranscript' as const,
+    minutes: session.minutes, minutesByMode: session.minutesByMode,
+    pendingReason: 'recovery_paused' as const,
+    recovery: { ...waiting.recovery, stage: 'paused' as const, lastError: localPause } };
+  const localJourney = meetingJourney(pausedMinutes, { ...offline, localMinutesSelected: true });
+  assert.match(localJourney.detail, /暂停时已整理 18 段/);
+  assert.match(localJourney.detail, /保持 Companion 打开/);
+  assert.deepEqual(localJourney.request, { action: 'meetingGenerateMinutes', sessionId: session.id, meetingMode: 'offlineStore' });
+  const cloudJourney = meetingJourney(pausedMinutes, { ...offline, localMinutesSelected: false });
+  assert.equal(cloudJourney.request, undefined, 'continuing a local pause must not submit a cloud generation request');
+  assert.equal(cloudJourney.destination, 'settings');
+  assert.equal(describeOperationFailure(localPause).kind, 'memory');
+  assert.equal(describeOperationFailure(localPause + ' private-service-info').kind, 'unknown');
 
   snapshot.host.sessions.push(raw); snapshot.host.selectedSessionId = session.id;
   snapshot.connected = false; snapshot.device.connected = false;
@@ -128,6 +143,19 @@ async function main() {
   assert.deepEqual(fragmentControls, [], 'rendering a saved fragment must not start processing or playback');
   act(() => button('转写已保存的片段').props.onClick());
   assert.deepEqual(fragmentControls, [{ action: 'meetingTranscribeAudio', sessionId: interrupted.id }]);
+  act(() => renderer.unmount());
+  const pauseSnapshot = structuredClone(snapshot);
+  pauseSnapshot.host.sessions = [pausedMinutes];
+  pauseSnapshot.host.selectedSessionId = pausedMinutes.id;
+  const pauseControls: any[] = [];
+  act(() => { renderer = create(<CompanionDashboard {...props} snapshot={pauseSnapshot}
+    productSettings={{ minutesProvider: 'local', localMinutesSupported: true, localMinutesAvailable: true,
+      deepseekMinutesEnabled: false, deepseekApiKeySet: false } as any}
+    onControl={(request: unknown) => pauseControls.push(request)} />); });
+  assert.match(text(renderer.toJSON()), /本地整理已暂停/);
+  assert.deepEqual(pauseControls, [], 'rendering an interrupted meeting must not retry automatically');
+  act(() => button('继续本地整理').props.onClick());
+  assert.deepEqual(pauseControls, [{ action: 'meetingGenerateMinutes', sessionId: pausedMinutes.id, meetingMode: 'offlineStore' }]);
   act(() => renderer.unmount());
   console.log('PASS_MEETING_JOURNEY_COMPONENTS_ONLY: offline progress, source-bound resume, global stop, local export and explicit interrupted-fragment routing; no browser or hardware');
 }
