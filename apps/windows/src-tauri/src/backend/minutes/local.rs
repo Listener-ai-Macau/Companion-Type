@@ -20,6 +20,7 @@ mod reader_turns;
 mod confirmed_handoffs;
 mod reader_exchanges;
 mod reader_agenda;
+mod reader_coverage;
 mod timed_evidence;
 mod source_checkpoint;
 mod source_review;

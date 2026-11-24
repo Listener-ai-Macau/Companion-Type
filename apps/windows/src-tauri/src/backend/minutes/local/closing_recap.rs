@@ -304,13 +304,17 @@ pub(super) fn direct_assignments(sentences: &[Value]) -> Vec<RecapHandoff> {
         (["散会", "到此结束", "会议结束"].iter().any(|cue| terminal.ends_with(cue))
             && !tentative(words)).then_some((pos, lead))
     });
-    let Some((last, lead)) = end else { return Vec::new() };
+    let Some((last, lead)) = end else {
+        return closing_summary_handoff(sentences).into_iter().collect();
+    };
     let announce = (last.saturating_sub(12)..=last).rev().find(|&pos| turn(pos).is_some_and(|(actor, words)| {
         actor == lead && !tentative(words)
             && has(words, &["本场会", "本次会", "今天的会", "今天就", "这场会"])
             && has(words, &["开到这儿", "开到这里", "到此结束", "到这里结束", "会议结束"])
     }));
-    let Some(announce) = announce else { return Vec::new() };
+    let Some(announce) = announce else {
+        return closing_summary_handoff(sentences).into_iter().collect();
+    };
     let first = if announce == last { last.saturating_sub(8) } else { announce };
 
     (first..=last).filter_map(|pos| {
@@ -348,6 +352,62 @@ pub(super) fn direct_assignments(sentences: &[Value]) -> Vec<RecapHandoff> {
             directive: pos,
         })
     }).collect()
+}
+
+fn closing_summary_handoff(sentences: &[Value]) -> Option<RecapHandoff> {
+    use crate::companion_v1::CompanionV1ActionItem;
+
+    static ASSIGNMENT: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"(?:下去以后|散会以后|散会后|会后|会议结束后)[，, ]*[嗯呃啊 ]*",
+        r"(?P<owner>各(?:个)?(?:部门|小组|团队|项目组)(?:儿)?)[嗯呃啊 ，, ]*",
+        r"(?:要|把|将)?[嗯呃啊 ，, ]*(?:刚才|刚)?(?:在)?会上(?:说到|讲到|讨论|提到|的)"
+    )).expect("explicit collective follow-up after the meeting"));
+    static DELIVERABLE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:总结|汇总|梳理|整理)(?:一[下遍点儿]|这些|一下儿)?[儿。！ ，,]*$"
+    ).expect("complete spoken follow-up, including split sentences"));
+
+    let blocked = |words: &str| tentative(words)
+        || has(words, &["不用", "不需要", "不必", "无需", "没必要", "不要求", "可以不", "不要", "禁止", "不再", "之前", "没说", "反对"]);
+    for at in sentences.len().saturating_sub(12)..sentences.len() {
+        let Some((lead, words)) = sentences[at]["text"].as_str()
+            .and_then(|raw| split_turn_label(raw.trim())) else { continue };
+        if blocked(words)
+            || !has(words, &["开到这儿", "开到这里", "就到这里", "就到这儿"])
+            || !has(words, &["今天", "本次", "本场", "咱们", "会议"])
+        {
+            continue;
+        }
+        let Some(found) = ASSIGNMENT.captures(words) else { continue };
+        let owner = found.name("owner")?.as_str().trim_end_matches('儿').to_owned();
+        let mut instruction = words.to_owned();
+        let mut citations = vec![at];
+        let mut rejected = false;
+        for (index, row) in sentences.iter().enumerate().skip(at + 1) {
+            let Some(raw) = row["text"].as_str().map(str::trim) else { continue };
+            let (speaker, body) = split_turn_label(raw).map_or((lead, raw), |(who, words)| (who, words.trim()));
+            let plain = body.trim_matches([' ', '，', '。', '！', '嗯', '呃', '啊', '哦']);
+            if matches!(plain, "" | "行" | "好" | "好的" | "收到" | "对" | "散会") { continue; }
+            if speaker != lead || blocked(body) || citations.len() >= 3 {
+                rejected = true;
+                break;
+            }
+            instruction.push_str(body);
+            citations.push(index);
+        }
+        if rejected || !DELIVERABLE.is_match(instruction.trim())
+            || !has(&instruction, &["这几点", "的要点", "的内容", "的事项", "的意见", "的问题"])
+        {
+            continue;
+        }
+        return Some(RecapHandoff {
+            item: CompanionV1ActionItem {
+                text: "汇总会上讨论的要点".into(), owner: Some(owner), due: None,
+            },
+            citations,
+            directive: at,
+        });
+    }
+    None
 }
 
 fn direct_closing_instruction(words: &str, after_announce: bool) -> Option<(String, &str)> {
@@ -415,6 +475,22 @@ mod tests {
 
         let source = format!("{}\n", lines.join("\n"));
         evidence_sentences(&source_units(&source))
+    }
+
+    #[test]
+    fn soft_close_retains_collective_work_only_when_the_same_speaker_finishes_it() {
+        let opening = "说话人1：今天先开到这里，会后各小组把会上讨论的要点";
+        let lines = [opening, "说话人1：汇总一下", "说话人3：好的"];
+        let work = direct_assignments(&transcript_rows(&lines));
+        let [item] = work.as_slice() else { panic!("expected one stated follow-up"); };
+        assert_eq!(item.item.owner.as_deref(), Some("各小组"));
+        assert_eq!(item.item.due, None);
+        assert_eq!(item.citations.len(), 2);
+
+        let lines = [opening, "说话人1：暂缓，不用汇总了。", "说话人3：好的"];
+        assert!(direct_assignments(&transcript_rows(&lines)).is_empty());
+        let lines = [opening, "说话人3：可以汇总一下。"];
+        assert!(direct_assignments(&transcript_rows(&lines)).is_empty());
     }
 
     #[test]

@@ -2796,6 +2796,7 @@ fn assemble_with_context(
     let mut reader_reported_context = Vec::new();
     let mut reader_complete_requirements = Vec::new();
     let mut reader_connected_answers = Vec::new();
+    let mut reader_coverage = Vec::new();
     let mut grouped_replies = Vec::new();
     if !bank.chapter_spans.is_empty() {
         let conversation = super::reader_turns::Conversation::new(&sentences);
@@ -2914,6 +2915,7 @@ fn assemble_with_context(
             let mut topic_sources = Vec::new();
             let mut visible_sources = HashSet::new();
             let mut nominated_sources = HashSet::new();
+            let mut initially_selected = HashSet::new();
             for (path,id) in result.bindings.iter() {
                 let detail = path.strip_prefix(&prefix).and_then(|row| row.parse::<usize>().ok());
                 let point = path.starts_with(&point_prefix);
@@ -2923,6 +2925,9 @@ fn assemble_with_context(
                 else { continue };
                 topic_sources.push(source);
                 if point || detail.is_some_and(|row| row < *limit) { visible_sources.insert(source); }
+                if !bank.review_quote(id.as_str()) && proposed.contains(id.as_str()) {
+                    initially_selected.insert(source);
+                }
                 if !bank.review_quote(id.as_str()) &&
                     (proposed.contains(id.as_str()) || bank.reader_order.contains_key(id.as_str()))
                 {
@@ -2969,8 +2974,36 @@ fn assemble_with_context(
                 reader_connected_answers.push(json!({"path":path,"sourceIds":answer.sources}));
             }
 
+            let coverage = super::reader_coverage::select(
+                conversation.turns(), &topic_sources, &visible_sources, &initially_selected, &unbound_review,
+            );
             let details = document["topics"][topic]["details"].as_array_mut().ok_or_else(fail)?;
             let offset = (*limit).min(details.len());
+            if let Some(coverage) = coverage {
+                if let Some((row, path, old_id)) = (0..offset).rev().find_map(|row| {
+                    let path = format!("{prefix}{row}");
+                    let (_, id) = result.bindings.iter().find(|(bound, _)| bound == &path)?;
+                    if bank.required_topic(id) || bank.review_quote(id)
+                        || bank.reader_priority.contains_key(id) || linked_details.contains_key(id.as_str())
+                    {
+                        return None;
+                    }
+                    let shown = details[row]["text"].as_str()?;
+                    (super::reader_coverage::replaceable(shown)
+                        && canonical_brief::line(&coverage.text, shown.chars().count().max(36)))
+                        .then_some((row, path, id))
+                }) {
+                    let evidence = coverage.sources.iter().map(|id| {
+                        let original = known[*id];
+                        json!({"source":original["source"],"quote":original["text"]})
+                    }).collect::<Vec<_>>();
+                    details[row] = json!({"text":coverage.text,"evidence":evidence});
+                    detail_kinds[topic][row] = Some(Kind::Status);
+                    layout_bindings.retain(|(binding, _)| binding != &path);
+                    reader_coverage.push(json!({"path":path,"role":coverage.role,
+                        "sourceIds":coverage.sources,"replacedFactId":old_id}));
+                }
+            }
             let example_count = example.as_ref().map_or(0, |(_,passages)| passages.len());
             let outcome_count = usize::from(outcome.is_some());
             let future_count = future.as_ref().map_or(0, |(_,lines)| lines.len());
@@ -3184,6 +3217,9 @@ fn assemble_with_context(
     }
     if !grouped_replies.is_empty() {
         parsed.receipt["readerGroupedReplies"] = json!(grouped_replies);
+    }
+    if !reader_coverage.is_empty() {
+        parsed.receipt["readerCoverageReplacements"] = json!(reader_coverage);
     }
     if !closing_actions.is_empty() {
         parsed.receipt["readerRecapAcceptedWork"] = json!(closing_actions.iter().map(|(path,handoff)| {
