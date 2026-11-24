@@ -16,6 +16,7 @@ const MAX_WINDOW: usize = 74;
 pub(super) struct SelectedReply {
     pub(super) text: String,
     pub(super) sources: Vec<String>,
+    pub(super) priority: bool,
 }
 
 struct Card {
@@ -275,7 +276,7 @@ pub(super) fn select(
         if matching.len() < 2 { continue; }
         for index in matching {
             let card = &choices[index];
-            results.push(SelectedReply { text: card.text.clone(), sources:card.sources.clone() });
+            results.push(SelectedReply { text: card.text.clone(), sources: card.sources.clone(), priority: false });
         }
     }
     Ok(results)

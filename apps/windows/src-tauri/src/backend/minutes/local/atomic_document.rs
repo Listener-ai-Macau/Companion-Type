@@ -1874,7 +1874,16 @@ pub(super) fn review_reply_groups(
     let protected = bank.facts.iter().filter(|fact| fact.placement != Placement::Topic
         || bank.review_quote(&fact.id) || bank.required_topic(&fact.id))
         .flat_map(|fact| fact.evidence.iter().map(String::as_str)).collect();
-    bank.reader_grouped_replies = super::reader_exchanges::select(&rows, &chosen, &protected, ask)?;
+    let reserved = super::reader_agenda::reserve(&rows, &protected);
+    let selected = super::reader_exchanges::select(&rows, &chosen, &protected, ask);
+    bank.reader_grouped_replies = reserved;
+    for reply in selected? {
+        if !bank.reader_grouped_replies.iter().any(|existing| {
+            existing.text == reply.text || existing.sources == reply.sources
+        }) {
+            bank.reader_grouped_replies.push(reply);
+        }
+    }
     Ok(())
 }
 
@@ -2823,6 +2832,10 @@ fn assemble_with_context(
                 let source = row["sentenceId"].as_str()?.strip_prefix('e')?.parse::<usize>().ok()?;
                 Some((source, row["role"].as_str()?))
             }).collect::<HashMap<_,_>>();
+        let reserved_slots = bank.reader_grouped_replies.iter().filter(|reply| {
+            reply.priority && reply.sources.iter().any(|source| source_topics.contains_key(source.as_str()))
+        }).count();
+        let mut discretionary_slots = 3_usize.saturating_sub(reserved_slots);
         for (topic,limit) in reader_detail_limits.iter_mut().enumerate() {
             let prefix = format!("/topics/{topic}/details/");
             let point_prefix = format!("/topics/{topic}/points/");
@@ -2964,7 +2977,16 @@ fn assemble_with_context(
             let replies = bank.reader_grouped_replies.iter().filter(|reply| {
                 reply.sources.iter().find_map(|source| source_topics.get(source.as_str())).copied() == Some(topic)
                     && reply.sources.iter().any(|source| source_index(source).is_some_and(|index| !visible_sources.contains(&index)))
-            }).take(3_usize.saturating_sub(grouped_replies.len())).collect::<Vec<_>>();
+            }).filter(|reply| {
+                if reply.priority {
+                    return true;
+                }
+                if discretionary_slots == 0 {
+                    return false;
+                }
+                discretionary_slots -= 1;
+                true
+            }).collect::<Vec<_>>();
             let count = example_count + outcome_count + future_count + reported.len() + replies.len();
             if count==0 { continue; }
             for (path,_) in &mut layout_bindings {
@@ -4069,6 +4091,77 @@ mod tests{
         ]));
         assert_eq!(coverage["unresolvedConstraintIds"],json!([]));
     }
+    #[test]
+    #[ignore = "replays the reader with valid fixed selections on two frozen public transcripts"]
+    fn reserved_discussion_groups_reach_the_visible_body() {
+        use super::super::source_windows::{SourceEncoding, SourceWindows};
+        use sha2::{Digest, Sha256};
+
+        let corpus = std::env::var_os("COMPANION_TEST_AGENDA_CORPUS").unwrap();
+        let out = std::env::var_os("COMPANION_TEST_AGENDA_RENDER").unwrap();
+        let manifest: Value = serde_json::from_slice(&std::fs::read(corpus).unwrap()).unwrap();
+        let mut report = Vec::new();
+        for item in manifest.as_array().unwrap() {
+            let raw = std::fs::read(item["path"].as_str().unwrap()).unwrap();
+            assert_eq!(format!("{:x}", Sha256::digest(&raw)), item["sha256"]);
+            let source = String::from_utf8(raw).unwrap();
+            let windows = SourceWindows::new(&source).unwrap();
+            let encoding = SourceEncoding::DirectSingleRole;
+            let mut facts = Vec::new();
+            for index in 0..windows.len() {
+                let mut skipped = serde_json::Map::new();
+                if windows.requires_model(index, encoding) {
+                    let (_, schema) = windows.contract(index, encoding);
+                    for (id, property) in schema["properties"].as_object().unwrap() {
+                        skipped.insert(id.clone(), if property["type"] == "array" { json!([]) } else { json!("skip") });
+                    }
+                }
+                facts.extend(windows.check_encoded(index, &json!(skipped).to_string(), encoding).unwrap().facts);
+            }
+            let session = crate::backend::minutes::tests::session_with_text(&source);
+            let base = crate::backend::minutes::rules_l0_minutes(&session, "reader replay");
+            let mut bank = build_session_bank(facts, &session, &super::super::source_review::Review::default()).unwrap();
+            let input = layout_input(&bank);
+            let mut labels = HashSet::new();
+            let mut chapters = serde_json::Map::new();
+            let mut focus = Vec::new();
+            for (id, chapter) in input["chapters"].as_object().unwrap() {
+                let choices = chapter["labelChoices"].as_object().unwrap();
+                let (label, _) = choices.iter()
+                    .find(|(_, term)| labels.insert(term.as_str().unwrap()))
+                    .unwrap_or_else(|| choices.iter().next().unwrap());
+                let main = chapter["facts"].as_array().unwrap().iter()
+                    .take(5).map(|row| row[0].clone()).collect::<Vec<_>>();
+                if focus.len() < 2 { focus.push(id.clone()); }
+                chapters.insert(id.clone(), json!({"labelIds":[label],"mainFacts":main}));
+            }
+            let layout = json!({"focusChapters":focus,"chapters":chapters}).to_string();
+            let before = organize(&layout, &bank, &session, &base).unwrap();
+            let _ = review_reply_groups(&mut bank, &source, |_, _, _, _| Err("fixture skips optional choices".into()));
+            let after = organize(&layout, &bank, &session, &base).unwrap();
+            let body = |markdown: &str| markdown.split("## 主题原话").next().unwrap().to_owned();
+            let selected = bank.reader_grouped_replies.iter().map(|reply|
+                json!({"text":reply.text,"sources":reply.sources})).collect::<Vec<_>>();
+            report.push(json!({
+                "case":item["case"], "selected":selected,
+                "before":body(&before.minutes.markdown), "after":body(&after.minutes.markdown),
+                "sourceLinks":after.receipt["readerGroupedReplies"],
+                "beforeActions":before.receipt["document"]["actionItems"],
+                "afterActions":after.receipt["document"]["actionItems"]
+            }));
+        }
+        std::fs::write(out, serde_json::to_vec_pretty(&report).unwrap()).unwrap();
+        for (item, row) in manifest.as_array().unwrap().iter().zip(&report) {
+            let needles = item["with"].as_array().unwrap();
+            let shows_group = |line: &str| needles.iter()
+                .all(|needle| line.contains(needle.as_str().unwrap()));
+            assert!(!row["before"].as_str().unwrap().lines().any(shows_group));
+            assert!(row["after"].as_str().unwrap().lines().any(shows_group), "{}", row["case"]);
+            assert!(row["sourceLinks"].as_array().is_some_and(|links| !links.is_empty()));
+            assert_eq!(row["beforeActions"], row["afterActions"]);
+        }
+    }
+
     #[test]
     fn long_local_layout_keeps_more_than_128_anchored_facts() {
         let source = (0..150).map(|index| format!("项目记录{index}已核对，列入合作项目。\n")).collect::<String>();
