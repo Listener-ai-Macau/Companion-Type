@@ -125,7 +125,7 @@ pub(super) fn grouped(
                 })
             });
             if let Some(intro)=intro {
-                let name=role_with_title(role,intro,source);
+                let name=role_with_title(role,intro,&source);
                 let pos=groups.iter().position(|group|group.role==name).unwrap_or_else(||{
                     groups.push(Group{role:name,actions:Vec::new(),questions:Vec::new()});
                     groups.len()-1
