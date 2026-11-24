@@ -69,6 +69,29 @@ impl Pressure {
     }
 }
 
+/// Allow a replacement engine only after Windows has reported stable recovery.
+pub(crate) fn wait_for_local_memory_recovery(cancel: Option<&AtomicBool>) -> bool {
+    let Ok(pressure) = Pressure::new() else { return false };
+    let started = Instant::now();
+    let mut available_since = None;
+    while started.elapsed() < Duration::from_secs(6) {
+        if cancel.is_some_and(|flag| flag.load(Ordering::Acquire)) {
+            return false;
+        }
+        match pressure.low() {
+            Ok(false) => {
+                if available_since.get_or_insert_with(Instant::now).elapsed() >= Duration::from_secs(2) {
+                    return true;
+                }
+            }
+            Ok(true) => available_since = None,
+            Err(_) => return false,
+        }
+        thread::sleep(Duration::from_millis(200));
+    }
+    false
+}
+
 pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,vulkan:bool,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     let private_bytes = if vulkan { VULKAN_PRIVATE_BYTES } else { CPU_PRIVATE_BYTES };
     controlled(program,args,cancel,WALL,private_bytes,work)
@@ -77,6 +100,9 @@ pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Opti
 fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wall:Duration,private_bytes:usize,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     if cancel.is_some_and(|v|v.load(Ordering::SeqCst)){return Err("本地纪要已取消，已有内容保留。".into());}
     let pressure=Pressure::new()?;
+    if pressure.low()? {
+        return Err(super::super::LOCAL_SERVICE_LOW_MEMORY.into());
+    }
     let service=Service::start(program,args,private_bytes).map_err(|_|failure())?;let started=Instant::now();
     let aborted=AtomicBool::new(false);
     thread::scope(|scope|{
@@ -92,7 +118,7 @@ fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wal
             if cancel.is_some_and(|v|v.load(Ordering::SeqCst)){break Err("本地纪要已取消，已有内容保留。".into());}
             if started.elapsed()>=wall{break Err("本地纪要本次处理已到期限，已有内容保留。".into());}
             match pressure.low(){
-                Ok(true)=>break Err("可用内存不足，本地纪要已停止，已有内容保留。".into()),
+                Ok(true)=>break Err(super::super::LOCAL_SERVICE_LOW_MEMORY.into()),
                 Err(error)=>break Err(error),
                 Ok(false)=>{},
             }

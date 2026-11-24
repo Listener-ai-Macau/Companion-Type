@@ -343,6 +343,52 @@ mod tests{
     }
 
     #[test]
+    #[ignore = "continues a hash-bound real CPU receipt through the desktop recovery route"]
+    fn resumes_desktop_minutes_from_a_real_memory_interruption() {
+        let archive = std::env::var_os("COMPANION_TEST_DESKTOP_RETRY_REPORT").unwrap();
+        let path = PathBuf::from(archive);
+        let expected = std::env::var("COMPANION_TEST_DESKTOP_RETRY_SHA").unwrap();
+        let output = PathBuf::from(std::env::var_os("COMPANION_TEST_DESKTOP_RETRY_OUTPUT").unwrap());
+        fs::create_dir(&output).unwrap();
+        let raw = fs::read(path).unwrap();
+        assert_eq!(format!("{:x}", Sha256::digest(&raw)), expected);
+        let saved: Value = serde_json::from_slice(&raw).unwrap();
+        let source = std::fs::read_to_string(saved["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        assert_eq!(format!("{:x}", Sha256::digest(source.as_bytes())), saved["sourceSha256"]);
+        let error = crate::backend::external_command::LOCAL_SERVICE_LOW_MEMORY;
+        assert_eq!(saved["error"], error);
+        assert_eq!(saved["newCloudCalls"], 0);
+        let session = session(source, "检查点实际续作", saved["durationMs"].as_u64().unwrap()).unwrap();
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "retry-proof");
+        let retry_slot = super::super::desktop_retry::RetrySlot::new();
+        let mut first = Some(saved["receipt"].clone());
+        let started = Instant::now();
+        let (result, trace) = super::super::desktop_retry::generate(&retry_slot, &session,
+            |prefix, pressure_retry| {
+                if let Some(trace) = first.take() {
+                    assert!(!pressure_retry);
+                    return (Err(error.into()), trace);
+                }
+                assert!(pressure_retry);
+                println!("restored {} checked windows before opening the engine", prefix.len());
+                super::super::recorded_attempt(&session, &base, super::super::new_trace(), prefix,
+                    super::super::RuntimePolicy::Application { pressure_retry })
+            },
+            || crate::backend::external_command::wait_for_local_memory_recovery(None),
+        );
+        save_new(&output.join("desktop-retry-result.json"), &json!({
+            "seconds":started.elapsed().as_secs_f64(),"receipt":trace,
+            "error":result.as_ref().err(),"sourceSha256":saved["sourceSha256"],
+            "candidate":result.as_ref().ok()
+        })).unwrap();
+        assert!(result.is_ok(), "{:?}", result.as_ref().err());
+        assert!(trace["reusedSourceWindows"].as_u64().unwrap_or_default() > 0);
+        assert_eq!(trace["newCloudCalls"], 0);
+        assert_eq!(trace["cpuPromptCacheMiB"], 0);
+    }
+
+    #[test]
     fn local_minutes_probe_constructor_preserves_exact_source_and_never_claims_real_capture(){
         let source="观点：预算未批准。\n赵工承诺周五报告。";
         let row=session(source.into(),"公开原文",120000).unwrap();assert_eq!(row.transcript_text,source);

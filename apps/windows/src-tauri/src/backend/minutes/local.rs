@@ -23,6 +23,7 @@ mod reader_agenda;
 mod reader_coverage;
 mod timed_evidence;
 mod source_checkpoint;
+mod desktop_retry;
 mod source_review;
 mod closing_recap;
 mod conversational_close;
@@ -63,19 +64,20 @@ fn delivery_preview_root()->Option<std::path::PathBuf>{None}
 enum RuntimePolicy<'a> {
     Cpu,
     ExplicitVulkan(&'a std::path::Path),
-    Application,
+    Application { pressure_retry: bool },
 }
 
-fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&str>,context:transport::Context)->Result<Vec<String>,String>{
+fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&str>,context:transport::Context,pressure_retry:bool)->Result<Vec<String>,String>{
     let model=model.to_str().ok_or("无法读取本地模型路径。")?;
     let profile=transport::profile()?;
     let template=json!({"enable_thinking":profile["enableThinking"]}).to_string();
     // Upload weights to the verified discrete GPU without keeping the GGUF
     // file mapped into the server's host working set. The CPU still uses mmap.
     let (layers,load_mode)=if device.is_some(){("99","none")}else{("0","mmap")};
+    let prompt_cache = if pressure_retry && device.is_none() { "0" } else { "256" };
     let mut args=["-m",model,"--host","127.0.0.1","--port",&port.to_string(),"--api-key",key,"--alias",alias,
         "-c",&context.tokens().to_string(),"-np","1","-ngl",layers,"-t","4","-tb","4","-b","128","-ub","64",
-        "--fit","off","--load-mode",load_mode,"--no-repack","--cache-ram","256","-lv","0",
+        "--fit","off","--load-mode",load_mode,"--no-repack","--cache-ram",prompt_cache,"-lv","0",
         "--no-warmup","--no-context-shift","--no-webui","--chat-template-kwargs",&template]
         .into_iter().map(str::to_owned).collect::<Vec<_>>();
     if let Some(device)=device{args.extend(["--device".to_owned(),device.to_owned()]);}
@@ -84,16 +86,31 @@ fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&
 
 pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<CompanionV1MeetingMinutes,String>{
     if !supported(){return Err("本地会议整理尚未准备好，已有文字和纪要保留。".into());}
-    let (minutes,trace)=recorded_attempt(session,base,new_trace(),&source_checkpoint::CheckedSourcePrefix::default(),RuntimePolicy::Application);
+    let (minutes,trace)=generate_on_desktop(session,base);
     if let Some(root)=delivery_preview_root(){
         let fields=["backend","vulkanDevice","runtimeFallback","sourceWindow","inferenceRequestAttempts","contextTokens","contextFallback",
-            "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","modelLoadMode","newCloudCalls"];
+            "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","modelLoadMode","newCloudCalls",
+            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB"];
         let summary=fields.into_iter().map(|key|(key.to_owned(),trace[key].clone())).collect::<serde_json::Map<_,_>>();
         let _=std::fs::write(root.join("local-minutes-delivery-trace.json"),Value::Object(summary).to_string());
     }
     let mut minutes=minutes?;
     minutes.quality="final".into();
     Ok(minutes)
+}
+
+fn generate_on_desktop(session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes)
+    -> (Result<CompanionV1MeetingMinutes, String>, Value)
+{
+    static RETRY: desktop_retry::RetrySlot = desktop_retry::RetrySlot::new();
+    let cancel = super::super::meeting_processing_job::current();
+    desktop_retry::generate(
+        &RETRY,
+        session,
+        |prefix, pressure_retry| recorded_attempt(session, base, new_trace(), prefix,
+            RuntimePolicy::Application { pressure_retry }),
+        || super::super::external_command::wait_for_local_memory_recovery(cancel.as_ref().map(|c| c.flag())),
+    )
 }
 
 pub(crate) fn attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->(Result<CompanionV1MeetingMinutes,String>,Value){
@@ -110,19 +127,14 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         if !session.meeting_notes.is_empty(){return Err("当前本地整理不能合并补充说明，已有内容保留。".into());}
         if !assets::cpu_supported(){return Err("这台电脑暂不支持当前本地纪要引擎，可选择云端整理。".into());}
         let windows=source_windows::SourceWindows::new(&session.transcript_text)?;
-        if let Ok(mut trace)=trace.lock() {
-            trace["reusedSourceWindows"] = json!(reused.len());
-            trace["freshWholeRun"] = json!(reused.len() == 0);
-            if reused.reuses_vulkan_on_cpu() {
-                trace["reusedSourceBackend"] = json!("vulkan");
-            }
-        }
         let _lease=assets::compute_lease()?;
         let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
+        let pressure_retry = matches!(policy, RuntimePolicy::Application { pressure_retry: true });
+        let desktop = matches!(policy, RuntimePolicy::Application { .. });
         let accelerator = match policy {
             RuntimePolicy::Cpu=>None,
             RuntimePolicy::ExplicitVulkan(root)=>Some(assets::engineering_vulkan(root)?),
-            RuntimePolicy::Application=>{
+            RuntimePolicy::Application { .. }=>{
                 let root=assets::runtime_root()?.join("vulkan");
                 match assets::engineering_vulkan(&root) {
                     Ok(found)=>Some(found),
@@ -139,8 +151,18 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             Some((path, _)) => path.clone(),
             None => assets::runtime()?,
         };
+        let empty_prefix = source_checkpoint::CheckedSourcePrefix::default();
+        let reused = if desktop && accelerator.is_some() { &empty_prefix } else { reused };
         if let Ok(mut trace) = trace.lock() {
+            trace["reusedSourceWindows"] = json!(reused.len());
+            trace["freshWholeRun"] = json!(reused.len() == 0);
+            if reused.reuses_vulkan_on_cpu() {
+                trace["reusedSourceBackend"] = json!("vulkan");
+            }
             trace["backend"] = json!(if accelerator.is_some() { "vulkan" } else { "cpu" });
+            if accelerator.is_none() {
+                trace["cpuPromptCacheMiB"] = json!(if pressure_retry { 0 } else { 256 });
+            }
             trace["modelLoadMode"] = json!(if accelerator.is_some() { "none" } else { "mmap" });
             if let Some((_, device)) = &accelerator {
                 trace["runtimeSha256"] = json!(assets::VULKAN_SERVER_SHA);
@@ -153,7 +175,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         let program=runtime.to_str().ok_or("本地纪要引擎路径无效。")?;
         let cancellation=super::super::meeting_processing_job::current();
         let run = |context, earlier: &ContextRetry| {
-            let args=arguments(&model,port,&key,&alias,accelerator.as_ref().map(|(_,device)|device.as_str()),context)?;
+            let args=arguments(&model,port,&key,&alias,accelerator.as_ref().map(|(_,device)|device.as_str()),context,pressure_retry)?;
             if let Ok(mut trace)=trace.lock() {
                 trace["stage"]=json!("loading-engine");
                 trace["contextTokens"]=json!(context.tokens());
@@ -377,7 +399,7 @@ mod tests{
     use super::*;
     #[test]
     fn local_minutes_arguments_keep_the_proven_cpu_memory_profile_and_loopback(){
-        let args=arguments(std::path::Path::new("C:/fixture/model.gguf"),12345,"test-key","test-model",None,transport::Context::ReducedCpu).unwrap();
+        let args=arguments(std::path::Path::new("C:/fixture/model.gguf"),12345,"test-key","test-model",None,transport::Context::ReducedCpu,false).unwrap();
         assert!(args.windows(2).any(|p|p==["--load-mode","mmap"]));assert!(args.contains(&"--no-repack".into()));
         assert!(args.windows(2).any(|p|p==["-ngl","0"]));assert!(args.windows(2).any(|p|p==["--host","127.0.0.1"]));
         assert!(args.windows(2).any(|p|p==["--cache-ram","256"]));
@@ -386,7 +408,7 @@ mod tests{
     #[test]
     fn local_minutes_vulkan_streams_the_same_model_with_the_same_context(){
         let model=std::path::Path::new("C:/fixture/model.gguf");
-        let args=arguments(model,12345,"test-key","test-model",Some("Vulkan0"),transport::Context::Full).unwrap();
+        let args=arguments(model,12345,"test-key","test-model",Some("Vulkan0"),transport::Context::Full,false).unwrap();
         for pair in [["-m","C:/fixture/model.gguf"],["--load-mode","none"],["-ngl","99"],
             ["--device","Vulkan0"],["-c","16384"],["--cache-ram","256"]] {
             assert!(args.windows(2).any(|actual|actual==pair));

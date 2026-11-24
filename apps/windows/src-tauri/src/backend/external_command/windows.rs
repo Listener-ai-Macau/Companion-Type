@@ -24,7 +24,7 @@ use std::{
 };
 
 mod local_service;
-pub(super) use local_service::with_local_service;
+pub(super) use local_service::{wait_for_local_memory_recovery, with_local_service};
 
 struct Handle(HANDLE);
 impl Drop for Handle {

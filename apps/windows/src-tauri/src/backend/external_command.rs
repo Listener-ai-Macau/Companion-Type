@@ -130,6 +130,14 @@ pub(super) fn closed_output_matches(path:&std::path::Path,prefix:&[u8],suffix:&[
 #[cfg(windows)]
 mod windows;
 
+#[cfg(windows)]
+pub(super) const LOCAL_SERVICE_LOW_MEMORY: &str = "可用内存不足，本地纪要已停止，已有内容保留。";
+
+#[cfg(windows)]
+pub(super) fn wait_for_local_memory_recovery(cancel: Option<&AtomicBool>) -> bool {
+    windows::wait_for_local_memory_recovery(cancel)
+}
+
 /// The local minutes engine is owned by one invocation. It never survives its
 /// caller, cancellation, memory pressure, or the bounded processing deadline.
 #[cfg(windows)]

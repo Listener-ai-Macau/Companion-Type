@@ -1,4 +1,4 @@
-//! Reuse completed original-source calls in engineering runs with an exact request match.
+//! Reuse completed original-source calls only when the source and request match.
 use std::{fs::File, io::Read, path::PathBuf};
 
 use serde::Deserialize;
@@ -132,14 +132,7 @@ impl CheckedSourcePrefix {
             {
                 return Err(failure());
             }
-            let calls = trace["calls"].as_array().ok_or_else(failure)?;
-            if let Some(start) = calls.iter().position(|call| call["stage"] == "compact-core-organization") {
-                checked.organization = calls[start..].iter().take_while(|call| {
-                    (call["stage"] == "compact-core-organization"
-                        || call["stage"].as_str().is_some_and(|stage| stage.starts_with("chapter-review-")))
-                        && call["finishReason"] == "stop"
-                }).cloned().collect();
-            }
+            checked.retain_organization(trace);
         }
         checked.vulkan_source_on_cpu = cross_backend;
         Ok(checked)
@@ -156,7 +149,6 @@ impl CheckedSourcePrefix {
     ) -> Result<Self, String> {
         let trace = &report["receipt"];
         let vulkan = matches!(runtime, ArchiveRuntime::Vulkan);
-        let mixed_sources = matches!(runtime, ArchiveRuntime::CpuWithVulkanSource);
         let runtime_sha = if vulkan { assets::VULKAN_SERVER_SHA } else { assets::SERVER_SHA };
         if !matches!(report["state"].as_str(), Some("native-candidate-failed-retained" | "native-candidate-engineer-review-required"))
             || report["sourceSha256"] != source_sha256
@@ -169,6 +161,52 @@ impl CheckedSourcePrefix {
         {
             return Err(failure());
         }
+        Self::from_validated_trace(trace, source, runtime, reuse_independent_source_review,
+            report["state"] == "native-candidate-failed-retained")
+    }
+
+    /// Product retries use in-process receipts, scoped to the unchanged adopted
+    /// transcript by the caller. Apply the engineering replay's exact checks.
+    pub(super) fn for_desktop_retry(source: &str, trace: &Value) -> Option<Self> {
+        if trace["backend"] != "cpu" || trace["provider"] != "local"
+            || trace["runtimeSha256"] != assets::SERVER_SHA || trace["modelSha256"] != assets::MODEL_SHA
+            || trace["newCloudCalls"] != 0 || trace["trainingUpdates"] != 0
+        {
+            return None;
+        }
+
+        let has_review = trace["calls"].as_array().is_some_and(|calls| calls.iter().any(|call| {
+            call["stage"].as_str().is_some_and(|stage| stage.starts_with("independent-source-review-"))
+        }));
+        if has_review {
+            if let Ok(mut checked) = Self::from_validated_trace(trace, source, ArchiveRuntime::Cpu, true, true) {
+                if checked.independent_source_review.as_ref().is_some_and(|review| review.complete.is_some()) {
+                    checked.retain_organization(trace);
+                }
+                return Some(checked);
+            }
+        }
+        Self::from_validated_trace(trace, source, ArchiveRuntime::Cpu, false, true).ok()
+    }
+
+    fn retain_organization(&mut self, trace: &Value) {
+        if let Some(calls) = trace["calls"].as_array() {
+            if let Some(start) = calls.iter().position(|call| call["stage"] == transport::COMPACT_CORE_STAGE) {
+                self.organization = calls[start..].iter().take_while(|call| {
+                    (call["stage"] == transport::COMPACT_CORE_STAGE
+                        || call["stage"].as_str().is_some_and(|stage| stage.starts_with("chapter-review-")))
+                        && call["finishReason"] == "stop"
+                }).cloned().collect();
+            }
+        }
+    }
+
+    fn from_validated_trace(
+        trace: &Value, source: &str, runtime: ArchiveRuntime, reuse_independent_source_review: bool,
+        interrupted: bool,
+    ) -> Result<Self, String> {
+        let vulkan = matches!(runtime, ArchiveRuntime::Vulkan);
+        let mixed_sources = matches!(runtime, ArchiveRuntime::CpuWithVulkanSource);
         let reviewed = trace["reviewedSourceWindows"].as_array().ok_or_else(failure)?;
         // The exact primary response is reusable. An excerpt is a local
         // recovery decision and is checked again against the current source.
@@ -256,7 +294,7 @@ impl CheckedSourcePrefix {
                 call["output"].as_str().map(|raw| Some(raw.to_owned())).ok_or_else(failure)
             })?;
             if archived.next().is_some() || calls.is_empty()
-                || (!complete && report["state"] != "native-candidate-failed-retained") {
+                || (!complete && !interrupted) {
                 return Err(failure());
             }
             Some(CheckedSourceReview { context_tokens, complete: complete.then_some(result), calls })
