@@ -310,19 +310,20 @@ pub(super) fn event_scheduled_work(source: &str) -> Option<CompanionV1ActionItem
         let time = TIME.find(lead);
         let explicit = time.and_then(|time| {
             let frame = &lead[..time.start()];
-            let at = frame.rsplit_once('在').map_or(frame, |(actor, _)| actor);
+            let (at, time_start) = frame.rsplit_once('在').map_or((frame,time.start()), |(actor, _)| (actor,actor.len()));
             let after = lead[time.end()..].trim_start();
             if at.is_empty() {
                 let actor = SPEAKER.find(after)?;
                 let promise = PROMISE.find(&after[actor.end()..])?;
-                return work(&after[actor.end() + promise.end()..]).then_some(lead);
+                let action = after[actor.end() + promise.end()..].trim_start();
+                return work(action).then_some((&lead[..time.end()],action));
             }
             let actor = SPEAKER.find(at)?;
             let remainder = &at[actor.end()..];
             PROMISE.find(remainder).filter(|modal| modal.end() == remainder.len())?;
-            work(after).then_some(lead)
+            work(after).then_some((&lead[time_start..time.end()],after))
         });
-        let text = explicit.map(str::to_owned).or_else(|| {
+        let record = explicit.or_else(|| {
             let time = time.filter(|time| time.end() == lead.len())?;
             let frame = &lead[..time.start()];
             if !(frame.is_empty() || frame.starts_with('在') || SPEAKER.is_match(frame)) {
@@ -335,10 +336,19 @@ pub(super) fn event_scheduled_work(source: &str) -> Option<CompanionV1ActionItem
             let actor = SPEAKER.find(next)?;
             let rest = &next[actor.end()..];
             let action = PROMISE.find(rest).map_or(rest, |modal| &rest[modal.end()..]);
-            work(action).then(|| format!("{lead}，{next}"))
+            static LEADING_FILLERS: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+                r"^(?:就是|就是这个|这个|那个|这场|呃|嗯|\s)*$"
+            ).unwrap());
+            let time_start = SPEAKER.find(frame)
+                .filter(|actor| LEADING_FILLERS.is_match(&frame[actor.end()..]))
+                .map_or(0, |_| time.start());
+            work(action).then_some((&lead[time_start..],action.trim_start()))
         });
-        if let Some(text) = text.filter(|text| canonical_brief::line(text, 90)) {
-            return Some(CompanionV1ActionItem { text, owner: None, due: None });
+        if let Some((deadline,action)) = record {
+            let text = format!("{deadline}，{action}");
+            if canonical_brief::line(&text, 90) {
+                return Some(CompanionV1ActionItem { text, owner: None, due: None });
+            }
         }
     }
     None
@@ -1216,11 +1226,11 @@ mod tests {
     fn event_relative_plans_keep_the_literal_deadline_and_no_invented_person() {
         for (text, expected) in [
             ("嗯但也不能太难，毕竟大家也没有面对面实操过，不知道他们到底是有什么基础，但是在期末考试前我会进行三次模拟。",
-             "在期末考试前我会进行三次模拟"),
-            ("我们会在上线前做两轮联调。", "我们会在上线前做两轮联调"),
-            ("在消防验收以前，咱们开展两次疏散演练。", "在消防验收以前，咱们开展两次疏散演练"),
+             "在期末考试前，进行三次模拟"),
+            ("我们会在上线前做两轮联调。", "在上线前，做两轮联调"),
+            ("在消防验收以前，咱们开展两次疏散演练。", "在消防验收以前，开展两次疏散演练"),
             ("所以我们就是这场就是这个期末考试结束之后，我们根据各科成绩做一个简单一个分析评估。",
-             "我们就是这场就是这个期末考试结束之后，我们根据各科成绩做一个简单一个分析评估"),
+             "期末考试结束之后，根据各科成绩做一个简单一个分析评估"),
         ] {
             let action = event_scheduled_work(text).unwrap_or_else(|| panic!("missing work: {text}"));
             assert_eq!(action.text, expected);

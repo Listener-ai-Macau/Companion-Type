@@ -1,17 +1,18 @@
-import {useId,useMemo} from 'react';
+import {useId,useMemo,type ReactNode} from 'react';
 import {ArrowUpRight,CheckCheck,ListTodo,MessageCircleQuestion} from 'lucide-react';
 import type {CompanionTranscriptSource} from '../../core/src/minutesSources';
 import {nativeActionParts} from './actionMetadata';
 import {meetingReaderModel} from './meetingReaderModel';
 
 /** The saved decisions and arrangements, with their original qualifications. */
-export function MeetingActions({markdown,onLocate,onLocateTranscript,onOpenSource,decisionQuotes,questionQuotes,actionQuotes,actionSources,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;onOpenSource?:(source:CompanionTranscriptSource)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;actionQuotes?:ReadonlyMap<string,string[]>;actionSources?:ReadonlyMap<string,CompanionTranscriptSource[]>;reviewPending?:boolean}){
+export function MeetingActions({markdown,onLocate,onLocateTranscript,onOpenSource,decisionQuotes,questionQuotes,actionQuotes,actionSources,followupTools,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;onOpenSource?:(source:CompanionTranscriptSource)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;actionQuotes?:ReadonlyMap<string,string[]>;actionSources?:ReadonlyMap<string,CompanionTranscriptSource[]>;followupTools?:ReactNode;reviewPending?:boolean}){
  const sourceId=useId();
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
  const groups=model.groups.filter(group=>group.id!=='discussionQuestions');
  const requirements=reviewPending?model.sections.find(section=>section.title==='执行要求（待复核）'):undefined;
  const icons={decisions:CheckCheck,actions:ListTodo,questions:MessageCircleQuestion,discussionQuestions:MessageCircleQuestion};
  return <section className="meeting-actions" aria-label="决策与待办">
+  {!reviewPending&&followupTools}
   {reviewPending?<p className="meeting-actions-empty"><ListTodo size={17} aria-hidden="true"/>待办复核未完成。完整纪要中的补充仍保留在正文。</p>
    :!groups.some(group=>group.id==='actions')&&<p className="meeting-actions-empty"><ListTodo size={17} aria-hidden="true"/>这份纪要没有记录明确待办</p>}
   {requirements?.items.length?<section className="meeting-action-group" aria-label={requirements.title}>

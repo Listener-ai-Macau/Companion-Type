@@ -242,6 +242,7 @@ export type CompanionMeetingExportRequest = {
   calendarSaveToken?:string;
   calendarSavedName?:boolean;
 };
+const localFollowupSelection={minutes:true,minutesFollowupOnly:true,transcript:false,highlights:false,timeline:false,noteIds:[]};
 
 export type CompanionMeetingSaveRequest = {
   sessionId: string;
@@ -1427,6 +1428,12 @@ export function CompanionDashboard({
   const pdfPreviewKey=JSON.stringify([copySourceKey,selectedSession?.transcriptText,selectedSession?.noteRevision,selectedSession?.bookmarkRevision,selectedSession?.transcriptReview?.revision,selectedPdfSections]);
   const pdfPreviewKeyRef=useRef(pdfPreviewKey);pdfPreviewKeyRef.current=pdfPreviewKey;
   const copySourceRef=useRef(copySourceKey);copySourceRef.current=copySourceKey;
+  const followupAvailable=selectedMinutesVariant?.source==='llm_local_qwen'&&selectedMinutesVariant.status==='minutesReady'
+    &&selectedMinutesVariant.quality==='final'&&!minutesIncomplete&&!selectedMinutesStale
+    &&/^## (Decisions|Action Items|Open Questions|协作要求)$/m.test(minutesMarkdown);
+  const [followupDraft,setFollowupDraft]=useState<{key:string;text?:string;hash?:string;message:string;error?:boolean}|null>(null);
+  const currentFollowup=followupDraft?.key===copySourceKey?followupDraft:null;
+  const followupBlocked=controlsBusy||oobeBlockedByRecording||titleDirty||minutesDirty||noteUnsaved||transcriptReviewUnsaved||selectedRecordingBeingCaptured;
   const [phoneResult,setPhoneResult]=useState<ChecklistPhoneResult|null>(null);
   const [phoneBusy,setPhoneBusy]=useState(false);
   const phoneGeneration=useRef(0);
@@ -1449,6 +1456,14 @@ export function CompanionDashboard({
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                  storedActionSources={storedActionSources} storedActionQuotes={storedActionQuotes}
                  decisionQuotes={storedDecisionQuotes} questionQuotes={storedQuestionQuotes}
+                followupTools={followupAvailable&&onPreviewMeetingExport?<div className="ct-checklist-copy-result" aria-label="会议跟进短稿">
+                  <button type="button" className="ct-action" disabled={followupBlocked||previewWaiting}
+                    onClick={()=>void prepareFollowup()}>查看跟进短稿</button>
+                  {currentFollowup&&<p role={currentFollowup.error?'alert':'status'}>{currentFollowup.message}</p>}
+                  {currentFollowup?.text&&<><textarea className="ct-followup-text" aria-label="已保存的跟进短稿" readOnly value={currentFollowup.text}
+                    onFocus={event=>event.currentTarget.select()}/><button type="button" className="ct-action" disabled={followupBlocked||copyBusy}
+                    onClick={()=>void prepareFollowup(currentFollowup.hash)}>复制跟进短稿</button></>}
+                </div>:undefined}
                 blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
                 onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?(text,returnId,preferExact)=>{
                   setMeetingPane('source');setSourceSelection(null);
@@ -1466,6 +1481,34 @@ export function CompanionDashboard({
     previewTask.current=task;setPreviewWaiting(true);
     try{return await task.result;}
     finally{if(previewTask.current===task){previewTask.current=null;setPreviewWaiting(false);}}
+  };
+  const prepareFollowup = async (expectedContentHash?:string) => {
+    if(!selectedSession||!followupAvailable||!onPreviewMeetingExport||followupBlocked||exportActive.current)return;
+    if(expectedContentHash&&currentFollowup?.hash!==expectedContentHash)return;
+    const key=copySourceKey;
+    const request:CompanionMeetingExportRequest={sessionId:selectedSession.id,meetingMode:minutesViewMode,
+      format:'txt',contentSections:localFollowupSelection};
+    exportActive.current=true;
+    if(expectedContentHash)setCopyBusy(true);
+    else setFollowupDraft({key,message:'正在准备已保存的跟进短稿…'});
+    try {
+      if(expectedContentHash&&onCopyMeetingContent){
+        const result=await onCopyMeetingContent({...request,expectedContentHash});
+        if(result.status!=='copied')throw Error('复制未完成。');
+      }else{
+        const preview=await readExportPreview(request);
+        if(copySourceRef.current!==key)return;
+        const {textContent,contentHash}=preview;
+        if(typeof textContent!=='string'||!textContent.trim()||!/^[a-f0-9]{64}$/.test(contentHash))throw Error('暂无可用的跟进短稿。');
+        if(!expectedContentHash){setFollowupDraft({key,text:textContent,hash:contentHash,message:'请核对明确事项和待确认问题。'});return;}
+        if(contentHash!==expectedContentHash)throw Error('纪要已变更，请重新查看短稿。');
+        await navigator.clipboard.writeText(textContent);
+      }
+      if(currentFollowup&&copySourceRef.current===key)setFollowupDraft({...currentFollowup,message:'跟进短稿已复制。',error:false});
+    }catch(error){
+      if(copySourceRef.current===key)setFollowupDraft({key,text:expectedContentHash?currentFollowup?.text:undefined,
+        hash:expectedContentHash,message:operationErrorText(error,'export'),error:true});
+    }finally{exportActive.current=false;if(expectedContentHash)setCopyBusy(false);}
   };
   const copyChecklist = async () => {
     if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||exportActive.current||selectedMinutesStale||minutesIncomplete)return;
@@ -2693,9 +2736,7 @@ export function CompanionDashboard({
             target={noteExportTarget?.sessionId===selectedSession.id?noteExportTarget:null} onClearTarget={()=>setNoteExportTarget(null)}
             standalone={surface==='windows'} sessionId={selectedSession.id} meetingMode={minutesViewMode}
             sourceVersion={JSON.stringify([copySourceKey,selectedSession.transcriptText,selectedSession.noteRevision,selectedSession.bookmarkRevision,selectedSession.transcriptReview?.revision,bookmarkUnsaved])}
-            minutes={hasMinutes} followupAvailable={selectedMinutesVariant?.source==='llm_local_qwen'&&selectedMinutesVariant.status==='minutesReady'
-              &&selectedMinutesVariant.quality==='final'&&!minutesIncomplete&&!selectedMinutesStale
-              &&/^## (Decisions|Action Items|Open Questions|协作要求)$/m.test(minutesMarkdown)}
+            minutes={hasMinutes} followupAvailable={followupAvailable}
             transcript={finalTranscript} highlights={Boolean(selectedSession.bookmarks?.length)} timing={hasReviewedTiming}
             exactTiming={Boolean(finalTranscript&&companionReviewedUtterances(selectedSession).length&&!companionReviewedUtterances(selectedSession).some(row=>row.approximateTiming||row.endMs<=row.startMs))}
             notes={selectedSession.meetingNotes??[]} blocked={controlsBusy||oobeBlockedByRecording} desktopFileSharing={surface==='windows'}
@@ -4023,10 +4064,10 @@ function meetingSource(session: CompanionV1HostSession): string {
   return '演示记录';
 }
 
-function MinutesReadingView({decisionQuotes,questionQuotes,...props}:Parameters<typeof MinutesReadingBody>[0]&{
-    decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>}) {
+function MinutesReadingView({decisionQuotes,questionQuotes,followupTools,...props}:Parameters<typeof MinutesReadingBody>[0]&{
+    decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;followupTools?:ReactNode}) {
   const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
-  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes} actionQuotes={props.storedActionQuotes} actionSources={props.storedActionSources}
+  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes} actionQuotes={props.storedActionQuotes} actionSources={props.storedActionSources} followupTools={followupTools}
     onLocateTranscript={!props.blocked&&props.onShowTranscript?(text,returnId)=>props.onShowTranscript?.(text,returnId,true):undefined} blocked={props.blocked}>
     <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
     {reading.review.trim()?<MeetingDisclosure className="ct-full-minutes ct-source-review" title="原话与待核对内容" description="核对来源，不作为已确认结论">

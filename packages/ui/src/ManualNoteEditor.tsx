@@ -1,4 +1,4 @@
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useRef,useState,type ClipboardEvent} from 'react';
 import {Plus,Trash2} from 'lucide-react';
 import type {ManualNoteKind} from '../../core/src/manualNoteContext';
 import './manualNoteContext.css';
@@ -16,6 +16,17 @@ export function ManualNoteEditor({kind,text,onChange,disabled=false,label,placeh
  const item=(line:string)=>/^(\s*[-*]\s+\[)([ xX])(\]\s+)(.*)$/.exec(body(line));
  const commit=(next:string)=>{if(next.length>4000){setError('这条备注最多4000字符；输入尚未替换，请缩短后再加。');return;}setError('');onChange(next);};
  const replace=(index:number,value:string)=>commit(lines.map((line,i)=>i===index?value+(line.endsWith('\r')?'\r':''):line).join('\n'));
+ const pasteItems=(event:ClipboardEvent<HTMLTextAreaElement>,index?:number)=>{
+  if(disabled)return;
+  const field=event.currentTarget;
+  if(index!==undefined&&(field.selectionStart!==0||field.selectionEnd!==field.value.length))return;
+  const entries=event.clipboardData.getData('text/plain').split(/\r?\n/).map(line=>line.trim()).filter(Boolean);
+  if(entries.length<2)return;
+  event.preventDefault();
+  const pasted=entries.map(line=>item(line)?line:'- [ ] '+line.replace(/^(?:\d+[.、)）]\s*|[-*•]\s+)/,''));
+  const at=index??lines.length;
+  commit([...lines.slice(0,at),...pasted,...lines.slice(index===undefined?at:at+1)].join('\n'));
+ };
  const numbered=lines.some(line=>/^\s*\d+[.、)）]\s*\S/.test(body(line))&&!item(line));
  const convertible=lines.some(line=>body(line).trim()&&!item(line));
  const convert=()=>commit(lines.map(line=>{
@@ -35,13 +46,13 @@ export function ManualNoteEditor({kind,text,onChange,disabled=false,label,placeh
     if(!match)return body(line)?<label className="manual-editor-text manual-editor-description-line" key={'row-'+index}><span className="visually-hidden">跟进说明 {index+1}</span><textarea aria-label={'跟进说明 '+(index+1)} rows={2} value={body(line)} disabled={disabled} onChange={event=>replace(index,event.target.value)}/></label>:<div className="manual-editor-gap" key={'row-'+index} aria-hidden="true"/>;
     return <div className="manual-edit-row" key={'row-'+index}>
      <input type="checkbox" aria-label={'完成跟进事项 '+(index+1)} checked={match[2].toLowerCase()==='x'} disabled={disabled} onChange={event=>replace(index,match[1]+(event.target.checked?'x':' ')+match[3]+match[4])}/>
-     <textarea rows={1} aria-label={'跟进事项 '+(index+1)} value={match[4]} disabled={disabled} placeholder="需要做什么…" onChange={event=>replace(index,match[1]+match[2]+match[3]+event.target.value)} onKeyDown={event=>{if(event.key==='Enter'&&!event.nativeEvent.isComposing){event.preventDefault();nextItem.current?.focus();}}}/>
+     <textarea rows={1} aria-label={'跟进事项 '+(index+1)} value={match[4]} disabled={disabled} placeholder="需要做什么…" onChange={event=>replace(index,match[1]+match[2]+match[3]+event.target.value)} onPaste={event=>pasteItems(event,index)} onKeyDown={event=>{if(event.key==='Enter'&&!event.nativeEvent.isComposing){event.preventDefault();nextItem.current?.focus();}}}/>
      <button type="button" aria-label={'移除跟进事项 '+(index+1)} disabled={disabled} onClick={()=>commit(lines.filter((_,i)=>i!==index).join('\n'))}><Trash2 size={15}/></button>
     </div>;
    })}
    <div className="manual-edit-row manual-edit-new" key={'row-'+lines.length}>
     <Plus size={18} aria-hidden="true"/>
-    <textarea rows={1} ref={nextItem} aria-label="新增跟进事项" value="" disabled={disabled} placeholder="添加一项需要跟进的事…" onChange={event=>{if(event.target.value)commit(text+(text?'\n':'')+'- [ ] '+event.target.value);}}/>
+     <textarea rows={1} ref={nextItem} aria-label="新增跟进事项" value="" disabled={disabled} placeholder="添加一项需要跟进的事…" onChange={event=>{if(event.target.value)commit(text+(text?'\n':'')+'- [ ] '+event.target.value);}} onPaste={event=>pasteItems(event)}/>
    </div>
    {convertible&&<button type="button" className="manual-convert-lines" disabled={disabled} onClick={convert}>{numbered?'将编号列表转为待办':'将非空文字行转为待办'}</button>}
   </div>}

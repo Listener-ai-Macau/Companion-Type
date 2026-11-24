@@ -29,3 +29,10 @@
 }
 @media(max-width:720px){.meeting-outline-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.meeting-outline-card{min-height:48px}.meeting-outline{margin-bottom:22px}}
 @media(prefers-reduced-motion:no-preference){.meeting-outline-card{transition:background .15s,border-color .15s}}
+.ct-followup-text {
+  box-sizing: border-box;
+  display: block;
+  margin-block: 8px;
+  min-height: 156px;
+  width: 100%;
+}

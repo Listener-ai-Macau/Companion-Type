@@ -3179,6 +3179,7 @@ fn assemble_with_context(
     }
     let mut source_actions: Vec<(String, super::closing_recap::RecapHandoff)> = Vec::new();
     let mut recap_count = 0;
+    let agenda = super::followup_agenda::Agenda::new(&sentences);
     if !bank.chapter_spans.is_empty() {
         let recap = super::closing_recap::detect(&sentences)
             .map(|recap| recap.accepted_handoffs(&sentences)).unwrap_or_default();
@@ -3239,7 +3240,8 @@ fn assemble_with_context(
             let Some(mut item) = super::source_commitments::event_scheduled_work(quote) else { continue; };
             let speaker = super::super::source_resolution::split_turn_label(quote)
                 .map_or("原话", |(label, _)| label);
-            let cited_text = format!("{speaker}：“{}”", item.text);
+            let participant = agenda.participant(index);
+            let cited_text = format!("{}｜{}",participant.map_or(speaker,|entry|entry.label),item.text);
             if super::source_commitments::current_procedure_reply(&sentences, index).is_some()
                 || actions.iter().any(|action| {
                     action["text"].as_str().is_some_and(|text|
@@ -3252,16 +3254,40 @@ fn assemble_with_context(
             }
             item.text = cited_text;
             let path = format!("actionItems[{}]", actions.len());
-            actions.push(json!({"text":item.text,"owner":item.owner,"due":item.due,
-                "evidence":[{"source":row["source"],"quote":quote}]}));
+            let mut citations = vec![index];
+            citations.extend(participant.map(|entry|entry.introduction));
+            let evidence = citations.iter().map(|&pos| {
+                let row=&sentences[pos];
+                json!({"source":row["source"],"quote":row["text"]})
+            }).collect::<Vec<_>>();
+            actions.push(json!({"text":item.text,"owner":item.owner,"due":item.due,"evidence":evidence}));
             source_actions.push((path, super::closing_recap::RecapHandoff {
-                item, citations: vec![index], directive: index,
+                item, citations, directive: index,
             }));
         }
     }
     let (decision_paths, pending_decisions) = review_unclear_decisions(&mut document)?;
     for (pointer, _) in &mut layout_bindings {
         if let Some(new_path) = decision_paths.get(pointer) { *pointer = new_path.clone(); }
+    }
+    let mut agenda_pending = Vec::new();
+    if !bank.chapter_spans.is_empty() {
+        let mut topics = ["actionItems","decisions","questions"].into_iter()
+            .flat_map(|field| document[field].as_array().into_iter().flatten())
+            .filter_map(|entry| entry["text"].as_str().map(str::to_owned)).collect::<Vec<_>>();
+        let questions = document["questions"].as_array_mut().ok_or_else(fail)?;
+        for item in agenda.review_items() {
+            if questions.len()>=20 { break; }
+            if topics.iter().any(|text|text.contains(&item.subject)) { continue; }
+            topics.push(item.text.clone());
+            let evidence = item.sources.iter().map(|&pos| {
+                let row=&sentences[pos];
+                json!({"source":row["source"],"quote":row["text"]})
+            }).collect::<Vec<_>>();
+            let ids = item.sources.iter().map(|&pos| &sentences[pos]["id"]).collect::<Vec<_>>();
+            agenda_pending.push(json!({"path":format!("questions[{}]",questions.len()),"sourceIds":ids}));
+            questions.push(json!({"text":item.text,"evidence":evidence}));
+        }
     }
     let reader_limit=(!bank.chapter_spans.is_empty()).then_some(reader_detail_limits.as_slice());
     let mut parsed = super::evidence_document::parse_with_details_limit(
@@ -3319,6 +3345,7 @@ fn assemble_with_context(
         .iter().filter_map(|anchor| anchor["path"].as_str()).collect();
     if required_visible.iter().any(|(_, path)| !visible_paths.contains(path.as_str()))
         || source_actions.iter().any(|(path,_)| !visible_paths.contains(path.as_str()))
+        || agenda_pending.iter().any(|entry|entry["path"].as_str().is_none_or(|path|!visible_paths.contains(path)))
         || reader_examples.iter().chain(&reader_outcomes).chain(&reader_future)
             .chain(&reader_reported_context).chain(&grouped_replies).any(|example| {
             example["path"].as_str().is_none_or(|path| !visible_paths.contains(path))
@@ -3378,6 +3405,9 @@ fn assemble_with_context(
             let ids = handoff.citations.iter().map(|&pos| &sentences[pos]["id"]).collect::<Vec<_>>();
             json!({"path":path,"sourceIds":ids,"owner":handoff.item.owner,"due":handoff.item.due})
         }).collect::<Vec<_>>());
+    }
+    if !agenda_pending.is_empty() {
+        parsed.receipt["readerAgendaPendingWork"] = json!(agenda_pending);
     }
     if let Some(close)=&bank.reader_conversation_close {
         let mut timing=close.timing.iter().collect::<Vec<_>>();

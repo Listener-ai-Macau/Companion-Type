@@ -22,6 +22,14 @@ act(()=>tree.root.findByProps({'aria-label':'新增跟进事项'}).props.onChang
 assert.equal(value,beforeLarge);assert(text(tree.toJSON()).includes('最多4000字符'));
 act(()=>tree.root.findByProps({'aria-label':'新增跟进事项'}).props.onChange({target:{value:'下次确认具体日期，不猜周二是哪天'}}));
 assert.equal(value,beforeLarge+'\n- [ ] 下次确认具体日期，不猜周二是哪天');
+let pastePrevented=false;
+const beforePaste=value;
+act(()=>tree.root.findByProps({'aria-label':'新增跟进事项'}).props.onPaste({
+ currentTarget:{},clipboardData:{getData:()=> '通知负责人\r\n2.核对名单\r\n- [ ] 回看原话'},
+ preventDefault:()=>{pastePrevented=true;},
+}));
+assert(pastePrevented);
+assert.equal(value,beforePaste+'\n- [ ] 通知负责人\n- [ ] 核对名单\n- [ ] 回看原话');
 act(()=>button('按原格式编辑').props.onClick());assert.equal(tree.root.findByProps({'aria-label':'完整原始输入'}).props.value,value);
 act(()=>button('按事项编辑').props.onClick());
 act(()=>tree.root.findByProps({'aria-label':'移除跟进事项 2'}).props.onClick());

@@ -11,6 +11,7 @@ mod reader_ranking;
 mod source_windows;
 mod source_authority;
 mod source_commitments;
+mod followup_agenda;
 mod source_grounding;
 mod source_context;
 mod delivery_evidence;
