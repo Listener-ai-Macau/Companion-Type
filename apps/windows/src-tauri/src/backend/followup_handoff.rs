@@ -1,6 +1,7 @@
 //! Render a sendable follow-up from the certified outcomes in a saved draft.
 use crate::companion_v1::{CompanionV1HostSession, CompanionV1MinutesActionEvidence};
 use sha2::{Digest, Sha256};
+use std::collections::HashMap;
 use std::sync::LazyLock;
 
 #[derive(Clone, Copy, PartialEq)]
@@ -73,6 +74,59 @@ fn plain_pending(body: &str) -> String {
         return thing.to_owned();
     }
     body.to_owned()
+}
+
+/// Some complete drafts have topic evidence without any certified outcome.
+/// Expose only a few work passages the saved reader selected and the current
+/// transcript still contains. This list has no assignment or decision status.
+pub(super) fn work_review(session: &CompanionV1HostSession, markdown: &str) -> Option<String> {
+    static REQUESTS_WORK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
+        r"(?:^|[，,。；])(?:那|然后|所以|下面儿?|这个|包括|嗯|呃|啊|\x20)*",
+        r"(?:(?:请|麻烦)(?:我们|咱们|大家|各部门|各组|各位)?|",
+        r"(?:我|我们|咱们|大家|各部门|各组|各位)[^，,。！？]{0,16}?(?:一定要|务必|必须|不要|还要|需要|会|要))",
+        r"(?:去|先|再|及时|重新|马上|一定|要|也|多|嗯|呃|啊|\x20)*",
+        r"(?:安排|沟通|确认|核实|核对|核查|检查|维护|维修|更换|整理|准备|处理|配合|通知|说明|交付|提交|规定|落实|问|给|把)|",
+        r"(?:大家|各部门|各组|各位)(?:现在|就|先|再|一起|互相|相互|都){0,3}(?:配合|检查|对齐|整理|核对|通知|处理)"
+    )).unwrap());
+    static DIRECT_CONDITION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:之前|之后|以后|的时候)[，,\x20]*(?:必须|务必|一定要)[\x20]*(?:注明|检查|确认|核对|恢复|维护|锁好|记录|报备|通知|准备|整理|限制)"
+    ).unwrap());
+    let (_, topics) = markdown.split_once("## 主题脉络\n")?;
+    let (body, evidence) = topics.split_once("## 主题原话\n")?;
+    let source = super::transcript_review::effective_text(session);
+    let mut occurrences = HashMap::<&str, usize>::new();
+    for line in source.lines().map(str::trim) {
+        *occurrences.entry(line).or_default() += 1;
+    }
+    let quotes = evidence.lines().filter_map(|line| line.strip_prefix("- "))
+        .map(str::trim).filter(|quote| occurrences.get(quote) == Some(&1))
+        .collect::<Vec<_>>();
+    let mut passages = vec![];
+    for line in body.lines().filter_map(|line| line.strip_prefix("- ")) {
+        let Some(passage) = ["发言：", "现状：", "补充："].iter().find_map(|prefix| line.strip_prefix(prefix)) else { continue; };
+        let proposal = passage.strip_prefix("会上拟议：");
+        let literal = proposal.unwrap_or(passage).trim().trim_end_matches(['。','；']);
+        // The visible proposal may omit an interjection in the middle. Keep
+        // the full persisted quote if the restatement has an exact final clause.
+        let proposal_tail = proposal.and_then(|_| literal.rsplit(['，', ',']).next())
+            .map(str::trim).filter(|tail| tail.chars().count() >= 14);
+        if literal.chars().count() < 12 { continue; }
+        let mut anchored = quotes.iter().copied().filter(|quote|
+            quote.contains(literal) || proposal_tail.is_some_and(|tail| quote.trim_end_matches('。').ends_with(tail)));
+        let Some(quote) = anchored.next() else { continue; };
+        if anchored.next().is_some() || passages.contains(&quote)
+            || quote.chars().count() > 155
+            || quote.contains(['？','?', '“','”'])
+            || ["比如", "比方", "例如", "假如", "如果", "能不能", "是不是", "能否", "建议是", "听说"]
+                .iter().any(|cue| quote.contains(cue)) { continue; }
+        let words = split_turn(quote).map_or(quote, |(_, words)| words);
+        if proposal.is_none() && !REQUESTS_WORK.is_match(words) && !DIRECT_CONDITION.is_match(words) { continue; }
+        passages.push(quote);
+        if passages.len() == 6 { break; }
+    }
+    if passages.is_empty() { return None; }
+    let rendered = passages.into_iter().map(|quote| format!("- “{quote}”")).collect::<Vec<_>>().join("\n");
+    Some(format!("## 待核对的执行做法\n\n{rendered}"))
 }
 
 /// Keep the participant's own follow-through next to the plan they described.

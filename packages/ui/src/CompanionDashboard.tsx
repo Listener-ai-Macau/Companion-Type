@@ -1433,9 +1433,12 @@ export function CompanionDashboard({
   const copySourceRef=useRef(copySourceKey);copySourceRef.current=copySourceKey;
   const followupAvailable=selectedMinutesVariant?.source==='llm_local_qwen'&&selectedMinutesVariant.status==='minutesReady'
     &&selectedMinutesVariant.quality==='final'&&!minutesIncomplete&&!selectedMinutesStale
-    &&/^## (Decisions|Action Items|Open Questions|协作要求)$/m.test(minutesMarkdown);
+    &&(/^## (Decisions|Action Items|Open Questions|协作要求)$/m.test(minutesMarkdown)
+      || (/^## 主题脉络$/m.test(minutesMarkdown)&&/^## 主题原话$/m.test(minutesMarkdown)));
   const [followupDraft,setFollowupDraft]=useState<{key:string;text?:string;hash?:string;message:string;error?:boolean}|null>(null);
   const currentFollowup=followupDraft?.key===copySourceKey?followupDraft:null;
+  const workReviewQuotes=currentFollowup?.text?.includes('\n## 待核对的执行做法\n')
+    ? Array.from(currentFollowup.text.matchAll(/^- “(.+)”$/gm),match=>match[1]) : [];
   const followupBlocked=controlsBusy||oobeBlockedByRecording||titleDirty||minutesDirty||noteUnsaved||transcriptReviewUnsaved||selectedRecordingBeingCaptured;
   const [phoneResult,setPhoneResult]=useState<ChecklistPhoneResult|null>(null);
   const [phoneBusy,setPhoneBusy]=useState(false);
@@ -1444,6 +1447,15 @@ export function CompanionDashboard({
   const closePhoneChecklist=()=>{
     phoneGeneration.current++;setPhoneResult(null);
     if(phoneBusy)previewTask.current?.cancel();
+  };
+  const showSavedTranscript = (text?:string,returnId?:string,preferExact?:boolean) => {
+    if(!selectedSession)return;
+    setMeetingPane('source');setSourceSelection(null);
+    setTranscriptLookup(text?{id:String(++lookupSequence.current),text,sessionId:selectedSession.id,returnId,preferExact}:null);
+    resumeTranscriptDraft(selectedSession.id);
+    if(preferExact)return;
+    window.requestAnimationFrame(()=>{const region=document.getElementById('ct-recording-text-review');
+      if(region&&!region.hidden){region.scrollIntoView({block:'start'});region.focus({preventScroll:true});}});
   };
   const renderSavedReading = () => selectedSession ? (<MinutesReadingView markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
                 actionContextKey={`${selectedSession.id}:${minutesViewMode}`}
@@ -1463,19 +1475,18 @@ export function CompanionDashboard({
                   <button type="button" className="ct-action" disabled={followupBlocked||previewWaiting}
                     onClick={()=>void prepareFollowup()}>查看跟进短稿</button>
                   {currentFollowup&&<p role={currentFollowup.error?'alert':'status'}>{currentFollowup.message}</p>}
-                  {currentFollowup?.text&&<><textarea className="ct-followup-text" aria-label="已保存的跟进短稿" readOnly value={currentFollowup.text}
-                    onFocus={event=>event.currentTarget.select()}/><button type="button" className="ct-action" disabled={followupBlocked||copyBusy}
+                  {currentFollowup?.text&&<>{workReviewQuotes.length>0
+                    ? <section aria-label="待核对的执行做法" className="meeting-action-group"><ul>{workReviewQuotes.map((quote,index)=>{
+                        const returnId=`ct-followup-work-source-${index}`;
+                        return <li key={quote}><p>{quote}</p><button type="button" id={returnId} className="meeting-action-source"
+                          disabled={followupBlocked} onClick={()=>showSavedTranscript(quote,returnId,true)}>查看转写</button></li>;
+                      })}</ul></section>
+                    : <textarea className="ct-followup-text" aria-label="已保存的跟进短稿" readOnly value={currentFollowup.text}
+                      onFocus={event=>event.currentTarget.select()}/>}<button type="button" className="ct-action" disabled={followupBlocked||copyBusy}
                     onClick={()=>void prepareFollowup(currentFollowup.hash)}>复制跟进短稿</button></>}
                 </div>:undefined}
                 blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
-                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?(text,returnId,preferExact)=>{
-                  setMeetingPane('source');setSourceSelection(null);
-                  setTranscriptLookup(text?{id:String(++lookupSequence.current),text,sessionId:selectedSession.id,returnId,preferExact}:null);
-                  resumeTranscriptDraft(selectedSession.id);
-                  if(preferExact)return;
-                  window.requestAnimationFrame(()=>{const region=document.getElementById('ct-recording-text-review');
-                    if(region&&!region.hidden){region.scrollIntoView({block:'start'});region.focus({preventScroll:true});}});
-                }:undefined} />) : null;
+                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?showSavedTranscript:undefined} />) : null;
   const renderExportFeedback = (origin: MeetingExportOrigin, className?: string) =>
     exportResult && exportResult.sessionId === selectedSession?.id && exportResult.origin === origin
       ? <div data-ct-export-feedback={origin}><CompanionExportFeedback key={exportResult.calendarOpenToken??exportResult.message} feedback={exportResult} className={className} onOpenSavedCalendar={onOpenSavedCalendar}/></div> : null;
@@ -1503,7 +1514,8 @@ export function CompanionDashboard({
         if(copySourceRef.current!==key)return;
         const {textContent,contentHash}=preview;
         if(typeof textContent!=='string'||!textContent.trim()||!/^[a-f0-9]{64}$/.test(contentHash))throw Error('暂无可用的跟进短稿。');
-        if(!expectedContentHash){setFollowupDraft({key,text:textContent,hash:contentHash,message:'请核对明确事项和待确认问题。'});return;}
+        if(!expectedContentHash){setFollowupDraft({key,text:textContent,hash:contentHash,
+          message:textContent.includes('\n## 待核对的执行做法\n')?'请核对这些做法的适用范围和责任人。':'请核对明确事项和待确认问题。'});return;}
         if(contentHash!==expectedContentHash)throw Error('纪要已变更，请重新查看短稿。');
         await navigator.clipboard.writeText(textContent);
       }

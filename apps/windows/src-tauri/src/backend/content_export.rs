@@ -76,16 +76,20 @@ fn saved_followup(session: &CompanionV1HostSession, mode: &str, markdown: &str) 
             output.push(line);
         }
     }
-    if output.is_empty() {
-        return Err("已保存的纪要没有决定、行动或待确认事项，可导出完整纪要。".into());
-    }
     let title = session.title.lines().next().unwrap_or("").trim();
     let title = if title.is_empty() { "会议跟进" } else { title };
-    let grouped = ready.source_action_evidence.as_ref()
-        .and_then(|evidence| super::followup_handoff::grouped(session,evidence,&output));
-    let body = grouped.unwrap_or_else(|| output.join("\n").trim_end().to_owned());
-    Ok(readable_minutes(&format!("# {title}\n\n> 已保存纪要中的决定与跟进，发送前请核对。\n\n{}",
-        body)))
+    let has_outcomes = output.iter().any(|line| !line.trim().is_empty() && !line.starts_with("## "));
+    let body = if has_outcomes {
+        ready.source_action_evidence.as_ref()
+            .and_then(|evidence| super::followup_handoff::grouped(session,evidence,&output))
+            .unwrap_or_else(|| output.join("\n").trim_end().to_owned())
+    } else {
+        super::followup_handoff::work_review(session, markdown)
+            .ok_or("这份纪要暂无可提取的跟进内容，可查看完整纪要。")?
+    };
+    let guidance = if has_outcomes { "已保存纪要中的决定与跟进，发送前请核对。" }
+        else { "会中提到的做法，发送前请核对适用范围与责任人。" };
+    Ok(readable_minutes(&format!("# {title}\n\n> {guidance}\n\n{body}")))
 }
 
 fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,literal_transcript:bool)->Result<String,String>{
@@ -266,6 +270,33 @@ mod tests {
         let legacy=source(&row,"offlineStore",&choice).unwrap();
         assert!(legacy.contains(action)&&legacy.contains(pending));
         assert!(!legacy.contains("## 请初一班主任核对"));
+    }
+
+    #[test]
+    fn followup_without_assignments_reuses_verified_work_passages_only() {
+        let mut row = sample();
+        let work = "说话人2: 下面大家就配合一下，把二楼的检修清单整理好。";
+        let report = "说话人1: 上个月我们做过检修，工作要求我们必须要外向一点。";
+        let proposed = "说话人3: 上周做完了登记，嗯不是说当天，登记核对完之后下个月再联系这些协会。";
+        let unsupported = "说话人2: 咱们明天要处理检查记录。";
+        row.transcript_text = format!("{work}\n{report}\n{proposed}");
+        let variant = row.minutes_by_mode.offline_store.as_mut().unwrap();
+        variant.source = "llm_local_qwen".into();
+        variant.status = "minutesReady".into();
+        variant.quality = "final".into();
+        variant.source_review_revision = None;
+        variant.source_note_context = None;
+        variant.processing = None;
+        variant.markdown = format!("## 主题脉络\n\n### 检修\n\n- 发言：{work}\n- 现状：{report}\n- 现状：{unsupported}\n- 补充：会上拟议：上周做完了登记，登记核对完之后下个月再联系这些协会\n\n## 主题原话\n\n- {work}\n- {report}\n- {proposed}\n- {unsupported}");
+        let choice = Selection {minutes:true,minutes_followup_only:true,transcript:false,highlights:false,timeline:false,note_ids:vec![]};
+        let draft = source(&row, "offlineStore", &choice).unwrap();
+        assert!(draft.contains("## 待核对的执行做法"));
+        assert!(draft.contains(work) && draft.contains(proposed));
+        assert!(!draft.contains(report) && !draft.contains(unsupported));
+        assert!(!draft.contains("## 行动事项") && !draft.contains("## 讨论结论"));
+        assert_eq!(draft.lines().filter(|line| line.starts_with("- “")).count(), 2);
+        row.transcript_text = report.into();
+        assert!(source(&row, "offlineStore", &choice).is_err());
     }
 
     fn sample()->CompanionV1HostSession {
