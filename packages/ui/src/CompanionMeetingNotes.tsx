@@ -17,7 +17,7 @@ type Edit = { kind:ManualNoteKind;references:ManualNoteEvidence[];originalKind:M
 type Draft = { kind?:ManualNoteKind;references?:ManualNoteEvidence[];text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; pendingImage?:CompanionMeetingImageNoteRequest; pendingAnchor?:CompanionBookmarkRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,onExportNote,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,searchTerm=''}: {
+export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,allowAddWhileBlocked=false,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,onExportNote,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,searchTerm=''}: {
   incoming?:ManualEvidenceDraft;
   onIncomingConsumed?:()=>void;
   onOpenEvidence?:(noteId:string,reference:ManualNoteEvidence,revision:number)=>Promise<void>;
@@ -26,6 +26,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
   resultEditLabel?:string;
   onHelp?:()=>void;
   session:CompanionV1HostSession;
+  allowAddWhileBlocked?:boolean;
   blocked:boolean;
   persistenceReady:boolean;
   anyRecording:boolean;
@@ -50,6 +51,8 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
   const active=useRef(false);
   const draft=drafts[session.id]??{};
   const disabled=blocked||busy||!onSave||!persistenceReady;
+  const addDisabled=(blocked&&!allowAddWhileBlocked)||busy||!onSave||!persistenceReady;
+  const composerSaveDisabled=draft.pending && draft.pending.action!=='add'?disabled:addDisabled;
   const [noteOrder,setNoteOrder]=useState<NoteReadingOrder>('recent');
   const notes=session.meetingNotes??[];
   const orderedNotes=readingOrder(notes,noteOrder),latest=readingOrder(notes)[0],latestId=latest&&(noteTimestamp(latest.updatedAt)||noteTimestamp(latest.createdAt))?latest.id:null;
@@ -67,7 +70,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
   const openEvidence=async(noteId:string,reference:ManualNoteEvidence)=>{if(active.current||disabled||!onOpenEvidence)return;active.current=true;setBusy(true);onBusyChange?.(true);message(session.id,'');try{await onOpenEvidence(noteId,reference,session.noteRevision??0);}catch(e){message(session.id,e instanceof Error?e.message:String(e));}finally{active.current=false;setBusy(false);onBusyChange?.(false);}};
 
   const save=async(request:CompanionMeetingNoteRequest)=>{
-    if(active.current||disabled||!onSave)return;
+    if(active.current||(request.action==='add'?addDisabled:disabled)||!onSave)return;
     active.current=true;setBusy(true);onBusyChange?.(true);message(request.sessionId,'');
     change(request.sessionId,(d)=>({...d,pending:request}));
     try {
@@ -128,7 +131,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
       {!compact||points.length>0||draft.anchor?selectAnchor(draft.anchor??'',(anchor)=>change(session.id,(d)=>({...d,anchor,pending:undefined,pendingAnchor:undefined,pendingImage:undefined})),'新备注关联重点'):null}
       {onSaveAnchor&&playbackPosition?<button type="button" className="ct-action" disabled={disabled||anyRecording||!session.audioStored} onClick={()=>void markPosition()}>{draft.pendingAnchor?'重试关联位置':'关联当前回听位置'}</button>:null}
 
-      <button type="button" className="ct-action" disabled={disabled||hasIncompleteManualItems(draft.kind??'note',draft.text??'')||(!draft.pending&&!draft.text?.trim()&&!draft.references?.length)} onClick={()=>void save(draft.pending??{
+      <button type="button" className="ct-action" disabled={composerSaveDisabled||hasIncompleteManualItems(draft.kind??'note',draft.text??'')||(!draft.pending&&!draft.text?.trim()&&!draft.references?.length)} onClick={()=>void save(draft.pending??{
         sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,action:'add',
         text:draft.text??'',kind:draft.kind??'note',references:draft.references??[],bookmarkId:draft.anchor||null,
       })}>{busy?'正在保存…':draft.pending?'重试保存备注':'保存备注'}</button>
@@ -139,7 +142,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
   </>;
   return <section id="ct-recording-notes" className={compact?"ct-meeting-notes ct-notes-inline":"ct-meeting-notes"} aria-label="录音备注">
     {!compact||notes.length>0?<div className="ct-notes-heading"><h4><StickyNote size={16}/>{compact?'补充':'录音备注'}</h4><span>用户补充 · {notes.length} 条</span></div>:null}
-    {compact&&!composers[session.id]&&!draft.text?.trim()&&!draft.references?.length&&!draft.pending?<button type="button" className="ct-action manual-followup-entry" disabled={disabled} onClick={()=>{change(session.id,d=>({...d,kind:'followup'}));setComposers(all=>({...all,[session.id]:true}));}}>新建跟进清单</button>:null}
+    {compact&&!composers[session.id]&&!draft.text?.trim()&&!draft.references?.length&&!draft.pending?<button type="button" className="ct-action manual-followup-entry" disabled={addDisabled} onClick={()=>{change(session.id,d=>({...d,kind:'followup'}));setComposers(all=>({...all,[session.id]:true}));}}>新建跟进清单</button>:null}
     {compact?<details className="ct-note-composer" open={Boolean(composers[session.id])} onToggle={event=>{
       const open=event.currentTarget.open;
       setComposers(all=>all[session.id]===open?all:{...all,[session.id]:open});

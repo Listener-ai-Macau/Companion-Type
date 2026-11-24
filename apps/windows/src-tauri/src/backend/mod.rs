@@ -1342,14 +1342,26 @@ impl FixtureCompanionBackend {
         snapshot: std::sync::MutexGuard<'a,CompanionV1Snapshot>,
         request: &CompanionV1ControlRequest, work: impl FnOnce()->T,
     )->Result<(std::sync::MutexGuard<'a,CompanionV1Snapshot>,T),String> {
-        let input=request.session_id.as_deref()
+        let mut input=request.session_id.as_deref()
             .and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id)).cloned();
-        let input_bytes=serde_json::to_vec(&input).map_err(|_|"无法核对会议处理输入。")?;
         drop(snapshot);
         let result=work();
         let mut snapshot=self.snapshot.lock().map_err(|_|"Companion backend state lock failed")?;
         let current=request.session_id.as_deref()
             .and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id));
+        if request.action == CompanionV1ControlAction::MeetingGenerateMinutes
+            && request.context_note_revision.is_none()
+        {
+            if let (Some(input), Some(current)) = (input.as_mut(), current) {
+                if input.note_revision != current.note_revision {
+                    input.note_revision = current.note_revision;
+                    input.meeting_notes.clone_from(&current.meeting_notes);
+                    // Saving a note invalidates the previous export receipt.
+                    input.exported_at = None;
+                }
+            }
+        }
+        let input_bytes=serde_json::to_vec(&input).map_err(|_|"无法核对会议处理输入。")?;
         if serde_json::to_vec(&current).map_err(|_|"无法核对会议处理结果。")?!=input_bytes {
             if let (Some(input),Some(current))=(input.as_ref(),request.session_id.as_deref()
                 .and_then(|id|snapshot.host.sessions.iter_mut().find(|s|s.id==id))) {
@@ -3811,6 +3823,11 @@ impl CompanionBackend for FixtureCompanionBackend {
                     next=apply_control_at(snapshot.clone(),request.clone(),&observation_timestamp())?;
                     next.meeting.status = session.status.clone();
                     if let Some(target) = next.host.sessions.iter_mut().find(|target| target.id == session.id) {
+                        if session.note_revision != target.note_revision {
+                            session.note_revision = target.note_revision;
+                            session.meeting_notes.clone_from(&target.meeting_notes);
+                            session.exported_at = None;
+                        }
                         *target = session;
                     }
                     if let Some(echo) = next.last_control.as_mut() {

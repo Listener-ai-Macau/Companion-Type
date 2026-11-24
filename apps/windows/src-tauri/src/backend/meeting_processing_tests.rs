@@ -93,3 +93,32 @@ fn recovery_external_late_result_never_recreates_deleted_session() {
     backend.record_meeting_recovery_failure("old","transcription",MEETING_WORK_SUPERSEDED).unwrap();
     assert!(backend.snapshot().unwrap().host.sessions.is_empty());
 }
+
+#[test]
+fn original_only_minutes_accepts_an_independently_saved_note() {
+    for include_notes in [false, true] {
+        let backend = backend();
+        let mut request = request(CompanionV1ControlAction::MeetingGenerateMinutes, "old");
+        request.context_note_revision = include_notes.then_some(0);
+        let save = meeting_notes::Request {
+            session_id: "old".into(),
+            note_id: uuid::Uuid::new_v4().to_string(),
+            expected_revision: 0,
+            action: meeting_notes::Action::Add,
+            text: Some("Ask the group about the next review date.".into()),
+            bookmark_id: None,
+            kind: None,
+            references: None,
+        };
+        let before = backend.snapshot.lock().unwrap();
+        let outcome = backend.run_meeting_work(before, &request, || backend.save_meeting_note(save).unwrap());
+        if include_notes {
+            assert!(matches!(outcome, Err(ref error) if error == MEETING_WORK_SUPERSEDED));
+            assert_eq!(backend.snapshot().unwrap().host.sessions[0].note_revision, 1);
+        } else {
+            let (current, receipt) = outcome.unwrap();
+            assert_eq!(current.host.sessions[0].note_revision, 1);
+            assert_eq!(current.host.sessions[0].meeting_notes, receipt.host.sessions[0].meeting_notes);
+        }
+    }
+}

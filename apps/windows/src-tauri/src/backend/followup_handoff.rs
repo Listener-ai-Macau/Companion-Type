@@ -14,6 +14,7 @@ struct Group {
     role: String,
     actions: Vec<String>,
     questions: Vec<String>,
+    next_steps: Vec<String>,
 }
 
 fn split_turn(line: &str) -> Option<(&str, &str)> {
@@ -74,6 +75,41 @@ fn plain_pending(body: &str) -> String {
     body.to_owned()
 }
 
+/// Keep the participant's own follow-through next to the plan they described.
+/// A changed speaker or an unrelated turn ends the search. These excerpts
+/// need review even when the lead action was already confirmed.
+fn dependent_step(primary: &str, source: &str) -> Option<String> {
+    let (speaker, words) = split_turn(primary)?;
+    let mut adjacent = source.lines().skip_while(|line| line.trim() != primary).skip(1).take(4);
+    let next = adjacent.find(|line| !line.trim().is_empty() && split_turn(line).is_none_or(|(_, turn)|
+        !turn.trim_matches([' ', '。', '，', ',', '嗯', '呃', '啊', '哦']).is_empty()))?;
+    let (other, next) = split_turn(next)?;
+    if other != speaker { return None; }
+    let example = ["比如说", "例如", "举个例子"].iter().filter_map(|marker| next.find(marker)).min();
+    let clause = &next[..example.unwrap_or(next.len())];
+    let clause = clause.trim().trim_end_matches(['。', '，', ',', ' ', '、']);
+    let clause = clause.strip_prefix("看着").filter(|rest| rest.starts_with("然后")).unwrap_or(clause);
+    let sequence = ["然后再", "接下来", "随后", "之后"].iter().find_map(|prefix| clause.strip_prefix(prefix));
+    let opening = sequence.unwrap_or(clause);
+    let link = ["根据", "基于", "依据", "结合"].iter().find_map(|prefix| opening.strip_prefix(prefix))?;
+    let (input, work) = link.split_once(['，', ','])?;
+    if !(2..=16).contains(&input.chars().count()) || input.contains(['。', '！', '？', '；']) {
+        return None;
+    }
+    let subject = input.trim_start_matches("这次").trim_start_matches("本次");
+    if sequence.is_none() && (subject.is_empty() || !words.contains(subject)) { return None; }
+    if !["做", "看", "核对", "比较", "分析", "评估", "确认", "整理", "安排", "调整"]
+        .iter().any(|cue| work.contains(cue))
+        || clause.chars().count() > 118
+        || ["不是说", "先不", "暂不", "取消", "不需要", "如果", "要不要", "是否", "？", "?"]
+            .iter().any(|cue| clause.contains(cue))
+    {
+        return None;
+    }
+    let clause = clause.trim_end_matches("然后就").trim_end_matches(['。','，',',',' ']);
+    Some(clause.to_owned())
+}
+
 /// Only promote a printed role to a heading when the current saved transcript
 /// still contains its literal introduction. Keep older and unscoped items in
 /// their saved sections, and never turn a proposed item into a commitment.
@@ -111,7 +147,7 @@ pub(super) fn grouped(
             let claims=match section {Section::Action=>&evidence.actions,_=>&evidence.questions};
             let text=line.strip_prefix("- ").unwrap_or(line);
             let mut matches=claims.iter().filter(|claim|claim.text==text);
-            let intro=matches.next().filter(|_|matches.next().is_none()).and_then(|claim| {
+            let verified=matches.next().filter(|_|matches.next().is_none()).and_then(|claim| {
                 // The leading quote is the action itself. The supporting
                 // introduction is separate and must resolve in this text.
                 let primary=claim.transcript_quotes.first()?;
@@ -122,12 +158,12 @@ pub(super) fn grouped(
                         words.trim_end_matches(['。','！',' ']).ends_with(role)
                         && (section!=Section::Action||actor==Some(speaker)))
                         && source.matches(quote.as_str()).take(2).count()==1
-                })
+                }).map(|intro| (intro, primary))
             });
-            if let Some(intro)=intro {
+            if let Some((intro, primary))=verified {
                 let name=role_with_title(role,intro,&source);
                 let pos=groups.iter().position(|group|group.role==name).unwrap_or_else(||{
-                    groups.push(Group{role:name,actions:Vec::new(),questions:Vec::new()});
+                    groups.push(Group{role:name,actions:Vec::new(),questions:Vec::new(),next_steps:Vec::new()});
                     groups.len()-1
                 });
                 let group=&mut groups[pos];
@@ -142,6 +178,13 @@ pub(super) fn grouped(
                     Section::Pending=>group.questions.push(plain_pending(body)),
                     Section::Other=>unreachable!(),
                 }
+                if split_turn(intro).zip(split_turn(primary)).is_some_and(|(intro, action)| intro.0==action.0) {
+                    if let Some(step) = dependent_step(primary, &source) {
+                        if !group.next_steps.contains(&step) {
+                            group.next_steps.push(step);
+                        }
+                    }
+                }
                 continue;
             }
         }
@@ -153,6 +196,7 @@ pub(super) fn grouped(
         let mut lines=vec![format!("## 请{}核对",group.role)];
         lines.extend(group.actions.into_iter().map(|action|format!("- 已明确 · {action}")));
         lines.extend(group.questions.into_iter().map(|question|format!("- 请确认 · {}。",question.trim_end_matches(['.','。']))));
+        lines.extend(group.next_steps.into_iter().map(|step| format!("- 后续做法待核对 · “{step}”。")));
         parts.push(lines.join("\n"));
     }
     let mut current=Vec::new();
@@ -169,4 +213,25 @@ pub(super) fn grouped(
         parts.push(current.join("\n").trim_end().to_owned());
     }
     Some(parts.join("\n\n"))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::dependent_step;
+
+    #[test]
+    fn linked_follow_through_preserves_scope_and_example_boundary() {
+        let primary = "说话人2: 我们每周做一次交接检查。";
+        let next = "根据交接检查，整理未交付清单，然后按到期日排序，例如上个月的旧单。";
+        assert_eq!(dependent_step(primary, &format!("{primary}\n说话人1: 嗯。\n说话人2: {next}")).as_deref(),
+            Some("根据交接检查，整理未交付清单，然后按到期日排序"));
+        for unrelated in [
+            format!("{primary}\n说话人3: {next}"),
+            format!("{primary}\n说话人1: 转到预算议题。\n说话人2: {next}"),
+            format!("{primary}\n说话人2: 根据设备巡检，整理未交付清单。"),
+            format!("{primary}\n说话人2: 根据交接检查，如果客户改期就调整。"),
+        ] {
+            assert!(dependent_step(primary, &unrelated).is_none(), "{unrelated}");
+        }
+    }
 }

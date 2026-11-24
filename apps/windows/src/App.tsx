@@ -81,7 +81,7 @@ export function App() {
   const [cancelProcessingPending, setCancelProcessingPending] = useState(false);
   const [processingNotice, setProcessingNotice] = useState<string | null>(null);
   const cancelProcessingActive = useRef(false);
-  const processingTicket = useRef<{sessionId:string;jobId:string} | null>(null);
+  const processingTicket = useRef<{sessionId:string;jobId:string;allowNewNotes?:boolean} | null>(null);
   const pauseSyncActive = useRef(false);
   const operationActive = useRef(false);
   const snapshotEpoch = useRef(0);
@@ -123,7 +123,10 @@ export function App() {
     const cleanupSessionId=request.sessionId??snapshot?.host.selectedSessionId;
     if (request.action === 'meetingTranscribeAudio' || request.action === 'meetingGenerateMinutes') {
       const jobId=`__meeting_job__${globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${++meetingProcessingSequence}`}`;
-      processingTicket.current=cleanupSessionId ? {sessionId:cleanupSessionId,jobId} : null;
+      processingTicket.current=cleanupSessionId ? {
+        sessionId:cleanupSessionId,jobId,
+        allowNewNotes:request.action==='meetingGenerateMinutes' && request.contextNoteRevision==null,
+      } : null;
       request={...request,promptId:jobId};
       setProcessingSessionId(cleanupSessionId ?? null);
       setCancelProcessingPending(false);
@@ -339,6 +342,7 @@ export function App() {
       onPauseSync={isTauriRuntime() ? (jobId) => void pauseSync(jobId) : undefined}
       onRepairSync={isTauriRuntime() ? async () => {setRecordingSync(await repairRecordingSyncSettings());} : undefined}
       processingSessionId={processingSessionId}
+      canAddNoteWhileOrganizing={busyAction==='meetingGenerateMinutes' && processingTicket.current?.allowNewNotes===true}
       cancelProcessingPending={cancelProcessingPending}
       processingNotice={processingNotice}
       onCancelMeetingProcessing={isTauriRuntime() ? (sessionId) => void cancelMeetingProcessing(sessionId) : undefined}
@@ -426,10 +430,31 @@ export function App() {
       onAddImageNote={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{try{const saved=await addCompanionImageNote(request);if(saved)setSnapshot(saved);return saved;}catch(error){try{setSnapshot(await getCompanionSnapshot());}catch{}throw error;}}):undefined}
       onCheckNoteEvidence={isTauriRuntime()?checkCompanionNoteEvidence:undefined}
       onPreviewNoteImage={isTauriRuntime()?previewCompanionNoteImage:undefined}
-      onSaveNote={isTauriRuntime() ? (request) => exclusive('refresh',async()=>{
-        try { const saved=await saveCompanionMeetingNote(request);setSnapshot(saved);return saved; }
-        catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* retain the last readable library */ } throw error; }
-      }):undefined}
+      onSaveNote={isTauriRuntime() ? async (request) => {
+        const ticket=processingTicket.current;
+        if (operationActive.current && request.action==='add' && ticket?.allowNewNotes && request.sessionId===ticket.sessionId) {
+          try {
+            const saved=await saveCompanionMeetingNote(request);
+            const updated=saved.host.sessions.find(session=>session.id===request.sessionId);
+            if (updated) setSnapshot(current=>{
+              if (!current) return current;
+              const sessions=current.host.sessions.map(session=>session.id===updated.id &&
+                (session.noteRevision??0)<(updated.noteRevision??0)
+                ? {...session,meetingNotes:updated.meetingNotes,noteRevision:updated.noteRevision,exportedAt:updated.exportedAt}
+                : session);
+              return {...current,host:{...current.host,sessions}};
+            });
+            return saved;
+          } finally {
+            // Reconcile the full snapshot once the in-flight result is applied.
+            void cachedReader.current?.request();
+          }
+        }
+        return exclusive('refresh',async()=>{
+          try { const saved=await saveCompanionMeetingNote(request);setSnapshot(saved);return saved; }
+          catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* retain the last readable library */ } throw error; }
+        });
+      }:undefined}
       onSaveLibraryOrganization={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{
         try{const saved=await saveCompanionLibraryOrganization(request);setSnapshot(saved);return saved;}
         catch(error){try{setSnapshot(await getCompanionSnapshot());}catch{/* retain last readable library */}throw error;}

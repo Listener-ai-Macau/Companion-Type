@@ -278,6 +278,7 @@ export interface CompanionDashboardProps {
   onPauseSync?: (jobId: string) => void;
   onRepairSync?: () => Promise<void>;
   processingSessionId?: string | null;
+  canAddNoteWhileOrganizing?: boolean;
   cancelProcessingPending?: boolean;
   processingNotice?: string | null;
   onCancelMeetingProcessing?: (sessionId: string) => void;
@@ -483,6 +484,7 @@ export function CompanionDashboard({
   onPauseSync,
   onRepairSync,
   processingSessionId = null,
+  canAddNoteWhileOrganizing = false,
   cancelProcessingPending = false,
   processingNotice = null,
   onCancelMeetingProcessing,
@@ -1123,7 +1125,8 @@ export function CompanionDashboard({
   // Native recording controls yield background synchronization at a safe boundary.
   // Keep foreground requests exclusive, but do not strand the current recording
   // behind a background job. New recordings and unrelated actions stay blocked.
-  const recordingControlBusy = busyAction !== null || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy || libraryBusy;
+  const otherRecordingControlsBusy = resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy || libraryBusy;
+  const recordingControlBusy = busyAction !== null || otherRecordingControlsBusy;
   const controlsBusy = recordingControlBusy || Boolean(recordingSync?.jobId);
   // A completed recording can be edited while a different recording continues.
   const selectedRecordingBeingCaptured = Boolean(selectedSession && (selectedSession.status === 'recording'
@@ -2959,6 +2962,8 @@ export function CompanionDashboard({
               if(reference.kind==='document'){setDocumentSource({id:reference.documentId,contextId:selectedSession.id,quote:reference.quote,nonce:crypto.randomUUID(),evidence:reference});revealMeetingTool('ct-document-context');}
               else{setMeetingPane('source');setTranscriptReviewOpen(true);setTranscriptLookup({id:crypto.randomUUID(),text:reference.quote,sessionId:selectedSession.id,returnId:'ct-recording-notes'});window.requestAnimationFrame(()=>document.getElementById('ct-recording-text-review')?.scrollIntoView({block:'start'}));}
             }:undefined} searchTerm={libraryQuery} resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
+            allowAddWhileBlocked={canAddNoteWhileOrganizing && busyAction==='meetingGenerateMinutes'
+              && processingSessionId===selectedSession.id && !otherRecordingControlsBusy && !selectedRecordingBeingCaptured}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onAddImage={onAddImageNote} onPreviewImage={onPreviewNoteImage} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onSaveAnchor={onSaveBookmark} playbackPosition={readBookmarkPosition}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)
