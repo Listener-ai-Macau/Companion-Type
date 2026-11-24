@@ -2483,6 +2483,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     groups.sort_by_key(|(_, items)| !items.iter().any(|(fact, _)| fact.id == purpose_id));
     let mut used_names: HashSet<String> = topics.values().flatten()
         .filter_map(|name| theme_name(name).map(str::to_owned)).collect();
+    let mut shown_names = HashSet::new();
     let mut fallback_topics = Vec::new();
     let mut next_fallback = 1;
     let mut linked_details = HashMap::new();
@@ -2492,8 +2493,9 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     for (id,items) in groups {
         let title=topics.remove(id).ok_or_else(fail)?;
         if items.is_empty(){continue;}
-        let title = match title.as_deref() {
-            Some(name) => theme_name(name).ok_or_else(fail)?.to_owned(),
+        let title = title.as_deref().map(|name| theme_name(name).map(str::to_owned).ok_or_else(fail)).transpose()?;
+        let title = match title.filter(|name| shown_names.insert(name.clone())) {
+            Some(name) => name,
             None => {
                 fallback_topics.push(id);
                 loop {
@@ -4239,6 +4241,35 @@ mod tests{
         assert!(parsed.minutes.markdown.contains("补充讨论"));
         assert!(parsed.minutes.markdown.contains("预算未批，不能采购。"));
         assert_eq!(parsed.minutes.action_items.len(), 2);
+    }
+    #[test]
+    fn keyed_organization_keeps_separate_facts_when_normalized_titles_collide() {
+        let session = crate::backend::minutes::tests::session_with_text(
+            "预算未批，不能采购。\n李敏承诺周三交报告。\n仓库周末关闭。\n合同仍在法务审核。",
+        );
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
+        let evidence = json!({"facts":[
+            {"evidence":["e0000"], "role":"status", "text":"预算未批，不能采购。", "owner":null, "due":null},
+            {"evidence":["e0001"], "role":"action", "text":"交报告。", "owner":"李敏", "due":"周三"},
+            {"evidence":["e0002"], "role":"status", "text":"仓库周末关闭。", "owner":null, "due":null},
+            {"evidence":["e0003"], "role":"status", "text":"合同仍在法务审核。", "owner":null, "due":null}
+        ]});
+        let bank = parse_bank(&evidence.to_string(), &session.transcript_text).unwrap();
+        let layout = json!({
+            "purposeFact":"a000",
+            "topics":{"t1":"采购准备：预算限制","t2":"采购准备:仓库开放时间","t3":"补充讨论",
+                      "t4":null,"t5":null,"t6":null,"t7":null,"t8":null},
+            "assignments":{"a000":"m1","a002":"m2","a003":"m3"}
+        });
+        let parsed = organize(&layout.to_string(), &bank, &session, &base).unwrap();
+        assert_eq!(parsed.receipt["topicsGivenNeutralTitles"], json!(["t2"]));
+        assert_eq!(parsed.receipt["retainedFactIds"], json!(["a000","a001","a002","a003"]));
+        assert_eq!(parsed.minutes.keywords, ["采购准备", "补充讨论（二）", "补充讨论"]);
+        assert_eq!(parsed.minutes.action_items[0].owner.as_deref(), Some("李敏"));
+        assert_eq!(parsed.minutes.action_items[0].due.as_deref(), Some("周三"));
+        for quote in ["预算未批，不能采购。", "仓库周末关闭。", "合同仍在法务审核。", "李敏承诺周三交报告。"] {
+            assert!(parsed.minutes.markdown.contains(quote), "missing {quote}");
+        }
     }
     #[test]
     fn fact_parser_checks_owner_against_selected_sentences_not_nearby_people(){
