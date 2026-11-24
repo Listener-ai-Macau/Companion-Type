@@ -1,4 +1,5 @@
 import {meetingReadingSources} from './meetingReadingSources';
+import type {TranscriptLookup} from './transcriptMatching';
 import {LibraryPanel} from './LibraryPanel';
 import {LibraryScopeChips,type LibraryScopeChip} from './LibraryScopeChips';
 import {ContentExportPanel,type ContentExportTarget} from './ContentExportPanel';
@@ -1280,7 +1281,7 @@ export function CompanionDashboard({
             : null;
   const audioIdentity = selectedSession ? listeningIdentity(selectedSession) : '';
   const [sourceSelection, setSourceSelection] = useState<CompanionTranscriptSource | null>(null);
-  const [transcriptLookup,setTranscriptLookup]=useState<{id:string;text:string;sessionId:string;returnId?:string}|null>(null);
+  const [transcriptLookup,setTranscriptLookup]=useState<(TranscriptLookup&{sessionId:string;returnId?:string})|null>(null);
   const lookupSequence=useRef(0);
   useEffect(()=>setTranscriptLookup(null),[selectedSession?.id]);
   useEffect(()=>{
@@ -1436,10 +1437,11 @@ export function CompanionDashboard({
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 storedActionSources={storedActionSources}
                 blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
-                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?(text,returnId)=>{
+                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?(text,returnId,preferExact)=>{
                   setMeetingPane('source');setSourceSelection(null);
-                  setTranscriptLookup(text?{id:String(++lookupSequence.current),text,sessionId:selectedSession.id,returnId}:null);
+                  setTranscriptLookup(text?{id:String(++lookupSequence.current),text,sessionId:selectedSession.id,returnId,preferExact}:null);
                   resumeTranscriptDraft(selectedSession.id);
+                  if(preferExact)return;
                   window.requestAnimationFrame(()=>{const region=document.getElementById('ct-recording-text-review');
                     if(region&&!region.hidden){region.scrollIntoView({block:'start'});region.focus({preventScroll:true});}});
                 }:undefined} />) : null;
@@ -4007,7 +4009,8 @@ function meetingSource(session: CompanionV1HostSession): string {
 
 function MinutesReadingView(props:Parameters<typeof MinutesReadingBody>[0]) {
   const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
-  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} blocked={props.blocked}>
+  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource}
+    onLocateTranscript={!props.blocked&&props.onShowTranscript?text=>props.onShowTranscript?.(text,undefined,true):undefined} blocked={props.blocked}>
     <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
     {reading.review.trim()?<MeetingDisclosure className="ct-full-minutes ct-source-review" title="原话与待核对内容" description="核对来源，不作为已确认结论">
       <p className="ct-step-meta">保留原始转写和先前整理中的核对材料；这里的片段不代表已确认的会议结论。</p>
@@ -4022,7 +4025,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;sourceFallbackLabel?:string;
   storedActionSources?: ReadonlyMap<string, CompanionTranscriptSource[]>;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
-  onShowTranscript?: (text?:string,returnId?:string) => void;
+  onShowTranscript?: (text?:string,returnId?:string,preferExact?:boolean) => void;
 }) {
   // Only fold the exact native provenance envelope represented by the saved
   // typed source snapshot. Complete saved output remains available below.

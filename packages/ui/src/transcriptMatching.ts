@@ -1,11 +1,22 @@
 export type TranscriptMatch={row:number;start:number;end:number};
-export type TranscriptLookup={id:string;text:string};
+export type TranscriptLookup={id:string;text:string;preferExact?:boolean};
 /** Literal, Unicode-safe matches. Original text, speaker and timing never change. */
 export function transcriptMatches(texts:readonly string[],query:string):TranscriptMatch[] {
  const term=query.trim();if(!term)return [];
  const escaped=term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
  const pattern=new RegExp(escaped,'giu');
  return texts.flatMap((text,row)=>Array.from(text.matchAll(pattern),match=>({row,start:match.index!,end:match.index!+match[0].length})));
+}
+
+/** Locate a literal draft excerpt only when the current transcript has one match. */
+export function uniqueTranscriptExcerpt(texts:readonly string[],excerpt:string):string {
+ const literal=excerpt.trim();
+ const matches=transcriptMatches(texts,literal);
+ if(matches.length===1)return literal;
+ if(matches.length>1)return '';
+ // Segmented reading shows machine speaker labels outside the text rows.
+ const words=/^(?:说话人[\d?？]+|未知说话人)[:：]\s*(.+)$/.exec(literal)?.[1];
+ return words&&transcriptMatches(texts,words).length===1?words:'';
 }
 
 /** Lexical suggestions only: every offered term must literally exist in both texts. */

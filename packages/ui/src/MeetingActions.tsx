@@ -3,7 +3,7 @@ import {ArrowUpRight,CheckCheck,ListTodo,MessageCircleQuestion} from 'lucide-rea
 import {meetingReaderModel} from './meetingReaderModel';
 
 /** The saved decisions and arrangements, with their original qualifications. */
-export function MeetingActions({markdown,onLocate,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;reviewPending?:boolean}){
+export function MeetingActions({markdown,onLocate,onLocateTranscript,reviewPending=false}:{markdown:string;onLocate:(section:string,text?:string)=>void;onLocateTranscript?:(text:string)=>void;reviewPending?:boolean}){
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
  const groups=model.groups.filter(group=>group.id!=='discussionQuestions');
  const requirements=reviewPending?model.sections.find(section=>section.title==='执行要求（待复核）'):undefined;
@@ -15,7 +15,7 @@ export function MeetingActions({markdown,onLocate,reviewPending=false}:{markdown
    <h3><MessageCircleQuestion size={16} aria-hidden="true"/>{requirements.title}</h3>
    <ul>{requirements.items.map((line,index)=><li key={index}>
     <div><p>{line}</p></div>
-    <button type="button" className="meeting-action-source" onClick={()=>onLocate(requirements.title,line)}>查看片段<ArrowUpRight size={13} aria-hidden="true"/></button>
+    <button type="button" className="meeting-action-source" onClick={()=>onLocateTranscript?onLocateTranscript(line):onLocate(requirements.title,line)}>{onLocateTranscript?'查看转写上下文':'查看片段'}<ArrowUpRight size={13} aria-hidden="true"/></button>
    </li>)}</ul>
   </section>:null}
   {groups.map(group=>{const Icon=icons[group.id];return <section className="meeting-action-group" key={group.id} aria-label={group.label}>

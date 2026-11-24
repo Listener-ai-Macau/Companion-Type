@@ -8,6 +8,15 @@ import {CalendarTimeEditor} from '../packages/ui/src/CalendarTimeEditor';
 import {ActionListEditor} from '../packages/ui/src/ActionListEditor';
 import {seedCalendarTime,confirmedCalendarTime} from '../packages/ui/src/calendarTime';
 import {libraryPreview,latestSavedResult} from '../packages/ui/src/libraryPreview';
+import {uniqueTranscriptExcerpt} from '../packages/ui/src/transcriptMatching';
+
+const exactClause='交班前必须核对登记表。';
+const speakerQuote='说话人3: '+exactClause;
+assert.equal(uniqueTranscriptExcerpt([speakerQuote],speakerQuote),speakerQuote);
+assert.equal(uniqueTranscriptExcerpt(['收到。',exactClause,'有异常需要报备。'],speakerQuote),exactClause);
+assert.equal(uniqueTranscriptExcerpt([exactClause,exactClause],speakerQuote),'');
+assert.equal(uniqueTranscriptExcerpt([speakerQuote,speakerQuote],speakerQuote),'');
+assert.equal(uniqueTranscriptExcerpt(['交班后再核对。'],speakerQuote),'');
 
 // Customer-reported reading and navigation contracts. IPC is deliberately not
 // provided: this suite cannot write a recording, call a provider or touch a board.
@@ -51,6 +60,14 @@ assert.match(text(tree.toJSON()),/可对照原音/);act(()=>tree.unmount());
 (globalThis as any).HTMLButtonElement=class {};
 (globalThis as any).document={activeElement:null};
 (globalThis as any).window={...(globalThis as any).window,requestAnimationFrame:(fn:()=>void)=>fn()};
+const sourceContext={...row,utterances:[],transcriptText:['第一次交班。',speakerQuote,'有异常需要报备。'].join('\n')};
+act(()=>{tree=create(<CompanionTranscriptReview session={sourceContext} visible blocked={false}
+ lookup={{id:'exact-context',text:speakerQuote,preferExact:true}} onUnsavedChange={()=>{}}/>);});
+assert.match(text(tree.toJSON()),/已定位这段转写/);
+assert.match(text(tree.toJSON()),/第一次交班。/);
+assert.match(text(tree.toJSON()),/有异常需要报备。/);
+assert.ok(tree.root.findAllByType('mark').some(mark=>mark.props['data-find-current']==='true'));
+act(()=>tree.unmount());
 const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{}});
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
 assert.match(text(tree.toJSON()),/手写清单已保存/);
