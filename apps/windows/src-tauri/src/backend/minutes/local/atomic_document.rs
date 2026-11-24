@@ -2154,6 +2154,31 @@ fn reader_selection<'a>(rows: &[&'a Fact], requested: &[String], allowed: &HashS
     primary
 }
 
+/// Build a source-only reading order when the engine stopped after reviewing
+/// the source. The usual evidence and display checks still apply in organize.
+pub(super) fn reviewable_layout(bank: &Bank) -> Option<String> {
+    let topics = bank.topics().collect::<Vec<_>>();
+    let mut chapters = BTreeMap::new();
+    let count = bank.chapter_spans.len();
+    if count == 0 { return None; }
+    for (index, span) in bank.chapter_spans.iter().enumerate() {
+        let rows = &topics[span.clone()];
+        let chosen = bank.chapter_point_choices[index].iter()
+            .map(|&pos| rows[pos]).take(CHAPTER_HIGHLIGHTS).collect::<Vec<_>>();
+        if chosen.is_empty() { return None; }
+        let (label, _) = bank.chapter_label_choices[index].iter().max_by_key(|(id, title)| {
+            let supported = chosen.iter().filter(|fact| fact.text.contains(title.as_str())).count();
+            (supported, std::cmp::Reverse(*id))
+        })?;
+        chapters.insert(THEME_IDS[index], json!({
+            "labelIds":[label], "mainFacts":chosen.iter().map(|fact| &fact.id).collect::<Vec<_>>()
+        }));
+    }
+    let focus = if count <= 2 { THEME_IDS[..count].to_vec() }
+        else { vec![THEME_IDS[0], THEME_IDS[count / 2], THEME_IDS[count - 1]] };
+    Some(json!({"chapters":chapters,"focusChapters":focus}).to_string())
+}
+
 fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Organization, ChapterFocus), String> {
     let facts: Vec<_> = bank.topics().collect();
     let mut descriptions = layout.chapters.0;

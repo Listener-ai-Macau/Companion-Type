@@ -86,17 +86,77 @@ fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str,device:Option<&
 
 pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<CompanionV1MeetingMinutes,String>{
     if !supported(){return Err("本地会议整理尚未准备好，已有文字和纪要保留。".into());}
-    let (minutes,trace)=generate_on_desktop(session,base);
+    let (result,mut trace)=generate_on_desktop(session,base);
+    let result = finish_desktop_minutes(session, base, result, &mut trace);
     if let Some(root)=delivery_preview_root(){
         let fields=["backend","vulkanDevice","runtimeFallback","sourceWindow","inferenceRequestAttempts","contextTokens","contextFallback",
             "freshWholeRun","reusedSourceWindows","serviceReleaseConfirmed","seconds","error","runtimeSha256","modelLoadMode","newCloudCalls",
-            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB"];
+            "memoryRecovery","retainedSourceWindows","cpuPromptCacheMiB","reviewableDraft"];
         let summary=fields.into_iter().map(|key|(key.to_owned(),trace[key].clone())).collect::<serde_json::Map<_,_>>();
         let _=std::fs::write(root.join("local-minutes-delivery-trace.json"),Value::Object(summary).to_string());
     }
-    let mut minutes=minutes?;
-    minutes.quality="final".into();
-    Ok(minutes)
+    result
+}
+
+fn finish_desktop_minutes(
+    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
+    result: Result<CompanionV1MeetingMinutes, String>, trace: &mut Value,
+) -> Result<CompanionV1MeetingMinutes, String> {
+    match result {
+        Ok(mut minutes) => {
+            minutes.quality = "final".into();
+            Ok(minutes)
+        }
+        Err(reason) => {
+            if trace["retainedSourceWindows"].as_u64().unwrap_or(0) == 0 {
+                return Err(reason);
+            }
+            let Some(mut draft) = source_only_review_draft(session, base, trace) else {
+                return Err(reason);
+            };
+            draft.quality = "draft".into();
+            draft.llm_note = Some(reason);
+            trace["reviewableDraft"] = json!(true);
+            Ok(draft)
+        }
+    }
+}
+
+fn source_only_review_draft(
+    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, trace: &Value,
+) -> Option<CompanionV1MeetingMinutes> {
+    let prefix = source_checkpoint::CheckedSourcePrefix::for_desktop_retry(&session.transcript_text, trace)?;
+    let context = match trace["contextTokens"].as_u64()? {
+        8192 => transport::Context::ReducedCpu,
+        16384 => transport::Context::Full,
+        _ => return None,
+    };
+    let (review, _) = prefix.independent_source_review(context)?;
+    let windows = source_windows::SourceWindows::new(&session.transcript_text).ok()?;
+    if prefix.len() != windows.len() { return None; }
+
+    let mut facts = Vec::new();
+    for index in 0..prefix.len() {
+        let (encoding, saved) = prefix.window(index)?;
+        let reply = match saved {
+            Some(call) => call["output"].as_str()?,
+            None => "{}",
+        };
+        let mut checked = windows.check_encoded(index, reply, encoding).ok()?;
+        if windows.excerpt_request(&checked).is_some() {
+            windows.finish_deferred(&mut checked, None);
+        }
+        facts.extend(checked.facts);
+    }
+    let bank = atomic_document::build_session_bank(facts, session, review).ok()?;
+    let layout = atomic_document::reviewable_layout(&bank)?;
+    let mut draft = atomic_document::organize(&layout, &bank, session, base).ok()?.minutes;
+    let (_, topics) = draft.markdown.split_once("## 主题脉络\n\n")?;
+    draft.markdown = format!(
+        "> 本地复核草稿。已整理的原话可核对，内存恢复后可继续完整组稿。\n\n## 已整理的讨论片段\n\n{topics}"
+    );
+    draft.summary.clear();
+    Some(draft)
 }
 
 fn generate_on_desktop(session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes)

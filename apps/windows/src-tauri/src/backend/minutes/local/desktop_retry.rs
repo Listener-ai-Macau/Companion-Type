@@ -105,7 +105,8 @@ pub(super) fn generate<T>(
                 if let Ok(mut cache) = slot.0.lock() {
                     *cache = Some(Saved { source, prefix });
                     trace["retainedSourceWindows"] = json!(windows);
-                    let message = format!("可用内存不足，已保留 {windows} 段整理进度。内存恢复后，点击重试可接着生成。");
+                    let lead = super::super::LOCAL_MEMORY_RETRY_PREFIX;
+                    let message = format!("{lead}，已保留 {windows} 段整理进度。内存恢复后，点击重试可接着生成。");
                     trace["error"] = json!(message);
                     return (Err(message), trace);
                 }

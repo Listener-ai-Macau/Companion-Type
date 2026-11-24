@@ -284,6 +284,7 @@ fn recovery_error_is_permanent(error: &str) -> bool {
 }
 
 fn schedule_recovery_failure(session: &mut CompanionV1HostSession, error: &str) {
+    let awaiting_memory = error.starts_with(minutes::LOCAL_MEMORY_RETRY_PREFIX);
     arm_meeting_recovery(session);
     if !matches!(
         session.recovery.stage.as_str(),
@@ -293,7 +294,7 @@ fn schedule_recovery_failure(session: &mut CompanionV1HostSession, error: &str) 
     }
     session.recovery.last_error = Some(error.chars().take(512).collect());
     let exhausted = session.recovery.attempt_count >= session.recovery.max_attempts.max(1);
-    if exhausted || recovery_error_is_permanent(error)
+    if exhausted || recovery_error_is_permanent(error) || awaiting_memory
         || session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual {
         session.recovery.stage = "paused".to_string();
         session.recovery.next_retry_at_unix_ms = None;
@@ -448,7 +449,8 @@ where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1Meeti
             else { session.minutes_by_mode.offline_store.clone() }
             .or_else(|| (mode == session.meeting_mode).then(|| session.minutes.as_ref().map(|m| minutes_variant(m, 0))).flatten());
         if generated.llm_note.is_some(){
-            let reviewable = minutes::is_cloud_review_draft(&variant.source, &variant.quality, variant.processing.is_some());
+            let reviewable = minutes::is_cloud_review_draft(&variant.source, &variant.quality, variant.processing.is_some())
+                || minutes::is_local_review_draft(&variant.source, &variant.quality, variant.processing.is_some());
             if let Some(mut retained) = previous.as_ref().filter(|p| !p.markdown.trim().is_empty()
                 && !(reviewable && p.source == "rules_l0" && p.quality == "draft")).cloned() {
                 if reviewable && retained.markdown != variant.markdown
@@ -6627,6 +6629,34 @@ mod tests {
         let retained=reopened.minutes_by_mode.offline_store.unwrap();
         assert_eq!(retained.markdown,"第一次重新整理");
         assert_eq!(retained.status,"retryPending");
+    }
+
+    #[test]
+    fn local_memory_pressure_shows_a_citable_draft_and_pauses_background_retries() {
+        let snapshot = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "memory-draft", false)).unwrap();
+        let mut session = snapshot.host.sessions[0].clone();
+        session.meeting_mode = "offlineStore".into();
+        let old = minutes::rules_l0_minutes(&session, "first");
+        session.minutes_by_mode.offline_store = Some(minutes_variant(&old, 0));
+        session.minutes = Some(old);
+        session.processing_policy = crate::companion_v1::CompanionV1ProcessingPolicy::Automatic;
+        session.recovery = CompanionV1MeetingRecovery::armed("offlineStore");
+        session.recovery.retry_stage = "minutes".into();
+        let reason = format!("{}，已保留 30 段整理进度。", minutes::LOCAL_MEMORY_RETRY_PREFIX);
+        refresh_minutes_products_for_mode(&mut session, "second", Some("offlineStore"), |input| {
+            let mut draft = minutes::rules_l0_minutes(input, "second");
+            draft.source = "llm_local_qwen".into();
+            draft.markdown = "本地复核草稿，附带主题原话。".into();
+            draft.llm_note = Some(reason.clone());
+            draft
+        });
+        let saved = session.minutes_by_mode.offline_store.as_ref().unwrap();
+        assert_eq!(saved.source, "llm_local_qwen");
+        assert_eq!(saved.status, "retryPending");
+        assert!(saved.markdown.contains("本地复核草稿"));
+        assert_eq!(session.recovery.stage, "paused");
+        assert!(session.recovery.next_retry_at_unix_ms.is_none());
     }
 
     #[test]

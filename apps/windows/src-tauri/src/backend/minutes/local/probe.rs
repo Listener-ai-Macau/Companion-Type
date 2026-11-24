@@ -389,6 +389,40 @@ mod tests{
     }
 
     #[test]
+    fn produces_a_reviewable_draft_from_a_verified_pressure_receipt_without_starting_an_engine() {
+        let Some(archive) = std::env::var_os("COMPANION_TEST_DESKTOP_RETRY_REPORT") else { return; };
+        let failed = std::env::var_os("COMPANION_TEST_REVIEWABLE_DRAFT_TRACE").unwrap();
+        let out = std::env::var_os("COMPANION_TEST_REVIEWABLE_DRAFT_OUTPUT").unwrap();
+        let original: Value = serde_json::from_slice(&fs::read(archive).unwrap()).unwrap();
+        let result: Value = serde_json::from_slice(&fs::read(failed).unwrap()).unwrap();
+        let source = fs::read_to_string(original["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        assert_eq!(format!("{:x}", Sha256::digest(source.as_bytes())), original["sourceSha256"]);
+        assert_eq!(original["sourceSha256"], result["sourceSha256"]);
+        let session = session(source, "复核稿验证", original["durationMs"].as_u64().unwrap()).unwrap();
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "reviewable draft");
+        let reason = result["error"].as_str().unwrap().to_owned();
+        let mut trace = result["receipt"].clone();
+        let requests = trace["inferenceRequestAttempts"].clone();
+        let start = std::time::Instant::now();
+        let minutes = super::super::finish_desktop_minutes(&session, &base, Err(reason.clone()), &mut trace).unwrap();
+        assert_eq!(minutes.quality, "draft");
+        assert_eq!(minutes.llm_note.as_deref(), Some(reason.as_str()));
+        assert!(minutes.markdown.contains("本地复核草稿") && minutes.markdown.contains("## 主题原话"));
+        assert!(!minutes.markdown.contains("## 会议主线"));
+        assert_eq!(trace["inferenceRequestAttempts"], requests);
+        assert_eq!(trace["reviewableDraft"], true);
+        assert_eq!(trace["newCloudCalls"], 0);
+        let mut invalid = trace.clone();
+        invalid["retainedSourceWindows"] = json!(0);
+        assert!(super::super::finish_desktop_minutes(&session, &base, Err(reason), &mut invalid).is_err());
+        save_new(Path::new(&out), &json!({
+            "draft":minutes,"seconds":start.elapsed().as_secs_f64(),"sourceSha256":original["sourceSha256"],
+            "validatedWindows":trace["retainedSourceWindows"],"additionalModelRequests":0
+        })).unwrap();
+    }
+
+    #[test]
     fn local_minutes_probe_constructor_preserves_exact_source_and_never_claims_real_capture(){
         let source="观点：预算未批准。\n赵工承诺周五报告。";
         let row=session(source.into(),"公开原文",120000).unwrap();assert_eq!(row.transcript_text,source);

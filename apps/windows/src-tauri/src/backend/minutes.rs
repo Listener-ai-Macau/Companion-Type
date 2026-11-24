@@ -199,6 +199,11 @@ pub fn rules_l0_minutes(
 }
 
 pub(super) const CLOUD_REVIEW_DRAFT_REASON: &str = "纪要初稿待核对";
+pub(super) const LOCAL_MEMORY_RETRY_PREFIX: &str = "可用内存不足";
+
+pub(super) fn is_local_review_draft(source: &str, quality: &str, has_processing: bool) -> bool {
+    source == "llm_local_qwen" && quality == "draft" && !has_processing
+}
 
 pub(super) fn is_cloud_review_draft(source: &str, quality: &str, has_processing: bool) -> bool {
     source == "llm_deepseek" && quality == "draft" && !has_processing
