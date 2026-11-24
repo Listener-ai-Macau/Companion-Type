@@ -10,7 +10,7 @@ import type {CompanionTranscriptSource} from '../../core/src/minutesSources';
 import './meetingReadingFrame.css';
 import './meetingVisual.css';
 
-export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[],onOpenSpeakerSource,onLocateTranscript,decisionQuotes,questionQuotes,actionQuotes,actionSources,followupTools,blocked=false,children}:{markdown:string;title?:string;sections?:readonly string[];speakerSources?:readonly CompanionTranscriptSource[];onOpenSpeakerSource?:(source:CompanionTranscriptSource)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;actionQuotes?:ReadonlyMap<string,string[]>;actionSources?:ReadonlyMap<string,CompanionTranscriptSource[]>;followupTools?:ReactNode;blocked?:boolean;children:ReactNode}){
+export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[],onOpenSpeakerSource,onLocateTranscript,decisionQuotes,questionQuotes,actionQuotes,actionSources,followupTools,onOpenActions,blocked=false,children}:{markdown:string;title?:string;sections?:readonly string[];speakerSources?:readonly CompanionTranscriptSource[];onOpenSpeakerSource?:(source:CompanionTranscriptSource)=>void;onLocateTranscript?:(text:string,returnId?:string)=>void;decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;actionQuotes?:ReadonlyMap<string,string[]>;actionSources?:ReadonlyMap<string,CompanionTranscriptSource[]>;followupTools?:ReactNode;onOpenActions?:()=>void;blocked?:boolean;children:ReactNode}){
  const content=useRef<HTMLDivElement>(null);
  const outline=useRef<HTMLDetailsElement>(null);
  const viewControls=useRef<HTMLDivElement>(null);
@@ -77,7 +77,7 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
    {view!=='reading'?<div ref={viewControls} className="meeting-reading-views" role="group" aria-label="纪要视角">
     <button type="button" aria-pressed={keypoints} onClick={()=>setView(keypointView)}><BookOpen size={15} aria-hidden="true"/>重点</button>
     <button type="button" aria-pressed={view==='speakers'} onClick={()=>setView('speakers')}><Users size={15} aria-hidden="true"/>发言人</button>
-    <button type="button" aria-pressed={view==='actions'} onClick={()=>setView('actions')}><ListTodo size={15} aria-hidden="true"/>待办</button>
+    <button type="button" aria-pressed={view==='actions'} onClick={()=>{setView('actions');onOpenActions?.();}}><ListTodo size={15} aria-hidden="true"/>待办</button>
    </div>:<span className="meeting-reading-label">完整纪要</span>}
    {keypoints&&<div className="meeting-reading-formats" role="group" aria-label="重点展示">
     <button type="button" aria-pressed={view==='map'} onClick={()=>changeFormat('map')}><GitBranch size={13} aria-hidden="true"/>图解</button>

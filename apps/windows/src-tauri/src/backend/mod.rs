@@ -111,6 +111,7 @@ pub(crate) mod diagnostics;
 pub(crate) mod export;
 pub(crate) mod content_export;
 mod followup_handoff;
+mod followup_tasks;
 mod spreadsheet_export;
 mod presentation_export;
 mod mindmap_image_export;

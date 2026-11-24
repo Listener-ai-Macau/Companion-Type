@@ -84,7 +84,8 @@ fn saved_followup(session: &CompanionV1HostSession, mode: &str, markdown: &str) 
             .and_then(|evidence| super::followup_handoff::grouped(session,evidence,&output))
             .unwrap_or_else(|| output.join("\n").trim_end().to_owned())
     } else {
-        super::followup_handoff::work_review(session, markdown)
+        super::followup_tasks::render(&super::transcript_review::effective_text(session))
+            .or_else(|| super::followup_handoff::work_review(session, markdown))
             .ok_or("这份纪要暂无可提取的跟进内容，可查看完整纪要。")?
     };
     let guidance = if has_outcomes { "已保存纪要中的决定与跟进，发送前请核对。" }

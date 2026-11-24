@@ -68,6 +68,8 @@ import {MeetingReferenceWorkspace,type ReferenceView} from './MeetingReferenceWo
 import {MeetingAiWorkbench} from './MeetingAiWorkbench';
 import {TranscriptQuoteCapture} from './TranscriptQuoteCapture';
 import type {ManualEvidenceDraft} from '../../core/src/manualNoteContext';
+import {MANUAL_CONTEXT_LIMITS} from '../../core/src/manualNoteContext';
+import {readTaskDraft,roleChecklist} from './savedFollowup';
 import type {DocumentSourceRequest} from './DocumentContextPanel';
 import {DocumentContextPanel} from './DocumentContextPanel';
 import {materialNote,readMaterialNote} from './aiMaterialNote';
@@ -1437,6 +1439,11 @@ export function CompanionDashboard({
       || (/^## 主题脉络$/m.test(minutesMarkdown)&&/^## 主题原话$/m.test(minutesMarkdown)));
   const [followupDraft,setFollowupDraft]=useState<{key:string;text?:string;hash?:string;message:string;error?:boolean}|null>(null);
   const currentFollowup=followupDraft?.key===copySourceKey?followupDraft:null;
+  const typedFollowup=currentFollowup?.text?readTaskDraft(currentFollowup.text):[];
+  const editableFollowup=typedFollowup.length
+    ? typedFollowup.map(item=>item.text)
+    : currentFollowup?.text?roleChecklist(currentFollowup.text):[];
+  const pendingFollowupWrite=useRef<{key:string;request:CompanionMeetingNoteRequest}|null>(null);
   const workReviewQuotes=currentFollowup?.text?.includes('\n## 待核对的执行做法\n')
     ? Array.from(currentFollowup.text.matchAll(/^- “(.+)”$/gm),match=>match[1]) : [];
   const followupBlocked=controlsBusy||oobeBlockedByRecording||titleDirty||minutesDirty||noteUnsaved||transcriptReviewUnsaved||selectedRecordingBeingCaptured;
@@ -1471,11 +1478,19 @@ export function CompanionDashboard({
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                  storedActionSources={storedActionSources} storedActionQuotes={storedActionQuotes}
                  decisionQuotes={storedDecisionQuotes} questionQuotes={storedQuestionQuotes}
+                onOpenActions={followupAvailable&&onPreviewMeetingExport&&!currentFollowup?()=>void prepareFollowup():undefined}
                 followupTools={followupAvailable&&onPreviewMeetingExport?<div className="ct-checklist-copy-result" aria-label="会议跟进短稿">
                   <button type="button" className="ct-action" disabled={followupBlocked||previewWaiting}
                     onClick={()=>void prepareFollowup()}>查看跟进短稿</button>
                   {currentFollowup&&<p role={currentFollowup.error?'alert':'status'}>{currentFollowup.message}</p>}
-                  {currentFollowup?.text&&<>{workReviewQuotes.length>0
+                  {currentFollowup?.text&&<>{typedFollowup.length>0
+                    ? <section aria-label="待核实的跟进清单" className="meeting-action-group"><ul>{typedFollowup.map((item,index)=>
+                        <li key={item.text}><p>{item.text}</p><div>{item.quotes.map((quote,position)=>{
+                          const returnId=`ct-followup-task-${index}-${position}`;
+                          return <button key={quote} type="button" id={returnId} className="meeting-action-source"
+                            disabled={followupBlocked} onClick={()=>showSavedTranscript(quote,returnId,true)}>查看原话{item.quotes.length>1?` ${position+1}`:''}</button>;
+                        })}</div></li>)}</ul></section>
+                    : workReviewQuotes.length>0
                     ? <section aria-label="待核对的执行做法" className="meeting-action-group"><ul>{workReviewQuotes.map((quote,index)=>{
                         const returnId=`ct-followup-work-source-${index}`;
                         return <li key={quote}><p>{quote}</p><button type="button" id={returnId} className="meeting-action-source"
@@ -1483,7 +1498,9 @@ export function CompanionDashboard({
                       })}</ul></section>
                     : <textarea className="ct-followup-text" aria-label="已保存的跟进短稿" readOnly value={currentFollowup.text}
                       onFocus={event=>event.currentTarget.select()}/>}<button type="button" className="ct-action" disabled={followupBlocked||copyBusy}
-                    onClick={()=>void prepareFollowup(currentFollowup.hash)}>复制跟进短稿</button></>}
+                    onClick={()=>void prepareFollowup(currentFollowup.hash)}>复制跟进短稿</button>
+                    {onSaveNote&&editableFollowup.length>0?<button type="button" className="ct-action"
+                      disabled={followupBlocked||copyBusy||storageBlocked} onClick={()=>void storeFollowupDraft()}>存为可编辑清单</button>:null}</>}
                 </div>:undefined}
                 blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
                 onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?showSavedTranscript:undefined} />) : null;
@@ -1515,7 +1532,7 @@ export function CompanionDashboard({
         const {textContent,contentHash}=preview;
         if(typeof textContent!=='string'||!textContent.trim()||!/^[a-f0-9]{64}$/.test(contentHash))throw Error('暂无可用的跟进短稿。');
         if(!expectedContentHash){setFollowupDraft({key,text:textContent,hash:contentHash,
-          message:textContent.includes('\n## 待核对的执行做法\n')?'请核对这些做法的适用范围和责任人。':'请核对明确事项和待确认问题。'});return;}
+          message:/\n## 待核(?:对的执行做法|实的跟进清单)\n/.test(textContent)?'请核对这些做法的适用范围和责任人。':'请核对明确事项和待确认问题。'});return;}
         if(contentHash!==expectedContentHash)throw Error('纪要已变更，请重新查看短稿。');
         await navigator.clipboard.writeText(textContent);
       }
@@ -1524,6 +1541,44 @@ export function CompanionDashboard({
       if(copySourceRef.current===key)setFollowupDraft({key,text:expectedContentHash?currentFollowup?.text:undefined,
         hash:expectedContentHash,message:operationErrorText(error,'export'),error:true});
     }finally{exportActive.current=false;if(expectedContentHash)setCopyBusy(false);}
+  };
+  const storeFollowupDraft = async () => {
+    if(!selectedSession||!currentFollowup?.hash||!onSaveNote||followupBlocked||storageBlocked||exportActive.current)return;
+    const session=selectedSession;
+    const key=copySourceKey;
+    const text=editableFollowup.map(item=>'- [ ] '+item).join('\n');
+    if(!text)return;
+    const transcript=companionReviewedTranscript(session);
+    const sourceQuotes=typedFollowup.length?typedFollowup.flatMap(item=>item.quotes):
+      [...(storedActionQuotes?.values()??[]),...(storedQuestionQuotes?.values()??[])].flat();
+    const quotes=[...new Set(sourceQuotes)].filter(quote=>transcript.includes(quote));
+    if(session.meetingNotes?.some(note=>note.kind==='followup'&&note.text===text)){
+      revealMeetingTool('ct-recording-notes');return;
+    }
+    const writeKey=JSON.stringify([key,currentFollowup.hash,session.noteRevision??0]);
+    exportActive.current=true;setCopyBusy(true);
+    try {
+      if(pendingFollowupWrite.current?.key!==writeKey){
+        const sourceHash=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(transcript));
+        if(copySourceRef.current!==key)return;
+        const sourceSha256=[...new Uint8Array(sourceHash)].map(byte=>byte.toString(16).padStart(2,'0')).join('');
+        const references=quotes.filter(quote=>quote.length<=MANUAL_CONTEXT_LIMITS.quoteUtf16)
+          .slice(0,MANUAL_CONTEXT_LIMITS.references)
+          .map(quote=>({id:crypto.randomUUID(),kind:'transcript' as const,name:'会议转写',quote,sourceSha256}));
+        pendingFollowupWrite.current={key:writeKey,request:{
+          sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,
+          action:'add',text,kind:'followup',references,bookmarkId:null,
+        }};
+      }
+      const request=pendingFollowupWrite.current.request;
+      const saved=await onSaveNote(request);
+      const note=saved.host.sessions.find(row=>row.id===request.sessionId)?.meetingNotes?.find(note=>note.id===request.noteId);
+      if(note?.text!==text||note.kind!=='followup')throw Error('尚未确认备注已保存到本机；输入仍保留，可以重试。');
+      pendingFollowupWrite.current=null;
+      if(copySourceRef.current===key)revealMeetingTool('ct-recording-notes');
+    }catch(error){
+      if(copySourceRef.current===key)setFollowupDraft({...currentFollowup,message:operationErrorText(error,'save'),error:true});
+    }finally{exportActive.current=false;setCopyBusy(false);}
   };
   const copyChecklist = async () => {
     if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||exportActive.current||selectedMinutesStale||minutesIncomplete)return;
@@ -4081,10 +4136,10 @@ function meetingSource(session: CompanionV1HostSession): string {
   return '演示记录';
 }
 
-function MinutesReadingView({decisionQuotes,questionQuotes,followupTools,...props}:Parameters<typeof MinutesReadingBody>[0]&{
-    decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;followupTools?:ReactNode}) {
+function MinutesReadingView({decisionQuotes,questionQuotes,followupTools,onOpenActions,...props}:Parameters<typeof MinutesReadingBody>[0]&{
+    decisionQuotes?:ReadonlyMap<string,string[]>;questionQuotes?:ReadonlyMap<string,string[]>;followupTools?:ReactNode;onOpenActions?:()=>void}) {
   const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
-  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes} actionQuotes={props.storedActionQuotes} actionSources={props.storedActionSources} followupTools={followupTools}
+  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} decisionQuotes={decisionQuotes} questionQuotes={questionQuotes} actionQuotes={props.storedActionQuotes} actionSources={props.storedActionSources} followupTools={followupTools} onOpenActions={onOpenActions}
     onLocateTranscript={!props.blocked&&props.onShowTranscript?(text,returnId)=>props.onShowTranscript?.(text,returnId,true):undefined} blocked={props.blocked}>
     <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
     {reading.review.trim()?<MeetingDisclosure className="ct-full-minutes ct-source-review" title="原话与待核对内容" description="核对来源，不作为已确认结论">
