@@ -624,7 +624,7 @@ pub struct CompanionV1ActionItem {
 }
 
 /// A generated action is tied to the transcript used for that generation.
-/// Older minutes have no stored timed evidence and keep the text lookup.
+/// Older minutes without saved evidence fall back to text search.
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1MinutesActionEvidence {
@@ -638,6 +638,8 @@ pub struct CompanionV1MinutesActionEvidence {
 pub struct CompanionV1ActionCitation {
     pub text: String,
     pub segments: Vec<CompanionV1ActionSourceSegment>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub transcript_quotes: Vec<String>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

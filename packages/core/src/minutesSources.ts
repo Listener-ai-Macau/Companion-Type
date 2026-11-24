@@ -110,6 +110,17 @@ export function companionStoredActionSources(evidence: CompanionMinutesActionEvi
   return links;
 }
 
+/** Call only after verifying the adopted transcript digest. */
+export function companionStoredActionQuotes(evidence: CompanionMinutesActionEvidence): ReadonlyMap<string, string[]> {
+  const links = new Map<string, string[]>();
+  for (const item of evidence.actions) {
+    if (evidence.actions.filter(other => other.text === item.text).length !== 1) continue;
+    const quotes = item.transcriptQuotes?.filter(quote => quote.trim());
+    if (quotes?.length) links.set(item.text.trim(), quotes);
+  }
+  return links;
+}
+
 // Long-meeting evidence replaces the newline between ASR segments with a
 // space when displayed. Link a unique, exact cross-segment quote to its first
 // segment; never bridge a missing segment or pick one of several occurrences.

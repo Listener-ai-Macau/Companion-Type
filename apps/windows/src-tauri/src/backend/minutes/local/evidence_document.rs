@@ -3,8 +3,9 @@
 use std::collections::HashMap;
 
 use serde_json::{json,Value};
+use sha2::{Digest,Sha256};
 use super::super::canonical_brief::{self,source_units};
-use crate::companion_v1::{CompanionV1HostSession,CompanionV1MeetingMinutes};
+use crate::companion_v1::{CompanionV1ActionCitation,CompanionV1HostSession,CompanionV1MeetingMinutes,CompanionV1MinutesActionEvidence};
 
 pub(super) const TOPIC_ORDINALS: [&str; 8] = ["一", "二", "三", "四", "五", "六", "七", "八"];
 
@@ -230,6 +231,32 @@ pub(super) fn parse_with_details_limit(
         &doc.to_string(),session,base,details_limit,reader_limits.is_none(),&visible_detail_kinds
     )?;
     parsed.minutes.markdown=exact_origins(&parsed.minutes.markdown,&doc,&anchors)?;
+    // Imported text has no verified audio times. Preserve exact reading
+    // anchors separately and keep them scoped to the adopted transcript.
+    if session.source == "importedTranscript" && session.utterances.is_empty() {
+        let actions = parsed.minutes.action_items.iter().enumerate().filter_map(|(index, item)| {
+            if parsed.minutes.action_items.iter().filter(|action| action.text == item.text).count() != 1 {
+                return None;
+            }
+            let path = format!("actionItems[{index}]");
+            let mut seen = std::collections::HashSet::new();
+            let transcript_quotes = anchors.iter().filter(|anchor| anchor["path"] == path)
+                .filter_map(|anchor| anchor["quote"].as_str().map(str::trim))
+                .filter(|quote| !quote.is_empty() && !quote.contains(['\r','\n'])
+                    && seen.insert(*quote) && session.transcript_text.matches(*quote).take(2).count() == 1)
+                .map(str::to_owned).collect::<Vec<_>>();
+            (!transcript_quotes.is_empty()).then(|| CompanionV1ActionCitation {
+                text:item.text.clone(),segments:Vec::new(),transcript_quotes,
+            })
+        }).collect::<Vec<_>>();
+        if !actions.is_empty() {
+            parsed.minutes.source_action_evidence = Some(CompanionV1MinutesActionEvidence {
+                transcript_sha256: format!("{:x}",Sha256::digest(session.transcript_text.as_bytes())),
+                review_revision: session.transcript_review.as_ref().map(|review|review.revision),
+                actions,
+            });
+        }
+    }
     parsed.receipt["evidenceAnchors"]=json!(anchors);
     parsed.receipt["literalEvidenceBound"]=json!(true);
     if visible_detail_kinds.iter().flatten().any(Option::is_some) {
@@ -263,6 +290,21 @@ mod tests{
             let a=anchor["startByte"].as_u64().unwrap()as usize;let z=anchor["endByte"].as_u64().unwrap()as usize;
             assert_eq!(&s.transcript_text[a..z],anchor["quote"].as_str().unwrap());
         }
+    }
+
+    #[test]
+    fn imported_actions_keep_a_unique_literal_source_without_audio_timing() {
+        let (mut s,b,d) = fixture();
+        s.source = "importedTranscript".into();
+        s.utterances.clear();
+        let parsed = parse(&d.to_string(),&s,&b).unwrap();
+        let evidence = parsed.minutes.source_action_evidence.unwrap();
+        assert_eq!(evidence.actions[0].text,"提交测试报告。");
+        assert!(evidence.actions[0].segments.is_empty());
+        assert_eq!(evidence.actions[0].transcript_quotes,["李敏承诺周五提交测试报告。"]);
+        s.transcript_text.push_str("李敏承诺周五提交测试报告。");
+        let repeated = parse(&d.to_string(),&s,&b).unwrap();
+        assert!(repeated.minutes.source_action_evidence.is_none());
     }
 
     #[test]

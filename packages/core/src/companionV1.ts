@@ -343,6 +343,7 @@ export interface CompanionMinutesActionEvidence {
   actions: {
     text: string;
     segments: { index: number; text: string; startMs: number; endMs: number }[];
+    transcriptQuotes?: string[];
   }[];
 }
 

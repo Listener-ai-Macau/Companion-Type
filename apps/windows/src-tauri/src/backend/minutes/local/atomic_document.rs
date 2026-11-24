@@ -3225,14 +3225,14 @@ fn assemble_with_context(
                 .filter_map(|citation| indices.get(citation.as_str()))
                 .flat_map(|index| timing.action_source_segments(*index, &action.text))
                 .filter(|segment| seen.insert(segment.index)).collect();
-            (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:action.text.clone(),segments})
+            (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:action.text.clone(),segments,transcript_quotes:Vec::new()})
         });
         let recap_citations = closing_actions.iter().filter_map(|(_,handoff)| {
             let mut seen = HashSet::new();
             let segments = handoff.citations.iter()
                 .flat_map(|&index| timing.action_source_segments(index, &handoff.item.text))
                 .filter(|segment| seen.insert(segment.index)).collect::<Vec<_>>();
-            (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:handoff.item.text.clone(),segments})
+            (!segments.is_empty()).then(|| CompanionV1ActionCitation {text:handoff.item.text.clone(),segments,transcript_quotes:Vec::new()})
         });
         let actions = native_actions.chain(recap_citations).collect::<Vec<_>>();
         if !actions.is_empty() {

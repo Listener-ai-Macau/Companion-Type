@@ -309,13 +309,16 @@ pub(super) fn direct_assignments(sentences: &[Value]) -> Vec<RecapHandoff> {
     };
     let announce = (last.saturating_sub(12)..=last).rev().find(|&pos| turn(pos).is_some_and(|(actor, words)| {
         actor == lead && !tentative(words)
-            && has(words, &["本场会", "本次会", "今天的会", "今天就", "这场会"])
+            && has(words, &["本场会", "本次会", "今天的会", "今天这个会", "今天就", "这场会"])
             && has(words, &["开到这儿", "开到这里", "到此结束", "到这里结束", "会议结束"])
     }));
     let Some(announce) = announce else {
         return closing_summary_handoff(sentences).into_iter().collect();
     };
-    let first = if announce == last { last.saturating_sub(8) } else { announce };
+    // A lead can give the collective follow-up just before announcing the
+    // close. Keep this small preceding range scoped to that known handoff.
+    let ordinary_start = if announce == last { last.saturating_sub(8) } else { announce };
+    let first = ordinary_start.min(announce.saturating_sub(3));
 
     (first..=last).filter_map(|pos| {
         let (actor, words) = turn(pos)?;
@@ -324,7 +327,10 @@ pub(super) fn direct_assignments(sentences: &[Value]) -> Vec<RecapHandoff> {
         }) {
             return None;
         }
-        let (owner, operation) = direct_closing_instruction(words, pos >= announce)?;
+        let (owner, operation) = collective_closing_improvement(words).or_else(|| {
+            if pos < ordinary_start { return None; }
+            direct_closing_instruction(words, pos >= announce)
+        })?;
         let mut text = operation.to_owned();
         let mut citations = vec![pos];
         if matches!(operation, "主抓" | "主抓一下" | "主抓一下儿") {
@@ -502,6 +508,21 @@ pub(super) fn final_group_delivery(rows: &[Value], at: usize, roles: &[Role<'_>]
     })
 }
 
+fn collective_closing_improvement(words: &str) -> Option<(String, &'static str)> {
+    static COLLECTIVE: LazyLock<Regex> = LazyLock::new(|| Regex::new(concat!(
+        r"^[嗯呃啊 ，,]*(?P<owner>各(?:个)?(?:幼儿园|院|园|部门|单位|门店|项目组|团队|小组))",
+        r"[都要须\s，,]*(?:根据|结合|按)",
+        r"[嗯呃啊 ，,]*(?:本次|刚才|会上|我们|咱们)[^。！？；]{0,20}(?:讨论|探讨|梳理|提出)[^。！？；]{0,12}(?:问题|意见)",
+        r"[，,嗯呃啊 ]*(?:然后)?[，,嗯呃啊 ]*(?:需要|要)?(?:进行|做)?",
+        r"(?:一下儿?)?(?:这些|这方面的|相关)?(?:改改进|改进)(?:[，,。！ ]|$)"
+    )).expect("closing improvement assigned to a named group"));
+    if tentative(words) || has(words, &["建议", "提出要不要", "如果", "还没决定", "不用", "不再", "原本"]) {
+        return None;
+    }
+    let direct = COLLECTIVE.captures(words)?;
+    Some((direct.name("owner")?.as_str().to_owned(), "根据会议讨论的问题进行改进"))
+}
+
 fn direct_closing_instruction(words: &str, after_announce: bool) -> Option<(String, &str)> {
     static STRICT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?P<owner>总监|主管|负责人|组长|项目经理|经理)(?:这边儿?|那边儿?)\s*(?:一定要|务必|必须)[^。；！？]{0,12}?(?P<work>注意安全|负责安全|检查现场|把关)",
@@ -567,6 +588,38 @@ mod tests {
 
         let source = format!("{}\n", lines.join("\n"));
         evidence_sentences(&source_units(&source))
+    }
+
+    #[test]
+    fn collective_improvement_is_kept_before_the_lead_announces_the_close() {
+        for (raw, owner) in [
+            ("嗯各园根据咱们探讨得出来的一些问题，然后进行一下儿这方面的改改进。", "各园"),
+            ("各部门根据本次讨论的问题进行改进。", "各部门"),
+        ] {
+            let directive = format!("说话人1：{raw}");
+            let rows = transcript_rows(&[&directive, "说话人1：咱们今天这个会议先到此结束。", "说话人1：散会。"]);
+            let result = direct_assignments(&rows);
+            assert_eq!(result.len(), 1);
+            assert_eq!(result[0].item.owner.as_deref(), Some(owner));
+            assert_eq!(result[0].item.text, "根据会议讨论的问题进行改进");
+            assert!(result[0].item.due.is_none());
+        }
+        let rows = transcript_rows(&[
+            "说话人2：各部门根据本次讨论的问题进行改进。",
+            "说话人1：咱们今天这个会议先到此结束。", "说话人1：散会。"
+        ]);
+        assert!(direct_assignments(&rows).is_empty());
+    }
+
+    #[test]
+    fn retained_closing_improvement_matches_the_frozen_public_transcript() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_CLOSING_PUBLIC_TRANSCRIPT") else { return; };
+        let text = std::fs::read_to_string(path).unwrap();
+        let lines = text.lines().collect::<Vec<_>>();
+        let rows = transcript_rows(&lines);
+        let result = direct_assignments(&rows);
+        assert!(result.iter().any(|handoff| handoff.item.owner.as_deref() == Some("各园")
+            && handoff.item.text == "根据会议讨论的问题进行改进" && handoff.item.due.is_none()));
     }
 
     #[test]
