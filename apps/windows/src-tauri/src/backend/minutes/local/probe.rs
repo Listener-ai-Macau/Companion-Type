@@ -273,7 +273,14 @@ mod tests{
                     atomic_document::layout_input(&bank), atomic_document::layout_schema(&bank).unwrap(), core_output).unwrap();
                 let core_only = std::env::var_os("COMPANION_TEST_REPLAY_COMPARE_CORE").map(|_| {
                     let base=super::super::super::rules_l0_minutes(&session,"engineering-candidate");
-                    atomic_document::organize(&core, &bank, &session, &base).unwrap()
+                    let direct = atomic_document::organize(&core, &bank, &session, &base).unwrap();
+                    let layout: Value = serde_json::from_str(crate::backend::minutes::strip_code_fences(&core).trim()).unwrap();
+                    let nominated = layout["chapters"].as_object().unwrap().values()
+                        .flat_map(|chapter| chapter["mainFacts"].as_array().unwrap()).collect::<Vec<_>>();
+                    bank.receipt["coreProposedReaderFactIds"] = json!(nominated);
+                    let with_sources = atomic_document::organize(&core, &bank, &session, &base).unwrap();
+                    bank.receipt.as_object_mut().unwrap().remove("coreProposedReaderFactIds");
+                    (direct, with_sources)
                 });
                 let mut chapter_requests = 0;
                 let raw=atomic_document::review_chapters(&mut bank,Some(&core),&text,|prompt,input,schema,stage| {
@@ -316,8 +323,9 @@ mod tests{
                 let result=output.join(key);
                 fs::create_dir(&result).unwrap();
                 fs::write(result.join("candidate.txt"),&rendered.minutes.markdown).unwrap();
-                if let Some(core_only) = core_only {
+                if let Some((core_only, with_sources)) = core_only {
                     fs::write(result.join("core-only.txt"), &core_only.minutes.markdown).unwrap();
+                    fs::write(result.join("core-with-source-marks.txt"), &with_sources.minutes.markdown).unwrap();
                     let chapter_seconds: f64 = calls.iter().filter(|call| {
                         call["stage"].as_str().is_some_and(|stage| stage.starts_with("chapter-review-"))
                     }).filter_map(|call| call["generationSeconds"].as_f64()).sum();
@@ -325,6 +333,7 @@ mod tests{
                         "experiment":"same archived facts and first layout, without the extra chapter passes",
                         "measuredArchivedChapterSeconds":chapter_seconds,"newModelCalls":0,
                         "documentReceipt":core_only.receipt,
+                        "withCoreSourceMarks":with_sources.receipt,
                     })).unwrap();
                 }
                 let mut replay = json!({
@@ -428,12 +437,30 @@ mod tests{
         assert_eq!(trace["inferenceRequestAttempts"], requests);
         assert_eq!(trace["reviewableDraft"], true);
         assert_eq!(trace["newCloudCalls"], 0);
+        let mut interrupted_review = result["receipt"].clone();
+        interrupted_review["calls"].as_array_mut().unwrap().retain(|call| {
+            call["stage"].as_str().is_some_and(|stage| stage.starts_with("source-window-"))
+        });
+        let start_partial = std::time::Instant::now();
+        let excerpts = super::super::finish_desktop_minutes(
+            &session, &base, Err(reason.clone()), &mut interrupted_review,
+        ).unwrap();
+        let partial_seconds = start_partial.elapsed().as_secs_f64();
+        assert_eq!(interrupted_review["reviewableDraft"], true);
+        assert_eq!(interrupted_review["newCloudCalls"], 0);
+        assert_eq!(excerpts.quality, "draft");
+        assert!(excerpts.markdown.contains("独立复核尚未完成") && excerpts.markdown.contains("## 已整理原话"));
+        assert!(!excerpts.markdown.contains("### 共同决定 · 原话") && !excerpts.markdown.contains("### 会后行动 · 原话"));
+        assert!(excerpts.summary.is_empty() && excerpts.decisions.is_empty() && excerpts.action_items.is_empty());
+        assert!(excerpts.questions.is_empty() && excerpts.source_action_evidence.is_none());
         let mut invalid = trace.clone();
         invalid["retainedSourceWindows"] = json!(0);
         assert!(super::super::finish_desktop_minutes(&session, &base, Err(reason), &mut invalid).is_err());
         save_new(Path::new(&out), &json!({
             "draft":minutes,"seconds":start.elapsed().as_secs_f64(),"sourceSha256":original["sourceSha256"],
-            "validatedWindows":trace["retainedSourceWindows"],"additionalModelRequests":0
+            "validatedWindows":trace["retainedSourceWindows"],"additionalModelRequests":0,
+            "beforeIndependentReview":{"draft":excerpts,"seconds":partial_seconds,
+                "validatedWindows":interrupted_review["retainedSourceWindows"],"additionalModelRequests":0}
         })).unwrap();
     }
 

@@ -131,7 +131,7 @@ fn source_only_review_draft(
         16384 => transport::Context::Full,
         _ => return None,
     };
-    let (review, _) = prefix.independent_source_review(context)?;
+    let checked_review = prefix.independent_source_review(context);
     let windows = source_windows::SourceWindows::new(&session.transcript_text).ok()?;
     if prefix.len() != windows.len() { return None; }
 
@@ -148,13 +148,35 @@ fn source_only_review_draft(
         }
         facts.extend(checked.facts);
     }
+    let default_review = source_review::Review::default();
+    let review = checked_review.map_or(&default_review, |(review, _)| review);
     let bank = atomic_document::build_session_bank(facts, session, review).ok()?;
     let layout = atomic_document::reviewable_layout(&bank)?;
     let mut draft = atomic_document::organize(&layout, &bank, session, base).ok()?.minutes;
-    let (_, topics) = draft.markdown.split_once("## 主题脉络\n\n")?;
-    draft.markdown = format!(
-        "> 本地复核草稿。已整理的原话可核对，内存恢复后可继续完整组稿。\n\n## 已整理的讨论片段\n\n{topics}"
-    );
+    if checked_review.is_some() {
+        let (_, topics) = draft.markdown.split_once("## 主题脉络\n\n")?;
+        draft.markdown = format!(
+            "> 本地复核草稿。已整理的原话可核对，内存恢复后可继续完整组稿。\n\n## 已整理的讨论片段\n\n{topics}"
+        );
+    } else {
+        // The first source pass was checked. The independent review was
+        // interrupted, so leave decisions and assignments unsettled.
+        let (_, originals) = draft.markdown.rsplit_once("## 主题原话\n\n")?;
+        if originals.trim().is_empty() { return None; }
+        let originals = originals.split_inclusive('\n').map(|line| match line {
+            "### 共同决定 · 原话\n" => "### 涉及决定的发言 · 待复核\n",
+            "### 会后行动 · 原话\n" => "### 涉及后续安排的发言 · 待复核\n",
+            "### 待确认问题 · 原话\n" => "### 涉及问题的发言 · 待复核\n",
+            _ => line,
+        }).collect::<String>();
+        draft.markdown = format!(
+            "> 本地复核草稿。独立复核尚未完成，以下仅供回查原话。决定、交办和期限仍待复核。\n\n## 已整理原话\n\n{originals}"
+        );
+        draft.decisions.clear();
+        draft.action_items.clear();
+        draft.questions.clear();
+        draft.source_action_evidence = None;
+    }
     draft.summary.clear();
     Some(draft)
 }
